@@ -1,4 +1,4 @@
-update=7/2/2015 10:33:31 AM
+update=7/2/2015 2:10:43 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -66,3 +66,6 @@ LibName34=crystal-4pin
 LibName35=cp2102
 LibName36=mcp1703t-3302e
 LibName37=mini-usb-b
+LibName38=ad7683
+LibName39=ad8610
+LibName40=adg5204
