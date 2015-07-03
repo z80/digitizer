@@ -25,5 +25,57 @@ t: r*c*log( 100000 );
 PS filter calc.
    [wxMaxima: comment end   ] */
 
+/* [wxMaxima: input   start ] */
+kill( all );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m: 3.3/11/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+b: 3.3/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Vref: 3.3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R1: 10e3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Rg: 10e3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R2: Vref*m/b*R1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+eq2: b/Vref*( (R1+R2)/R2 ) = ( (Rf+Rg)/Rg );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve( [eq1, eq2], [R2, Rf] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R2: 3000;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Rf: 11667;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m: ( R2/(R1+R2) )*( (Rf+Rg)/Rg );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+b: Vref*( R1/(R1+R2) )*( (Rf+Rg)/Rg );
+/* [wxMaxima: input   end   ] */
+
 /* Maxima can't load/batch files which end with a comment! */
 "Created with wxMaxima"$
