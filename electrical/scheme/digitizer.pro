@@ -1,4 +1,4 @@
-update=7/2/2015 3:05:18 PM
+update=7/3/2015 1:17:57 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -70,3 +70,5 @@ LibName38=ad7683
 LibName39=ad8610
 LibName40=adg5204
 LibName41=ad8620
+LibName42=ad5543
+LibName43=bat54s

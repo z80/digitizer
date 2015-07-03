@@ -22,7 +22,7 @@ t: r*c*log( 100000 );
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: comment start ]
-PS filter calc.
+ADC input shrink and biasing with model Vout = "-m*Vin + b".
    [wxMaxima: comment end   ] */
 
 /* [wxMaxima: input   start ] */
@@ -30,7 +30,7 @@ kill( all );
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-m: 3.3/11/2;
+m: -3.3/2/11;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
@@ -42,39 +42,63 @@ Vref: 3.3;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-R1: 10e3;
+Rf: 10e3;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-Rg: 10e3;
+R1: 1e3;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-R2: Vref*m/b*R1;
+eq1: m = -Rf/Rg;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-eq2: b/Vref*( (R1+R2)/R2 ) = ( (Rf+Rg)/Rg );
+eq2: b = Vref*( (Rf+Rg)/Rg )*( R1/( R1+R2 ) );
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-solve( [eq1, eq2], [R2, Rf] );
+solve( [eq1, eq2], [Rg, R2] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+DAC output extend with Vout = "-m*Vin - b".
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill( all );
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-R2: 3000;
+m: -12 / (3.3/2);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-Rf: 11667;
+b: -12;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-m: ( R2/(R1+R2) )*( (Rf+Rg)/Rg );
+Vref: 3.3;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-b: Vref*( R1/(R1+R2) )*( (Rf+Rg)/Rg );
+Rf: 8.2e3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Rf: 40e3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+eq1: m = -Rf/Rg1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+eq2: -b = Vref*Rf/Rg2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve( [eq1, eq2], [Rg1, Rg2] );
 /* [wxMaxima: input   end   ] */
 
 /* Maxima can't load/batch files which end with a comment! */
