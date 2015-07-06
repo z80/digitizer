@@ -1,4 +1,4 @@
-update=7/6/2015 12:28:41 PM
+update=7/6/2015 3:53:36 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -74,3 +74,5 @@ LibName42=ad8620
 LibName43=ad5543
 LibName44=bat54s
 LibName45=ref196
+LibName46=adr4533
+LibName47=adt7410
