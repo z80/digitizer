@@ -97,5 +97,53 @@ eq2: -b = Vref*Rf/Rg2;
 solve( [eq1, eq2], [Rg1, Rg2] );
 /* [wxMaxima: input   end   ] */
 
+/* [wxMaxima: comment start ]
+PS filter calc.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+s: %i * x;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: 50e-6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R: 5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+C: 330e-6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Zl: s*L;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Zr: R;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Zc: 1/(s*C);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H: Zc/( Zl + Zr + Zc );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+HH: cabs( H );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(HH);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([HH], [x,1000,100000])$
+/* [wxMaxima: input   end   ] */
+
 /* Maxima can't load/batch files which end with a comment! */
 "Created with wxMaxima"$
