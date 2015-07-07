@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://og2k.com/ru/content/how-generate-bill-materials-bom-kicad -->
+<html lang="ru" dir="ltr" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://ogp.me/ns#" xmlns:article="http://ogp.me/ns/article#" xmlns:book="http://ogp.me/ns/book#" xmlns:profile="http://ogp.me/ns/profile#" xmlns:video="http://ogp.me/ns/video#" class="js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<link rel="next" href="http://og2k.com/ru/node/60">
+<link rel="shortcut icon" href="http://og2k.com/sites/all/themes/dark_elegant/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="up" href="http://og2k.com/ru/content/kicad-linux-electronic-schema-and-pcb-design-environment">
+<link rel="prev" href="http://og2k.com/ru/content/how-draw-kicad-shortly">
+<meta name="description" content="install sudo apt-get install xsltprocdownload &quot;bom2csv.xsl&quot; from wget https://raw.githubusercontent.com/KiCad/kicad-source-mirror/master/eeschema/plugins/bom2csv.xslin eeschema:">
+<meta name="generator" content="Drupal 7 (http://drupal.org)">
+<link rel="canonical" href="./kicad-bom-gen_files/kicad-bom-gen.htm">
+<link rel="shortlink" href="http://og2k.com/ru/node/319">
+<meta property="og:site_name" content="OG2K">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to generate Bill Of Materials (BOM) in Kicad?">
+<meta property="og:url" content="http://og2k.com/ru/content/how-generate-bill-materials-bom-kicad">
+<meta property="og:description" content="install sudo apt-get install xsltprocdownload &quot;bom2csv.xsl&quot; from wget https://raw.githubusercontent.com/KiCad/kicad-source-mirror/master/eeschema/plugins/bom2csv.xslin eeschema:">
+<meta property="og:updated_time" content="2015-01-02T00:04:35+02:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="http://og2k.com/ru/content/how-generate-bill-materials-bom-kicad">
+<meta name="twitter:title" content="How to generate Bill Of Materials (BOM) in Kicad?">
+<meta name="twitter:description" content="install sudo apt-get install xsltprocdownload &quot;bom2csv.xsl&quot; from wget https://raw.githubusercontent.com/KiCad/kicad-source-mirror/master/eeschema/plugins/bom2csv.xslin eeschema:">
+<meta property="article:published_time" content="2014-08-15T18:45:51+03:00">
+<meta property="article:modified_time" content="2015-01-02T00:04:35+02:00">
+<meta itemprop="name" content="How to generate Bill Of Materials (BOM) in Kicad?">
+<meta itemprop="description" content="install sudo apt-get install xsltprocdownload &quot;bom2csv.xsl&quot; from wget https://raw.githubusercontent.com/KiCad/kicad-source-mirror/master/eeschema/plugins/bom2csv.xslin eeschema:">
+<meta name="dcterms.title" content="How to generate Bill Of Materials (BOM) in Kicad?">
+<meta name="dcterms.creator" content="Anton">
+<meta name="dcterms.description" content="install sudo apt-get install xsltprocdownload &quot;bom2csv.xsl&quot; from wget https://raw.githubusercontent.com/KiCad/kicad-source-mirror/master/eeschema/plugins/bom2csv.xslin eeschema:">
+<meta name="dcterms.date" content="2014-08-15T18:45+03:00">
+<meta name="dcterms.modified" content="2015-01-02T00:04+02:00">
+<meta name="dcterms.type" content="Text">
+<meta name="dcterms.format" content="text/html">
+<meta name="dcterms.identifier" content="http://og2k.com/ru/content/how-generate-bill-materials-bom-kicad">
+<meta name="dcterms.language" content="und">
+<title>How to generate Bill Of Materials (BOM) in Kicad? | OG2K</title>
+<style type="text/css" media="all">
+@import url("http://og2k.com/modules/system/system.base.css?nobrft");
+@import url("http://og2k.com/modules/system/system.menus.css?nobrft");
+@import url("http://og2k.com/modules/system/system.messages.css?nobrft");
+@import url("http://og2k.com/modules/system/system.theme.css?nobrft");
+</style>
+<style type="text/css" media="all">
+@import url("http://og2k.com/sites/all/modules/comment_notify/comment_notify.css?nobrft");
+@import url("http://og2k.com/modules/book/book.css?nobrft");
+@import url("http://og2k.com/modules/comment/comment.css?nobrft");
+@import url("http://og2k.com/sites/all/modules/date/date_api/date.css?nobrft");
+@import url("http://og2k.com/sites/all/modules/date/date_popup/themes/datepicker.1.7.css?nobrft");
+@import url("http://og2k.com/modules/field/theme/field.css?nobrft");
+@import url("http://og2k.com/modules/node/node.css?nobrft");
+@import url("http://og2k.com/modules/poll/poll.css?nobrft");
+@import url("http://og2k.com/modules/search/search.css?nobrft");
+@import url("http://og2k.com/modules/user/user.css?nobrft");
+@import url("http://og2k.com/modules/forum/forum.css?nobrft");
+@import url("http://og2k.com/sites/all/modules/views/css/views.css?nobrft");
+@import url("http://og2k.com/sites/all/modules/ckeditor/css/ckeditor.css?nobrft");
+</style>
+<style type="text/css" media="all">
+@import url("http://og2k.com/sites/all/modules/ctools/css/ctools.css?nobrft");
+@import url("http://og2k.com/sites/all/modules/panels/css/panels.css?nobrft");
+@import url("http://og2k.com/sites/all/modules/tagclouds/tagclouds.css?nobrft");
+</style>
+<style type="text/css" media="all">
+<!--/*--><![CDATA[/*><!--*/
+.url-textfield{display:none !important;}
+
+/*]]>*/-->
+</style>
+<style type="text/css" media="all">
+@import url("http://og2k.com/sites/all/themes/dark_elegant/style.css?nobrft");
+</style>
+<script type="text/javascript" defer="" async="" src="./kicad-bom-gen_files/piwik.js"></script><script type="text/javascript" src="./kicad-bom-gen_files/jquery.js"></script><style type="text/css"></style>
+<script type="text/javascript" src="./kicad-bom-gen_files/jquery.once.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/drupal.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/jquery.cookie.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/comment_notify.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/contentanalysis.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/contentoptimizer.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/hashcash.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/ru_AXk4YCAXyAFAnbcD0exEtdn-pCfGW0ODj0SgtBnkHB0.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/piwik(1).js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/textarea.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/superfish.js"></script>
+<script type="text/javascript" src="./kicad-bom-gen_files/custom.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"ru\/","ajaxPageState":{"theme":"dark_elegant","theme_token":"qCfeZRDjBht2283ZJ3zLO8fgH04NK1JN4y3f3pizAVc","js":{"0":1,"modules\/statistics\/statistics.js":1,"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"misc\/jquery.cookie.js":1,"sites\/all\/modules\/comment_notify\/comment_notify.js":1,"sites\/all\/modules\/contentanalysis\/contentanalysis.js":1,"sites\/all\/modules\/contentoptimizer\/contentoptimizer.js":1,"sites\/all\/modules\/hashcash\/js\/hashcash.js":1,"public:\/\/languages\/ru_AXk4YCAXyAFAnbcD0exEtdn-pCfGW0ODj0SgtBnkHB0.js":1,"sites\/all\/modules\/piwik\/piwik.js":1,"misc\/textarea.js":1,"sites\/all\/themes\/dark_elegant\/js\/superfish.js":1,"sites\/all\/themes\/dark_elegant\/js\/custom.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"sites\/all\/modules\/comment_notify\/comment_notify.css":1,"modules\/book\/book.css":1,"modules\/comment\/comment.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/poll\/poll.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"modules\/forum\/forum.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/panels\/css\/panels.css":1,"sites\/all\/modules\/tagclouds\/tagclouds.css":1,"0":1,"sites\/all\/themes\/dark_elegant\/style.css":1}},"hashcash":{"url":"http:\/\/og2k.com\/ru\/hashcash"},"piwik":{"trackMailto":1},"statistics":{"data":{"nid":"319"},"url":"\/ru\/modules\/statistics\/statistics.php"}});
+//--><!]]>
+</script>
+<!--[if lt IE 9]><script src="/sites/all/themes/dark_elegant/js/html5.js"></script><![endif]-->
+</head>
+<body class="html not-front not-logged-in one-sidebar sidebar-first page-node page-node- page-node-319 node-type-book i18n-ru left-sidebar">
+    <div id="page" class="container_6">
+  <header id="header" role="banner">
+    <div class="mmenu">
+      <a href="http://og2k.com/" class="top-logo"><img src="./kicad-bom-gen_files/top-logo.png"></a>
+      <div class="mmenu-l">
+<ul class="menu"><li class="first leaf"><a href="http://og2k.com/ru" title="">Blogpostlist</a></li>
+<li class="leaf"><a href="http://og2k.com/?q=node/5" title="">About me</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/glossary" title="">Glossary</a></li>
+<li class="last leaf"><a href="http://og2k.com/ru/node/52" title="">QSL</a></li>
+</ul>  
+
+
+      </div>
+
+      <div class="mmenu-search">
+        <div class="mmenu-search-bg">
+        <form accept-charset="UTF-8" id="search-block-form" method="post" action="http://og2k.com/">
+          <input name="search_block_form" id="edit-search-block-form--2" type="text" value="" placeholder="search"></form></div>
+          <input type="submit" name="op" id="edit-submit--2" class="mmenu-search-btn" value=""> 
+          <div class="clear"></div>   
+          <input type="hidden" value="form-_VUJItEEUEIcn5oW8u5HYePHfeVeNL2wHTYoMC55T0o" name="form_build_id">
+          <input type="hidden" value="-dZbmNgXhN-ntBkim2we6Hig56o9JKS30dKIqLt9WQ0" name="form_token">
+          <input type="hidden" value="search_block_form" name="form_id">
+                            
+        
+      </div>
+      
+      <div class="clear"></div>
+    </div>
+    <div class="top clearfix">
+      <div class="search-block-region">
+              </div>
+    </div>
+    <nav id="navigation" role="navigation">
+      <div id="main-menu">
+        <ul class="menu sf-js-enabled sf-shadow"><li class="first leaf"><a href="http://og2k.com/ru/content/activity-air">ACTIVITY ON AIR</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/node/12">Projects</a></li>
+<li class="leaf active-trail"><a href="http://og2k.com/ru/content/computers" class="active-trail">Computers</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/node/93">Hiking</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/content/kitchen">Kitchen</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/content/library">Library</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/content/radioamateur">Radioamateur</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/content/ocean">Ocean</a></li>
+<li class="last leaf"><a href="http://og2k.com/ru/content/kauppa">Kauppa / Store</a></li>
+</ul>      </div>
+    </nav>
+  </header>
+
+  <div id="main" class="clearfix">
+    
+   
+    
+    
+    <div style="display:table; min-width:600px; width:100%;">
+    <div id="primary">
+      <section id="content" class="grid_4" role="main">
+        <div id="breadcrumbs"><h2 class="element-invisible">Вы здесь</h2><nav class="breadcrumb"><a href="http://og2k.com/ru">Главная</a> » <a href="http://og2k.com/ru/content/computers">Computers</a> » <a href="http://og2k.com/ru/content/software">Software</a> » <a href="http://og2k.com/ru/node/9">Linux Handbook</a> » <a href="http://og2k.com/ru/content/kicad-linux-electronic-schema-and-pcb-design-environment">KICAD - Linux Electronic schema and PCB design environment</a> » How to generate Bill Of Materials (BOM) in Kicad?</nav></div>                
+        <div id="content-wrap">
+                    <h1 class="page-title">How to generate Bill Of Materials (BOM) in Kicad?</h1>                                                  <div class="region region-content">
+  <div id="block-system-main" class="block block-system">
+
+      
+  <div class="content">
+                          
+              <span class="submitted">
+        Posted by <span class="username">Anton</span> on Friday, 15 August 2014        </span>
+      
+    
+  <div class="content">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>install</p>
+<pre><code class="language-bash">sudo apt-get install xsltproc</code></pre><p>download "bom2csv.xsl" from</p>
+<pre><code class="language-bash">wget https://raw.githubusercontent.com/KiCad/kicad-source-mirror/master/eeschema/plugins/bom2csv.xsl</code></pre><p>in eeschema:</p>
+<ul><li>open "BOM"</li>
+<li>add plugin</li>
+<li>name: xsltproc</li>
+<li>command:</li>
+</ul><pre><code class="language-bash">xsltproc -o "%O.csv" /home/anton/kicad-libs/BOM/bom2csv.xsl "%I"</code></pre><ul><li>(replace "/home/anton/kicad-libs/BOM/" with a path to your bom2csv.xsl)</li>
+<li>open *.csv file with libreoffice, test import window will come up, click ok.</li>
+</ul><p>that's better :) Sort, print... have fun! go shopping</p>
+<ul><li>for me: menu &gt; data &gt; sort , key1 "value", key2 "reference".</li>
+</ul><p>so I have a print for the same components in some kind of order :)</p>
+ </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="http://og2k.com/ru/tags/kicad">kicad</a></div></div></div>  <div id="book-navigation-305" class="book-navigation">
+    
+        <div class="page-links clearfix">
+              <a href="http://og2k.com/ru/content/how-draw-kicad-shortly" class="page-previous" title="На предыдущую страницу">‹ How to draw in KiCAD (shortly)?</a>
+                    <a href="http://og2k.com/ru/content/kicad-linux-electronic-schema-and-pcb-design-environment" class="page-up" title="Перейти к родительской странице">Вверх</a>
+                    <a href="http://og2k.com/ru/node/60" class="page-next" title="На следующую страницу">How to install KICAD to Linux Ubuntu -family? ›</a>
+          </div>
+    
+  </div>
+  </div>
+
+      <footer>
+      <ul class="links inline"><li class="book_printer first"><a href="http://og2k.com/ru/book/export/html/319" title="Показать версию этой подшивки со всеми дочерними страницами в виде, удобном для печати.">Версия для печати</a></li>
+<li class="comment-add last active"><a href="http://og2k.com/ru/content/how-generate-bill-materials-bom-kicad#comment-form" title="Поделитесь своими мыслями и мнением относительно этой темы." class="active">Добавить комментарий</a></li>
+</ul>    </footer>
+  
+  <div id="comments" class="comment-wrapper">
+          <h2 class="title">Комментарии</h2>
+      
+  <a id="comment-25"></a>
+<div class="comment comment-by-anonymous clearfix">
+
+  <div class="attribution">
+
+    
+    <div class="comment-submitted">
+      <p class="commenter-name">
+        <a href="http://www.waltech.com/" rel="nofollow" class="username">Karl Walter (не проверено)</a>      </p>
+      <p class="comment-time">
+        пн, 2014/12/08 - 06:07      </p>
+      <p class="comment-permalink">
+        <a href="http://og2k.com/ru/comment/25#comment-25" class="permalink" rel="bookmark">Постоянная ссылка (Permalink)</a>      </p>
+    </div>
+  </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+
+    
+        <h3><a href="http://og2k.com/ru/comment/25#comment-25" class="permalink" rel="bookmark">Thank you.  You saved me a</a></h3>
+    
+    <div class="content">
+      <div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">Thank you.  You saved me a lot of time.</div></div></div>          </div> <!-- /.content -->
+
+    <ul class="links inline"><li class="comment-reply first last"><a href="http://og2k.com/ru/comment/reply/319/25">ответить</a></li>
+</ul>  </div> <!-- /.comment-text -->
+</div>
+
+<div class="indented"><a id="comment-26"></a>
+<div class="comment comment-by-node-author clearfix">
+
+  <div class="attribution">
+
+    
+    <div class="comment-submitted">
+      <p class="commenter-name">
+        <span class="username">Anton</span>      </p>
+      <p class="comment-time">
+        пн, 2014/12/08 - 22:19      </p>
+      <p class="comment-permalink">
+        <a href="http://og2k.com/ru/comment/26#comment-26" class="permalink" rel="bookmark">Постоянная ссылка (Permalink)</a>      </p>
+    </div>
+  </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+
+    
+        <h3><a href="http://og2k.com/ru/comment/26#comment-26" class="permalink" rel="bookmark">Karl, I am glad you found my</a></h3>
+    
+    <div class="content">
+      <div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">Karl, I am glad you found my article useful. Hopefully, one day it will be integrated to Kicad :)</div></div></div>          </div> <!-- /.content -->
+
+    <ul class="links inline"><li class="comment-reply first last"><a href="http://og2k.com/ru/comment/reply/319/26">ответить</a></li>
+</ul>  </div> <!-- /.comment-text -->
+</div>
+</div><a id="comment-37"></a>
+<div class="comment comment-by-anonymous clearfix">
+
+  <div class="attribution">
+
+    
+    <div class="comment-submitted">
+      <p class="commenter-name">
+        <span class="username">justin (не проверено)</span>      </p>
+      <p class="comment-time">
+        пт, 2015/05/29 - 06:40      </p>
+      <p class="comment-permalink">
+        <a href="http://og2k.com/ru/comment/37#comment-37" class="permalink" rel="bookmark">Постоянная ссылка (Permalink)</a>      </p>
+    </div>
+  </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+
+    
+        <h3><a href="http://og2k.com/ru/comment/37#comment-37" class="permalink" rel="bookmark">Tried to do this but I get
+</a></h3>
+    
+    <div class="content">
+      <div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">Tried to do this but I get
+warning: failed to load external entity "%I"
+unable to parse %I
+</div></div></div>          </div> <!-- /.content -->
+
+    <ul class="links inline"><li class="comment-reply first last"><a href="http://og2k.com/ru/comment/reply/319/37">ответить</a></li>
+</ul>  </div> <!-- /.comment-text -->
+</div>
+
+      <h2 class="title comment-form">Добавить комментарий</h2>
+    <form class="comment-form user-info-from-cookie" onsubmit="return hashcash_create(&quot;hashcash-comment_node_book_form&quot;);" action="http://og2k.com/ru/comment/reply/319" method="post" id="comment-form" accept-charset="UTF-8"><div><div class="form-item form-type-textfield form-item-name">
+  <label for="edit-name">Ваше имя </label>
+ <input type="text" id="edit-name" name="name" value="" size="30" maxlength="60" class="form-text">
+</div>
+<div class="form-item form-type-textfield form-item-mail">
+  <label for="edit-mail">E-mail </label>
+ <input type="text" id="edit-mail" name="mail" value="" size="30" maxlength="64" class="form-text">
+<div class="description">Содержание этого поля является приватным и не предназначено к показу.</div>
+</div>
+<div class="form-item form-type-textfield form-item-homepage">
+  <label for="edit-homepage">Домашняя страница </label>
+ <input type="text" id="edit-homepage" name="homepage" value="" size="30" maxlength="255" class="form-text">
+</div>
+<div class="field-type-text-long field-name-comment-body field-widget-text-textarea form-wrapper" id="edit-comment-body"><div id="comment-body-add-more-wrapper"><div class="form-item form-type-textarea form-item-comment-body-und-0-value">
+  <label for="edit-comment-body-und-0-value">Comment <span class="form-required" title="Это поле обязательно для заполнения.">*</span></label>
+ <div class="form-textarea-wrapper resizable textarea-processed resizable-textarea"><textarea class="text-full form-textarea required" id="edit-comment-body-und-0-value" name="comment_body[und][0][value]" cols="60" rows="5"></textarea><div class="grippie"></div></div>
+</div>
+</div></div><input type="hidden" name="form_build_id" value="form-93miE7lZXu2IRuuTlIFwWOJa6lCVUr4HsqEtlCcWnD8">
+<input type="hidden" name="form_id" value="comment_node_book_form">
+<div class="form-item form-type-textfield form-item-captcha-questions-answer-given">
+  <label for="edit-captcha-questions-answer-given">Cybercheck, please calculate 2 + 2 x 2 ? <span class="form-required" title="Это поле обязательно для заполнения.">*</span></label>
+ <input type="text" id="edit-captcha-questions-answer-given" name="captcha_questions_answer_given" value="" size="60" maxlength="128" class="form-text required">
+</div>
+<div class="form-item form-type-checkbox form-item-notify">
+ <input type="checkbox" id="edit-notify" name="notify" value="1" checked="checked" class="form-checkbox">  <label class="option" for="edit-notify">Уведомлять меня о новых комментариях </label>
+
+</div>
+<div id="edit-notify-type" class="form-radios"><div class="form-item form-type-radio form-item-notify-type">
+ <input type="radio" id="edit-notify-type-1" name="notify_type" value="1" checked="checked" class="form-radio">  <label class="option" for="edit-notify-type-1">Все комментарии </label>
+
+</div>
+<div class="form-item form-type-radio form-item-notify-type">
+ <input type="radio" id="edit-notify-type-2" name="notify_type" value="2" class="form-radio">  <label class="option" for="edit-notify-type-2">Ответы на мой комментарий </label>
+
+</div>
+</div><input id="hashcash-comment_node_book_form" type="hidden" name="hashcash" value="comment_node_book_form">
+<input type="hidden" name="honeypot_time" value="1436223705">
+<div class="url-textfield"><div class="form-item form-type-textfield form-item-url">
+  <label for="edit-url">Leave this field blank </label>
+ <input autocomplete="off" type="text" id="edit-url" name="url" value="" size="20" maxlength="128" class="form-text">
+</div>
+</div><div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Сохранить" class="form-submit"></div></div></form>  </div>
+  </div>
+  
+</div> <!-- /.block -->
+</div>
+ <!-- /.region -->
+        </div>
+
+      </section> <!-- /#main -->
+    </div>
+
+          <aside id="sidebar" class="grid_2" role="complementary">
+       <div class="region region-sidebar-first">
+  <div id="block-search-form" class="block block-search">
+
+      
+  <div class="content">
+    <form onsubmit="return hashcash_create(&quot;hashcash-search_block_form&quot;);" action="./kicad-bom-gen_files/kicad-bom-gen.htm" method="post" id="search-block-form" accept-charset="UTF-8"><div><div class="container-inline">
+      <h2 class="element-invisible">Форма поиска</h2>
+    <div class="form-item form-type-textfield form-item-search-block-form">
+  <label class="element-invisible" for="edit-search-block-form--2">Поиск </label>
+ <input title="Введите ключевые слова для поиска." type="text" id="edit-search-block-form--2" name="search_block_form" value="" size="15" maxlength="128" class="form-text">
+</div>
+<div class="form-actions form-wrapper" id="edit-actions--2"><input type="submit" id="edit-submit--2" name="op" value="Поиск" class="form-submit"></div><input type="hidden" name="form_build_id" value="form-GSO1jwsIfolfqOyhKpA-IOlhZlgwSUeSYtRlMHLocQQ">
+<input type="hidden" name="form_id" value="search_block_form">
+<input id="hashcash-search_block_form" type="hidden" name="hashcash" value="search_block_form">
+</div>
+</div></form>  </div>
+  
+</div> <!-- /.block -->
+<div id="block-block-3" class="block block-block">
+
+        <h2>Shortcuts</h2>
+    
+  <div class="content">
+     <p><a href="http://og2k.com/HC8">HC8 Galapagos Is. 2014</a><br><a href="http://og2k.com/node/9">Linux Handbook</a><br><a href="http://og2k.com/RI-1">RI-1 radio interface one</a><br><a href="http://og2k.com/aalog">AAlog - ideas and bugs</a></p>
+   </div>
+  
+</div> <!-- /.block -->
+<div id="block-book-navigation" class="block block-book">
+
+        <h2><a href="http://og2k.com/ru/content/computers" class="book-title">Computers</a></h2>
+    
+  <div class="content">
+    <ul class="menu"><li class="first collapsed"><a href="http://og2k.com/ru/content/hardware">Hardware</a></li>
+<li class="last expanded active-trail"><a href="http://og2k.com/ru/content/software" class="active-trail">Software</a><ul class="menu"><li class="first collapsed"><a href="http://og2k.com/ru/content/android-handbook">Android handbook</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/hosting-web-development-cloud">Hosting, web development, cloud</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/content/howto-add-subtitles-dvd">Howto add subtitles to DVD ?</a></li>
+<li class="expanded active-trail"><a href="http://og2k.com/ru/node/9" class="active-trail">Linux Handbook</a><ul class="menu"><li class="first collapsed"><a href="http://og2k.com/ru/content/console-operations-files">Console operations with files</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/devices-printers-gadgets">Devices (printers, gadgets..)</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/graphics-photos-pictures">Graphics, photos, pictures</a></li>
+<li class="expanded active-trail"><a href="http://og2k.com/ru/content/kicad-linux-electronic-schema-and-pcb-design-environment" class="active-trail">KICAD - Linux Electronic schema and PCB design environment</a><ul class="menu"><li class="first leaf"><a href="http://og2k.com/ru/content/checklist-start-pcb-manufacture-process">Checklist before start PCB manufacture process</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/content/how-draw-kicad-shortly">How to draw in KiCAD (shortly)?</a></li>
+<li class="leaf active-trail"><a href="./kicad-bom-gen_files/kicad-bom-gen.htm" class="active-trail active">How to generate Bill Of Materials (BOM) in Kicad?</a></li>
+<li class="leaf"><a href="http://og2k.com/ru/node/60">How to install KICAD to Linux Ubuntu -family?</a></li>
+<li class="last leaf"><a href="http://og2k.com/ru/content/how-print-paper-kicad-pcb-software-make-transfer-print">How to print to paper from Kicad PCB software to make a transfer print?</a></li>
+</ul></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/launiching-and-emulating-microsoft-windows-software-linux">Launiching and emulating Microsoft Windows software in Linux</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/linux-installation-and-tuning">Linux installation and tuning</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/networking">Networking</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/programming">Programming</a></li>
+<li class="last collapsed"><a href="http://og2k.com/ru/content/video-taking-montage-conferencing">Video, taking, montage, conferencing</a></li>
+</ul></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/ms-active-directory-handbook">MS Active Directory handbook</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/ms-exchange-handbook">MS Exchange handbook</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/ms-windows-ce-handbook">MS Windows CE handbook</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/ms-windows-handbook">MS Windows handbook</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/macintosh-handbook">Macintosh handbook</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/multi-platform-handbook">Multi-Platform handbook</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/other">Other</a></li>
+<li class="collapsed"><a href="http://og2k.com/ru/content/palmos-handbook">PalmOS handbook</a></li>
+<li class="last collapsed"><a href="http://og2k.com/ru/content/time-synchronization">Time Synchronization</a></li>
+</ul></li>
+</ul>  </div>
+  
+</div> <!-- /.block -->
+<div id="block-node-recent" class="block block-node">
+
+        <h2>Последние материалы</h2>
+    
+  <div class="content">
+    <table>
+<tbody>
+ <tr class="odd"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/aalog-radioamateur-journal">AAlog - radioamateur journal</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="even"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/vintage-radio">Vintage Radio</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="odd"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/%D0%BA%D0%B0%D0%BA%D1%83%D1%8E-%D1%84%D0%BE%D1%82%D0%BE%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D1%83-%D0%B2%D0%B7%D1%8F%D1%82%D1%8C-%D1%81-%D1%81%D0%BE%D0%B1%D0%BE%D0%B9">Какую фототехнику взять с собой?</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="even"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/2015-03-19-22-oh0-aland">2015 03 19-22 - OH0 Aland Is</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="odd"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/activity-air">ACTIVITY ON AIR</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="even"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/2015-06-06-07-og2k1-perinneradiotapahtuma-vintage-radio-day">2015 06 06-07 - OG2K/1 - PerinneRadioTapahtuma - Vintage Radio Day</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="odd"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/2011-vantaanrinne-vantaa-kp20kh">2011 - Vantaanrinne, VANTAA (KP20kh)</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="even"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/s-90b">S-90B</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="odd"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/viestitoimisto-aka-message-center">Viestitoimisto aka Message center</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+ <tr class="even"><td class="title-author"><div class="node-title"><a href="http://og2k.com/ru/content/how-make-bootable-usb-flash-drive-disk-ubuntu-linux">How to make bootable USB flash drive disk in Ubuntu linux?</a></div><div class="node-author"><span class="username">Anton</span></div></td><td class="edit"></td><td class="delete"></td> </tr>
+</tbody>
+</table>
+  </div>
+  
+</div> <!-- /.block -->
+<div id="block-tagclouds-1" class="block block-tagclouds">
+
+        <h2>Tags in Tags</h2>
+    
+  <div class="content">
+    <span class="tagclouds-term"><a href="http://og2k.com/ru/tags/abc" class="tagclouds level1" title="">abc</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/adc" class="tagclouds level1" title="">adc</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/alphabet" class="tagclouds level1" title="">alphabet</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/amateur" class="tagclouds level3" title="">amateur</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/atmel" class="tagclouds level1" title="">Atmel</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/audio" class="tagclouds level1" title="">audio</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/avr" class="tagclouds level3" title="">AVR</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/button" class="tagclouds level1" title="">button</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/callsign" class="tagclouds level1" title="">callsign</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/check" class="tagclouds level1" title="">check</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/contest" class="tagclouds level5" title="">contest</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/cq-ww-dx" class="tagclouds level1" title="">CQ WW DX</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/dac" class="tagclouds level1" title="">dac</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/dx" class="tagclouds level6" title="">dx</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/emulate" class="tagclouds level1" title="">emulate</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/equipment" class="tagclouds level1" title="">equipment</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/equipment-case" class="tagclouds level1" title="">equipment case</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/fix" class="tagclouds level1" title="">fix</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ftp" class="tagclouds level1" title="">ftp</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/fuses" class="tagclouds level1" title="">fuses</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/gwenview" class="tagclouds level1" title="">gwenview</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ham" class="tagclouds level1" title="">ham</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ham-shack" class="tagclouds level1" title="">ham shack</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/handmade" class="tagclouds level1" title="">handmade</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/hard-case" class="tagclouds level1" title="">hard case</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/hc2" class="tagclouds level1" title="">HC2</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/hc2ao" class="tagclouds level1" title="">HC2AO</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/hc8" class="tagclouds level1" title="">HC8</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ic-7000" class="tagclouds level1" title="">ic-7000</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/install" class="tagclouds level1" title="">install</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/iota" class="tagclouds level1" title="">iota</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/keyboard" class="tagclouds level1" title="">keyboard</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/kicad" class="tagclouds level3" title="">kicad</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/launch" class="tagclouds level1" title="">launch</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/linux" class="tagclouds level3" title="">linux</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/meter" class="tagclouds level1" title="">meter</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/networking" class="tagclouds level1" title="">networking</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ntp" class="tagclouds level1" title="">ntp</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/pa" class="tagclouds level1" title="">pa</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/pedition" class="tagclouds level1" title="">pedition</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/photo" class="tagclouds level1" title="">photo</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/power" class="tagclouds level1" title="">power</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/power-amplifier" class="tagclouds level1" title="">power amplifier</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ptt" class="tagclouds level1" title="">ptt</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/radio" class="tagclouds level3" title="">radio</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ri-1" class="tagclouds level1" title="">RI-1</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ssb" class="tagclouds level1" title="">SSB</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ssh" class="tagclouds level1" title="">ssh</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/start" class="tagclouds level1" title="">start</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/station" class="tagclouds level1" title="">station</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/swr" class="tagclouds level1" title="">swr</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/transmit" class="tagclouds level1" title="">transmit</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/transportation" class="tagclouds level1" title="">transportation</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/ubuntu" class="tagclouds level1" title="">ubuntu</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/virtualbox" class="tagclouds level1" title="">virtualbox</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/voice-keyer" class="tagclouds level1" title="">Voice Keyer</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/vpn" class="tagclouds level1" title="">vpn</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/webdev-equipment" class="tagclouds level1" title="">webdev equipment</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/windows" class="tagclouds level1" title="">windows</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/windows-manager" class="tagclouds level1" title="">windows manager</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/wine" class="tagclouds level1" title="">wine</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/%D0%B4%D1%80%D0%BE%D0%B1%D0%B8" class="tagclouds level1" title="">дроби</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/%D0%BC%D0%B0%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0" class="tagclouds level3" title="">математика</a></span>
+<span class="tagclouds-term"><a href="http://og2k.com/ru/tags/%D1%88%D0%B5%D0%BA" class="tagclouds level1" title="">шек</a></span>
+  </div>
+  
+</div> <!-- /.block -->
+</div>
+ <!-- /.region -->
+      </aside> 
+        </div>
+
+    
+  </div>
+
+
+  
+<script type="text/javascript">
+  $(document).ready(function(){
+    var $width = $('#primary').width()-50;
+    $('.juicebox-gallery,.jb-navigation,.jb-classifier-detail-aream,.jb-panel-detail,.jcbx-glry-classic,.field,.field-items,.field-item,.juicebox-parent').width($width)-50;    
+  });
+    $(window).resize(function(){
+          var $width2 = $('#primary').width()-50;
+          
+          $('.juicebox-gallery,.jb-navigation,.jb-classifier-detail-aream,.jb-panel-detail,.jcbx-glry-classic,.field,.field-items,.field-item,.juicebox-parent').width($width2)-50;
+    });
+</script>
+
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="copyright">
+      Copyright © 2015, <a href="http://og2k.com/ru">OG2K</a><br>
+    </div>
+  </footer>
+</div>
+
+<script type="text/javascript">
+  var j = jQuery.noConflict();
+  j(document).ready(function(){
+    j('li.en').find('a').text('En');
+    j('li.fi').find('a').text('Fi');
+    j('li.ru').find('a').text('Ru');
+  });
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+<!--//--><![CDATA[//><!--
+var _paq = _paq || [];(function(){var u=(("https:" == document.location.protocol) ? "" : "http://og2k.com/piwik/");_paq.push(["setSiteId", "1"]);_paq.push(["setTrackerUrl", u+"piwik.php"]);_paq.push(["setDoNotTrack", 1]);_paq.push(["trackPageView"]);_paq.push(["setIgnoreClasses", ["no-tracking","colorbox"]]);_paq.push(["enableLinkTracking"]);var d=document,g=d.createElement("script"),s=d.getElementsByTagName("script")[0];g.type="text/javascript";g.defer=true;g.async=true;g.src=u+"piwik.js";s.parentNode.insertBefore(g,s);})();
+//--><!]]>
+</script>
+<script type="text/javascript" src="./kicad-bom-gen_files/statistics.js"></script>
+
+</body></html>
