@@ -102,47 +102,79 @@ PS filter calc.
    [wxMaxima: comment end   ] */
 
 /* [wxMaxima: input   start ] */
-s: %i * x;
+P( a, b ) := a*b/(a+b);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-L: 50e-6;
+L1: 100e-6;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-R: 5;
+R1: 0.1;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-C: 330e-6;
+C1: 680e-6;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-Zl: s*L;
+L2: 100e-6;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-Zr: R;
+R2: 0.1;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-Zc: 1/(s*C);
+C2: 680e-6;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-H: Zc/( Zl + Zr + Zc );
+s: %i*w;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-HH: cabs( H );
+Zl1: s*L1;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-factor(HH);
+Zr1: s*R1;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-plot2d([HH], [x,1000,100000])$
+Zc1: 1/(s*C1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Zl2: s*L2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Zr2: R2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Zc2: 1/(s*C2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+V1: P( Zc1, Zl2 + Zr2 + Zc2 ) / ( Zl1 + Zr1 + P( Zc1, Zl2 + Zr2 + Zc2 ) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+V2: V1 * Zc2 / ( Zl2 + Zr2 + Zc2 );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H: factor( cabs( V2 ) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([H], [w,100,100000], [logx], [logy] )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+12/100*25.4;
 /* [wxMaxima: input   end   ] */
 
 /* Maxima can't load/batch files which end with a comment! */
