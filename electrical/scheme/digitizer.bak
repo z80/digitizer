@@ -1220,9 +1220,9 @@ Text Label 23200 1650 0    60   ~ 0
 src-0
 Text Label 23200 1750 0    60   ~ 0
 src-1
-Text Label 23200 1850 0    60   ~ 0
-src-2
 Text Label 23200 1950 0    60   ~ 0
+src-2
+Text Label 23200 1850 0    60   ~ 0
 src-3
 $Comp
 L C C14
