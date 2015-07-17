@@ -1199,9 +1199,9 @@ F 3 "" H 21400 1250 60  0000 C CNN
 	1    21400 1250
 	1    0    0    -1  
 $EndComp
-Text Label 22950 2550 0    60   ~ 0
+Text Label 23850 2550 0    60   ~ 0
 adc-mux-0
-Text Label 22950 2650 0    60   ~ 0
+Text Label 23850 2650 0    60   ~ 0
 adc-mux-1
 $Comp
 L VDD #PWR050
@@ -5096,4 +5096,30 @@ F 3 "" H 31050 15550 60  0000 C CNN
 	1    31050 15550
 	1    0    0    -1  
 $EndComp
+$Comp
+L R R94
+U 1 1 55A94CE2
+P 23450 2550
+F 0 "R94" V 23530 2550 50  0000 C CNN
+F 1 "100 5%" V 23450 2550 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 23380 2550 30  0001 C CNN
+F 3 "" H 23450 2550 30  0000 C CNN
+	1    23450 2550
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R95
+U 1 1 55A9753A
+P 23450 2650
+F 0 "R95" V 23530 2650 50  0000 C CNN
+F 1 "100 5%" V 23450 2650 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 23380 2650 30  0001 C CNN
+F 3 "" H 23450 2650 30  0000 C CNN
+	1    23450 2650
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	23600 2550 24400 2550
+Wire Wire Line
+	23600 2650 24400 2650
 $EndSCHEMATC
