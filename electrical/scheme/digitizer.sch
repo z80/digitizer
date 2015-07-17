@@ -2195,7 +2195,7 @@ Text Label 1700 12400 1    60   ~ 0
 led-1
 Text Label 4150 5900 0    60   ~ 0
 led-0
-Text Label 4150 6600 0    60   ~ 0
+Text Label 9800 2300 0    60   ~ 0
 led-1
 $Comp
 L CONN_01X02 P1
@@ -2289,15 +2289,15 @@ Text Label 9800 3000 0    60   ~ 0
 tx-2
 Text Label 9800 3200 0    60   ~ 0
 rx-2
-Text Label 9800 2300 0    60   ~ 0
+Text Label 4150 6600 0    60   ~ 0
 gpio-0
-Text Label 9800 6950 0    60   ~ 0
+Text Label 9700 8100 0    60   ~ 0
 gpio-1
-Text Label 9800 7150 0    60   ~ 0
+Text Label 9700 7500 0    60   ~ 0
 gpio-2
-Text Label 9800 7500 0    60   ~ 0
+Text Label 9700 6950 0    60   ~ 0
 gpio-3
-Text Label 9800 8100 0    60   ~ 0
+Text Label 9700 7150 0    60   ~ 0
 gpio-4
 Text Label 2700 12550 0    60   ~ 0
 tx-2
