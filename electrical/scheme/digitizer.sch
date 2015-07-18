@@ -2195,7 +2195,7 @@ Text Label 1700 12400 1    60   ~ 0
 led-1
 Text Label 4150 5900 0    60   ~ 0
 led-0
-Text Label 9800 2300 0    60   ~ 0
+Text Label 9700 2300 0    60   ~ 0
 led-1
 $Comp
 L CONN_01X02 P1
