@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source C:/projects/digitizer.git/electrical/scheme/digitizer.sch)
-    (date "7/17/2015 4:40:15 PM")
+    (date "7/21/2015 10:51:17 AM")
     (tool "Eeschema (after 2015-may-25 BZR unknown)-product")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -1054,7 +1054,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 55B6574B))
     (comp (ref C101)
-      (value 220p)
+      (value 100p)
       (footprint Capacitors_SMD:C_0805_HandSoldering)
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
@@ -1600,31 +1600,6 @@
       (sheetpath (names /dac-v-1/) (tstamps /55A5B809/))
       (tstamp 55A0B7EF)))
   (libparts
-    (libpart (lib device) (part R)
-      (description Resistor)
-      (footprints
-        (fp R_*)
-        (fp Resistor_*))
-      (fields
-        (field (name Reference) R)
-        (field (name Value) R))
-      (pins
-        (pin (num 1) (name ~) (type passive))
-        (pin (num 2) (name ~) (type passive))))
-    (libpart (lib device) (part D_Schottky)
-      (description "Diode schottky")
-      (footprints
-        (fp D-Pak_TO252AA)
-        (fp Diode_*)
-        (fp *SingleDiode)
-        (fp *SingleDiode*)
-        (fp *_Diode_*))
-      (fields
-        (field (name Reference) D)
-        (field (name Value) D_Schottky))
-      (pins
-        (pin (num 1) (name K) (type passive))
-        (pin (num 2) (name A) (type passive))))
     (libpart (lib device) (part C)
       (description "Unpolarized capacitor")
       (footprints
@@ -1654,6 +1629,59 @@
       (pins
         (pin (num 1) (name ~) (type passive))
         (pin (num 2) (name ~) (type passive))))
+    (libpart (lib device) (part D_Schottky)
+      (description "Diode schottky")
+      (footprints
+        (fp D-Pak_TO252AA)
+        (fp Diode_*)
+        (fp *SingleDiode)
+        (fp *SingleDiode*)
+        (fp *_Diode_*))
+      (fields
+        (field (name Reference) D)
+        (field (name Value) D_Schottky))
+      (pins
+        (pin (num 1) (name K) (type passive))
+        (pin (num 2) (name A) (type passive))))
+    (libpart (lib device) (part INDUCTOR)
+      (fields
+        (field (name Reference) L)
+        (field (name Value) INDUCTOR))
+      (pins
+        (pin (num 1) (name 1) (type passive))
+        (pin (num 2) (name 2) (type passive))))
+    (libpart (lib device) (part LED)
+      (footprints
+        (fp LED-3MM)
+        (fp LED-5MM)
+        (fp LED-10MM)
+        (fp LED-0603)
+        (fp LED-0805)
+        (fp LED-1206)
+        (fp LEDV))
+      (fields
+        (field (name Reference) D)
+        (field (name Value) LED))
+      (pins
+        (pin (num 1) (name K) (type passive))
+        (pin (num 2) (name A) (type passive))))
+    (libpart (lib device) (part R)
+      (description Resistor)
+      (footprints
+        (fp R_*)
+        (fp Resistor_*))
+      (fields
+        (field (name Reference) R)
+        (field (name Value) R))
+      (pins
+        (pin (num 1) (name ~) (type passive))
+        (pin (num 2) (name ~) (type passive))))
+    (libpart (lib device) (part TST)
+      (fields
+        (field (name Reference) P)
+        (field (name Value) TST))
+      (pins
+        (pin (num 1) (name ~) (type passive))))
     (libpart (lib conn) (part BNC)
       (footprints
         (fp BNC_*)
@@ -1724,19 +1752,19 @@
         (pin (num 11) (name P11) (type passive))
         (pin (num 12) (name P12) (type passive))
         (pin (num 13) (name P13) (type passive))))
-    (libpart (lib digitizer-cache) (part R-RESCUE-voltamper)
+    (libpart (lib conn) (part USB_B)
+      (description "USB B connector")
       (footprints
-        (fp R?)
-        (fp SM0603)
-        (fp SM0805)
-        (fp R?-*)
-        (fp SM1206))
+        (fp USB*))
       (fields
-        (field (name Reference) R)
-        (field (name Value) R-RESCUE-voltamper))
+        (field (name Reference) P)
+        (field (name Value) USB_B))
       (pins
-        (pin (num 1) (name ~) (type passive))
-        (pin (num 2) (name ~) (type passive))))
+        (pin (num 1) (name VCC) (type power_out))
+        (pin (num 2) (name D-) (type passive))
+        (pin (num 3) (name D+) (type passive))
+        (pin (num 4) (name GND) (type power_in))
+        (pin (num 5) (name shield) (type passive))))
     (libpart (lib my_comps) (part NCP3063)
       (fields
         (field (name Reference) U)
@@ -1946,47 +1974,19 @@
         (pin (num 6) (name ct) (type openCol))
         (pin (num 7) (name gnd) (type passive))
         (pin (num 8) (name Vdd) (type power_in))))
-    (libpart (lib device) (part INDUCTOR)
-      (fields
-        (field (name Reference) L)
-        (field (name Value) INDUCTOR))
-      (pins
-        (pin (num 1) (name 1) (type passive))
-        (pin (num 2) (name 2) (type passive))))
-    (libpart (lib device) (part LED)
+    (libpart (lib digitizer-cache) (part R-RESCUE-voltamper)
       (footprints
-        (fp LED-3MM)
-        (fp LED-5MM)
-        (fp LED-10MM)
-        (fp LED-0603)
-        (fp LED-0805)
-        (fp LED-1206)
-        (fp LEDV))
+        (fp R?)
+        (fp SM0603)
+        (fp SM0805)
+        (fp R?-*)
+        (fp SM1206))
       (fields
-        (field (name Reference) D)
-        (field (name Value) LED))
+        (field (name Reference) R)
+        (field (name Value) R-RESCUE-voltamper))
       (pins
-        (pin (num 1) (name K) (type passive))
-        (pin (num 2) (name A) (type passive))))
-    (libpart (lib device) (part TST)
-      (fields
-        (field (name Reference) P)
-        (field (name Value) TST))
-      (pins
-        (pin (num 1) (name ~) (type passive))))
-    (libpart (lib conn) (part USB_B)
-      (description "USB B connector")
-      (footprints
-        (fp USB*))
-      (fields
-        (field (name Reference) P)
-        (field (name Value) USB_B))
-      (pins
-        (pin (num 1) (name VCC) (type power_out))
-        (pin (num 2) (name D-) (type passive))
-        (pin (num 3) (name D+) (type passive))
-        (pin (num 4) (name GND) (type power_in))
-        (pin (num 5) (name shield) (type passive)))))
+        (pin (num 1) (name ~) (type passive))
+        (pin (num 2) (name ~) (type passive)))))
   (libraries
     (library (logical device)
       (uri C:\Programs\KiCad-r5691\share\kicad\library\device.lib))
