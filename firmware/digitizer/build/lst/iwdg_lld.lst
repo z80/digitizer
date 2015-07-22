@@ -1,0 +1,1162 @@
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"iwdg_lld.c"
+  14              		.section	.debug_abbrev,"",%progbits
+  15              	.Ldebug_abbrev0:
+  16              		.section	.debug_info,"",%progbits
+  17              	.Ldebug_info0:
+  18              		.section	.debug_line,"",%progbits
+  19              	.Ldebug_line0:
+  20 0000 54010000 		.text
+  20      02000B01 
+  20      00000201 
+  20      FB0E0D00 
+  20      01010101 
+  21              	.Ltext0:
+  22              		.cfi_sections	.debug_frame
+  23              		.section	.text.iwdg_lld_init,"ax",%progbits
+  24              		.align	2
+  25              		.p2align 4,,15
+  26              		.global	iwdg_lld_init
+  27              		.thumb
+  28              		.thumb_func
+  29              		.type	iwdg_lld_init, %function
+  30              	iwdg_lld_init:
+  31              	.LFB62:
+  32              		.file 1 "./src/iwdg/iwdg_lld.c"
+  33              		.loc 1 76 0
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 0
+  36              		@ frame_needed = 0, uses_anonymous_args = 0
+  37              		@ link register save eliminated.
+  38              		.loc 1 77 0
+  39 0000 40F20003 		movw	r3, #:lower16:.LANCHOR0
+  40              		.loc 1 78 0
+  41 0004 4FF44052 		mov	r2, #12288
+  42              		.loc 1 77 0
+  43 0008 C0F20003 		movt	r3, #:upper16:.LANCHOR0
+  44              		.loc 1 78 0
+  45 000c C4F20002 		movt	r2, 16384
+  46              		.loc 1 77 0
+  47 0010 0121     		movs	r1, #1
+  48 0012 1970     		strb	r1, [r3, #0]
+  49              		.loc 1 78 0
+  50 0014 5A60     		str	r2, [r3, #4]
+  51              		.loc 1 79 0
+  52 0016 7047     		bx	lr
+  53              		.cfi_endproc
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 2
+
+
+  54              	.LFE62:
+  55              		.size	iwdg_lld_init, .-iwdg_lld_init
+  56 0018 AFF30080 		.section	.text.iwdg_lld_start,"ax",%progbits
+  56      AFF30080 
+  57              		.align	2
+  58              		.p2align 4,,15
+  59              		.global	iwdg_lld_start
+  60              		.thumb
+  61              		.thumb_func
+  62              		.type	iwdg_lld_start, %function
+  63              	iwdg_lld_start:
+  64              	.LFB63:
+  65              		.loc 1 90 0
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 0
+  68              		@ frame_needed = 0, uses_anonymous_args = 0
+  69              		@ link register save eliminated.
+  70              	.LVL0:
+  71              		.loc 1 97 0
+  72 0000 0B88     		ldrh	r3, [r1, #0]
+  73              		.loc 1 94 0
+  74 0002 4268     		ldr	r2, [r0, #4]
+  75              	.LVL1:
+  76              		.loc 1 96 0
+  77 0004 8978     		ldrb	r1, [r1, #2]	@ zero_extendqisi2
+  78              	.LVL2:
+  79              		.loc 1 97 0
+  80 0006 40F6FF70 		movw	r0, #4095
+  81              	.LVL3:
+  82 000a 8342     		cmp	r3, r0
+  83 000c 28BF     		it	cs
+  84 000e 0346     		movcs	r3, r0
+  85              		.loc 1 95 0
+  86 0010 45F25550 		movw	r0, #21845
+  87 0014 1060     		str	r0, [r2, #0]
+  88              		.loc 1 96 0
+  89 0016 5160     		str	r1, [r2, #4]
+  90              		.loc 1 97 0
+  91 0018 9360     		str	r3, [r2, #8]
+  92              		.loc 1 98 0
+  93 001a 4AF6AA23 		movw	r3, #43690
+  94 001e 1360     		str	r3, [r2, #0]
+  95              		.loc 1 99 0
+  96 0020 4CF6CC43 		movw	r3, #52428
+  97 0024 1360     		str	r3, [r2, #0]
+  98              		.loc 1 100 0
+  99 0026 7047     		bx	lr
+ 100              		.cfi_endproc
+ 101              	.LFE63:
+ 102              		.size	iwdg_lld_start, .-iwdg_lld_start
+ 103 0028 AFF30080 		.section	.text.iwdg_lld_reset,"ax",%progbits
+ 103      AFF30080 
+ 104              		.align	2
+ 105              		.p2align 4,,15
+ 106              		.global	iwdg_lld_reset
+ 107              		.thumb
+ 108              		.thumb_func
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 3
+
+
+ 109              		.type	iwdg_lld_reset, %function
+ 110              	iwdg_lld_reset:
+ 111              	.LFB64:
+ 112              		.loc 1 110 0
+ 113              		.cfi_startproc
+ 114              		@ args = 0, pretend = 0, frame = 0
+ 115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116              		@ link register save eliminated.
+ 117              	.LVL4:
+ 118              		.loc 1 111 0
+ 119 0000 4368     		ldr	r3, [r0, #4]
+ 120 0002 4AF6AA22 		movw	r2, #43690
+ 121 0006 1A60     		str	r2, [r3, #0]
+ 122              		.loc 1 112 0
+ 123 0008 7047     		bx	lr
+ 124              		.cfi_endproc
+ 125              	.LFE64:
+ 126              		.size	iwdg_lld_reset, .-iwdg_lld_reset
+ 127              		.global	IWDGD
+ 128 000a 00BFAFF3 		.section	.bss.IWDGD,"aw",%nobits
+ 128      0080
+ 129              		.align	2
+ 130              		.set	.LANCHOR0,. + 0
+ 131              		.type	IWDGD, %object
+ 132              		.size	IWDGD, 8
+ 133              	IWDGD:
+ 134 0000 00000000 		.space	8
+ 134      00000000 
+ 135              		.text
+ 136              	.Letext0:
+ 137              		.section	.debug_loc,"",%progbits
+ 138              	.Ldebug_loc0:
+ 139              	.LLST0:
+ 140 0000 00000000 		.4byte	.LVL0
+ 141 0004 0A000000 		.4byte	.LVL3
+ 142 0008 0100     		.2byte	0x1
+ 143 000a 50       		.byte	0x50
+ 144 000b 00000000 		.4byte	0x0
+ 145 000f 00000000 		.4byte	0x0
+ 146              	.LLST1:
+ 147 0013 00000000 		.4byte	.LVL0
+ 148 0017 06000000 		.4byte	.LVL2
+ 149 001b 0100     		.2byte	0x1
+ 150 001d 51       		.byte	0x51
+ 151 001e 00000000 		.4byte	0x0
+ 152 0022 00000000 		.4byte	0x0
+ 153              	.LLST2:
+ 154 0026 04000000 		.4byte	.LVL1
+ 155 002a 0A000000 		.4byte	.LVL3
+ 156 002e 0200     		.2byte	0x2
+ 157 0030 70       		.byte	0x70
+ 158 0031 04       		.sleb128 4
+ 159 0032 0A000000 		.4byte	.LVL3
+ 160 0036 28000000 		.4byte	.LFE63
+ 161 003a 0100     		.2byte	0x1
+ 162 003c 52       		.byte	0x52
+ 163 003d 00000000 		.4byte	0x0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 4
+
+
+ 164 0041 00000000 		.4byte	0x0
+ 165              		.file 2 "c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h"
+ 166              		.file 3 "../chibios_2.4.x/os/hal/platforms/STM32F1xx/stm32f10x.h"
+ 167              		.file 4 "./src/iwdg/iwdg.h"
+ 168              		.file 5 "./src/iwdg/iwdg_lld.h"
+ 169              		.file 6 "../chibios_2.4.x/os/ports/common/ARMCMx/CMSIS/include/core_cm3.h"
+ 170              		.section	.debug_info
+ 171 0000 55020000 		.4byte	0x255
+ 172 0004 0200     		.2byte	0x2
+ 173 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 174 000a 04       		.byte	0x4
+ 175 000b 01       		.uleb128 0x1
+ 176 000c D5000000 		.4byte	.LASF29
+ 177 0010 01       		.byte	0x1
+ 178 0011 00000000 		.4byte	.LASF30
+ 179 0015 3F000000 		.4byte	.LASF31
+ 180 0019 00000000 		.4byte	0x0
+ 181 001d 00000000 		.4byte	0x0
+ 182 0021 00000000 		.4byte	.Ldebug_ranges0+0x0
+ 183 0025 00000000 		.4byte	.Ldebug_line0
+ 184 0029 02       		.uleb128 0x2
+ 185 002a 04       		.byte	0x4
+ 186 002b 05       		.byte	0x5
+ 187 002c 696E7400 		.ascii	"int\000"
+ 188 0030 03       		.uleb128 0x3
+ 189 0031 04       		.byte	0x4
+ 190 0032 07       		.byte	0x7
+ 191 0033 F4000000 		.4byte	.LASF0
+ 192 0037 03       		.uleb128 0x3
+ 193 0038 01       		.byte	0x1
+ 194 0039 06       		.byte	0x6
+ 195 003a 6F010000 		.4byte	.LASF1
+ 196 003e 04       		.uleb128 0x4
+ 197 003f 06010000 		.4byte	.LASF4
+ 198 0043 02       		.byte	0x2
+ 199 0044 2A       		.byte	0x2a
+ 200 0045 49000000 		.4byte	0x49
+ 201 0049 03       		.uleb128 0x3
+ 202 004a 01       		.byte	0x1
+ 203 004b 08       		.byte	0x8
+ 204 004c 8B000000 		.4byte	.LASF2
+ 205 0050 03       		.uleb128 0x3
+ 206 0051 02       		.byte	0x2
+ 207 0052 05       		.byte	0x5
+ 208 0053 3B010000 		.4byte	.LASF3
+ 209 0057 04       		.uleb128 0x4
+ 210 0058 51010000 		.4byte	.LASF5
+ 211 005c 02       		.byte	0x2
+ 212 005d 36       		.byte	0x36
+ 213 005e 62000000 		.4byte	0x62
+ 214 0062 03       		.uleb128 0x3
+ 215 0063 02       		.byte	0x2
+ 216 0064 07       		.byte	0x7
+ 217 0065 AB000000 		.4byte	.LASF6
+ 218 0069 04       		.uleb128 0x4
+ 219 006a 1F010000 		.4byte	.LASF7
+ 220 006e 02       		.byte	0x2
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 5
+
+
+ 221 006f 4F       		.byte	0x4f
+ 222 0070 74000000 		.4byte	0x74
+ 223 0074 03       		.uleb128 0x3
+ 224 0075 04       		.byte	0x4
+ 225 0076 05       		.byte	0x5
+ 226 0077 2B000000 		.4byte	.LASF8
+ 227 007b 04       		.uleb128 0x4
+ 228 007c 5A010000 		.4byte	.LASF9
+ 229 0080 02       		.byte	0x2
+ 230 0081 50       		.byte	0x50
+ 231 0082 86000000 		.4byte	0x86
+ 232 0086 03       		.uleb128 0x3
+ 233 0087 04       		.byte	0x4
+ 234 0088 07       		.byte	0x7
+ 235 0089 99000000 		.4byte	.LASF10
+ 236 008d 03       		.uleb128 0x3
+ 237 008e 08       		.byte	0x8
+ 238 008f 05       		.byte	0x5
+ 239 0090 27010000 		.4byte	.LASF11
+ 240 0094 03       		.uleb128 0x3
+ 241 0095 08       		.byte	0x8
+ 242 0096 07       		.byte	0x7
+ 243 0097 74000000 		.4byte	.LASF12
+ 244 009b 05       		.uleb128 0x5
+ 245 009c 7B000000 		.4byte	0x7b
+ 246 00a0 06       		.uleb128 0x6
+ 247 00a1 04       		.byte	0x4
+ 248 00a2 07       		.byte	0x7
+ 249 00a3 03       		.uleb128 0x3
+ 250 00a4 01       		.byte	0x1
+ 251 00a5 08       		.byte	0x8
+ 252 00a6 01010000 		.4byte	.LASF13
+ 253 00aa 05       		.uleb128 0x5
+ 254 00ab 69000000 		.4byte	0x69
+ 255 00af 07       		.uleb128 0x7
+ 256 00b0 10       		.byte	0x10
+ 257 00b1 03       		.byte	0x3
+ 258 00b2 2D04     		.2byte	0x42d
+ 259 00b4 F2000000 		.4byte	0xf2
+ 260 00b8 08       		.uleb128 0x8
+ 261 00b9 4B5200   		.ascii	"KR\000"
+ 262 00bc 03       		.byte	0x3
+ 263 00bd 2F04     		.2byte	0x42f
+ 264 00bf 9B000000 		.4byte	0x9b
+ 265 00c3 02       		.byte	0x2
+ 266 00c4 23       		.byte	0x23
+ 267 00c5 00       		.uleb128 0x0
+ 268 00c6 08       		.uleb128 0x8
+ 269 00c7 505200   		.ascii	"PR\000"
+ 270 00ca 03       		.byte	0x3
+ 271 00cb 3004     		.2byte	0x430
+ 272 00cd 9B000000 		.4byte	0x9b
+ 273 00d1 02       		.byte	0x2
+ 274 00d2 23       		.byte	0x23
+ 275 00d3 04       		.uleb128 0x4
+ 276 00d4 08       		.uleb128 0x8
+ 277 00d5 524C5200 		.ascii	"RLR\000"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 6
+
+
+ 278 00d9 03       		.byte	0x3
+ 279 00da 3104     		.2byte	0x431
+ 280 00dc 9B000000 		.4byte	0x9b
+ 281 00e0 02       		.byte	0x2
+ 282 00e1 23       		.byte	0x23
+ 283 00e2 08       		.uleb128 0x8
+ 284 00e3 08       		.uleb128 0x8
+ 285 00e4 535200   		.ascii	"SR\000"
+ 286 00e7 03       		.byte	0x3
+ 287 00e8 3204     		.2byte	0x432
+ 288 00ea 9B000000 		.4byte	0x9b
+ 289 00ee 02       		.byte	0x2
+ 290 00ef 23       		.byte	0x23
+ 291 00f0 0C       		.uleb128 0xc
+ 292 00f1 00       		.byte	0x0
+ 293 00f2 09       		.uleb128 0x9
+ 294 00f3 86010000 		.4byte	.LASF14
+ 295 00f7 03       		.byte	0x3
+ 296 00f8 3304     		.2byte	0x433
+ 297 00fa AF000000 		.4byte	0xaf
+ 298 00fe 0A       		.uleb128 0xa
+ 299 00ff 01       		.byte	0x1
+ 300 0100 04       		.byte	0x4
+ 301 0101 3C       		.byte	0x3c
+ 302 0102 19010000 		.4byte	0x119
+ 303 0106 0B       		.uleb128 0xb
+ 304 0107 63010000 		.4byte	.LASF15
+ 305 010b 00       		.sleb128 0
+ 306 010c 0B       		.uleb128 0xb
+ 307 010d CB000000 		.4byte	.LASF16
+ 308 0111 01       		.sleb128 1
+ 309 0112 0B       		.uleb128 0xb
+ 310 0113 7B010000 		.4byte	.LASF17
+ 311 0117 02       		.sleb128 2
+ 312 0118 00       		.byte	0x0
+ 313 0119 04       		.uleb128 0x4
+ 314 011a 45010000 		.4byte	.LASF18
+ 315 011e 04       		.byte	0x4
+ 316 011f 40       		.byte	0x40
+ 317 0120 FE000000 		.4byte	0xfe
+ 318 0124 0C       		.uleb128 0xc
+ 319 0125 04       		.byte	0x4
+ 320 0126 05       		.byte	0x5
+ 321 0127 49       		.byte	0x49
+ 322 0128 49010000 		.4byte	0x149
+ 323 012c 0D       		.uleb128 0xd
+ 324 012d 6C000000 		.4byte	.LASF19
+ 325 0131 05       		.byte	0x5
+ 326 0132 4A       		.byte	0x4a
+ 327 0133 57000000 		.4byte	0x57
+ 328 0137 02       		.byte	0x2
+ 329 0138 23       		.byte	0x23
+ 330 0139 00       		.uleb128 0x0
+ 331 013a 0E       		.uleb128 0xe
+ 332 013b 64697600 		.ascii	"div\000"
+ 333 013f 05       		.byte	0x5
+ 334 0140 4B       		.byte	0x4b
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 7
+
+
+ 335 0141 3E000000 		.4byte	0x3e
+ 336 0145 02       		.byte	0x2
+ 337 0146 23       		.byte	0x23
+ 338 0147 02       		.uleb128 0x2
+ 339 0148 00       		.byte	0x0
+ 340 0149 04       		.uleb128 0x4
+ 341 014a 0E010000 		.4byte	.LASF20
+ 342 014e 05       		.byte	0x5
+ 343 014f 4C       		.byte	0x4c
+ 344 0150 24010000 		.4byte	0x124
+ 345 0154 0F       		.uleb128 0xf
+ 346 0155 34000000 		.4byte	.LASF23
+ 347 0159 08       		.byte	0x8
+ 348 015a 05       		.byte	0x5
+ 349 015b 51       		.byte	0x51
+ 350 015c 7D010000 		.4byte	0x17d
+ 351 0160 0D       		.uleb128 0xd
+ 352 0161 25000000 		.4byte	.LASF21
+ 353 0165 05       		.byte	0x5
+ 354 0166 55       		.byte	0x55
+ 355 0167 19010000 		.4byte	0x119
+ 356 016b 02       		.byte	0x2
+ 357 016c 23       		.byte	0x23
+ 358 016d 00       		.uleb128 0x0
+ 359 016e 0D       		.uleb128 0xd
+ 360 016f E1000000 		.4byte	.LASF22
+ 361 0173 05       		.byte	0x5
+ 362 0174 57       		.byte	0x57
+ 363 0175 7D010000 		.4byte	0x17d
+ 364 0179 02       		.byte	0x2
+ 365 017a 23       		.byte	0x23
+ 366 017b 04       		.uleb128 0x4
+ 367 017c 00       		.byte	0x0
+ 368 017d 10       		.uleb128 0x10
+ 369 017e 04       		.byte	0x4
+ 370 017f F2000000 		.4byte	0xf2
+ 371 0183 04       		.uleb128 0x4
+ 372 0184 34000000 		.4byte	.LASF23
+ 373 0188 05       		.byte	0x5
+ 374 0189 5A       		.byte	0x5a
+ 375 018a 54010000 		.4byte	0x154
+ 376 018e 11       		.uleb128 0x11
+ 377 018f 01       		.byte	0x1
+ 378 0190 E6000000 		.4byte	.LASF32
+ 379 0194 01       		.byte	0x1
+ 380 0195 4C       		.byte	0x4c
+ 381 0196 01       		.byte	0x1
+ 382 0197 00000000 		.4byte	.LFB62
+ 383 019b 18000000 		.4byte	.LFE62
+ 384 019f 02       		.byte	0x2
+ 385 01a0 7D       		.byte	0x7d
+ 386 01a1 00       		.sleb128 0
+ 387 01a2 12       		.uleb128 0x12
+ 388 01a3 01       		.byte	0x1
+ 389 01a4 16000000 		.4byte	.LASF25
+ 390 01a8 01       		.byte	0x1
+ 391 01a9 59       		.byte	0x59
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 8
+
+
+ 392 01aa 01       		.byte	0x1
+ 393 01ab 00000000 		.4byte	.LFB63
+ 394 01af 28000000 		.4byte	.LFE63
+ 395 01b3 02       		.byte	0x2
+ 396 01b4 7D       		.byte	0x7d
+ 397 01b5 00       		.sleb128 0
+ 398 01b6 E6010000 		.4byte	0x1e6
+ 399 01ba 13       		.uleb128 0x13
+ 400 01bb 19010000 		.4byte	.LASF24
+ 401 01bf 01       		.byte	0x1
+ 402 01c0 59       		.byte	0x59
+ 403 01c1 E6010000 		.4byte	0x1e6
+ 404 01c5 00000000 		.4byte	.LLST0
+ 405 01c9 14       		.uleb128 0x14
+ 406 01ca 63666700 		.ascii	"cfg\000"
+ 407 01ce 01       		.byte	0x1
+ 408 01cf 59       		.byte	0x59
+ 409 01d0 EC010000 		.4byte	0x1ec
+ 410 01d4 13000000 		.4byte	.LLST1
+ 411 01d8 15       		.uleb128 0x15
+ 412 01d9 6400     		.ascii	"d\000"
+ 413 01db 01       		.byte	0x1
+ 414 01dc 5E       		.byte	0x5e
+ 415 01dd 7D010000 		.4byte	0x17d
+ 416 01e1 26000000 		.4byte	.LLST2
+ 417 01e5 00       		.byte	0x0
+ 418 01e6 10       		.uleb128 0x10
+ 419 01e7 04       		.byte	0x4
+ 420 01e8 83010000 		.4byte	0x183
+ 421 01ec 10       		.uleb128 0x10
+ 422 01ed 04       		.byte	0x4
+ 423 01ee F2010000 		.4byte	0x1f2
+ 424 01f2 16       		.uleb128 0x16
+ 425 01f3 49010000 		.4byte	0x149
+ 426 01f7 12       		.uleb128 0x12
+ 427 01f8 01       		.byte	0x1
+ 428 01f9 93010000 		.4byte	.LASF26
+ 429 01fd 01       		.byte	0x1
+ 430 01fe 6D       		.byte	0x6d
+ 431 01ff 01       		.byte	0x1
+ 432 0200 00000000 		.4byte	.LFB64
+ 433 0204 0A000000 		.4byte	.LFE64
+ 434 0208 02       		.byte	0x2
+ 435 0209 7D       		.byte	0x7d
+ 436 020a 00       		.sleb128 0
+ 437 020b 1D020000 		.4byte	0x21d
+ 438 020f 17       		.uleb128 0x17
+ 439 0210 19010000 		.4byte	.LASF24
+ 440 0214 01       		.byte	0x1
+ 441 0215 6D       		.byte	0x6d
+ 442 0216 E6010000 		.4byte	0x1e6
+ 443 021a 01       		.byte	0x1
+ 444 021b 50       		.byte	0x50
+ 445 021c 00       		.byte	0x0
+ 446 021d 18       		.uleb128 0x18
+ 447 021e BE000000 		.4byte	.LASF27
+ 448 0222 06       		.byte	0x6
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 9
+
+
+ 449 0223 9404     		.2byte	0x494
+ 450 0225 AA000000 		.4byte	0xaa
+ 451 0229 01       		.byte	0x1
+ 452 022a 01       		.byte	0x1
+ 453 022b 19       		.uleb128 0x19
+ 454 022c 35010000 		.4byte	.LASF28
+ 455 0230 05       		.byte	0x5
+ 456 0231 5C       		.byte	0x5c
+ 457 0232 83010000 		.4byte	0x183
+ 458 0236 01       		.byte	0x1
+ 459 0237 01       		.byte	0x1
+ 460 0238 18       		.uleb128 0x18
+ 461 0239 BE000000 		.4byte	.LASF27
+ 462 023d 06       		.byte	0x6
+ 463 023e 9404     		.2byte	0x494
+ 464 0240 AA000000 		.4byte	0xaa
+ 465 0244 01       		.byte	0x1
+ 466 0245 01       		.byte	0x1
+ 467 0246 1A       		.uleb128 0x1a
+ 468 0247 35010000 		.4byte	.LASF28
+ 469 024b 01       		.byte	0x1
+ 470 024c 36       		.byte	0x36
+ 471 024d 83010000 		.4byte	0x183
+ 472 0251 01       		.byte	0x1
+ 473 0252 05       		.byte	0x5
+ 474 0253 03       		.byte	0x3
+ 475 0254 00000000 		.4byte	IWDGD
+ 476 0258 00       		.byte	0x0
+ 477              		.section	.debug_abbrev
+ 478 0000 01       		.uleb128 0x1
+ 479 0001 11       		.uleb128 0x11
+ 480 0002 01       		.byte	0x1
+ 481 0003 25       		.uleb128 0x25
+ 482 0004 0E       		.uleb128 0xe
+ 483 0005 13       		.uleb128 0x13
+ 484 0006 0B       		.uleb128 0xb
+ 485 0007 03       		.uleb128 0x3
+ 486 0008 0E       		.uleb128 0xe
+ 487 0009 1B       		.uleb128 0x1b
+ 488 000a 0E       		.uleb128 0xe
+ 489 000b 11       		.uleb128 0x11
+ 490 000c 01       		.uleb128 0x1
+ 491 000d 52       		.uleb128 0x52
+ 492 000e 01       		.uleb128 0x1
+ 493 000f 55       		.uleb128 0x55
+ 494 0010 06       		.uleb128 0x6
+ 495 0011 10       		.uleb128 0x10
+ 496 0012 06       		.uleb128 0x6
+ 497 0013 00       		.byte	0x0
+ 498 0014 00       		.byte	0x0
+ 499 0015 02       		.uleb128 0x2
+ 500 0016 24       		.uleb128 0x24
+ 501 0017 00       		.byte	0x0
+ 502 0018 0B       		.uleb128 0xb
+ 503 0019 0B       		.uleb128 0xb
+ 504 001a 3E       		.uleb128 0x3e
+ 505 001b 0B       		.uleb128 0xb
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 10
+
+
+ 506 001c 03       		.uleb128 0x3
+ 507 001d 08       		.uleb128 0x8
+ 508 001e 00       		.byte	0x0
+ 509 001f 00       		.byte	0x0
+ 510 0020 03       		.uleb128 0x3
+ 511 0021 24       		.uleb128 0x24
+ 512 0022 00       		.byte	0x0
+ 513 0023 0B       		.uleb128 0xb
+ 514 0024 0B       		.uleb128 0xb
+ 515 0025 3E       		.uleb128 0x3e
+ 516 0026 0B       		.uleb128 0xb
+ 517 0027 03       		.uleb128 0x3
+ 518 0028 0E       		.uleb128 0xe
+ 519 0029 00       		.byte	0x0
+ 520 002a 00       		.byte	0x0
+ 521 002b 04       		.uleb128 0x4
+ 522 002c 16       		.uleb128 0x16
+ 523 002d 00       		.byte	0x0
+ 524 002e 03       		.uleb128 0x3
+ 525 002f 0E       		.uleb128 0xe
+ 526 0030 3A       		.uleb128 0x3a
+ 527 0031 0B       		.uleb128 0xb
+ 528 0032 3B       		.uleb128 0x3b
+ 529 0033 0B       		.uleb128 0xb
+ 530 0034 49       		.uleb128 0x49
+ 531 0035 13       		.uleb128 0x13
+ 532 0036 00       		.byte	0x0
+ 533 0037 00       		.byte	0x0
+ 534 0038 05       		.uleb128 0x5
+ 535 0039 35       		.uleb128 0x35
+ 536 003a 00       		.byte	0x0
+ 537 003b 49       		.uleb128 0x49
+ 538 003c 13       		.uleb128 0x13
+ 539 003d 00       		.byte	0x0
+ 540 003e 00       		.byte	0x0
+ 541 003f 06       		.uleb128 0x6
+ 542 0040 24       		.uleb128 0x24
+ 543 0041 00       		.byte	0x0
+ 544 0042 0B       		.uleb128 0xb
+ 545 0043 0B       		.uleb128 0xb
+ 546 0044 3E       		.uleb128 0x3e
+ 547 0045 0B       		.uleb128 0xb
+ 548 0046 00       		.byte	0x0
+ 549 0047 00       		.byte	0x0
+ 550 0048 07       		.uleb128 0x7
+ 551 0049 13       		.uleb128 0x13
+ 552 004a 01       		.byte	0x1
+ 553 004b 0B       		.uleb128 0xb
+ 554 004c 0B       		.uleb128 0xb
+ 555 004d 3A       		.uleb128 0x3a
+ 556 004e 0B       		.uleb128 0xb
+ 557 004f 3B       		.uleb128 0x3b
+ 558 0050 05       		.uleb128 0x5
+ 559 0051 01       		.uleb128 0x1
+ 560 0052 13       		.uleb128 0x13
+ 561 0053 00       		.byte	0x0
+ 562 0054 00       		.byte	0x0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 11
+
+
+ 563 0055 08       		.uleb128 0x8
+ 564 0056 0D       		.uleb128 0xd
+ 565 0057 00       		.byte	0x0
+ 566 0058 03       		.uleb128 0x3
+ 567 0059 08       		.uleb128 0x8
+ 568 005a 3A       		.uleb128 0x3a
+ 569 005b 0B       		.uleb128 0xb
+ 570 005c 3B       		.uleb128 0x3b
+ 571 005d 05       		.uleb128 0x5
+ 572 005e 49       		.uleb128 0x49
+ 573 005f 13       		.uleb128 0x13
+ 574 0060 38       		.uleb128 0x38
+ 575 0061 0A       		.uleb128 0xa
+ 576 0062 00       		.byte	0x0
+ 577 0063 00       		.byte	0x0
+ 578 0064 09       		.uleb128 0x9
+ 579 0065 16       		.uleb128 0x16
+ 580 0066 00       		.byte	0x0
+ 581 0067 03       		.uleb128 0x3
+ 582 0068 0E       		.uleb128 0xe
+ 583 0069 3A       		.uleb128 0x3a
+ 584 006a 0B       		.uleb128 0xb
+ 585 006b 3B       		.uleb128 0x3b
+ 586 006c 05       		.uleb128 0x5
+ 587 006d 49       		.uleb128 0x49
+ 588 006e 13       		.uleb128 0x13
+ 589 006f 00       		.byte	0x0
+ 590 0070 00       		.byte	0x0
+ 591 0071 0A       		.uleb128 0xa
+ 592 0072 04       		.uleb128 0x4
+ 593 0073 01       		.byte	0x1
+ 594 0074 0B       		.uleb128 0xb
+ 595 0075 0B       		.uleb128 0xb
+ 596 0076 3A       		.uleb128 0x3a
+ 597 0077 0B       		.uleb128 0xb
+ 598 0078 3B       		.uleb128 0x3b
+ 599 0079 0B       		.uleb128 0xb
+ 600 007a 01       		.uleb128 0x1
+ 601 007b 13       		.uleb128 0x13
+ 602 007c 00       		.byte	0x0
+ 603 007d 00       		.byte	0x0
+ 604 007e 0B       		.uleb128 0xb
+ 605 007f 28       		.uleb128 0x28
+ 606 0080 00       		.byte	0x0
+ 607 0081 03       		.uleb128 0x3
+ 608 0082 0E       		.uleb128 0xe
+ 609 0083 1C       		.uleb128 0x1c
+ 610 0084 0D       		.uleb128 0xd
+ 611 0085 00       		.byte	0x0
+ 612 0086 00       		.byte	0x0
+ 613 0087 0C       		.uleb128 0xc
+ 614 0088 13       		.uleb128 0x13
+ 615 0089 01       		.byte	0x1
+ 616 008a 0B       		.uleb128 0xb
+ 617 008b 0B       		.uleb128 0xb
+ 618 008c 3A       		.uleb128 0x3a
+ 619 008d 0B       		.uleb128 0xb
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 12
+
+
+ 620 008e 3B       		.uleb128 0x3b
+ 621 008f 0B       		.uleb128 0xb
+ 622 0090 01       		.uleb128 0x1
+ 623 0091 13       		.uleb128 0x13
+ 624 0092 00       		.byte	0x0
+ 625 0093 00       		.byte	0x0
+ 626 0094 0D       		.uleb128 0xd
+ 627 0095 0D       		.uleb128 0xd
+ 628 0096 00       		.byte	0x0
+ 629 0097 03       		.uleb128 0x3
+ 630 0098 0E       		.uleb128 0xe
+ 631 0099 3A       		.uleb128 0x3a
+ 632 009a 0B       		.uleb128 0xb
+ 633 009b 3B       		.uleb128 0x3b
+ 634 009c 0B       		.uleb128 0xb
+ 635 009d 49       		.uleb128 0x49
+ 636 009e 13       		.uleb128 0x13
+ 637 009f 38       		.uleb128 0x38
+ 638 00a0 0A       		.uleb128 0xa
+ 639 00a1 00       		.byte	0x0
+ 640 00a2 00       		.byte	0x0
+ 641 00a3 0E       		.uleb128 0xe
+ 642 00a4 0D       		.uleb128 0xd
+ 643 00a5 00       		.byte	0x0
+ 644 00a6 03       		.uleb128 0x3
+ 645 00a7 08       		.uleb128 0x8
+ 646 00a8 3A       		.uleb128 0x3a
+ 647 00a9 0B       		.uleb128 0xb
+ 648 00aa 3B       		.uleb128 0x3b
+ 649 00ab 0B       		.uleb128 0xb
+ 650 00ac 49       		.uleb128 0x49
+ 651 00ad 13       		.uleb128 0x13
+ 652 00ae 38       		.uleb128 0x38
+ 653 00af 0A       		.uleb128 0xa
+ 654 00b0 00       		.byte	0x0
+ 655 00b1 00       		.byte	0x0
+ 656 00b2 0F       		.uleb128 0xf
+ 657 00b3 13       		.uleb128 0x13
+ 658 00b4 01       		.byte	0x1
+ 659 00b5 03       		.uleb128 0x3
+ 660 00b6 0E       		.uleb128 0xe
+ 661 00b7 0B       		.uleb128 0xb
+ 662 00b8 0B       		.uleb128 0xb
+ 663 00b9 3A       		.uleb128 0x3a
+ 664 00ba 0B       		.uleb128 0xb
+ 665 00bb 3B       		.uleb128 0x3b
+ 666 00bc 0B       		.uleb128 0xb
+ 667 00bd 01       		.uleb128 0x1
+ 668 00be 13       		.uleb128 0x13
+ 669 00bf 00       		.byte	0x0
+ 670 00c0 00       		.byte	0x0
+ 671 00c1 10       		.uleb128 0x10
+ 672 00c2 0F       		.uleb128 0xf
+ 673 00c3 00       		.byte	0x0
+ 674 00c4 0B       		.uleb128 0xb
+ 675 00c5 0B       		.uleb128 0xb
+ 676 00c6 49       		.uleb128 0x49
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 13
+
+
+ 677 00c7 13       		.uleb128 0x13
+ 678 00c8 00       		.byte	0x0
+ 679 00c9 00       		.byte	0x0
+ 680 00ca 11       		.uleb128 0x11
+ 681 00cb 2E       		.uleb128 0x2e
+ 682 00cc 00       		.byte	0x0
+ 683 00cd 3F       		.uleb128 0x3f
+ 684 00ce 0C       		.uleb128 0xc
+ 685 00cf 03       		.uleb128 0x3
+ 686 00d0 0E       		.uleb128 0xe
+ 687 00d1 3A       		.uleb128 0x3a
+ 688 00d2 0B       		.uleb128 0xb
+ 689 00d3 3B       		.uleb128 0x3b
+ 690 00d4 0B       		.uleb128 0xb
+ 691 00d5 27       		.uleb128 0x27
+ 692 00d6 0C       		.uleb128 0xc
+ 693 00d7 11       		.uleb128 0x11
+ 694 00d8 01       		.uleb128 0x1
+ 695 00d9 12       		.uleb128 0x12
+ 696 00da 01       		.uleb128 0x1
+ 697 00db 40       		.uleb128 0x40
+ 698 00dc 0A       		.uleb128 0xa
+ 699 00dd 00       		.byte	0x0
+ 700 00de 00       		.byte	0x0
+ 701 00df 12       		.uleb128 0x12
+ 702 00e0 2E       		.uleb128 0x2e
+ 703 00e1 01       		.byte	0x1
+ 704 00e2 3F       		.uleb128 0x3f
+ 705 00e3 0C       		.uleb128 0xc
+ 706 00e4 03       		.uleb128 0x3
+ 707 00e5 0E       		.uleb128 0xe
+ 708 00e6 3A       		.uleb128 0x3a
+ 709 00e7 0B       		.uleb128 0xb
+ 710 00e8 3B       		.uleb128 0x3b
+ 711 00e9 0B       		.uleb128 0xb
+ 712 00ea 27       		.uleb128 0x27
+ 713 00eb 0C       		.uleb128 0xc
+ 714 00ec 11       		.uleb128 0x11
+ 715 00ed 01       		.uleb128 0x1
+ 716 00ee 12       		.uleb128 0x12
+ 717 00ef 01       		.uleb128 0x1
+ 718 00f0 40       		.uleb128 0x40
+ 719 00f1 0A       		.uleb128 0xa
+ 720 00f2 01       		.uleb128 0x1
+ 721 00f3 13       		.uleb128 0x13
+ 722 00f4 00       		.byte	0x0
+ 723 00f5 00       		.byte	0x0
+ 724 00f6 13       		.uleb128 0x13
+ 725 00f7 05       		.uleb128 0x5
+ 726 00f8 00       		.byte	0x0
+ 727 00f9 03       		.uleb128 0x3
+ 728 00fa 0E       		.uleb128 0xe
+ 729 00fb 3A       		.uleb128 0x3a
+ 730 00fc 0B       		.uleb128 0xb
+ 731 00fd 3B       		.uleb128 0x3b
+ 732 00fe 0B       		.uleb128 0xb
+ 733 00ff 49       		.uleb128 0x49
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 14
+
+
+ 734 0100 13       		.uleb128 0x13
+ 735 0101 02       		.uleb128 0x2
+ 736 0102 06       		.uleb128 0x6
+ 737 0103 00       		.byte	0x0
+ 738 0104 00       		.byte	0x0
+ 739 0105 14       		.uleb128 0x14
+ 740 0106 05       		.uleb128 0x5
+ 741 0107 00       		.byte	0x0
+ 742 0108 03       		.uleb128 0x3
+ 743 0109 08       		.uleb128 0x8
+ 744 010a 3A       		.uleb128 0x3a
+ 745 010b 0B       		.uleb128 0xb
+ 746 010c 3B       		.uleb128 0x3b
+ 747 010d 0B       		.uleb128 0xb
+ 748 010e 49       		.uleb128 0x49
+ 749 010f 13       		.uleb128 0x13
+ 750 0110 02       		.uleb128 0x2
+ 751 0111 06       		.uleb128 0x6
+ 752 0112 00       		.byte	0x0
+ 753 0113 00       		.byte	0x0
+ 754 0114 15       		.uleb128 0x15
+ 755 0115 34       		.uleb128 0x34
+ 756 0116 00       		.byte	0x0
+ 757 0117 03       		.uleb128 0x3
+ 758 0118 08       		.uleb128 0x8
+ 759 0119 3A       		.uleb128 0x3a
+ 760 011a 0B       		.uleb128 0xb
+ 761 011b 3B       		.uleb128 0x3b
+ 762 011c 0B       		.uleb128 0xb
+ 763 011d 49       		.uleb128 0x49
+ 764 011e 13       		.uleb128 0x13
+ 765 011f 02       		.uleb128 0x2
+ 766 0120 06       		.uleb128 0x6
+ 767 0121 00       		.byte	0x0
+ 768 0122 00       		.byte	0x0
+ 769 0123 16       		.uleb128 0x16
+ 770 0124 26       		.uleb128 0x26
+ 771 0125 00       		.byte	0x0
+ 772 0126 49       		.uleb128 0x49
+ 773 0127 13       		.uleb128 0x13
+ 774 0128 00       		.byte	0x0
+ 775 0129 00       		.byte	0x0
+ 776 012a 17       		.uleb128 0x17
+ 777 012b 05       		.uleb128 0x5
+ 778 012c 00       		.byte	0x0
+ 779 012d 03       		.uleb128 0x3
+ 780 012e 0E       		.uleb128 0xe
+ 781 012f 3A       		.uleb128 0x3a
+ 782 0130 0B       		.uleb128 0xb
+ 783 0131 3B       		.uleb128 0x3b
+ 784 0132 0B       		.uleb128 0xb
+ 785 0133 49       		.uleb128 0x49
+ 786 0134 13       		.uleb128 0x13
+ 787 0135 02       		.uleb128 0x2
+ 788 0136 0A       		.uleb128 0xa
+ 789 0137 00       		.byte	0x0
+ 790 0138 00       		.byte	0x0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 15
+
+
+ 791 0139 18       		.uleb128 0x18
+ 792 013a 34       		.uleb128 0x34
+ 793 013b 00       		.byte	0x0
+ 794 013c 03       		.uleb128 0x3
+ 795 013d 0E       		.uleb128 0xe
+ 796 013e 3A       		.uleb128 0x3a
+ 797 013f 0B       		.uleb128 0xb
+ 798 0140 3B       		.uleb128 0x3b
+ 799 0141 05       		.uleb128 0x5
+ 800 0142 49       		.uleb128 0x49
+ 801 0143 13       		.uleb128 0x13
+ 802 0144 3F       		.uleb128 0x3f
+ 803 0145 0C       		.uleb128 0xc
+ 804 0146 3C       		.uleb128 0x3c
+ 805 0147 0C       		.uleb128 0xc
+ 806 0148 00       		.byte	0x0
+ 807 0149 00       		.byte	0x0
+ 808 014a 19       		.uleb128 0x19
+ 809 014b 34       		.uleb128 0x34
+ 810 014c 00       		.byte	0x0
+ 811 014d 03       		.uleb128 0x3
+ 812 014e 0E       		.uleb128 0xe
+ 813 014f 3A       		.uleb128 0x3a
+ 814 0150 0B       		.uleb128 0xb
+ 815 0151 3B       		.uleb128 0x3b
+ 816 0152 0B       		.uleb128 0xb
+ 817 0153 49       		.uleb128 0x49
+ 818 0154 13       		.uleb128 0x13
+ 819 0155 3F       		.uleb128 0x3f
+ 820 0156 0C       		.uleb128 0xc
+ 821 0157 3C       		.uleb128 0x3c
+ 822 0158 0C       		.uleb128 0xc
+ 823 0159 00       		.byte	0x0
+ 824 015a 00       		.byte	0x0
+ 825 015b 1A       		.uleb128 0x1a
+ 826 015c 34       		.uleb128 0x34
+ 827 015d 00       		.byte	0x0
+ 828 015e 03       		.uleb128 0x3
+ 829 015f 0E       		.uleb128 0xe
+ 830 0160 3A       		.uleb128 0x3a
+ 831 0161 0B       		.uleb128 0xb
+ 832 0162 3B       		.uleb128 0x3b
+ 833 0163 0B       		.uleb128 0xb
+ 834 0164 49       		.uleb128 0x49
+ 835 0165 13       		.uleb128 0x13
+ 836 0166 3F       		.uleb128 0x3f
+ 837 0167 0C       		.uleb128 0xc
+ 838 0168 02       		.uleb128 0x2
+ 839 0169 0A       		.uleb128 0xa
+ 840 016a 00       		.byte	0x0
+ 841 016b 00       		.byte	0x0
+ 842 016c 00       		.byte	0x0
+ 843              		.section	.debug_pubnames,"",%progbits
+ 844 0000 50000000 		.4byte	0x50
+ 845 0004 0200     		.2byte	0x2
+ 846 0006 00000000 		.4byte	.Ldebug_info0
+ 847 000a 59020000 		.4byte	0x259
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 16
+
+
+ 848 000e 8E010000 		.4byte	0x18e
+ 849 0012 69776467 		.ascii	"iwdg_lld_init\000"
+ 849      5F6C6C64 
+ 849      5F696E69 
+ 849      7400
+ 850 0020 A2010000 		.4byte	0x1a2
+ 851 0024 69776467 		.ascii	"iwdg_lld_start\000"
+ 851      5F6C6C64 
+ 851      5F737461 
+ 851      727400
+ 852 0033 F7010000 		.4byte	0x1f7
+ 853 0037 69776467 		.ascii	"iwdg_lld_reset\000"
+ 853      5F6C6C64 
+ 853      5F726573 
+ 853      657400
+ 854 0046 46020000 		.4byte	0x246
+ 855 004a 49574447 		.ascii	"IWDGD\000"
+ 855      4400
+ 856 0050 00000000 		.4byte	0x0
+ 857              		.section	.debug_pubtypes,"",%progbits
+ 858 0000 8E000000 		.4byte	0x8e
+ 859 0004 0200     		.2byte	0x2
+ 860 0006 00000000 		.4byte	.Ldebug_info0
+ 861 000a 59020000 		.4byte	0x259
+ 862 000e 3E000000 		.4byte	0x3e
+ 863 0012 75696E74 		.ascii	"uint8_t\000"
+ 863      385F7400 
+ 864 001a 57000000 		.4byte	0x57
+ 865 001e 75696E74 		.ascii	"uint16_t\000"
+ 865      31365F74 
+ 865      00
+ 866 0027 69000000 		.4byte	0x69
+ 867 002b 696E7433 		.ascii	"int32_t\000"
+ 867      325F7400 
+ 868 0033 7B000000 		.4byte	0x7b
+ 869 0037 75696E74 		.ascii	"uint32_t\000"
+ 869      33325F74 
+ 869      00
+ 870 0040 F2000000 		.4byte	0xf2
+ 871 0044 49574447 		.ascii	"IWDG_TypeDef\000"
+ 871      5F547970 
+ 871      65446566 
+ 871      00
+ 872 0051 19010000 		.4byte	0x119
+ 873 0055 69776467 		.ascii	"iwdgstate_t\000"
+ 873      73746174 
+ 873      655F7400 
+ 874 0061 49010000 		.4byte	0x149
+ 875 0065 49574447 		.ascii	"IWDGConfig\000"
+ 875      436F6E66 
+ 875      696700
+ 876 0070 54010000 		.4byte	0x154
+ 877 0074 49574447 		.ascii	"IWDGDriver\000"
+ 877      44726976 
+ 877      657200
+ 878 007f 83010000 		.4byte	0x183
+ 879 0083 49574447 		.ascii	"IWDGDriver\000"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 17
+
+
+ 879      44726976 
+ 879      657200
+ 880 008e 00000000 		.4byte	0x0
+ 881              		.section	.debug_aranges,"",%progbits
+ 882 0000 2C000000 		.4byte	0x2c
+ 883 0004 0200     		.2byte	0x2
+ 884 0006 00000000 		.4byte	.Ldebug_info0
+ 885 000a 04       		.byte	0x4
+ 886 000b 00       		.byte	0x0
+ 887 000c 0000     		.2byte	0x0
+ 888 000e 0000     		.2byte	0x0
+ 889 0010 00000000 		.4byte	.LFB62
+ 890 0014 18000000 		.4byte	.LFE62-.LFB62
+ 891 0018 00000000 		.4byte	.LFB63
+ 892 001c 28000000 		.4byte	.LFE63-.LFB63
+ 893 0020 00000000 		.4byte	.LFB64
+ 894 0024 0A000000 		.4byte	.LFE64-.LFB64
+ 895 0028 00000000 		.4byte	0x0
+ 896 002c 00000000 		.4byte	0x0
+ 897              		.section	.debug_ranges,"",%progbits
+ 898              	.Ldebug_ranges0:
+ 899 0000 00000000 		.4byte	.LFB62
+ 900 0004 18000000 		.4byte	.LFE62
+ 901 0008 00000000 		.4byte	.LFB63
+ 902 000c 28000000 		.4byte	.LFE63
+ 903 0010 00000000 		.4byte	.LFB64
+ 904 0014 0A000000 		.4byte	.LFE64
+ 905 0018 00000000 		.4byte	0x0
+ 906 001c 00000000 		.4byte	0x0
+ 907              		.section	.debug_str,"MS",%progbits,1
+ 908              	.LASF30:
+ 909 0000 2E2F7372 		.ascii	"./src/iwdg/iwdg_lld.c\000"
+ 909      632F6977 
+ 909      64672F69 
+ 909      7764675F 
+ 909      6C6C642E 
+ 910              	.LASF25:
+ 911 0016 69776467 		.ascii	"iwdg_lld_start\000"
+ 911      5F6C6C64 
+ 911      5F737461 
+ 911      727400
+ 912              	.LASF21:
+ 913 0025 73746174 		.ascii	"state\000"
+ 913      6500
+ 914              	.LASF8:
+ 915 002b 6C6F6E67 		.ascii	"long int\000"
+ 915      20696E74 
+ 915      00
+ 916              	.LASF23:
+ 917 0034 49574447 		.ascii	"IWDGDriver\000"
+ 917      44726976 
+ 917      657200
+ 918              	.LASF31:
+ 919 003f 433A5C70 		.ascii	"C:\\projects\\digitizer.git\\firmware\\digitizer\000"
+ 919      726F6A65 
+ 919      6374735C 
+ 919      64696769 
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 18
+
+
+ 919      74697A65 
+ 920              	.LASF19:
+ 921 006c 636F756E 		.ascii	"counter\000"
+ 921      74657200 
+ 922              	.LASF12:
+ 923 0074 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 923      206C6F6E 
+ 923      6720756E 
+ 923      7369676E 
+ 923      65642069 
+ 924              	.LASF2:
+ 925 008b 756E7369 		.ascii	"unsigned char\000"
+ 925      676E6564 
+ 925      20636861 
+ 925      7200
+ 926              	.LASF10:
+ 927 0099 6C6F6E67 		.ascii	"long unsigned int\000"
+ 927      20756E73 
+ 927      69676E65 
+ 927      6420696E 
+ 927      7400
+ 928              	.LASF6:
+ 929 00ab 73686F72 		.ascii	"short unsigned int\000"
+ 929      7420756E 
+ 929      7369676E 
+ 929      65642069 
+ 929      6E7400
+ 930              	.LASF27:
+ 931 00be 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 931      52784275 
+ 931      66666572 
+ 931      00
+ 932              	.LASF16:
+ 933 00cb 49574447 		.ascii	"IWDG_STOP\000"
+ 933      5F53544F 
+ 933      5000
+ 934              	.LASF29:
+ 935 00d5 474E5520 		.ascii	"GNU C 4.5.0\000"
+ 935      4320342E 
+ 935      352E3000 
+ 936              	.LASF22:
+ 937 00e1 69776467 		.ascii	"iwdg\000"
+ 937      00
+ 938              	.LASF32:
+ 939 00e6 69776467 		.ascii	"iwdg_lld_init\000"
+ 939      5F6C6C64 
+ 939      5F696E69 
+ 939      7400
+ 940              	.LASF0:
+ 941 00f4 756E7369 		.ascii	"unsigned int\000"
+ 941      676E6564 
+ 941      20696E74 
+ 941      00
+ 942              	.LASF13:
+ 943 0101 63686172 		.ascii	"char\000"
+ 943      00
+ 944              	.LASF4:
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 19
+
+
+ 945 0106 75696E74 		.ascii	"uint8_t\000"
+ 945      385F7400 
+ 946              	.LASF20:
+ 947 010e 49574447 		.ascii	"IWDGConfig\000"
+ 947      436F6E66 
+ 947      696700
+ 948              	.LASF24:
+ 949 0119 69776467 		.ascii	"iwdgp\000"
+ 949      7000
+ 950              	.LASF7:
+ 951 011f 696E7433 		.ascii	"int32_t\000"
+ 951      325F7400 
+ 952              	.LASF11:
+ 953 0127 6C6F6E67 		.ascii	"long long int\000"
+ 953      206C6F6E 
+ 953      6720696E 
+ 953      7400
+ 954              	.LASF28:
+ 955 0135 49574447 		.ascii	"IWDGD\000"
+ 955      4400
+ 956              	.LASF3:
+ 957 013b 73686F72 		.ascii	"short int\000"
+ 957      7420696E 
+ 957      7400
+ 958              	.LASF18:
+ 959 0145 69776467 		.ascii	"iwdgstate_t\000"
+ 959      73746174 
+ 959      655F7400 
+ 960              	.LASF5:
+ 961 0151 75696E74 		.ascii	"uint16_t\000"
+ 961      31365F74 
+ 961      00
+ 962              	.LASF9:
+ 963 015a 75696E74 		.ascii	"uint32_t\000"
+ 963      33325F74 
+ 963      00
+ 964              	.LASF15:
+ 965 0163 49574447 		.ascii	"IWDG_UNINIT\000"
+ 965      5F554E49 
+ 965      4E495400 
+ 966              	.LASF1:
+ 967 016f 7369676E 		.ascii	"signed char\000"
+ 967      65642063 
+ 967      68617200 
+ 968              	.LASF17:
+ 969 017b 49574447 		.ascii	"IWDG_READY\000"
+ 969      5F524541 
+ 969      445900
+ 970              	.LASF14:
+ 971 0186 49574447 		.ascii	"IWDG_TypeDef\000"
+ 971      5F547970 
+ 971      65446566 
+ 971      00
+ 972              	.LASF26:
+ 973 0193 69776467 		.ascii	"iwdg_lld_reset\000"
+ 973      5F6C6C64 
+ 973      5F726573 
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 20
+
+
+ 973      657400
+ 974              		.ident	"GCC: (GNU) 4.5.0"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cchOlOjt.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 iwdg_lld.c
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:24     .text.iwdg_lld_init:00000000 $t
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:30     .text.iwdg_lld_init:00000000 iwdg_lld_init
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:130    .bss.IWDGD:00000000 .LANCHOR0
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:57     .text.iwdg_lld_start:00000000 $t
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:63     .text.iwdg_lld_start:00000000 iwdg_lld_start
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:104    .text.iwdg_lld_reset:00000000 $t
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:110    .text.iwdg_lld_reset:00000000 iwdg_lld_reset
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:133    .bss.IWDGD:00000000 IWDGD
+C:\Users\z80\AppData\Local\Temp\cchOlOjt.s:129    .bss.IWDGD:00000000 $d
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS
