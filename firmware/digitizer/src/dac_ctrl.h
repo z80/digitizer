@@ -4,14 +4,9 @@
 
 #include "ch.h"
 
-typedef struct 
-{
-	uint16_t dac1;
-	uint16_t dac2;
-} DacCfg;
-
-void dacInit( void );
-void dacSet( DacCfg * dac );
+void initDac( void );
+void setDacI( int index, int value );
+void processDacI( void );
 
 
 #endif
