@@ -6,14 +6,18 @@
 #include "hdw_config.h"
 #include "led_ctrl.h"
 
-#define ADC_QUEUE_SZ (24)
+#define ADC_QUEUE_SZ (32)
 #define ADC_MUX_0    0
 #define ADC_MUX_1    1
 
 InputQueue  adc_queue;
 uint8_t     adc_queue_buffer[ADC_QUEUE_SZ];
 
-uint8_t     adc_rx_buffer[3];
+uint8_t     adc_rx_buffer[4];
+static int adcIndex = 0;
+
+// Possible indices 0, 1, 2, 3.
+static void selectAdcIndex( int index );
 
 static void onSpiComplete( SPIDriver * spid );
 
@@ -42,6 +46,8 @@ void initAdc( void )
     palSetPadMode( GPIOA, GPIOA_SPI1NSS, PAL_MODE_OUTPUT_PUSHPULL );
     palSetPad( GPIOA, GPIOA_SPI1NSS );
 
+    selectAdcIndex( adcIndex );
+
     spiStart( &SPID1, &hs_spicfg );
 }
 
@@ -57,12 +63,20 @@ void onSpiComplete( SPIDriver * spid )
 {
 	(void)spid;
 	chSysLockFromIsr();
+		// The very first thing - switch another signal to ADC input.
+		adcIndex = (adcIndex + 1) % 4;
+		selectAdcIndex( adcIndex );
+		// Unselect SPI slave.
 		spiUnselectI( &SPID1 );
-		if ( chIQGetEmptyI( &adc_queue ) >= 3 )
+		// Put data to input queue.
+		if ( chIQGetEmptyI( &adc_queue ) >= 4 )
 		{
 			// Before I don't really know which bits to get I get all bits obtained.
 			// In datasheet it is written that minimum 22 cycles are required and 24
 			// are shown as an example.
+			// Save ADC signal index first.
+			chIQPutI( &adc_queue, (uint8_t)adcIndex );
+			// Save data here.
 			chIQPutI( &adc_queue, adc_rx_buffer[0] );
 			chIQPutI( &adc_queue, adc_rx_buffer[1] );
 			chIQPutI( &adc_queue, adc_rx_buffer[2] );
@@ -75,7 +89,7 @@ InputQueue * adcQueue( void )
 	return &adc_queue;
 }
 
-void selectAdc( int index )
+void selectAdcIndex( int index )
 {
 	if ( index & 1 )
 		palSetPad( GPIOA, ADC_MUX_0 );

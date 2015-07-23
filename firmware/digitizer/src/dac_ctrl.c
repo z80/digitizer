@@ -7,7 +7,6 @@
 OutputQueue  dac_queue;
 uint8_t      dac_queue_buffer[DAC_QUEUE_SZ];
 
-
 #define DAC_CS_0     9
 #define DAC_CS_1     10
 #define DAC_CS_2     11

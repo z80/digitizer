@@ -1,5 +1,7 @@
 
 #include "timer_ctrl.h"
+#include "adc_ctrl.h"
+#include "dac_ctrl.h"
 #include "hal.h"
 
 static void gptCb( GPTDriver * gptp );
@@ -18,11 +20,9 @@ void initTimer( void )
 
 static void gptCb(GPTDriver *gptp)
 {
-
   (void)gptp;
-  palClearPad(IOPORT3, GPIOC_LED);
-  chSysLockFromIsr();
-  chSysUnlockFromIsr();
+  queryAdcI();
+  processDacI();
 }
 
 

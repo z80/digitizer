@@ -7,8 +7,6 @@
 void initAdc( void );
 void queryAdcI( void );
 InputQueue * adcQueue( void );
-// Possible indices 0, 1, 2, 3.
-void selectAdc( int index );
 
 #endif
 
