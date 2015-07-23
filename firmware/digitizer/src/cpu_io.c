@@ -6,7 +6,7 @@
 
 #include "led_ctrl.h"
 #include "adc_ctrl.h"
-#include "relay_ctrl.h"
+#include "dac_ctrl.h"
 
 #include "hdw_config.h"
 #include <string.h>
@@ -30,17 +30,17 @@ static void writeResult( uint8_t v );
 static void writeEom( void );
 
 
-void cpu_io_init( void )
+void initCpuIo( void )
 {
 	// Initialize serial driver.
 	sdStart( &SERIAL, 0 );
 
 	// Setup pad settings.
-	palSetPadMode( IOPORT1, 9, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
-	palSetPadMode( IOPORT1, 10, PAL_MODE_INPUT );
+	palSetPadMode( GPIOA, 9, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
+	palSetPadMode( GPIOA, 10, PAL_MODE_INPUT );
 }
 
-void cpu_io_process( void )
+void processCpuIo( void )
 {
 	static uint8_t slash = 0;
 	static int out_index = 0;
@@ -111,35 +111,21 @@ static void process_command( uint8_t * buf, int sz )
 	}
 }
 
-static void osc_eaux( uint8_t * args );
-static void osc_eref( uint8_t * args );
-static void osc_iaux( uint8_t * args );
-static void osc_set_period( uint8_t * args );
-static void set_leds( uint8_t * args );
-static void set_out_relay( uint8_t * args );
-static void set_sc_relay( uint8_t * args );
-static void set_dac( uint8_t * args );
-static void set_one_pulse( uint8_t * args );
-static void set_meandr( uint8_t * args );
-static void set_sweep( uint8_t * args );
 static void hardware_version( uint8_t * args );
 static void firmware_version( uint8_t * args );
+static void set_led( uint8_t * args );
+static void set_dac1( uint8_t * args );
+static void set_dac2( uint8_t * args );
+static void get_adc( uint8_t * args );
 
 static TFunc funcs[] =
 {
-	osc_eaux,
-	osc_eref,
-	osc_iaux,
-	osc_set_period,
-    set_leds,
-	set_out_relay,
-	set_sc_relay,
-	set_dac,
-	set_one_pulse,
-	set_meandr,
-	set_sweep,
 	hardware_version,
-	firmware_version
+	firmware_version,
+    set_led,
+	set_dac1,
+	set_dac2,
+	get_adc
 };
 
 static void exec_func( void )
@@ -149,100 +135,6 @@ static void exec_func( void )
 	int funcs_sz = (int)(sizeof(funcs)/sizeof(TFunc));
     func_index = (func_index < funcs_sz) ? func_index : 0;
 	funcs[func_index]( args );
-}
-
-static void writeOscQueue( InputQueue * q )
-{
-	msg_t msg;
-	uint8_t noData;
-	size_t cnt, i;
-	chSysLock();
-		cnt = (chQSpaceI( q ) / 2) * 2;
-	chSysUnlock();
-	for ( i=0; i<cnt; i++ )
-	{
-		msg = chIQGetTimeout( q, TIME_IMMEDIATE );
-		noData = ( ( msg == Q_TIMEOUT ) || ( msg == Q_RESET ) ) ? 1 : 0;
-		uint8_t v;
-		v = ( noData ) ? 0 : (uint8_t)msg;
-		writeResult( v );
-	}
-	writeEom();
-}
-
-static void osc_eaux( uint8_t * args )
-{
-	(void)args;
-	InputQueue * q = eauxQueue();
-	writeOscQueue( q );
-}
-
-static void osc_eref( uint8_t * args )
-{
-	(void)args;
-	InputQueue * q = erefQueue();
-	writeOscQueue( q );
-}
-
-static void osc_iaux( uint8_t * args )
-{
-	(void)args;
-	InputQueue * q = iauxQueue();
-	writeOscQueue( q );
-}
-
-static void osc_set_period( uint8_t * args )
-{
-    (void)args;
-    uint32_t period;
-    period = (uint32_t)args[0] +
-             (((uint32_t)args[1]) << 8) +
-             (((uint32_t)args[2]) << 16) +
-             (((uint32_t)args[3]) << 24);
-    setOscPeriod( period );
-}
-
-static void set_leds( uint8_t * args )
-{
-	setLeds( args[0] );
-}
-
-static void set_out_relay( uint8_t * args )
-{
-    setOutRelay( args[0] );
-}
-
-static void set_sc_relay( uint8_t * args )
-{
-    setScRelay( args[0] );
-}
-
-static void set_dac( uint8_t * args )
-{
-    (void)args;
-	OutputQueue * q = commandQueue();
-	chOQPut( q, TDAC );
-}
-
-static void set_one_pulse( uint8_t * args )
-{
-    (void)args;
-    OutputQueue * q = commandQueue();
-    chOQPut( q, TONEPULSE );
-}
-
-static void set_meandr( uint8_t * args )
-{
-    (void)args;
-    OutputQueue * q = commandQueue();
-    chOQPut( q, TMEANDR );
-}
-
-static void set_sweep( uint8_t * args )
-{
-    (void)args;
-    OutputQueue * q = commandQueue();
-    chOQPut( q, TSWEEP );
 }
 
 static void hardware_version( uint8_t * args )
@@ -266,6 +158,38 @@ static void firmware_version( uint8_t * args )
 		writeResult( stri[i] );
 	writeEom();
 }
+
+static void set_led( uint8_t * args )
+{
+	setLeds( args[0] );
+}
+
+
+static void set_dac1( uint8_t * args )
+{
+	int valL = (int)args[0] + ((int)args[1] << 8);
+	int valH = (int)args[2] + ((int)args[3] << 8);
+	setDac1( valL, valH );
+}
+
+static void set_dac2( uint8_t * args )
+{
+	int valL = (int)args[0] + ((int)args[1] << 8);
+	int valH = (int)args[2] + ((int)args[3] << 8);
+	setDac2( valL, valH );
+}
+
+static void get_adc( uint8_t * args )
+{
+	(void)args;
+	int res = 123;
+	uint8_t b = (uint8_t)(res & 0xFF);
+	writeResult( b );
+	b = (uint8_t)((res >> 8) & 0xFF);
+	writeResult( b );
+	writeEom();
+}
+
 
 
 

@@ -4,9 +4,9 @@
 
 #include "iwdg.h"
 #include "led_ctrl.h"
-#include "relay_ctrl.h"
-#include "dac.h"
+#include "dac_ctrl.h"
 #include "adc_ctrl.h"
+#include "timer_ctrl.h"
 #include "cpu_io.h"
 
 int main(void)
@@ -15,14 +15,14 @@ int main(void)
     chSysInit();
 
     initLed();
-    dacInit();
+    initDac();
     initAdc();
-    initRelay();
-    cpu_io_init();
+    initTimer();
+    initCpuIo();
 
     while (TRUE)
     {
-    	cpu_io_process();
+    	processCpuIo();
 
     	/*
     	DacCfg dac;

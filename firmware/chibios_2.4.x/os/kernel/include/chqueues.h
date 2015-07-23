@@ -253,7 +253,7 @@ typedef GenericQueue OutputQueue;
  *
  * @iclass
  */
-#define chOQGetEmptyI(iqp) chQSpaceI(oqp)
+#define chOQGetEmptyI(oqp) chQSpaceI(oqp)
 
 /**
  * @brief   Evaluates to @p TRUE if the specified output queue is empty.

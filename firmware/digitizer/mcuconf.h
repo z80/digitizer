@@ -54,7 +54,7 @@
 #define STM32_SW                            STM32_SW_PLL
 #define STM32_PLLSRC                        STM32_PLLSRC_HSE
 #define STM32_PLLXTPRE                      STM32_PLLXTPRE_DIV1
-#define STM32_PLLMUL_VALUE                  3
+#define STM32_PLLMUL_VALUE                  9
 #define STM32_HPRE                          STM32_HPRE_DIV1
 #define STM32_PPRE1                         STM32_PPRE1_DIV2
 #define STM32_PPRE2                         STM32_PPRE2_DIV2
@@ -69,7 +69,7 @@
 /*
  * ADC driver system settings.
  */
-#define STM32_ADC_USE_ADC1                  TRUE
+#define STM32_ADC_USE_ADC1                  FALSE
 #define STM32_ADC_ADC1_DMA_PRIORITY         2
 #define STM32_ADC_ADC1_IRQ_PRIORITY         5
 
@@ -97,7 +97,7 @@
 /*
  * GPT driver system settings.
  */
-#define STM32_GPT_USE_TIM1                  FALSE
+#define STM32_GPT_USE_TIM1                  TRUE
 #define STM32_GPT_USE_TIM2                  FALSE
 #define STM32_GPT_USE_TIM3                  FALSE
 #define STM32_GPT_USE_TIM4                  FALSE
@@ -183,8 +183,8 @@
 /*
  * SPI driver system settings.
  */
-#define STM32_SPI_USE_SPI1                  FALSE
-#define STM32_SPI_USE_SPI2                  FALSE
+#define STM32_SPI_USE_SPI1                  TRUE
+#define STM32_SPI_USE_SPI2                  TRUE
 #define STM32_SPI_USE_SPI3                  FALSE
 #define STM32_SPI_SPI1_DMA_PRIORITY         1
 #define STM32_SPI_SPI2_DMA_PRIORITY         1

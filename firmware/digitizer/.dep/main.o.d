@@ -44,10 +44,10 @@ build/obj/main.o: src/main.c ../chibios_2.4.x/os/kernel/include/ch.h \
  ../chibios_2.4.x/os/hal/include/pal.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/GPIOv1/pal_lld.h \
  ../chibios_2.4.x/os/hal/include/adc.h \
- ../chibios_2.4.x/os/hal/platforms/STM32F1xx/adc_lld.h \
  ../chibios_2.4.x/os/hal/include/can.h \
  ../chibios_2.4.x/os/hal/include/ext.h \
  ../chibios_2.4.x/os/hal/include/gpt.h \
+ ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h \
  ../chibios_2.4.x/os/hal/include/i2c.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/i2c_lld.h \
  ../chibios_2.4.x/os/hal/include/icu.h \
@@ -58,12 +58,13 @@ build/obj/main.o: src/main.c ../chibios_2.4.x/os/kernel/include/ch.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/serial_lld.h \
  ../chibios_2.4.x/os/hal/include/sdc.h \
  ../chibios_2.4.x/os/hal/include/spi.h \
+ ../chibios_2.4.x/os/hal/platforms/STM32/spi_lld.h \
  ../chibios_2.4.x/os/hal/include/uart.h \
  ../chibios_2.4.x/os/hal/include/usb.h \
  ../chibios_2.4.x/os/hal/include/mmc_spi.h \
  ../chibios_2.4.x/os/hal/include/serial_usb.h src/iwdg/iwdg.h \
- src/iwdg/iwdg_lld.h src/led_ctrl.h src/relay_ctrl.h src/dac.h \
- src/adc_ctrl.h src/cpu_io.h
+ src/iwdg/iwdg_lld.h src/led_ctrl.h src/dac_ctrl.h src/adc_ctrl.h \
+ src/timer_ctrl.h src/cpu_io.h
 
 ../chibios_2.4.x/os/kernel/include/ch.h:
 
@@ -165,13 +166,13 @@ mcuconf.h:
 
 ../chibios_2.4.x/os/hal/include/adc.h:
 
-../chibios_2.4.x/os/hal/platforms/STM32F1xx/adc_lld.h:
-
 ../chibios_2.4.x/os/hal/include/can.h:
 
 ../chibios_2.4.x/os/hal/include/ext.h:
 
 ../chibios_2.4.x/os/hal/include/gpt.h:
+
+../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h:
 
 ../chibios_2.4.x/os/hal/include/i2c.h:
 
@@ -193,6 +194,8 @@ mcuconf.h:
 
 ../chibios_2.4.x/os/hal/include/spi.h:
 
+../chibios_2.4.x/os/hal/platforms/STM32/spi_lld.h:
+
 ../chibios_2.4.x/os/hal/include/uart.h:
 
 ../chibios_2.4.x/os/hal/include/usb.h:
@@ -207,10 +210,10 @@ src/iwdg/iwdg_lld.h:
 
 src/led_ctrl.h:
 
-src/relay_ctrl.h:
-
-src/dac.h:
+src/dac_ctrl.h:
 
 src/adc_ctrl.h:
+
+src/timer_ctrl.h:
 
 src/cpu_io.h:

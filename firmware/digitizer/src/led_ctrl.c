@@ -28,11 +28,6 @@ static msg_t ledsThread( void *arg )
                 palTogglePad( LED_1_PORT, LED_1_PIN );
             else
             	palClearPad( LED_1_PORT, LED_1_PIN );
-
-            if ( arg & 4 )
-                palTogglePad( LED_2_PORT, LED_2_PIN );
-            else
-            	palClearPad( LED_2_PORT, LED_2_PIN );
         chMtxUnlock();
         chThdSleepMilliseconds( 250 );
     }
@@ -44,10 +39,8 @@ void initLed( void )
 {
 	palClearPad( LED_0_PORT,   LED_0_PIN );
 	palClearPad( LED_1_PORT,   LED_1_PIN );
-	palClearPad( LED_2_PORT,   LED_2_PIN );
 	palSetPadMode( LED_0_PORT, LED_0_PIN, PAL_MODE_OUTPUT_PUSHPULL );
 	palSetPadMode( LED_1_PORT, LED_1_PIN, PAL_MODE_OUTPUT_PUSHPULL );
-	palSetPadMode( LED_2_PORT, LED_2_PIN, PAL_MODE_OUTPUT_PUSHPULL );
 
 	// Initializing mutex.
 	chMtxInit( &mutex );
@@ -76,8 +69,6 @@ void toggleLedsImmediate( uint32_t val )
         palTogglePad( LED_0_PORT, LED_0_PIN );
     if ( val & 2 )
         palTogglePad( LED_1_PORT, LED_1_PIN );
-    if ( val & 4 )
-        palTogglePad( LED_2_PORT, LED_2_PIN );
 }
 
 void toggleLedsI( uint32_t arg )
@@ -86,8 +77,6 @@ void toggleLedsI( uint32_t arg )
         palTogglePad( LED_0_PORT, LED_0_PIN );
     if ( arg & 2 )
         palTogglePad( LED_1_PORT, LED_1_PIN );
-    if ( arg & 4 )
-        palTogglePad( LED_2_PORT, LED_2_PIN );
 }
 
 

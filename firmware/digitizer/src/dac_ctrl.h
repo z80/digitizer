@@ -6,6 +6,9 @@
 
 void initDac( void );
 void setDacI( int index, int value );
+int  setDac( int index, int value );
+int  setDac1( int valueL, int valueH );
+int  setDac2( int valueL, int valueH );
 void processDacI( void );
 
 

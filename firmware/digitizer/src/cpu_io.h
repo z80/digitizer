@@ -4,8 +4,8 @@
 
 #include "ch.h"
 
-void cpu_io_init( void );
-void cpu_io_process( void );
+void initCpuIo( void );
+void processCpuIo( void );
 uint8_t * funcArgs( void );
 
 typedef void (* TFunc)( uint8_t * args );
