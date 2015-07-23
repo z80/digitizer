@@ -18,9 +18,9 @@ static int adcIndex = 0;
 
 // Possible indices 0, 1, 2, 3.
 static void selectAdcIndex( int index );
-
 static void onSpiComplete( SPIDriver * spid );
-
+static WORKING_AREA( waAdc, 2048 );
+static msg_t adcThread( void *arg );
 /*
  * Maximum speed SPI configuration (18MHz, CPHA=0, CPOL=0, MSb first).
  */
@@ -49,6 +49,9 @@ void initAdc( void )
     selectAdcIndex( adcIndex );
 
     spiStart( &SPID1, &hs_spicfg );
+
+	// Creating thread.
+	chThdCreateStatic( waAdc, sizeof(waAdc), NORMALPRIO, AdcThread, NULL );
 }
 
 void queryAdcI( void )
@@ -109,6 +112,37 @@ void selectAdcIndex( int index )
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+static msg_t adcThread( void *arg )
+{
+    (void)arg;
+    chRegSetThreadName( "ld" );
+    while ( 1 )
+    {
+    	msg_t msg = chIQGet( &adc_queue, TIME_INFINITE );
+    	int index = (int)msg;
+
+    	int value;
+    	msg = chIQGet( &adc_queue, TIME_INFINITE );
+    	value = (int)msg;
+    	msg = chIQGet( &adc_queue, TIME_INFINITE );
+    	value += (int)msg << 8;
+    	msg = chIQGet( &adc_queue, TIME_INFINITE );
+    	value += (int)msg << 16;
+    }
+
+    return 0;
+}
 
 
 
