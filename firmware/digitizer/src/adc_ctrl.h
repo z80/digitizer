@@ -7,6 +7,8 @@
 void initAdc( void );
 void queryAdcI( void );
 InputQueue * adcQueue( void );
+// Returns 4 values. So pointer should reference at least 4 integers array.
+void instantAdc( int * vals );
 
 #endif
 

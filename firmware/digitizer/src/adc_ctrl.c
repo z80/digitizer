@@ -51,7 +51,7 @@ void initAdc( void )
     spiStart( &SPID1, &hs_spicfg );
 
 	// Creating thread.
-	chThdCreateStatic( waAdc, sizeof(waAdc), NORMALPRIO, AdcThread, NULL );
+	chThdCreateStatic( waAdc, sizeof(waAdc), NORMALPRIO, adcThread, NULL );
 }
 
 void queryAdcI( void )
@@ -122,26 +122,43 @@ void selectAdcIndex( int index )
 
 
 
-
+static int instantAdcdata[4] = { -1, -1, -1, -1 };
 static msg_t adcThread( void *arg )
 {
     (void)arg;
     chRegSetThreadName( "ld" );
     while ( 1 )
     {
-    	msg_t msg = chIQGet( &adc_queue, TIME_INFINITE );
+    	// chIGet waits for a byte for TIME_INFINITE time.
+    	msg_t msg = chIQGet( &adc_queue );
     	int index = (int)msg;
 
     	int value;
-    	msg = chIQGet( &adc_queue, TIME_INFINITE );
+    	msg = chIQGet( &adc_queue );
     	value = (int)msg;
-    	msg = chIQGet( &adc_queue, TIME_INFINITE );
+    	msg = chIQGet( &adc_queue );
     	value += (int)msg << 8;
-    	msg = chIQGet( &adc_queue, TIME_INFINITE );
+    	msg = chIQGet( &adc_queue );
     	value += (int)msg << 16;
+    	chSysLock();
+    		instantAdcdata[index] = value;
+    	chSysUnlock();
     }
 
     return 0;
+}
+
+void instantAdc( int * vals )
+{
+	if ( vals )
+	{
+		chSysLock();
+			vals[0] = instantAdcdata[0];
+			vals[1] = instantAdcdata[1];
+			vals[2] = instantAdcdata[2];
+			vals[3] = instantAdcdata[3];
+		chSysUnlock();
+	}
 }
 
 
