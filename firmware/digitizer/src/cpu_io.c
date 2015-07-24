@@ -29,15 +29,30 @@ static void process_command( uint8_t * buf, int sz );
 static void writeResult( uint8_t v );
 static void writeEom( void );
 
+static const SerialConfig serial_cfg =
+{
+	115200,
+	0,
+	USART_CR2_STOP1_BITS | USART_CR2_LINEN,
+	USART_CR3_RTSE | USART_CR3_CTSE
+
+};
 
 void initCpuIo( void )
 {
 	// Initialize serial driver.
-	sdStart( &SERIAL, 0 );
+	sdStart( &SERIAL, &serial_cfg );
 
 	// Setup pad settings.
 	palSetPadMode( GPIOA, 9, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
 	palSetPadMode( GPIOA, 10, PAL_MODE_INPUT );
+
+	// Setup RTS.
+	palSetPadMode( GPIOA, 11, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
+
+	// Setup CTS.
+	palSetPadMode( GPIOA, 12, PAL_MODE_INPUT );
+
 }
 
 void processCpuIo( void )
