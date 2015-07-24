@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWnd</class>
+ <widget class="QMainWindow" name="MainWnd">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Potentiostat</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/images/icon.png</normaloff>:/images/icon.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="C" country="AnyCountry"/>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>64</width>
+    <height>64</height>
+   </size>
+  </property>
+  <widget class="QWidget" name="osc"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_Quit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_About"/>
+   </widget>
+   <widget class="QMenu" name="menuCalibration">
+    <property name="title">
+     <string>Calibration</string>
+    </property>
+    <addaction name="actionCalibration"/>
+   </widget>
+   <widget class="QMenu" name="menuDevice">
+    <property name="title">
+     <string>Device</string>
+    </property>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menuDevice"/>
+   <addaction name="menuCalibration"/>
+   <addaction name="menu_Help"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionDC_Volt"/>
+   <addaction name="actionSingle_pulse"/>
+   <addaction name="actionMeandr"/>
+   <addaction name="actionSweep"/>
+   <addaction name="separator"/>
+   <addaction name="actionShort_relay"/>
+   <addaction name="actionOut_relay"/>
+   <addaction name="separator"/>
+   <addaction name="actionExecLua"/>
+   <addaction name="actionStopLua"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Lua console</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QtLua::Console" name="console"/>
+  </widget>
+  <action name="action_Quit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open/Reopen</string>
+   </property>
+  </action>
+  <action name="actionDC_Volt">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/dc.png</normaloff>:/images/dc.png</iconset>
+   </property>
+   <property name="text">
+    <string>DC Volt</string>
+   </property>
+   <property name="toolTip">
+    <string>DC voltage controls</string>
+   </property>
+  </action>
+  <action name="actionSingle_pulse">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/pulse.png</normaloff>:/images/pulse.png</iconset>
+   </property>
+   <property name="text">
+    <string>Single pulse</string>
+   </property>
+   <property name="toolTip">
+    <string>Single voltage pulse controls</string>
+   </property>
+  </action>
+  <action name="actionMeandr">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/meandr.png</normaloff>:/images/meandr.png</iconset>
+   </property>
+   <property name="text">
+    <string>Meandr</string>
+   </property>
+   <property name="toolTip">
+    <string>Voltage meandr controls</string>
+   </property>
+  </action>
+  <action name="actionShort_relay">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/short-relay.png</normaloff>:/images/short-relay.png</iconset>
+   </property>
+   <property name="text">
+    <string>Short relay</string>
+   </property>
+  </action>
+  <action name="actionOut_relay">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/out-relay.png</normaloff>:/images/out-relay.png</iconset>
+   </property>
+   <property name="text">
+    <string>Out relay</string>
+   </property>
+   <property name="toolTip">
+    <string>Out relay</string>
+   </property>
+  </action>
+  <action name="actionCalibration">
+   <property name="text">
+    <string>Calibration</string>
+   </property>
+  </action>
+  <action name="actionSweep">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/sweep.png</normaloff>:/images/sweep.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sweep</string>
+   </property>
+  </action>
+  <action name="actionExecLua">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/exec.png</normaloff>:/images/exec.png</iconset>
+   </property>
+   <property name="text">
+    <string>execLua</string>
+   </property>
+   <property name="toolTip">
+    <string>Execute Lua script</string>
+   </property>
+  </action>
+  <action name="actionStopLua">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>stopLua</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtLua::Console</class>
+   <extends>QWidget</extends>
+   <header>QtLua/Console</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
+ <connections/>
+</ui>

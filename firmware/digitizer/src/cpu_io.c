@@ -182,11 +182,20 @@ static void set_dac2( uint8_t * args )
 static void get_adc( uint8_t * args )
 {
 	(void)args;
-	int res = 123;
-	uint8_t b = (uint8_t)(res & 0xFF);
-	writeResult( b );
-	b = (uint8_t)((res >> 8) & 0xFF);
-	writeResult( b );
+	int res[4];
+	instantAdc( res );
+	int i;
+	for ( i=0; i<4; i++ )
+	{
+		uint8_t b = (uint8_t)(res[i] & 0xFF);
+		writeResult( b );
+		b = (uint8_t)((res[i] >> 8) & 0xFF);
+		writeResult( b );
+		b = (uint8_t)((res[i] >> 16) & 0xFF);
+		writeResult( b );
+		b = (uint8_t)((res[i] >> 24) & 0xFF);
+		writeResult( b );
+	}
 	writeEom();
 }
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SinglePulseWnd</class>
+ <widget class="QWidget" name="SinglePulseWnd">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>151</width>
+    <height>132</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Single pulse</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QDoubleSpinBox" name="volt">
+     <property name="locale">
+      <locale language="C" country="AnyCountry"/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="prefix">
+      <string>V:</string>
+     </property>
+     <property name="suffix">
+      <string>[mV]</string>
+     </property>
+     <property name="minimum">
+      <double>-12000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>12000.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>1000.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="duration">
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="prefix">
+      <string>time:</string>
+     </property>
+     <property name="suffix">
+      <string>[ms]</string>
+     </property>
+     <property name="maximum">
+      <double>100000.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>30.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QPushButton" name="apply">
+     <property name="text">
+      <string>Pulse</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
