@@ -16,11 +16,17 @@ uint8_t     adc_queue_buffer[ADC_QUEUE_SZ];
 uint8_t     adc_rx_buffer[4];
 static int adcIndex = 0;
 
+static int instantAdcData[4] = { -1, -1, -1, -1 };
+
+// Oscilloscope parameters.
+int signalMask = 15;
+int period     = 500;
+int elapsed    = 0;
+
+
 // Possible indices 0, 1, 2, 3.
 static void selectAdcIndex( int index );
 static void onSpiComplete( SPIDriver * spid );
-static WORKING_AREA( waAdc, 2048 );
-static msg_t adcThread( void *arg );
 /*
  * Maximum speed SPI configuration (18MHz, CPHA=0, CPOL=0, MSb first).
  */
@@ -49,9 +55,6 @@ void initAdc( void )
     selectAdcIndex( adcIndex );
 
     spiStart( &SPID1, &hs_spicfg );
-
-	// Creating thread.
-	chThdCreateStatic( waAdc, sizeof(waAdc), NORMALPRIO, adcThread, NULL );
 }
 
 void queryAdcI( void )
@@ -67,23 +70,88 @@ void onSpiComplete( SPIDriver * spid )
 	(void)spid;
 	chSysLockFromIsr();
 		// The very first thing - switch another signal to ADC input.
+		int prevIndex = adcIndex;
 		adcIndex = (adcIndex + 1) % 4;
 		selectAdcIndex( adcIndex );
 		// Unselect SPI slave.
 		spiUnselectI( &SPID1 );
-		// Put data to input queue.
-		if ( chIQGetEmptyI( &adc_queue ) >= 4 )
-		{
-			// Before I don't really know which bits to get I get all bits obtained.
-			// In datasheet it is written that minimum 22 cycles are required and 24
-			// are shown as an example.
-			// Save ADC signal index first.
-			chIQPutI( &adc_queue, (uint8_t)adcIndex );
-			// Save data here.
-			chIQPutI( &adc_queue, adc_rx_buffer[0] );
-			chIQPutI( &adc_queue, adc_rx_buffer[1] );
-			chIQPutI( &adc_queue, adc_rx_buffer[2] );
-		}
+
+		int value = (int)(adc_rx_buffer[0]) +
+					((int)(adc_rx_buffer[1]) << 8) +
+					((int)(adc_rx_buffer[1]) << 16);
+    		instantAdcData[prevIndex] = value;
+
+		// if (adcIndex == 0) this means it was 3 just
+		// in time of measure. So a full cycle was just completed.
+		// And now it's time to process oscilloscope. Put
+		// data to input queue.
+    	if ( prevIndex == 3 )
+    	{
+			elapsed += 1;
+			if ( elapsed >= period )
+			{
+				elapsed -= period;
+				if ( chIQGetEmptyI( &adc_queue ) >= 12 )
+				{
+					// Before I don't really know which bits to get I get all bits obtained.
+					// In datasheet it is written that minimum 22 cycles are required and 24
+					// are shown as an example.
+					// Save ADC signal index first.
+					uint8_t v;
+					if ( signalMask & 1 )
+					{
+						value = instantAdcData[0];
+						v = (uint8_t)( value & 0xFF );
+						chIQPutI( &adc_queue, v );
+
+						v = (uint8_t)( (value >> 8) & 0xFF );
+						chIQPutI( &adc_queue, v );
+
+						v = (uint8_t)( (value >> 16) & 0xFF );
+						chIQPutI( &adc_queue, v );
+					}
+
+					if ( signalMask & 2 )
+					{
+						value = instantAdcData[1];
+						v = (uint8_t)( value & 0xFF );
+						chIQPutI( &adc_queue, v );
+
+						v = (uint8_t)( (value >> 8) & 0xFF );
+						chIQPutI( &adc_queue, v );
+
+						v = (uint8_t)( (value >> 16) & 0xFF );
+						chIQPutI( &adc_queue, v );
+					}
+
+					if ( signalMask & 4 )
+					{
+						value = instantAdcData[2];
+						v = (uint8_t)( value & 0xFF );
+						chIQPutI( &adc_queue, v );
+
+						v = (uint8_t)( (value >> 8) & 0xFF );
+						chIQPutI( &adc_queue, v );
+
+						v = (uint8_t)( (value >> 16) & 0xFF );
+						chIQPutI( &adc_queue, v );
+					}
+
+					if ( signalMask & 8 )
+					{
+						value = instantAdcData[3];
+						v = (uint8_t)( value & 0xFF );
+						chIQPutI( &adc_queue, v );
+
+						v = (uint8_t)( (value >> 8) & 0xFF );
+						chIQPutI( &adc_queue, v );
+
+						v = (uint8_t)( (value >> 16) & 0xFF );
+						chIQPutI( &adc_queue, v );
+					}
+				}
+			}
+    	}
 	chSysUnlockFromIsr();
 }
 
@@ -122,44 +190,34 @@ void selectAdcIndex( int index )
 
 
 
-static int instantAdcdata[4] = { -1, -1, -1, -1 };
-static msg_t adcThread( void *arg )
-{
-    (void)arg;
-    chRegSetThreadName( "ld" );
-    while ( 1 )
-    {
-    	// chIGet waits for a byte for TIME_INFINITE time.
-    	msg_t msg = chIQGet( &adc_queue );
-    	int index = (int)msg;
-
-    	int value;
-    	msg = chIQGet( &adc_queue );
-    	value = (int)msg;
-    	msg = chIQGet( &adc_queue );
-    	value += (int)msg << 8;
-    	msg = chIQGet( &adc_queue );
-    	value += (int)msg << 16;
-    	chSysLock();
-    		instantAdcdata[index] = value;
-    	chSysUnlock();
-    }
-
-    return 0;
-}
-
 void instantAdc( int * vals )
 {
 	if ( vals )
 	{
 		chSysLock();
-			vals[0] = instantAdcdata[0];
-			vals[1] = instantAdcdata[1];
-			vals[2] = instantAdcdata[2];
-			vals[3] = instantAdcdata[3];
+			vals[0] = instantAdcData[0];
+			vals[1] = instantAdcData[1];
+			vals[2] = instantAdcData[2];
+			vals[3] = instantAdcData[3];
 		chSysUnlock();
 	}
 }
+
+void setOscSignals( int mask )
+{
+	chSysLock();
+		signalMask = mask;
+	chSysUnlock();
+}
+
+void setOscPeriod( uint32_t interval )
+{
+	chSysLock();
+		period = (int)interval;
+	chSysUnlock();
+
+}
+
 
 
 

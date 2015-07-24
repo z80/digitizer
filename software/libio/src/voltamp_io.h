@@ -18,23 +18,14 @@ public:
     bool hardware_version( QString & stri );
     bool firmware_version( QString & stri );
 
+    bool setLed( int leds );
     bool setDac1( int dacA, int dacB );
     bool setDac2( int dacA, int dacB );
     bool instantAdc( QVector<int> & data );
 
-    bool osc_eaux( QVector<quint16> & vals );
-    bool osc_eref( QVector<quint16> & vals );
-    bool osc_iaux( QVector<quint16> & vals );
-    bool osc_set_period( qreal secs, int per_pts );
-    bool set_leds( int leds );
-    bool set_out_relay( bool en );
-    bool set_sc_relay( bool en );
-    bool set_dac_raw( int dacLow, int dacHigh );
-    bool set_one_pulse_raw( int dacLow, int dacHigh, qreal ms );
-    bool set_meandr_raw( int dacLow1, int dacHigh1, qreal timeMs1, int dacLow2, int dacHigh2, qreal timeMs2 );
-    bool set_sweep_raw( int dacLow1, int dacHigh1, int dacLow2, int dacHigh2, qreal timeMs2 );
-
-
+    bool setOscSignals( bool * en );
+    bool setOscPeriod( int ptsCnt, qreal periodMs );
+    bool oscData( QVector<int> & data );
 
     bool setArgs( quint8 * data, int dataSz );
     bool execFunc( quint8 funcId );
