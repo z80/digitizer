@@ -117,6 +117,9 @@ static void set_led( uint8_t * args );
 static void set_dac1( uint8_t * args );
 static void set_dac2( uint8_t * args );
 static void get_adc( uint8_t * args );
+static void set_osc_signals( uint8_t * args );
+static void set_osc_period( uint8_t * args );
+static void get_osc_data( uint8_t * args );
 
 static TFunc funcs[] =
 {
@@ -125,7 +128,10 @@ static TFunc funcs[] =
     set_led,
 	set_dac1,
 	set_dac2,
-	get_adc
+	get_adc,
+	set_osc_signals,
+	set_osc_period,
+	get_osc_data
 };
 
 static void exec_func( void )
@@ -198,6 +204,44 @@ static void get_adc( uint8_t * args )
 	}
 	writeEom();
 }
+
+static void set_osc_signals( uint8_t * arg )
+{
+	uint8_t v = arg[0];
+	setOscSignals( v );
+}
+
+static void set_osc_period( uint8_t * arg )
+{
+	uint32_t v;
+	v = (int)( arg[0] );
+	v += ( (int)( arg[1] ) << 8 );
+	v += ( (int)( arg[1] ) << 16 );
+	v += ( (int)( arg[1] ) << 24 );
+	setOscPeriod( v );
+}
+
+static void get_osc_data( uint8_t * arg )
+{
+	(void)arg;
+	msg_t msg;
+	uint8_t noData;
+	size_t cnt, i;
+	InputQueue * q = adcQueue();
+	chSysLock();
+		cnt = (chQSpaceI( q ) / 12);
+	chSysUnlock();
+	for ( i=0; i<cnt; i++ )
+	{
+		msg = chIQGetTimeout( q, TIME_IMMEDIATE );
+		noData = ( ( msg == Q_TIMEOUT ) || ( msg == Q_RESET ) ) ? 1 : 0;
+		uint8_t v;
+		v = ( noData ) ? 0 : (uint8_t)msg;
+		writeResult( v );
+	}
+	writeEom();
+}
+
 
 
 
