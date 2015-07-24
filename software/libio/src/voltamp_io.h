@@ -18,8 +18,9 @@ public:
     bool hardware_version( QString & stri );
     bool firmware_version( QString & stri );
 
-    bool setDac1( int dacA, dacB );
-    bool setDac2( int dacA, dacB );
+    bool setDac1( int dacA, int dacB );
+    bool setDac2( int dacA, int dacB );
+    bool instantAdc( QVector<int> & data );
 
     bool osc_eaux( QVector<quint16> & vals );
     bool osc_eref( QVector<quint16> & vals );
