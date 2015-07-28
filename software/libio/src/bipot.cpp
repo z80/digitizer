@@ -3,6 +3,26 @@
 #include "voltamp_io.h"
 
 
+struct CalibrationDac
+{
+    int   dacA;
+    int   dacB;
+    qreal volt;
+};
+
+struct CalibrationAdc
+{
+    int adcA;
+    int adcB;
+    int adcC;
+    int adcD;
+
+    qreal voltA;
+    qreal voltB;
+    qreal voltC;
+    qreal voltD;
+};
+
 class Bipot::PD
 {
 public:
@@ -20,30 +40,34 @@ public:
     QVector<int> data;
 
     qreal workA, workB, probeA, probeB;
+
+    QList<CalibrationDac> clbrDacWork, 
+                          clbrDacProbe;
+    QList<CalibrationAdc> clbrAdc;
 };
 
 qreal Bipot::PD::adc2workV( int adc )
 {
-    qreal res = static_ast< qreal >( adc );
+    qreal res = static_cast< qreal >( adc );
     return res;
 }
 
 qreal Bipot::PD::adc2probeV( int adc )
 {
-    qreal res = static_ast< qreal >( adc );
+    qreal res = static_cast< qreal >( adc );
     return res;
 }
 
 qreal Bipot::PD::adc2workI( int adc )
 {
-    qreal res = static_ast< qreal >( adc );
+    qreal res = static_cast< qreal >( adc );
     res = res * workA + workB;
     return res;
 }
 
 qreal Bipot::PD::adc2probeI( int adc )
 {
-    qreal res = static_ast< qreal >( adc );
+    qreal res = static_cast< qreal >( adc );
     res = res * probeA + probeB;
     return res;
 }
@@ -232,33 +256,96 @@ void Bipot::setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB )
 
 void Bipot::clearCalibrationWorkDac()
 {
-    
+        pd->clbrDacWork.clear();
 }
 
 bool Bipot::loadCalibrationWorkDac( const QString & fileName )
 {
+    QFile file( fileName );
+    bool open = file.open( QIODevice::ReadOnly );
+    if ( open )
+    {
+        QString stri; 
+        while ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                CalibrationDac d;
+                QString m;
+                m = ex.cap( 1 );
+                d.dacA = m.toInt();
 
-    return true;
+                m = ex.cap( 2 );
+                d.dacB = m.toInt();
+
+                m = ex.cap( 3 );
+                d.volt = m.toDouble();
+
+                pd->clbrDacWork.append( d );
+            }
+        }
+        file.close();
+        return true;
+    }
+
+    return false;
 }
 
 bool Bipot::saveCalibrationWorkDac( const QString & fileName )
 {
-
-    return true;
+    return false;
 }
 
 void Bipot::addCalibrationWorkDac( int dacA, int DacB, qreal mV )
 {
+    CalibrationDac d;
+    d.dacA = dacA;
+    d.dacB = dacB;
+    d.volt = mV;
+    pd->clbrDacWork.append( d );
 }
 
 void Bipot::clearCalibrationProbeDac()
 {
+    pd->clbrDacProbe.clear();
 }
 
 bool Bipot::loadCalibrationProbeDac( const QString & fileName )
 {
+    QFile file( fileName );
+    bool open = file.open( QIODevice::ReadOnly );
+    if ( open )
+    {
+        QString stri; 
+        while ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                CalibrationDac d;
+                QString m;
+                m = ex.cap( 1 );
+                d.dacA = m.toInt();
 
-    return true;
+                m = ex.cap( 2 );
+                d.dacB = m.toInt();
+
+                m = ex.cap( 3 );
+                d.volt = m.toDouble();
+
+                pd->clbrDacProbe.append( d );
+            }
+        }
+        file.close();
+        return true;
+    }
+
+    return false;
 }
 
 bool Bipot::saveCalibrationProbeDac( const QString & fileName )
@@ -269,15 +356,66 @@ bool Bipot::saveCalibrationProbeDac( const QString & fileName )
 
 void Bipot::addCalibrationProbeDac( int dacA, int DacB, qreal mV )
 {
+    CalibrationDac d;
+    d.dacA = dacA;
+    d.dacB = dacB;
+    d.volt = mV;
+    pd->clbrDacProbe.append( d );
 }
 
 void Bipot::clearCalibrationAdc()
 {
+    pd->clbrAdc.clear();
 }
 
 bool Bipot::loadCalibrationAdc( const QString & fileName )
 {
-    return true;
+    QFile file( fileName );
+    bool open = file.open( QIODevice::ReadOnly );
+    if ( open )
+    {
+        QString stri; 
+        while ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                CalibrationAdc d;
+                QString m;
+                m = ex.cap( 1 );
+                d.adcA = m.toInt();
+
+                m = ex.cap( 2 );
+                d.adcB = m.toInt();
+
+                m = ex.cap( 3 );
+                d.adcC = m.toInt();
+
+                m = ex.cap( 4 );
+                d.adcD = m.toInt();
+
+                m = ex.cap( 5 );
+                d.voltA = m.toDouble();
+
+                m = ex.cap( 6 );
+                d.voltB = m.toDouble();
+
+                m = ex.cap( 7 );
+                d.voltC = m.toDouble();
+
+                m = ex.cap( 8 );
+                d.voltD = m.toDouble();
+
+                pd->clbrAdc.append( d );
+            }
+        }
+        file.close();
+        return true;
+    }
+
+    return false;
 }
 
 bool Bipot::saveCalibrationAdc( const QString & fileName )
@@ -287,6 +425,11 @@ bool Bipot::saveCalibrationAdc( const QString & fileName )
 
 void Bipot::addCalibrationAdc( qreal mv0, qreal mv1, qreal mv2, qreal mv3 )
 {
+    CalibrationDac d;
+    d.dacA = dacA;
+    d.dacB = dacB;
+    d.volt = mV;
+    pd->clbrDacProbe.append( d );
 }
 
 bool Bipot::calibrationCalc()
