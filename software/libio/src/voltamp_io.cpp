@@ -150,7 +150,7 @@ bool VoltampIo::setLed( int leds )
         return false;
 
     quint8 funcInd = 2;
-    bool res = execFunc( funcInd );
+    res = execFunc( funcInd );
     if ( !res )
         return false;
 
@@ -219,7 +219,7 @@ bool VoltampIo::setDac2( int dacA, int dacB )
     return true;
 }
 
-bool VoltampIo::instantAdc( QVector<int> & data )
+bool VoltampIo::instantAdc( int * data )
 {
     QMutexLocker lock( &pd->mutex );
 
@@ -235,7 +235,6 @@ bool VoltampIo::instantAdc( QVector<int> & data )
     if ( ( !eom ) || ( cnt < 16 ) )
         return false;
 
-    data.resize( 4 );
     for ( int i=0; i<4; i++ )
     {
         quint8 * d = reinterpret_cast<quint8 *>( arr.data() );
@@ -258,7 +257,7 @@ bool VoltampIo::setOscSignals( bool * en )
     bool res = execFunc( funcInd );
     if ( !res )
         return false;
-    quint8_t v = ( (en[0] ? 1 : 0) | (en[1] ? 2 : 0) | (en[2] ? 4 : 0) | (en[3] ? 8 : 0) );
+    quint8 v = ( (en[0] ? 1 : 0) | (en[1] ? 2 : 0) | (en[2] ? 4 : 0) | (en[3] ? 8 : 0) );
     res = setArgs( &v, 1 );
     if ( !res )
         return false;
@@ -311,7 +310,7 @@ bool VoltampIo::oscData( QVector<int> & data )
     quint8 * d = reinterpret_cast<quint8 *>( arr.data() );
     for ( int i=0; i<sz; i++ )
     {
-        int val v;
+        int v;
         v  = static_cast<int>( d[i] );
         v += static_cast<int>( d[i+1] << 8 );
         v += static_cast<int>( d[i+2] << 16 );
@@ -349,7 +348,7 @@ bool VoltampIo::setArgs( quint8 * data, int dataSz )
     return ( cnt == pd->buffer.size() );
 }
 
-bool VoltampIo::execFunc( quint8 funcId )
+bool VoltampIo::execFunc( quint16 funcId )
 {
     QByteArray & arr = pd->buffer_cmd;
     arr.reserve( 2 + 1 );

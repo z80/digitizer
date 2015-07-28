@@ -21,14 +21,14 @@ public:
     bool setLed( int leds );
     bool setDac1( int dacA, int dacB );
     bool setDac2( int dacA, int dacB );
-    bool instantAdc( QVector<int> & data );
+    bool instantAdc( int * data );
 
     bool setOscSignals( bool * en );
     bool setOscPeriod( int ptsCnt, qreal periodMs );
     bool oscData( QVector<int> & data );
 
     bool setArgs( quint8 * data, int dataSz );
-    bool execFunc( quint8 funcId );
+    bool execFunc( quint16 funcId );
     int  readData( quint8 * data, int dataSz );
 protected:
     int write( quint8 * data, int dataSz );
