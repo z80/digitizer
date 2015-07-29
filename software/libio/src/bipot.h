@@ -35,21 +35,21 @@ public:
     void clearCalibrationWorkDac();
     bool loadCalibrationWorkDac( const QString & fileName = "./work_dac.dat" );
     bool saveCalibrationWorkDac( const QString & fileName = "./work_dac.dat" );
-    void addCalibrationWorkDac( int dacA, int DacB, qreal mV );
+    void addCalibrationWorkDac( int dacA, int dacB, qreal mV );
 
     void clearCalibrationProbeDac();
     bool loadCalibrationProbeDac( const QString & fileName = "./probe_dac.dat" );
     bool saveCalibrationProbeDac( const QString & fileName = "./probe_dac.dat" );
-    void addCalibrationProbeDac( int dacA, int DacB, qreal mV );
+    void addCalibrationProbeDac( int dacA, int dacB, qreal mV );
 
     void clearCalibrationAdc();
     bool loadCalibrationAdc( const QString & fileName = "./adc.dat" );
     bool saveCalibrationAdc( const QString & fileName = "./adc.dat" );
-    void addCalibrationAdc( qreal mv0, qreal mv1, qreal mv2, qreal mv3 );
+    bool addCalibrationAdc( qreal mv0, qreal mv1, qreal mv2, qreal mv3 );
 
     bool calibrationCalc();
-    bool calibrationLoad( const QString & fileName = "./claibration.dat" );
-    bool calibrationSave( const QString & fileName = "./claibration.dat" );
+    bool calibrationLoad( const QString & fileName = "./calibration.dat" );
+    bool calibrationSave( const QString & fileName = "./calibration.dat" );
 private:
     class PD;
     PD * pd;

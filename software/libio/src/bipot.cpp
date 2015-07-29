@@ -296,10 +296,24 @@ bool Bipot::loadCalibrationWorkDac( const QString & fileName )
 
 bool Bipot::saveCalibrationWorkDac( const QString & fileName )
 {
+    QFile file( fileName );
+    if ( file.open( QIODevice::WriteOnly ) )
+    {
+        QTextStream out( &file );
+        for ( QList<CalibrationDac>::const_iterator i=pd->clbrDacWork.begin(); i!=pd->clbrDacWork.end(); i++ )
+        {
+            const CalibrationDac d = *i;
+            QString stri = QString( "%1 %2 %3\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.volt );
+            out << stri;
+        }
+        out.flush();
+        file.close();
+        return true;
+    }
     return false;
 }
 
-void Bipot::addCalibrationWorkDac( int dacA, int DacB, qreal mV )
+void Bipot::addCalibrationWorkDac( int dacA, int dacB, qreal mV )
 {
     CalibrationDac d;
     d.dacA = dacA;
@@ -350,11 +364,24 @@ bool Bipot::loadCalibrationProbeDac( const QString & fileName )
 
 bool Bipot::saveCalibrationProbeDac( const QString & fileName )
 {
-    
-    return true;
+    QFile file( fileName );
+    if ( file.open( QIODevice::WriteOnly ) )
+    {
+        QTextStream out( &file );
+        for ( QList<CalibrationDac>::const_iterator i=pd->clbrDacProbe.begin(); i!=pd->clbrDacProbe.end(); i++ )
+        {
+            const CalibrationDac d = *i;
+            QString stri = QString( "%1 %2 %3\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.volt );
+            out << stri;
+        }
+        out.flush();
+        file.close();
+        return true;
+    }
+    return false;
 }
 
-void Bipot::addCalibrationProbeDac( int dacA, int DacB, qreal mV )
+void Bipot::addCalibrationProbeDac( int dacA, int dacB, qreal mV )
 {
     CalibrationDac d;
     d.dacA = dacA;
@@ -420,16 +447,52 @@ bool Bipot::loadCalibrationAdc( const QString & fileName )
 
 bool Bipot::saveCalibrationAdc( const QString & fileName )
 {
-    return true;
+    QFile file( fileName );
+    if ( file.open( QIODevice::WriteOnly ) )
+    {
+        QTextStream out( &file );
+        for ( QList<CalibrationAdc>::const_iterator i=pd->clbrAdc.begin(); i!=pd->clbrAdc.end(); i++ )
+        {
+            const CalibrationAdc d = *i;
+            QString stri = QString( "%1 %2 %3 %4 %5 %6 %7 %8\n" ).arg( d.adcA )
+                                                                 .arg( d.adcB )
+                                                                 .arg( d.adcC )
+                                                                 .arg( d.adcD )
+                                                                 .arg( d.voltA )
+                                                                 .arg( d.voltB )
+                                                                 .arg( d.voltC )
+                                                                 .arg( d.voltD );
+            out << stri;
+        }
+        out.flush();
+        file.close();
+        return true;
+    }
+    return false;
 }
 
-void Bipot::addCalibrationAdc( qreal mv0, qreal mv1, qreal mv2, qreal mv3 )
+bool Bipot::addCalibrationAdc( qreal mv0, qreal mv1, qreal mv2, qreal mv3 )
 {
-    CalibrationDac d;
-    d.dacA = dacA;
-    d.dacB = dacB;
-    d.volt = mV;
-    pd->clbrDacProbe.append( d );
+    CalibrationAdc d;
+
+    int i0, i1, i2, i3;
+    bool res = instantDataRaw( i0, i1, i2, i3 );
+    if ( !res )
+        return false;
+    
+    d.adcA = i0;
+    d.adcB = i1;
+    d.adcC = i2;
+    d.adcD = i3;
+
+    d.voltA = mv0;
+    d.voltB = mv1;
+    d.voltC = mv2;
+    d.voltD = mv3;
+
+    pd->clbrAdc.append( d );
+
+    return true;
 }
 
 bool Bipot::calibrationCalc()
