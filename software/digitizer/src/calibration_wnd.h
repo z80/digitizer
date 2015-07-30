@@ -4,7 +4,7 @@
 
 #include <QtGui>
 #include "ui_calibration_wnd.h"
-#include "voltamp_io.h"
+#include "bipot.h"
 
 class MainWnd;
 class OscilloscopeWnd;
@@ -16,7 +16,7 @@ public:
     CalibrationWnd( QWidget * parent = 0 );
     ~CalibrationWnd();
 
-    void setIo( VoltampIo * io, MainWnd * mainWnd, OscilloscopeWnd * osc );
+    void setIo( Bipot * io );
 
 protected:
     void showEvent( QShowEvent & e );
@@ -24,47 +24,23 @@ protected:
 
 private slots:
     void slotEnable();
-    void slotAddVolt();
-    void slotAddCurr();
+    void slotAddWorkVolt();
+    void slotAddProbeVolt();
+    void slotAddAdc();
     void slotClearFiles();
 private:
     void setRandomVolt();
-    void calcDac2Volt();
-    void calcAdcAux2Volt();
-    void calcAdcRef2Volt();
-    void calcAdcI2Curr();
 
-    void openVoltCalibrationFile();
-    void openCurrCalibrationFile();
-    void closeCalibrationFiles();
+    void openCalibrationFiles();
+    void saveCalibrationFiles();
+    void clearCalibrationFiles();
 
     Ui_CalibrationWnd ui;
     MainWnd * mainWnd;
-    OscilloscopeWnd * osc;
-    VoltampIo * io;
+    Bipot * io;
 
-    int dacLow,
-        dacHigh;
-
-    QVector<int> dacLowV,
-                 dacHighV,
-                 adcAux,
-                 adcRef,
-                 adcI;
-
-    QVector<qreal> volt,
-                   curr;
-
-    // Calibration coefs.
-    qreal aDacLow, aDacHigh, bDac;
-    qreal aAdcAux, bAdcAux;
-    qreal aAdcRef, bAdcRef;
-    qreal aAdcI,   bAdcI;
-
-    QFile       voltFile,   currFile;
-    QTextStream voltStream, currStream;
-
-    static const QString VOLT_FILE, CURR_FILE;
+    int dacA,
+        dacB;
 };
 
 
