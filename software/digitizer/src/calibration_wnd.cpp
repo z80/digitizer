@@ -57,6 +57,9 @@ void CalibrationWnd::closeEvent( QCloseEvent & e )
 
 void CalibrationWnd::slotEnable()
 {
+    if ( !io->isOpen() )
+        return;
+
     bool en = ui.mode->isChecked();
     ui.panel->setEnabled( en );
     ui.clear->setEnabled( !en );
@@ -78,6 +81,9 @@ void CalibrationWnd::slotEnable()
 
 void CalibrationWnd::slotAddWorkVolt()
 {
+    if ( !io->isOpen() )
+        return;
+
     qreal v = ui.voltDacWork->value();
     io->addCalibrationWorkDac( this->dacA, this->dacB, v );
     setRandomVolt();
@@ -85,6 +91,9 @@ void CalibrationWnd::slotAddWorkVolt()
 
 void CalibrationWnd::slotAddProbeVolt()
 {
+    if ( !io->isOpen() )
+        return;
+
     qreal v = ui.voltDacProbe->value();
     io->addCalibrationProbeDac( this->dacA, this->dacB, v );
     setRandomVolt();
@@ -92,6 +101,9 @@ void CalibrationWnd::slotAddProbeVolt()
 
 void CalibrationWnd::slotAddAdc()
 {
+    if ( !io->isOpen() )
+        return;
+
     qreal vA = ui.voltAdcWork->value();
     qreal vB = ui.voltAdcProbe->value();
     qreal vC = ui.currAdcWork->value();
@@ -111,6 +123,9 @@ void CalibrationWnd::slotClearFiles()
 
 void CalibrationWnd::setRandomVolt()
 {
+    if ( !io->isOpen() )
+        return;
+
     qreal range = static_cast<qreal>( ui.voltRange->value() * 4095 / 100 );
 
     qreal a = static_cast<qreal>( qrand() ) / static_cast<qreal>( RAND_MAX ) - 0.5;
@@ -159,6 +174,14 @@ void CalibrationWnd::clearCalibrationFiles()
     io->clearCalibrationProbeDac();
     io->clearCalibrationAdc();
 }
+
+
+
+
+
+
+
+
 
 
 

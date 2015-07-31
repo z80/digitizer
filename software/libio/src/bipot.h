@@ -32,6 +32,8 @@ public:
 
     // Some active movements.
     bool sweepWork( qreal from, qreal to, qreal ms );
+    bool sweepProbe( qreal from, qreal to, qreal ms );
+    bool seeepBoth( qreal from1, qreal to1, qreal from2, qreal to2, qreal ms );
     bool triggerSweepWork( qreal from, qreal to, int ptsCnt );
 
     // Calibrations.

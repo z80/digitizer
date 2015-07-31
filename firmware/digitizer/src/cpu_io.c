@@ -9,6 +9,7 @@
 #include "dac_ctrl.h"
 
 #include "hdw_config.h"
+#include "funcs.h"
 #include <string.h>
 
 #define BUFFER_SZ    32

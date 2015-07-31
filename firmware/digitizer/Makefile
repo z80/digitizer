@@ -137,7 +137,8 @@ INCDIR = $(PORTINC) $(KERNINC) $(TESTINC) \
          $(HALINC) $(PLATFORMINC) $(BOARDINC) \
          $(CHIBIOS)/os/various \
          ./src \
-         ./src/iwdg 
+         ./src/iwdg \
+         ../../common
          #./cpal_i2c \
          #./stdperiph
 

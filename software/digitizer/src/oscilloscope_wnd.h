@@ -18,12 +18,12 @@ public:
     ~OscilloscopeWnd();
 
     void setPeriod( qreal sec );
-    void addData( const QVector<qreal> & y );
-    void addData( const QVector<qreal> & x, const QVector<qreal> & y );
+    void addData( QQueue<qreal> & y );
+    void addData( QQueue<qreal> & x, QQueue<qreal> & y );
     void clear();
-private slots:
-    void slotCurveType();
-    void slotPeriod();
+public slots:
+    //void slotCurveType();
+    //void slotPeriod();
     void slotReplot();
 private:
 

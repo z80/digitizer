@@ -4,14 +4,12 @@
 
 #include <QtGui>
 #include <QMessageBox>
+#include <QtConcurrent/QtConcurrentRun>
+
 #include "ui_main_wnd.h"
 #include "bipot.h"
 #include "oscilloscope_wnd.h"
 #include "calibration_wnd.h"
-
-#include <QtLua/State>
-#include <QtLua/Console>
-struct lua_Debug;
 
 class MainWnd: public QMainWindow
 {
@@ -27,6 +25,7 @@ public:
 
 signals:
     void sigInstantValues( qreal wv, qreal pv, qreal wi, qreal pi );
+    void sigReplot();
 public slots:
     void slotQuit();
     void slotAbout();
@@ -47,6 +46,7 @@ public slots:
     void slotSweepProbe();
 
     void slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi );
+    void slotReplot();
 protected:
     void closeEvent( QCloseEvent * e );
 private:
@@ -59,13 +59,20 @@ private:
     int devName;
 
     Ui_MainWnd ui;
-    QMutex mutex;
-    Bipot  * io;
+    QFuture<void> future;
+    QMutex        mutex;
+    bool          terminate;
+    Bipot         * io;
     OscilloscopeWnd * oscWork;
     OscilloscopeWnd * oscProbe;
-    CalibrationWnd * calibrationWnd;
+    CalibrationWnd  * calibrationWnd;
 
     QList<QAction *> devicesList;
+
+    // Data to be read from USB directly in a separate thread.
+    QVector<qreal> t_workV, t_workI, t_probeV, t_probeI;
+    // Data to be painted.
+    QQueue<qreal> p_workV, p_workI, p_probeV, p_probeI;
 
     static const QString SETTINGS_INI;
 };

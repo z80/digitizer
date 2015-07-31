@@ -14,9 +14,6 @@
 
 include_directories( "./src"
                      ${ROOT}/libio/src
-                     ${ROOT}/3dparty/lua-5.1.5/src
-                     ${ROOT}/3dparty/lua-5.1.5/etc
-                     ${ROOT}/3dparty/libqtlua-2.0/src
                      ${ROOT}/3dparty/qwt-6.1.2/src
                      ${CMAKE_CURRENT_BINARY_DIR} )
 if ( WIN32 )
@@ -49,6 +46,5 @@ endif ( WIN32 )
 
 add_executable( digitizer ${BLD_TYPE} ${src} )
 qt5_use_modules( digitizer Widgets Core )
-target_link_libraries( digitizer libio qwt-6.1.2 qtlua ${QT_LIBRARIES} Qt5::WinMain )
+target_link_libraries( digitizer libio qwt-6.1.2 ${QT_LIBRARIES} Qt5::WinMain )
 install( TARGETS   digitizer DESTINATION ./ )
-install( DIRECTORY ./lua/ DESTINATION ./ )

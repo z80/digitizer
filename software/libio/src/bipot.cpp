@@ -274,6 +274,16 @@ bool Bipot::sweepWork( qreal from, qreal to, qreal ms )
     return true;
 }
 
+bool Bipot::sweepProbe( qreal from, qreal to, qreal ms )
+{
+    return true;
+}
+
+bool Bipot::seeepBoth( qreal from1, qreal to1, qreal from2, qreal to2, qreal ms )
+{
+    return true;
+}
+
 bool Bipot::triggerSweepWork( qreal from, qreal to, int ptsCnt )
 {
     return true;

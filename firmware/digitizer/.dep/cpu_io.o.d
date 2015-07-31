@@ -64,7 +64,7 @@ build/obj/cpu_io.o: src/cpu_io.c src/cpu_io.h \
  ../chibios_2.4.x/os/hal/include/usb.h \
  ../chibios_2.4.x/os/hal/include/mmc_spi.h \
  ../chibios_2.4.x/os/hal/include/serial_usb.h src/led_ctrl.h \
- src/adc_ctrl.h src/dac_ctrl.h src/hdw_config.h \
+ src/adc_ctrl.h src/dac_ctrl.h src/hdw_config.h ../../common/funcs.h \
  c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/string.h \
  c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/_ansi.h \
  c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/newlib.h \
@@ -225,6 +225,8 @@ src/adc_ctrl.h:
 src/dac_ctrl.h:
 
 src/hdw_config.h:
+
+../../common/funcs.h:
 
 c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/string.h:
 

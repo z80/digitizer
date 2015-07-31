@@ -69,14 +69,15 @@ void OscilloscopeWnd::setPeriod( qreal sec )
     period = sec;
 }
 
-void OscilloscopeWnd::addData( const QVector<qreal> & y )
+void OscilloscopeWnd::addData( QQueue<qreal> & y )
 {
     int sz = y.size();
     Curve & c = curves[0];
 
-    for ( int i=0; i<sz; i++ )
+    while ( y.size() > 0 )
     {
-        c.y[c.cnt] = y.at( i );
+        qreal v = y.dequeue();
+        c.y[c.cnt] = v;
         c.x[c.cnt] = period * static_cast<qreal>( c.cnt ) / static_cast<qreal>( PTS_CNT );
         c.cnt++;
         if ( c.cnt >= PTS_CNT )
@@ -89,23 +90,24 @@ void OscilloscopeWnd::addData( const QVector<qreal> & y )
     }
 }
 
-void OscilloscopeWnd::addData( const QVector<qreal> & x, const QVector<qreal> & y )
+void OscilloscopeWnd::addData( QQueue<qreal> & x, QQueue<qreal> & y )
 {
     int sz = ( y.size() < x.size() ) ? y.size() : x.size();
     Curve & c = curves[0];
 
+    int newSz = c.cnt + sz;
+    if ( c.x.size() < newSz )
+        c.x.resize( newSz );
+    if ( c.y.size() < newSz )
+        c.y.resize( newSz );
+
     for ( int i=0; i<sz; i++ )
     {
-        c.y[c.cnt] = y.at( i );
-        c.x[c.cnt] = x.at( i );
+        qreal vx = x.dequeue();
+        qreal vy = y.dequeue();
+        c.y[c.cnt] = vx;
+        c.x[c.cnt] = vy;
         c.cnt++;
-        if ( c.cnt >= PTS_CNT )
-        {
-            for ( int j=(curves.size()-1); j>0; j-- )
-                curves[j] = curves[j-1];
-
-            c.cnt = 0;
-        }
     }
 }
 

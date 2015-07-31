@@ -1,8 +1,10 @@
 
 #include "main_wnd.h"
 #include <QFileDialog>
-#include "lua.hpp"
 
+#include <boost/bind.hpp>
+#include <boost/bind/arg.hpp>
+#include <boost/bind/placeholders.hpp>
 
 const QString MainWnd::SETTINGS_INI = "./settings.ini";
 
@@ -12,7 +14,9 @@ MainWnd::MainWnd( QWidget * parent )
     ui.setupUi( this );
     //ui.osc->show();
 
-    io = new Bipot();
+    terminate = false;
+    io        = new Bipot();
+    future = QtConcurrent::run( boost::bind( &MainWnd::measure, this ) );
 
     loadSettings();
     refreshDevicesList();
@@ -27,21 +31,43 @@ MainWnd::MainWnd( QWidget * parent )
     calibrationWnd = new CalibrationWnd( 0 );
     calibrationWnd->setIo( io );
 
-    connect( ui.action_Quit,  SIGNAL(triggered()), this, SLOT(slotQuit()) );
-    connect( ui.action_About, SIGNAL(triggered()), this, SLOT(slotAbout()) );
-    connect( ui.actionCalibration,  SIGNAL(triggered()), this, SLOT(slotCalibration()) );
+    connect( ui.action_Quit,       SIGNAL(triggered()), this, SLOT(slotQuit()) );
+    connect( ui.action_About,      SIGNAL(triggered()), this, SLOT(slotAbout()) );
+    connect( ui.actionCalibration, SIGNAL(triggered()), this, SLOT(slotCalibration()) );
+
+    connect( ui.workVoltGain,   SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
+    connect( ui.workCurrGainA,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
+    connect( ui.workCurrGainB,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
+    connect( ui.probeVoltGain,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
+    connect( ui.probeCurrGainA, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
+    connect( ui.probeCurrGainB, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
+
+    connect( ui.workVolt, SIGNAL(valueChanged(double)), this, SLOT(slotWorkVoltChange()) );
+    connect( ui.workVolt, SIGNAL(editingFinished()),    this, SLOT(slotWorkVolt()) );
+    connect( ui.sweepWork, SIGNAL(clicked()),           this, SLOT(slotSweepWork()) );
+
+    connect( ui.probeVolt,  SIGNAL(valueChanged(double)), this, SLOT(slotProbeVoltChange()) );
+    connect( ui.probeVolt,  SIGNAL(editingFinished()),    this, SLOT(slotProbeVolt()) );
+    connect( ui.sweepProbe, SIGNAL(clicked()),            this, SLOT(slotSweepProbe()) );
+
+    connect( ui.workVolt, SIGNAL(editingFinished()),    this, SLOT(slotWorkVolt()) );
 
     connect( this, SIGNAL(sigInstantValues(qreal,qreal,qreal,qreal)), 
              this, SLOT(slotInstantValues(qreal,qreal,qreal,qreal)), 
              Qt::QueuedConnection );
+    connect( this, SIGNAL(sigReplot()), 
+             this, SLOT(slotReplot()), 
+             Qt::QueuedConnection );
     
-
 }
 
 MainWnd::~MainWnd()
 {
-    //state->deleteLater();
-    ui.osc->deleteLater();
+    mutex.lock();
+        terminate = true;
+    mutex.unlock();
+    future.waitForFinished();
+
     delete io;
 }
 
@@ -87,8 +113,11 @@ void MainWnd::slotReopen()
 
 void MainWnd::slotAbout()
 {
-    QString fmwVer = io->firmwareVersion();
-    //QString hdwVer = io->hardwareVersion();
+    QString fmwVer;
+    if ( io->isOpen() )
+        fmwVer = io->firmwareVersion();
+    else
+        fmwVer = "undefined";
     QString stri = QString( "Bipotentiostat control module\nfirmware version: %1" ).arg( fmwVer );
     QMessageBox::about( this, "About", stri );
 }
@@ -142,12 +171,18 @@ void MainWnd::measure()
             if ( !io->isOpen() )
             {
                 reopen();
+                mutex.lock();
+                    term = terminate;
+                mutex.unlock();
+                if ( term )
+                    break;
                 Msleep::msleep( 1000 );
                 continue;
             }
 
             bool res;
             qreal workV, probeV, workI, probeI;
+            // Probably instant data shouldn't be read here.
             res = io->instantData( workV, probeV, workI, probeI );
             if ( !res )
             {
@@ -156,12 +191,32 @@ void MainWnd::measure()
                 continue;
             }
 
-            
+            // Read oscilloscope data.
+            res = io->oscData( t_workV, t_workI, t_probeV, t_probeI );
+            if ( !res )
+            {
+                io->close();
+                Msleep::msleep( 1000 );
+                continue;
+            }
 
-            if ( paintSz > 12 )
+            // Check total data cnt in all arrays.
+            int sz = t_workV.size() + t_workI.size() + t_probeV.size() + t_probeI.size();
+            // Now move data to paint data.
+            mutex.lock();
+                for ( int i=0; i<t_workV.size(); i++ )
+                    p_workV.enqueue( t_workV.at( i ) );
+                for ( int i=0; i<t_workI.size(); i++ )
+                    p_workI.enqueue( t_workI.at( i ) );
+                for ( int i=0; i<t_probeV.size(); i++ )
+                    p_probeV.enqueue( t_probeV.at( i ) );
+                for ( int i=0; i<t_probeI.size(); i++ )
+                    p_probeI.enqueue( t_probeI.at( i ) );
+            mutex.unlock();
+            // Replot if necessary.
+            if ( sz > 12 )
                 emit sigReplot();
-            int sleepSz = szEaux + szEref + szIaux;
-            if ( sleepSz < 30 )
+            if ( sz < 30 )
                 Msleep::msleep( 10 );
         }
         else
@@ -172,10 +227,10 @@ void MainWnd::measure()
     } while ( !term );
 }
 
-void MainWnd::measure()
+void MainWnd::reopen()
 {
     io->close();
-    io->open( devName );
+    io->open();
 }
 
 void MainWnd::refreshDevicesList()
@@ -229,26 +284,32 @@ void MainWnd::slotWorkVoltChange()
 
 void MainWnd::slotWorkVolt()
 {
-    qreal val = ui.workVolt->value();
-    io->setWorkMv( val );
+    if ( io->isOpen() )
+    {
+        qreal val = ui.workVolt->value();
+        io->setWorkMv( val );
 
-    QString ss = "background-color: rgb(100, 135, 100);\nborder-color: rgb(100, 135, 100);";
-    ui.workVolt->setStyleSheet( ss );
+        QString ss = "background-color: rgb(100, 135, 100);\nborder-color: rgb(100, 135, 100);";
+        ui.workVolt->setStyleSheet( ss );
+    }
 }
 
 void MainWnd::slotSweepWork()
 {
-    qreal from   = ui.workVolt->value();
-    qreal to     = ui.workSweepTo->value();
-    qreal timeMs = 1000.0;
-
-    if ( !ui.pullProbe->isChecked() )
-        io->sweepWork( from, to, timeMs );
-    else
+    if ( io->isOpen() )
     {
-        qreal from2 = ui.probeVolt->value();
-        qreal to2   = from2 + to - from;
-        //io->sweepBoth( from, to, from2, to2, timeMs );
+        qreal from   = ui.workVolt->value();
+        qreal to     = ui.workSweepTo->value();
+        qreal timeMs = 1000.0;
+
+        if ( !ui.pullProbe->isChecked() )
+            io->sweepWork( from, to, timeMs );
+        else
+        {
+            qreal from2 = ui.probeVolt->value();
+            qreal to2   = from2 + to - from;
+            //io->sweepBoth( from, to, from2, to2, timeMs );
+        }
     }
 }
 
@@ -260,31 +321,52 @@ void MainWnd::slotProbeVoltChange()
 
 void MainWnd::slotProbeVolt()
 {
-    qreal val = ui.probeVolt->value();
-    io->setProbeMv( val );
+    if ( io->isOpen() )
+    {
+        qreal val = ui.probeVolt->value();
+        io->setProbeMv( val );
 
-    QString ss = "background-color: rgb(100, 135, 100);\nborder-color: rgb(100, 135, 100);";
-    ui.probeVolt->setStyleSheet( ss );
+        QString ss = "background-color: rgb(100, 135, 100);\nborder-color: rgb(100, 135, 100);";
+        ui.probeVolt->setStyleSheet( ss );
+    }
 }
 
 void MainWnd::slotSweepProbe()
 {
-    qreal from   = ui.probeVolt->value();
-    qreal to     = ui.probeSweepTo->value();
-    qreal timeMs = 1000.0;
-
-    if ( !ui.pullWork->isChecked() )
-        io->sweepProbe( from, to, timeMs );
-    else
+    if ( io->isOpen() )
     {
-        qreal from2 = ui.workVolt->value();
-        qreal to2   = from2 + to - from;
-        //io->sweepBoth( from2, to2, from, to, timeMs );
+        qreal from   = ui.probeVolt->value();
+        qreal to     = ui.probeSweepTo->value();
+        qreal timeMs = 1000.0;
+
+        if ( !ui.pullWork->isChecked() )
+            io->sweepProbe( from, to, timeMs );
+        else
+        {
+            qreal from2 = ui.workVolt->value();
+            qreal to2   = from2 + to - from;
+            //io->sweepBoth( from2, to2, from, to, timeMs );
+        }
     }
 }
 
 void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
 {
+    
+}
+
+void MainWnd::slotReplot()
+{
+    // Add data to oscilloscope windows.
+    mutex.lock();
+        oscWork->addData( p_workV );
+        oscProbe->addData( p_probeV );
+        p_workI.clear();
+        p_probeI.clear();
+    mutex.unlock();
+    // Replot oscilloscope windows.
+    oscWork->slotReplot();
+    oscProbe->slotReplot();
 }
 
 

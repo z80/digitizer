@@ -3,7 +3,8 @@ project( digitizer )
 cmake_minimum_required(VERSION 2.8)
 
 set( ROOT ${CMAKE_CURRENT_SOURCE_DIR} )
-set( CMAKE_INSTALL_PREFIX ${ROOT}/.build.app )
+#set( CMAKE_INSTALL_PREFIX ${ROOT}/.build.app )
+set( CMAKE_INSTALL_PREFIX ${ROOT}/app )
 set( _3DPARTY ${CMAKE_CURRENT_SOURCE_DIR}/3dparty )
 
 if ( WIN32 )

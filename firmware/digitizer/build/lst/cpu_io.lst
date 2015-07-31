@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 1
 
 
    1              		.syntax unified
@@ -36,13 +36,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
   29              	sweep_dac1:
   30              	.LFB76:
   31              		.file 1 "./src/cpu_io.c"
-  32              		.loc 1 267 0
+  32              		.loc 1 268 0
   33              		.cfi_startproc
   34              		@ args = 0, pretend = 0, frame = 0
   35              		@ frame_needed = 0, uses_anonymous_args = 0
   36              		@ link register save eliminated.
   37              	.LVL0:
-  38              		.loc 1 269 0
+  38              		.loc 1 270 0
   39 0000 7047     		bx	lr
   40              		.cfi_endproc
   41              	.LFE76:
@@ -58,16 +58,16 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
   48              		.type	sweep_dac2, %function
   49              	sweep_dac2:
   50              	.LFB77:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 2
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 2
 
 
-  51              		.loc 1 272 0
+  51              		.loc 1 273 0
   52              		.cfi_startproc
   53              		@ args = 0, pretend = 0, frame = 0
   54              		@ frame_needed = 0, uses_anonymous_args = 0
   55              		@ link register save eliminated.
   56              	.LVL1:
-  57              		.loc 1 274 0
+  57              		.loc 1 275 0
   58 0000 7047     		bx	lr
   59              		.cfi_endproc
   60              	.LFE77:
@@ -83,13 +83,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
   67              		.type	sweep_both, %function
   68              	sweep_both:
   69              	.LFB78:
-  70              		.loc 1 277 0
+  70              		.loc 1 278 0
   71              		.cfi_startproc
   72              		@ args = 0, pretend = 0, frame = 0
   73              		@ frame_needed = 0, uses_anonymous_args = 0
   74              		@ link register save eliminated.
   75              	.LVL2:
-  76              		.loc 1 279 0
+  76              		.loc 1 280 0
   77 0000 7047     		bx	lr
   78              		.cfi_endproc
   79              	.LFE78:
@@ -105,44 +105,44 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
   86              		.type	writeResult, %function
   87              	writeResult:
   88              	.LFB79:
-  89              		.loc 1 290 0
+  89              		.loc 1 291 0
   90              		.cfi_startproc
   91              		@ args = 0, pretend = 0, frame = 0
   92              		@ frame_needed = 0, uses_anonymous_args = 0
   93              	.LVL3:
-  94              		.loc 1 291 0
+  94              		.loc 1 292 0
   95 0000 D0F10103 		rsbs	r3, r0, #1
   96 0004 38BF     		it	cc
   97 0006 0023     		movcc	r3, #0
   98 0008 5C28     		cmp	r0, #92
   99 000a 08BF     		it	eq
  100 000c 43F00103 		orreq	r3, r3, #1
- 101              		.loc 1 290 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 3
+ 101              		.loc 1 291 0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 3
 
 
  102 0010 10B5     		push	{r4, lr}
  103              	.LCFI0:
  104              		.cfi_def_cfa_offset 8
- 105              		.loc 1 290 0
+ 105              		.loc 1 291 0
  106 0012 0446     		mov	r4, r0
  107              		.cfi_offset 14, -4
  108              		.cfi_offset 4, -8
- 109              		.loc 1 291 0
+ 109              		.loc 1 292 0
  110 0014 2BB1     		cbz	r3, .L5
- 111              		.loc 1 292 0
+ 111              		.loc 1 293 0
  112 0016 0648     		ldr	r0, .L7
  113              	.LVL4:
  114 0018 5C21     		movs	r1, #92
  115 001a 4FF0FF32 		mov	r2, #-1
  116 001e FFF7FEFF 		bl	chOQPutTimeout
  117              	.L5:
- 118              		.loc 1 293 0
+ 118              		.loc 1 294 0
  119 0022 2146     		mov	r1, r4
  120 0024 4FF0FF32 		mov	r2, #-1
  121 0028 0148     		ldr	r0, .L7
  122 002a FFF7FEFF 		bl	chOQPutTimeout
- 123              		.loc 1 294 0
+ 123              		.loc 1 295 0
  124 002e 10BD     		pop	{r4, pc}
  125              	.L8:
  126              		.align	2
@@ -161,24 +161,24 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  137              		.type	writeEom, %function
  138              	writeEom:
  139              	.LFB80:
- 140              		.loc 1 297 0
+ 140              		.loc 1 298 0
  141              		.cfi_startproc
  142              		@ args = 0, pretend = 0, frame = 0
  143              		@ frame_needed = 0, uses_anonymous_args = 0
  144 0000 08B5     		push	{r3, lr}
  145              	.LCFI1:
  146              		.cfi_def_cfa_offset 8
- 147              		.loc 1 298 0
+ 147              		.loc 1 299 0
  148 0002 0021     		movs	r1, #0
  149 0004 4FF0FF32 		mov	r2, #-1
  150 0008 0148     		ldr	r0, .L10
  151              		.cfi_offset 14, -4
  152              		.cfi_offset 3, -8
  153 000a FFF7FEFF 		bl	chOQPutTimeout
- 154              		.loc 1 299 0
+ 154              		.loc 1 300 0
  155 000e 08BD     		pop	{r3, pc}
  156              	.L11:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 4
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 4
 
 
  157              		.align	2
@@ -197,7 +197,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  168              		.type	get_osc_data, %function
  169              	get_osc_data:
  170              	.LFB75:
- 171              		.loc 1 246 0
+ 171              		.loc 1 247 0
  172              		.cfi_startproc
  173              		@ args = 0, pretend = 0, frame = 0
  174              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -205,7 +205,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  176 0000 70B5     		push	{r4, r5, r6, lr}
  177              	.LCFI2:
  178              		.cfi_def_cfa_offset 16
- 179              		.loc 1 251 0
+ 179              		.loc 1 252 0
  180              		.cfi_offset 14, -4
  181              		.cfi_offset 6, -8
  182              		.cfi_offset 5, -12
@@ -213,16 +213,16 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  184 0002 FFF7FEFF 		bl	adcQueue
  185              	.LVL6:
  186              	.LBB9:
- 187              		.loc 1 252 0
+ 187              		.loc 1 253 0
  188 0006 2023     		movs	r3, #32
  189              	.LVL7:
  190              	.LBE9:
- 191              		.loc 1 251 0
+ 191              		.loc 1 252 0
  192 0008 0446     		mov	r4, r0
  193              	.LVL8:
  194              	.LBB10:
- 195              		.loc 1 252 0
- 196              	@ 252 "./src/cpu_io.c" 1
+ 195              		.loc 1 253 0
+ 196              	@ 253 "./src/cpu_io.c" 1
  197 000a 83F31188 		msr     BASEPRI, r3
  198              	@ 0 "" 2
  199              	.LVL9:
@@ -230,43 +230,43 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  201              	.LBE10:
  202 000e FFF7FEFF 		bl	dbg_check_lock
  203              	.LVL10:
- 204              		.loc 1 253 0
+ 204              		.loc 1 254 0
  205 0012 A568     		ldr	r5, [r4, #8]
  206 0014 4AF6AB23 		movw	r3, #43691
  207 0018 CAF6AA23 		movt	r3, 43690
  208 001c A3FB0525 		umull	r2, r5, r3, r5
- 209              		.loc 1 254 0
+ 209              		.loc 1 255 0
  210 0020 FFF7FEFF 		bl	dbg_check_unlock
- 211              		.loc 1 253 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 5
+ 211              		.loc 1 254 0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 5
 
 
  212 0024 ED08     		lsrs	r5, r5, #3
  213              	.LVL11:
  214              	.LBB11:
- 215              		.loc 1 254 0
+ 215              		.loc 1 255 0
  216 0026 0023     		movs	r3, #0
  217              	.LVL12:
- 218              	@ 254 "./src/cpu_io.c" 1
+ 218              	@ 255 "./src/cpu_io.c" 1
  219 0028 83F31188 		msr     BASEPRI, r3
  220              	@ 0 "" 2
  221              	.LVL13:
  222              		.thumb
  223              	.LBE11:
- 224              		.loc 1 255 0
+ 224              		.loc 1 256 0
  225 002c 75B1     		cbz	r5, .L13
  226 002e 1E46     		mov	r6, r3
  227              	.LVL14:
  228              	.L15:
  229              	.LBB12:
- 230              		.loc 1 257 0
+ 230              		.loc 1 258 0
  231 0030 0021     		movs	r1, #0
  232 0032 2046     		mov	r0, r4
  233 0034 FFF7FEFF 		bl	chIQGetTimeout
  234              	.LVL15:
- 235              		.loc 1 258 0
+ 235              		.loc 1 259 0
  236 0038 831C     		adds	r3, r0, #2
- 237              		.loc 1 260 0
+ 237              		.loc 1 261 0
  238 003a 012B     		cmp	r3, #1
  239 003c 8CBF     		ite	hi
  240 003e C0B2     		uxtbhi	r0, r0
@@ -274,22 +274,22 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  242 0040 0020     		movls	r0, #0
  243              	.LVL17:
  244              	.LBE12:
- 245              		.loc 1 255 0
+ 245              		.loc 1 256 0
  246 0042 0136     		adds	r6, r6, #1
  247              	.LBB13:
- 248              		.loc 1 261 0
+ 248              		.loc 1 262 0
  249 0044 FFF7FEFF 		bl	writeResult
  250              	.LVL18:
  251              	.LBE13:
- 252              		.loc 1 255 0
+ 252              		.loc 1 256 0
  253 0048 B542     		cmp	r5, r6
  254 004a F1D8     		bhi	.L15
  255              	.LVL19:
  256              	.L13:
- 257              		.loc 1 263 0
+ 257              		.loc 1 264 0
  258 004c FFF7FEFF 		bl	writeEom
  259              	.LVL20:
- 260              		.loc 1 264 0
+ 260              		.loc 1 265 0
  261 0050 70BD     		pop	{r4, r5, r6, pc}
  262              		.cfi_endproc
  263              	.LFE75:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  265      0080AFF3 
  265      0080AFF3 
  265      0080
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 6
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 6
 
 
  266              		.align	2
@@ -308,7 +308,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  270              		.type	firmware_version, %function
  271              	firmware_version:
  272              	.LFB68:
- 273              		.loc 1 179 0
+ 273              		.loc 1 180 0
  274              		.cfi_startproc
  275              		@ args = 0, pretend = 0, frame = 8
  276              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -316,13 +316,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  278 0000 30B5     		push	{r4, r5, lr}
  279              	.LCFI3:
  280              		.cfi_def_cfa_offset 12
- 281              		.loc 1 181 0
+ 281              		.loc 1 182 0
  282 0002 0A4B     		ldr	r3, .L21
- 283              		.loc 1 179 0
+ 283              		.loc 1 180 0
  284 0004 83B0     		sub	sp, sp, #12
  285              	.LCFI4:
  286              		.cfi_def_cfa_offset 24
- 287              		.loc 1 181 0
+ 287              		.loc 1 182 0
  288 0006 02AD     		add	r5, sp, #8
  289              		.cfi_offset 14, -4
  290              		.cfi_offset 5, -8
@@ -333,19 +333,19 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  295 0010 6C1E     		subs	r4, r5, #1
  296 0012 ADF80410 		strh	r1, [sp, #4]	@ movhi
  297              	.LVL23:
- 298              		.loc 1 178 0
+ 298              		.loc 1 179 0
  299 0016 0435     		adds	r5, r5, #4
  300              	.LVL24:
  301              	.L19:
- 302              		.loc 1 185 0 discriminator 2
+ 302              		.loc 1 186 0 discriminator 2
  303 0018 14F8010F 		ldrb	r0, [r4, #1]!	@ zero_extendqisi2
  304 001c FFF7FEFF 		bl	writeResult
- 305              		.loc 1 184 0 discriminator 2
+ 305              		.loc 1 185 0 discriminator 2
  306 0020 AC42     		cmp	r4, r5
  307 0022 F9D1     		bne	.L19
- 308              		.loc 1 186 0
+ 308              		.loc 1 187 0
  309 0024 FFF7FEFF 		bl	writeEom
- 310              		.loc 1 187 0
+ 310              		.loc 1 188 0
  311 0028 03B0     		add	sp, sp, #12
  312 002a 30BD     		pop	{r4, r5, pc}
  313              	.L22:
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  320              		.section	.text.hardware_version,"ax",%progbits
  321              		.align	2
  322              		.p2align 4,,15
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 7
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 7
 
 
  323              		.thumb
@@ -366,7 +366,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  325              		.type	hardware_version, %function
  326              	hardware_version:
  327              	.LFB67:
- 328              		.loc 1 168 0
+ 328              		.loc 1 169 0
  329              		.cfi_startproc
  330              		@ args = 0, pretend = 0, frame = 16
  331              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -374,13 +374,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  333 0000 30B5     		push	{r4, r5, lr}
  334              	.LCFI5:
  335              		.cfi_def_cfa_offset 12
- 336              		.loc 1 170 0
+ 336              		.loc 1 171 0
  337 0002 0A4B     		ldr	r3, .L26
- 338              		.loc 1 168 0
+ 338              		.loc 1 169 0
  339 0004 85B0     		sub	sp, sp, #20
  340              	.LCFI6:
  341              		.cfi_def_cfa_offset 32
- 342              		.loc 1 170 0
+ 342              		.loc 1 171 0
  343 0006 EC46     		mov	ip, sp
  344 0008 0FCB     		ldmia	r3, {r0, r1, r2, r3}
  345              	.LVL26:
@@ -390,19 +390,19 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  349              		.cfi_offset 14, -4
  350              		.cfi_offset 5, -8
  351              		.cfi_offset 4, -12
- 352              		.loc 1 167 0
+ 352              		.loc 1 168 0
  353 0012 0DF10E05 		add	r5, sp, #14
  354              	.LVL28:
  355              	.L24:
- 356              		.loc 1 174 0 discriminator 2
+ 356              		.loc 1 175 0 discriminator 2
  357 0016 14F8010F 		ldrb	r0, [r4, #1]!	@ zero_extendqisi2
  358 001a FFF7FEFF 		bl	writeResult
- 359              		.loc 1 173 0 discriminator 2
+ 359              		.loc 1 174 0 discriminator 2
  360 001e AC42     		cmp	r4, r5
  361 0020 F9D1     		bne	.L24
- 362              		.loc 1 175 0
+ 362              		.loc 1 176 0
  363 0022 FFF7FEFF 		bl	writeEom
- 364              		.loc 1 176 0
+ 364              		.loc 1 177 0
  365 0026 05B0     		add	sp, sp, #20
  366 0028 30BD     		pop	{r4, r5, pc}
  367              	.L27:
@@ -418,12 +418,12 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  377              		.thumb
  378              		.thumb_func
  379              		.type	set_osc_period, %function
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 8
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 8
 
 
  380              	set_osc_period:
  381              	.LFB74:
- 382              		.loc 1 236 0
+ 382              		.loc 1 237 0
  383              		.cfi_startproc
  384              		@ args = 0, pretend = 0, frame = 0
  385              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -431,27 +431,27 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  387 0000 08B5     		push	{r3, lr}
  388              	.LCFI7:
  389              		.cfi_def_cfa_offset 8
- 390              		.loc 1 239 0
+ 390              		.loc 1 240 0
  391 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
  392              		.cfi_offset 14, -4
  393              		.cfi_offset 3, -8
- 394              		.loc 1 238 0
+ 394              		.loc 1 239 0
  395 0004 0278     		ldrb	r2, [r0, #0]	@ zero_extendqisi2
  396              	.LVL30:
- 397              		.loc 1 240 0
+ 397              		.loc 1 241 0
  398 0006 1804     		lsls	r0, r3, #16
  399              	.LVL31:
- 400              		.loc 1 239 0
+ 400              		.loc 1 240 0
  401 0008 00EB0320 		add	r0, r0, r3, lsl #8
- 402              		.loc 1 240 0
+ 402              		.loc 1 241 0
  403 000c 8018     		adds	r0, r0, r2
  404              	.LVL32:
- 405              		.loc 1 241 0
+ 405              		.loc 1 242 0
  406 000e 00EB0360 		add	r0, r0, r3, lsl #24
  407              	.LVL33:
- 408              		.loc 1 242 0
+ 408              		.loc 1 243 0
  409 0012 FFF7FEFF 		bl	setOscPeriod
- 410              		.loc 1 243 0
+ 410              		.loc 1 244 0
  411 0016 08BD     		pop	{r3, pc}
  412              		.cfi_endproc
  413              	.LFE74:
@@ -465,7 +465,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  420              		.type	set_osc_signals, %function
  421              	set_osc_signals:
  422              	.LFB73:
- 423              		.loc 1 230 0
+ 423              		.loc 1 231 0
  424              		.cfi_startproc
  425              		@ args = 0, pretend = 0, frame = 0
  426              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -473,16 +473,16 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  428 0000 08B5     		push	{r3, lr}
  429              	.LCFI8:
  430              		.cfi_def_cfa_offset 8
- 431              		.loc 1 232 0
+ 431              		.loc 1 233 0
  432 0002 0078     		ldrb	r0, [r0, #0]	@ zero_extendqisi2
  433              	.LVL35:
  434              		.cfi_offset 14, -4
  435              		.cfi_offset 3, -8
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 9
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 9
 
 
  436 0004 FFF7FEFF 		bl	setOscSignals
- 437              		.loc 1 233 0
+ 437              		.loc 1 234 0
  438 0008 08BD     		pop	{r3, pc}
  439              		.cfi_endproc
  440              	.LFE73:
@@ -496,7 +496,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  447              		.type	get_adc, %function
  448              	get_adc:
  449              	.LFB72:
- 450              		.loc 1 210 0
+ 450              		.loc 1 211 0
  451              		.cfi_startproc
  452              		@ args = 0, pretend = 0, frame = 16
  453              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -507,7 +507,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  458 0002 85B0     		sub	sp, sp, #20
  459              	.LCFI10:
  460              		.cfi_def_cfa_offset 32
- 461              		.loc 1 213 0
+ 461              		.loc 1 214 0
  462 0004 6846     		mov	r0, sp
  463              	.LVL37:
  464              		.cfi_offset 14, -4
@@ -520,36 +520,36 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  471              	.LVL39:
  472              	.L31:
  473              	.LBB14:
- 474              		.loc 1 218 0 discriminator 2
+ 474              		.loc 1 219 0 discriminator 2
  475 000e 285D     		ldrb	r0, [r5, r4]	@ zero_extendqisi2
  476 0010 FFF7FEFF 		bl	writeResult
  477              	.LVL40:
- 478              		.loc 1 219 0 discriminator 2
+ 478              		.loc 1 220 0 discriminator 2
  479 0014 2859     		ldr	r0, [r5, r4]
- 480              		.loc 1 220 0 discriminator 2
+ 480              		.loc 1 221 0 discriminator 2
  481 0016 C0F30720 		ubfx	r0, r0, #8, #8
  482 001a FFF7FEFF 		bl	writeResult
- 483              		.loc 1 221 0 discriminator 2
+ 483              		.loc 1 222 0 discriminator 2
  484 001e 2859     		ldr	r0, [r5, r4]
- 485              		.loc 1 222 0 discriminator 2
+ 485              		.loc 1 223 0 discriminator 2
  486 0020 C0F30740 		ubfx	r0, r0, #16, #8
  487 0024 FFF7FEFF 		bl	writeResult
- 488              		.loc 1 223 0 discriminator 2
+ 488              		.loc 1 224 0 discriminator 2
  489 0028 2859     		ldr	r0, [r5, r4]
- 490              		.loc 1 224 0 discriminator 2
+ 490              		.loc 1 225 0 discriminator 2
  491 002a 0434     		adds	r4, r4, #4
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 10
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 10
 
 
  492 002c 000E     		lsrs	r0, r0, #24
  493 002e FFF7FEFF 		bl	writeResult
  494              	.LBE14:
- 495              		.loc 1 215 0 discriminator 2
+ 495              		.loc 1 216 0 discriminator 2
  496 0032 102C     		cmp	r4, #16
  497 0034 EBD1     		bne	.L31
- 498              		.loc 1 226 0
+ 498              		.loc 1 227 0
  499 0036 FFF7FEFF 		bl	writeEom
- 500              		.loc 1 227 0
+ 500              		.loc 1 228 0
  501 003a 05B0     		add	sp, sp, #20
  502 003c 30BD     		pop	{r4, r5, pc}
  503              		.cfi_endproc
@@ -563,7 +563,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  511              		.type	set_dac2, %function
  512              	set_dac2:
  513              	.LFB71:
- 514              		.loc 1 203 0
+ 514              		.loc 1 204 0
  515              		.cfi_startproc
  516              		@ args = 0, pretend = 0, frame = 0
  517              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -571,23 +571,23 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  519 0000 08B5     		push	{r3, lr}
  520              	.LCFI11:
  521              		.cfi_def_cfa_offset 8
- 522              		.loc 1 205 0
+ 522              		.loc 1 206 0
  523 0002 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
  524              		.cfi_offset 14, -4
  525              		.cfi_offset 3, -8
- 526              		.loc 1 204 0
+ 526              		.loc 1 205 0
  527 0004 90F801C0 		ldrb	ip, [r0, #1]	@ zero_extendqisi2
  528 0008 0278     		ldrb	r2, [r0, #0]	@ zero_extendqisi2
- 529              		.loc 1 205 0
+ 529              		.loc 1 206 0
  530 000a C178     		ldrb	r1, [r0, #3]	@ zero_extendqisi2
- 531              		.loc 1 204 0
+ 531              		.loc 1 205 0
  532 000c 02EB0C20 		add	r0, r2, ip, lsl #8
  533              	.LVL42:
- 534              		.loc 1 205 0
+ 534              		.loc 1 206 0
  535 0010 03EB0121 		add	r1, r3, r1, lsl #8
- 536              		.loc 1 206 0
+ 536              		.loc 1 207 0
  537 0014 FFF7FEFF 		bl	setDac2
- 538              		.loc 1 207 0
+ 538              		.loc 1 208 0
  539 0018 08BD     		pop	{r3, pc}
  540              		.cfi_endproc
  541              	.LFE71:
@@ -598,13 +598,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  545              		.p2align 4,,15
  546              		.thumb
  547              		.thumb_func
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 11
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 11
 
 
  548              		.type	set_dac1, %function
  549              	set_dac1:
  550              	.LFB70:
- 551              		.loc 1 196 0
+ 551              		.loc 1 197 0
  552              		.cfi_startproc
  553              		@ args = 0, pretend = 0, frame = 0
  554              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -612,23 +612,23 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  556 0000 08B5     		push	{r3, lr}
  557              	.LCFI12:
  558              		.cfi_def_cfa_offset 8
- 559              		.loc 1 198 0
+ 559              		.loc 1 199 0
  560 0002 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
  561              		.cfi_offset 14, -4
  562              		.cfi_offset 3, -8
- 563              		.loc 1 197 0
+ 563              		.loc 1 198 0
  564 0004 90F801C0 		ldrb	ip, [r0, #1]	@ zero_extendqisi2
  565 0008 0278     		ldrb	r2, [r0, #0]	@ zero_extendqisi2
- 566              		.loc 1 198 0
+ 566              		.loc 1 199 0
  567 000a C178     		ldrb	r1, [r0, #3]	@ zero_extendqisi2
- 568              		.loc 1 197 0
+ 568              		.loc 1 198 0
  569 000c 02EB0C20 		add	r0, r2, ip, lsl #8
  570              	.LVL44:
- 571              		.loc 1 198 0
+ 571              		.loc 1 199 0
  572 0010 03EB0121 		add	r1, r3, r1, lsl #8
- 573              		.loc 1 199 0
+ 573              		.loc 1 200 0
  574 0014 FFF7FEFF 		bl	setDac1
- 575              		.loc 1 200 0
+ 575              		.loc 1 201 0
  576 0018 08BD     		pop	{r3, pc}
  577              		.cfi_endproc
  578              	.LFE70:
@@ -642,7 +642,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  585              		.type	set_led, %function
  586              	set_led:
  587              	.LFB69:
- 588              		.loc 1 190 0
+ 588              		.loc 1 191 0
  589              		.cfi_startproc
  590              		@ args = 0, pretend = 0, frame = 0
  591              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -650,15 +650,15 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  593 0000 08B5     		push	{r3, lr}
  594              	.LCFI13:
  595              		.cfi_def_cfa_offset 8
- 596              		.loc 1 191 0
+ 596              		.loc 1 192 0
  597 0002 0078     		ldrb	r0, [r0, #0]	@ zero_extendqisi2
  598              	.LVL46:
  599              		.cfi_offset 14, -4
  600              		.cfi_offset 3, -8
  601 0004 FFF7FEFF 		bl	setLeds
- 602              		.loc 1 192 0
+ 602              		.loc 1 193 0
  603 0008 08BD     		pop	{r3, pc}
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 12
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 12
 
 
  604              		.cfi_endproc
@@ -674,51 +674,51 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  613              		.type	initCpuIo, %function
  614              	initCpuIo:
  615              	.LFB62:
- 616              		.loc 1 42 0
+ 616              		.loc 1 43 0
  617              		.cfi_startproc
  618              		@ args = 0, pretend = 0, frame = 0
  619              		@ frame_needed = 0, uses_anonymous_args = 0
  620 0000 10B5     		push	{r4, lr}
  621              	.LCFI14:
  622              		.cfi_def_cfa_offset 8
- 623              		.loc 1 44 0
+ 623              		.loc 1 45 0
  624 0002 40F20000 		movw	r0, #:lower16:SD1
  625 0006 40F20001 		movw	r1, #:lower16:.LANCHOR0
- 626              		.loc 1 47 0
+ 626              		.loc 1 48 0
  627 000a 4FF40064 		mov	r4, #2048
  628              		.cfi_offset 14, -4
  629              		.cfi_offset 4, -8
  630 000e C4F20104 		movt	r4, 16385
- 631              		.loc 1 44 0
+ 631              		.loc 1 45 0
  632 0012 C0F20000 		movt	r0, #:upper16:SD1
  633 0016 C0F20001 		movt	r1, #:upper16:.LANCHOR0
  634 001a FFF7FEFF 		bl	sdStart
- 635              		.loc 1 47 0
+ 635              		.loc 1 48 0
  636 001e 2046     		mov	r0, r4
  637 0020 1022     		movs	r2, #16
  638 0022 4FF40071 		mov	r1, #512
  639 0026 FFF7FEFF 		bl	_pal_lld_setgroupmode
- 640              		.loc 1 48 0
+ 640              		.loc 1 49 0
  641 002a 2046     		mov	r0, r4
  642 002c 0222     		movs	r2, #2
  643 002e 4FF48061 		mov	r1, #1024
  644 0032 FFF7FEFF 		bl	_pal_lld_setgroupmode
- 645              		.loc 1 51 0
+ 645              		.loc 1 52 0
  646 0036 2046     		mov	r0, r4
  647 0038 1022     		movs	r2, #16
  648 003a 4FF40061 		mov	r1, #2048
  649 003e FFF7FEFF 		bl	_pal_lld_setgroupmode
- 650              		.loc 1 54 0
+ 650              		.loc 1 55 0
  651 0042 2046     		mov	r0, r4
  652 0044 4FF48051 		mov	r1, #4096
  653 0048 0222     		movs	r2, #2
  654 004a FFF7FEFF 		bl	_pal_lld_setgroupmode
- 655              		.loc 1 56 0
+ 655              		.loc 1 57 0
  656 004e 10BD     		pop	{r4, pc}
  657              		.cfi_endproc
  658              	.LFE62:
  659              		.size	initCpuIo, .-initCpuIo
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 13
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 13
 
 
  660              		.section	.text.processCpuIo,"ax",%progbits
@@ -730,60 +730,60 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  666              		.type	processCpuIo, %function
  667              	processCpuIo:
  668              	.LFB63:
- 669              		.loc 1 59 0
+ 669              		.loc 1 60 0
  670              		.cfi_startproc
  671              		@ args = 0, pretend = 0, frame = 0
  672              		@ frame_needed = 0, uses_anonymous_args = 0
  673 0000 10B5     		push	{r4, lr}
  674              	.LCFI15:
  675              		.cfi_def_cfa_offset 8
- 676              		.loc 1 73 0
+ 676              		.loc 1 74 0
  677 0002 2948     		ldr	r0, .L50
  678 0004 4FF0FF31 		mov	r1, #-1
  679              		.cfi_offset 14, -4
  680              		.cfi_offset 4, -8
  681 0008 FFF7FEFF 		bl	chIQGetTimeout
  682              	.LVL47:
- 683              		.loc 1 74 0
+ 683              		.loc 1 75 0
  684 000c 831C     		adds	r3, r0, #2
- 685              		.loc 1 75 0
+ 685              		.loc 1 76 0
  686 000e 012B     		cmp	r3, #1
  687 0010 0ED9     		bls	.L37
  688              	.LBB15:
- 689              		.loc 1 79 0
+ 689              		.loc 1 80 0
  690 0012 264A     		ldr	r2, .L50+4
- 691              		.loc 1 77 0
+ 691              		.loc 1 78 0
  692 0014 C0B2     		uxtb	r0, r0
  693              	.LVL48:
- 694              		.loc 1 79 0
+ 694              		.loc 1 80 0
  695 0016 1378     		ldrb	r3, [r2, #0]	@ zero_extendqisi2
  696              	.LVL49:
  697 0018 5BB9     		cbnz	r3, .L39
- 698              		.loc 1 81 0
+ 698              		.loc 1 82 0
  699 001a C0B9     		cbnz	r0, .L40
  700              	.LBB18:
  701              	.LBB21:
- 702              		.loc 1 114 0
+ 702              		.loc 1 115 0
  703 001c 2449     		ldr	r1, .L50+8
  704              	.LBE21:
  705              	.LBE18:
- 706              		.loc 1 84 0
+ 706              		.loc 1 85 0
  707 001e 254C     		ldr	r4, .L50+12
  708              	.LBB17:
  709              	.LBB20:
- 710              		.loc 1 116 0
+ 710              		.loc 1 117 0
  711 0020 0B78     		ldrb	r3, [r1, #0]	@ zero_extendqisi2
  712              	.LBE20:
  713              	.LBE17:
- 714              		.loc 1 84 0
+ 714              		.loc 1 85 0
  715 0022 2068     		ldr	r0, [r4, #0]
  716              	.LVL50:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 14
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 14
 
 
  717              	.LBB16:
  718              	.LBB28:
- 719              		.loc 1 116 0
+ 719              		.loc 1 117 0
  720 0024 012B     		cmp	r3, #1
  721 0026 1ED0     		beq	.L42
  722 0028 022B     		cmp	r3, #2
@@ -791,7 +791,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  724              	.L41:
  725              	.LBB23:
  726              	.LBB25:
- 727              		.loc 1 163 0
+ 727              		.loc 1 164 0
  728 002c 0023     		movs	r3, #0
  729              	.LVL51:
  730              	.L46:
@@ -799,78 +799,78 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  732              	.LBE23:
  733              	.LBE28:
  734              	.LBE16:
- 735              		.loc 1 98 0
+ 735              		.loc 1 99 0
  736 002e 2360     		str	r3, [r4, #0]
  737              	.LVL52:
  738              	.L37:
  739              	.LBE15:
- 740              		.loc 1 101 0
+ 740              		.loc 1 102 0
  741 0030 10BD     		pop	{r4, pc}
  742              	.LVL53:
  743              	.L39:
  744              	.LBB32:
- 745              		.loc 1 95 0
+ 745              		.loc 1 96 0
  746 0032 204C     		ldr	r4, .L50+12
- 747              		.loc 1 94 0
+ 747              		.loc 1 95 0
  748 0034 4FF0000C 		mov	ip, #0
- 749              		.loc 1 95 0
+ 749              		.loc 1 96 0
  750 0038 2168     		ldr	r1, [r4, #0]
- 751              		.loc 1 94 0
+ 751              		.loc 1 95 0
  752 003a 82F800C0 		strb	ip, [r2, #0]
- 753              		.loc 1 95 0
+ 753              		.loc 1 96 0
  754 003e 4B1C     		adds	r3, r1, #1
  755 0040 1B4A     		ldr	r2, .L50+8
  756 0042 202B     		cmp	r3, #32
  757 0044 A8BF     		it	ge
  758 0046 2023     		movge	r3, #32
  759 0048 5054     		strb	r0, [r2, r1]
- 760              		.loc 1 98 0
+ 760              		.loc 1 99 0
  761 004a 2360     		str	r3, [r4, #0]
  762 004c F0E7     		b	.L37
  763              	.L40:
- 764              		.loc 1 87 0
+ 764              		.loc 1 88 0
  765 004e 5C28     		cmp	r0, #92
  766 0050 16D0     		beq	.L47
- 767              		.loc 1 88 0
+ 767              		.loc 1 89 0
  768 0052 184C     		ldr	r4, .L50+12
  769 0054 1649     		ldr	r1, .L50+8
  770 0056 2268     		ldr	r2, [r4, #0]
  771 0058 531C     		adds	r3, r2, #1
  772 005a 202B     		cmp	r3, #32
  773 005c A8BF     		it	ge
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 15
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 15
 
 
  774 005e 2023     		movge	r3, #32
  775 0060 8854     		strb	r0, [r1, r2]
- 776              		.loc 1 98 0
+ 776              		.loc 1 99 0
  777 0062 2360     		str	r3, [r4, #0]
  778 0064 E4E7     		b	.L37
  779              	.LVL54:
  780              	.L42:
  781              	.LBB30:
  782              	.LBB19:
- 783              		.loc 1 119 0
+ 783              		.loc 1 120 0
  784 0066 0128     		cmp	r0, #1
  785 0068 E0DD     		ble	.L41
  786 006a 134A     		ldr	r2, .L50+16
- 787              		.loc 1 115 0
+ 787              		.loc 1 116 0
  788 006c 4B1C     		adds	r3, r1, #1
- 789              		.loc 1 58 0
+ 789              		.loc 1 59 0
  790 006e 0818     		adds	r0, r1, r0
  791              	.LVL55:
  792              	.L44:
- 793              		.loc 1 120 0
+ 793              		.loc 1 121 0
  794 0070 13F8011B 		ldrb	r1, [r3], #1	@ zero_extendqisi2
- 795              		.loc 1 119 0
+ 795              		.loc 1 120 0
  796 0074 8342     		cmp	r3, r0
- 797              		.loc 1 120 0
+ 797              		.loc 1 121 0
  798 0076 02F8011F 		strb	r1, [r2, #1]!
- 799              		.loc 1 119 0
+ 799              		.loc 1 120 0
  800 007a F9D1     		bne	.L44
  801              	.LBB22:
  802              	.LBB24:
- 803              		.loc 1 163 0
+ 803              		.loc 1 164 0
  804 007c 0023     		movs	r3, #0
  805 007e D6E7     		b	.L46
  806              	.LVL56:
@@ -879,7 +879,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  809              	.LBE22:
  810              	.LBE19:
  811              	.LBE30:
- 812              		.loc 1 90 0
+ 812              		.loc 1 91 0
  813 0080 0C4C     		ldr	r4, .L50+12
  814 0082 0121     		movs	r1, #1
  815 0084 2368     		ldr	r3, [r4, #0]
@@ -887,7 +887,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  817 0088 202B     		cmp	r3, #32
  818 008a A8BF     		it	ge
  819 008c 2023     		movge	r3, #32
- 820              		.loc 1 98 0
+ 820              		.loc 1 99 0
  821 008e 2360     		str	r3, [r4, #0]
  822 0090 CEE7     		b	.L37
  823              	.LVL57:
@@ -896,27 +896,27 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  826              	.LBB29:
  827              	.LBB27:
  828              	.LBB26:
- 829              		.loc 1 160 0
+ 829              		.loc 1 161 0
  830 0092 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 16
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 16
 
 
  831              	.LVL58:
- 832              		.loc 1 164 0
+ 832              		.loc 1 165 0
  833 0094 094A     		ldr	r2, .L50+20
- 834              		.loc 1 163 0
+ 834              		.loc 1 164 0
  835 0096 0B2B     		cmp	r3, #11
  836 0098 C8BF     		it	gt
  837 009a 0023     		movgt	r3, #0
  838              	.LVL59:
- 839              		.loc 1 164 0
+ 839              		.loc 1 165 0
  840 009c 52F82330 		ldr	r3, [r2, r3, lsl #2]
  841              	.LVL60:
  842 00a0 0748     		ldr	r0, .L50+24
  843              	.LVL61:
  844 00a2 9847     		blx	r3
  845              	.LVL62:
- 846              		.loc 1 163 0
+ 846              		.loc 1 164 0
  847 00a4 0023     		movs	r3, #0
  848 00a6 C2E7     		b	.L46
  849              	.L51:
@@ -948,17 +948,17 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  873              		.type	funcArgs, %function
  874              	funcArgs:
  875              	.LFB64:
- 876              		.loc 1 104 0
+ 876              		.loc 1 105 0
  877              		.cfi_startproc
  878              		@ args = 0, pretend = 0, frame = 0
  879              		@ frame_needed = 0, uses_anonymous_args = 0
  880              		@ link register save eliminated.
- 881              		.loc 1 105 0
+ 881              		.loc 1 106 0
  882 0000 40F20000 		movw	r0, #:lower16:.LANCHOR4
  883 0004 C0F20000 		movt	r0, #:upper16:.LANCHOR4
- 884              		.loc 1 106 0
+ 884              		.loc 1 107 0
  885 0008 7047     		bx	lr
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 17
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 17
 
 
  886              		.cfi_endproc
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  937      00000000 
  937      00000000 
  937      00000000 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 18
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 18
 
 
  938              		.section	.rodata.str1.4,"aMS",%progbits,1
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  984 0047 0200     		.2byte	0x2
  985 0049 7D       		.byte	0x7d
  986 004a 08       		.sleb128 8
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 19
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 19
 
 
  987 004b 00000000 		.4byte	0x0
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1040 00cc 80808080 		.uleb128 0x80000000
  1040      08
  1041 00d1 0C       		.byte	0xc
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 20
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 20
 
 
  1042 00d2 01000080 		.4byte	0x80000001
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1096 0161 00000000 		.4byte	.LFB68
  1097 0165 02000000 		.4byte	.LCFI3
  1098 0169 0200     		.2byte	0x2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 21
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 21
 
 
  1099 016b 7D       		.byte	0x7d
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1153              	.LLST17:
  1154 01f3 0E000000 		.4byte	.LVL27
  1155 01f7 16000000 		.4byte	.LVL28
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 22
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 22
 
 
  1156 01fb 0200     		.2byte	0x2
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1210 0270 7D       		.byte	0x7d
  1211 0271 00       		.sleb128 0
  1212 0272 02000000 		.4byte	.LCFI8
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 23
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 23
 
 
  1213 0276 0A000000 		.4byte	.LFE73
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1267              	.LLST27:
  1268 0300 0E000000 		.4byte	.LVL39
  1269 0304 13000000 		.4byte	.LVL40-1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 24
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 24
 
 
  1270 0308 0800     		.2byte	0x8
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1324 0388 0200     		.2byte	0x2
  1325 038a 7D       		.byte	0x7d
  1326 038b 00       		.sleb128 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 25
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 25
 
 
  1327 038c 02000000 		.4byte	.LCFI13
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1381 0413 0C000000 		.4byte	.LVL47
  1382 0417 16000000 		.4byte	.LVL48
  1383 041b 0F00     		.2byte	0xf
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 26
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 26
 
 
  1384 041d 70       		.byte	0x70
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1436 04a3 A2000000 		.4byte	.LVL61
  1437 04a7 0100     		.2byte	0x1
  1438 04a9 50       		.byte	0x50
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 27
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 27
 
 
  1439 04aa A2000000 		.4byte	.LVL61
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1493              	.LLST43:
  1494 0542 24000000 		.4byte	.LVL50
  1495 0546 30000000 		.4byte	.LVL52
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 28
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 28
 
 
  1496 054a 0600     		.2byte	0x6
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1550 0015 FD000000 		.4byte	.LASF143
  1551 0019 00000000 		.4byte	0x0
  1552 001d 00000000 		.4byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 29
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 29
 
 
  1553 0021 E8000000 		.4byte	.Ldebug_ranges0+0xe8
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1607 008d 91000000 		.4byte	0x91
  1608 0091 04       		.uleb128 0x4
  1609 0092 04       		.byte	0x4
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 30
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 30
 
 
  1610 0093 07       		.byte	0x7
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1664 0105 86000000 		.4byte	0x86
  1665 0109 03       		.uleb128 0x3
  1666 010a 13040000 		.4byte	.LASF23
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 31
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 31
 
 
  1667 010e 05       		.byte	0x5
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1721 0171 02       		.byte	0x2
  1722 0172 23       		.byte	0x23
  1723 0173 14       		.uleb128 0x14
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 32
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 32
 
 
  1724 0174 06       		.uleb128 0x6
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1778 01d4 23       		.byte	0x23
  1779 01d5 2C       		.uleb128 0x2c
  1780 01d6 06       		.uleb128 0x6
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 33
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 33
 
 
  1781 01d7 DB010000 		.4byte	.LASF36
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1835 0234 72030000 		.4byte	.LASF25
  1836 0238 05       		.byte	0x5
  1837 0239 64       		.byte	0x64
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 34
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 34
 
 
  1838 023a 42020000 		.4byte	0x242
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1892 02a0 75020000 		.4byte	0x275
  1893 02a4 02       		.byte	0x2
  1894 02a5 23       		.byte	0x23
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 35
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 35
 
 
  1895 02a6 00       		.uleb128 0x0
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  1949 0308 02       		.byte	0x2
  1950 0309 23       		.byte	0x23
  1951 030a 1C       		.uleb128 0x1c
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 36
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 36
 
 
  1952 030b 0B       		.uleb128 0xb
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2006 0370 23       		.byte	0x23
  2007 0371 08       		.uleb128 0x8
  2008 0372 06       		.uleb128 0x6
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 37
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 37
 
 
  2009 0373 99040000 		.4byte	.LASF50
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2063 03d6 92030000 		.4byte	0x392
  2064 03da 05       		.uleb128 0x5
  2065 03db 7F010000 		.4byte	.LASF55
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 38
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 38
 
 
  2066 03df 04       		.byte	0x4
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2120 0448 04       		.byte	0x4
  2121 0449 82020000 		.4byte	0x282
  2122 044d 09       		.uleb128 0x9
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 39
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 39
 
 
  2123 044e 04       		.byte	0x4
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2177 04b1 94030000 		.4byte	.LASF68
  2178 04b5 0A       		.byte	0xa
  2179 04b6 4C       		.byte	0x4c
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 40
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 40
 
 
  2180 04b7 F0040000 		.4byte	0x4f0
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2234 0526 09       		.uleb128 0x9
  2235 0527 04       		.byte	0x4
  2236 0528 2C050000 		.4byte	0x52c
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 41
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 41
 
 
  2237 052c 11       		.uleb128 0x11
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2291 05a4 8D050000 		.4byte	0x58d
  2292 05a8 14       		.uleb128 0x14
  2293 05a9 01       		.byte	0x1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 42
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 42
 
 
  2294 05aa 30000000 		.4byte	0x30
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2348 0626 01       		.byte	0x1
  2349 0627 31060000 		.4byte	0x631
  2350 062b 13       		.uleb128 0x13
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 43
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 43
 
 
  2351 062c F0040000 		.4byte	0x4f0
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2405 0695 FF03     		.2byte	0x3ff
  2406 0697 3D030000 		.4byte	0x33d
  2407 069b 02       		.byte	0x2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 44
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 44
 
 
  2408 069c 23       		.byte	0x23
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2462 06fe 42525200 		.ascii	"BRR\000"
  2463 0702 0D       		.byte	0xd
  2464 0703 E704     		.2byte	0x4e7
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 45
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 45
 
 
  2465 0705 31060000 		.4byte	0x631
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2519 076b 0D       		.byte	0xd
  2520 076c EE04     		.2byte	0x4ee
  2521 076e 62000000 		.4byte	0x62
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 46
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 46
 
 
  2522 0772 02       		.byte	0x2
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2576 07d8 DC070000 		.4byte	0x7dc
  2577 07dc 1A       		.uleb128 0x1a
  2578 07dd 57040000 		.4byte	.LASF92
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 47
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 47
 
 
  2579 07e1 5404     		.2byte	0x454
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2633 0841 0F       		.byte	0xf
  2634 0842 8A       		.byte	0x8a
  2635 0843 4A090000 		.4byte	0x94a
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 48
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 48
 
 
  2636 0847 02       		.byte	0x2
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2690 08a5 02       		.byte	0x2
  2691 08a6 23       		.byte	0x23
  2692 08a7 08       		.uleb128 0x8
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 49
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 49
 
 
  2693 08a8 00       		.byte	0x0
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2747 090b 0F       		.byte	0xf
  2748 090c 7D       		.byte	0x7d
  2749 090d A2050000 		.4byte	0x5a2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 50
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 50
 
 
  2750 0911 02       		.byte	0x2
@@ -2987,61 +2987,61 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2793 0961 1D       		.uleb128 0x1d
  2794 0962 FB010000 		.4byte	.LASF114
  2795 0966 01       		.byte	0x1
- 2796 0967 9E       		.byte	0x9e
+ 2796 0967 9F       		.byte	0x9f
  2797 0968 01       		.byte	0x1
  2798 0969 01       		.byte	0x1
  2799 096a 85090000 		.4byte	0x985
  2800 096e 1E       		.uleb128 0x1e
  2801 096f 30050000 		.4byte	.LASF112
  2802 0973 01       		.byte	0x1
- 2803 0974 A0       		.byte	0xa0
+ 2803 0974 A1       		.byte	0xa1
  2804 0975 29000000 		.4byte	0x29
  2805 0979 1E       		.uleb128 0x1e
  2806 097a 8B030000 		.4byte	.LASF113
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 51
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 51
 
 
  2807 097e 01       		.byte	0x1
- 2808 097f A2       		.byte	0xa2
+ 2808 097f A3       		.byte	0xa3
  2809 0980 29000000 		.4byte	0x29
  2810 0984 00       		.byte	0x0
  2811 0985 1D       		.uleb128 0x1d
  2812 0986 E5030000 		.4byte	.LASF115
  2813 098a 01       		.byte	0x1
- 2814 098b 6E       		.byte	0x6e
+ 2814 098b 6F       		.byte	0x6f
  2815 098c 01       		.byte	0x1
  2816 098d 01       		.byte	0x1
  2817 098e C7090000 		.4byte	0x9c7
  2818 0992 1F       		.uleb128 0x1f
  2819 0993 62756600 		.ascii	"buf\000"
  2820 0997 01       		.byte	0x1
- 2821 0998 6E       		.byte	0x6e
+ 2821 0998 6F       		.byte	0x6f
  2822 0999 F0040000 		.4byte	0x4f0
  2823 099d 1F       		.uleb128 0x1f
  2824 099e 737A00   		.ascii	"sz\000"
  2825 09a1 01       		.byte	0x1
- 2826 09a2 6E       		.byte	0x6e
+ 2826 09a2 6F       		.byte	0x6f
  2827 09a3 29000000 		.4byte	0x29
  2828 09a7 20       		.uleb128 0x20
  2829 09a8 6900     		.ascii	"i\000"
  2830 09aa 01       		.byte	0x1
- 2831 09ab 70       		.byte	0x70
+ 2831 09ab 71       		.byte	0x71
  2832 09ac 29000000 		.4byte	0x29
  2833 09b0 20       		.uleb128 0x20
  2834 09b1 636D6400 		.ascii	"cmd\000"
  2835 09b5 01       		.byte	0x1
- 2836 09b6 71       		.byte	0x71
+ 2836 09b6 72       		.byte	0x72
  2837 09b7 49000000 		.4byte	0x49
  2838 09bb 1E       		.uleb128 0x1e
  2839 09bc BC040000 		.4byte	.LASF116
  2840 09c0 01       		.byte	0x1
- 2841 09c1 73       		.byte	0x73
+ 2841 09c1 74       		.byte	0x74
  2842 09c2 F0040000 		.4byte	0x4f0
  2843 09c6 00       		.byte	0x0
  2844 09c7 21       		.uleb128 0x21
  2845 09c8 EB010000 		.4byte	.LASF117
  2846 09cc 01       		.byte	0x1
- 2847 09cd 0A01     		.2byte	0x10a
+ 2847 09cd 0B01     		.2byte	0x10b
  2848 09cf 01       		.byte	0x1
  2849 09d0 00000000 		.4byte	.LFB76
  2850 09d4 02000000 		.4byte	.LFE76
@@ -3052,18 +3052,18 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2855 09df 22       		.uleb128 0x22
  2856 09e0 8B050000 		.4byte	.LASF119
  2857 09e4 01       		.byte	0x1
- 2858 09e5 0A01     		.2byte	0x10a
+ 2858 09e5 0B01     		.2byte	0x10b
  2859 09e7 F0040000 		.4byte	0x4f0
  2860 09eb 01       		.byte	0x1
  2861 09ec 50       		.byte	0x50
  2862 09ed 00       		.byte	0x0
  2863 09ee 21       		.uleb128 0x21
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 52
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 52
 
 
  2864 09ef 4C040000 		.4byte	.LASF118
  2865 09f3 01       		.byte	0x1
- 2866 09f4 0F01     		.2byte	0x10f
+ 2866 09f4 1001     		.2byte	0x110
  2867 09f6 01       		.byte	0x1
  2868 09f7 00000000 		.4byte	.LFB77
  2869 09fb 02000000 		.4byte	.LFE77
@@ -3074,7 +3074,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2874 0a06 22       		.uleb128 0x22
  2875 0a07 8B050000 		.4byte	.LASF119
  2876 0a0b 01       		.byte	0x1
- 2877 0a0c 0F01     		.2byte	0x10f
+ 2877 0a0c 1001     		.2byte	0x110
  2878 0a0e F0040000 		.4byte	0x4f0
  2879 0a12 01       		.byte	0x1
  2880 0a13 50       		.byte	0x50
@@ -3082,7 +3082,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2882 0a15 21       		.uleb128 0x21
  2883 0a16 2D020000 		.4byte	.LASF120
  2884 0a1a 01       		.byte	0x1
- 2885 0a1b 1401     		.2byte	0x114
+ 2885 0a1b 1501     		.2byte	0x115
  2886 0a1d 01       		.byte	0x1
  2887 0a1e 00000000 		.4byte	.LFB78
  2888 0a22 02000000 		.4byte	.LFE78
@@ -3093,7 +3093,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2893 0a2d 22       		.uleb128 0x22
  2894 0a2e 8B050000 		.4byte	.LASF119
  2895 0a32 01       		.byte	0x1
- 2896 0a33 1401     		.2byte	0x114
+ 2896 0a33 1501     		.2byte	0x115
  2897 0a35 F0040000 		.4byte	0x4f0
  2898 0a39 01       		.byte	0x1
  2899 0a3a 50       		.byte	0x50
@@ -3101,7 +3101,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2901 0a3c 23       		.uleb128 0x23
  2902 0a3d 80040000 		.4byte	.LASF121
  2903 0a41 01       		.byte	0x1
- 2904 0a42 2101     		.2byte	0x121
+ 2904 0a42 2201     		.2byte	0x122
  2905 0a44 01       		.byte	0x1
  2906 0a45 00000000 		.4byte	.LFB79
  2907 0a49 34000000 		.4byte	.LFE79
@@ -3110,15 +3110,15 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2910 0a55 24       		.uleb128 0x24
  2911 0a56 7600     		.ascii	"v\000"
  2912 0a58 01       		.byte	0x1
- 2913 0a59 2101     		.2byte	0x121
+ 2913 0a59 2201     		.2byte	0x122
  2914 0a5b 49000000 		.4byte	0x49
  2915 0a5f 20000000 		.4byte	.LLST1
  2916 0a63 00       		.byte	0x0
  2917 0a64 25       		.uleb128 0x25
  2918 0a65 00000000 		.4byte	.LASF144
  2919 0a69 01       		.byte	0x1
- 2920 0a6a 2801     		.2byte	0x128
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 53
+ 2920 0a6a 2901     		.2byte	0x129
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 53
 
 
  2921 0a6c 01       		.byte	0x1
@@ -3128,7 +3128,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2925 0a79 26       		.uleb128 0x26
  2926 0a7a D1020000 		.4byte	.LASF122
  2927 0a7e 01       		.byte	0x1
- 2928 0a7f F5       		.byte	0xf5
+ 2928 0a7f F6       		.byte	0xf6
  2929 0a80 01       		.byte	0x1
  2930 0a81 00000000 		.4byte	.LFB75
  2931 0a85 52000000 		.4byte	.LFE75
@@ -3137,38 +3137,38 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2934 0a91 27       		.uleb128 0x27
  2935 0a92 61726700 		.ascii	"arg\000"
  2936 0a96 01       		.byte	0x1
- 2937 0a97 F5       		.byte	0xf5
+ 2937 0a97 F6       		.byte	0xf6
  2938 0a98 F0040000 		.4byte	0x4f0
  2939 0a9c 73000000 		.4byte	.LLST4
  2940 0aa0 28       		.uleb128 0x28
  2941 0aa1 6D736700 		.ascii	"msg\000"
  2942 0aa5 01       		.byte	0x1
- 2943 0aa6 F8       		.byte	0xf8
+ 2943 0aa6 F9       		.byte	0xf9
  2944 0aa7 E8000000 		.4byte	0xe8
  2945 0aab 86000000 		.4byte	.LLST5
  2946 0aaf 29       		.uleb128 0x29
  2947 0ab0 05020000 		.4byte	.LASF123
  2948 0ab4 01       		.byte	0x1
- 2949 0ab5 F9       		.byte	0xf9
+ 2949 0ab5 FA       		.byte	0xfa
  2950 0ab6 49000000 		.4byte	0x49
  2951 0aba A6000000 		.4byte	.LLST6
  2952 0abe 2A       		.uleb128 0x2a
  2953 0abf 636E7400 		.ascii	"cnt\000"
  2954 0ac3 01       		.byte	0x1
- 2955 0ac4 FA       		.byte	0xfa
+ 2955 0ac4 FB       		.byte	0xfb
  2956 0ac5 30000000 		.4byte	0x30
  2957 0ac9 01       		.byte	0x1
  2958 0aca 55       		.byte	0x55
  2959 0acb 28       		.uleb128 0x28
  2960 0acc 6900     		.ascii	"i\000"
  2961 0ace 01       		.byte	0x1
- 2962 0acf FA       		.byte	0xfa
+ 2962 0acf FB       		.byte	0xfb
  2963 0ad0 30000000 		.4byte	0x30
  2964 0ad4 E0000000 		.4byte	.LLST7
  2965 0ad8 28       		.uleb128 0x28
  2966 0ad9 7100     		.ascii	"q\000"
  2967 0adb 01       		.byte	0x1
- 2968 0adc FB       		.byte	0xfb
+ 2968 0adc FC       		.byte	0xfc
  2969 0add 300B0000 		.4byte	0xb30
  2970 0ae1 FF000000 		.4byte	.LLST8
  2971 0ae5 2B       		.uleb128 0x2b
@@ -3177,8 +3177,8 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2974 0aee 28       		.uleb128 0x28
  2975 0aef 746D7000 		.ascii	"tmp\000"
  2976 0af3 01       		.byte	0x1
- 2977 0af4 FC       		.byte	0xfc
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 54
+ 2977 0af4 FD       		.byte	0xfd
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 54
 
 
  2978 0af5 86000000 		.4byte	0x86
@@ -3191,7 +3191,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2985 0b0b 28       		.uleb128 0x28
  2986 0b0c 746D7000 		.ascii	"tmp\000"
  2987 0b10 01       		.byte	0x1
- 2988 0b11 FE       		.byte	0xfe
+ 2988 0b11 FF       		.byte	0xff
  2989 0b12 86000000 		.4byte	0x86
  2990 0b16 30010000 		.4byte	.LLST10
  2991 0b1a 00       		.byte	0x0
@@ -3200,7 +3200,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  2994 0b20 2E       		.uleb128 0x2e
  2995 0b21 7600     		.ascii	"v\000"
  2996 0b23 01       		.byte	0x1
- 2997 0b24 0301     		.2byte	0x103
+ 2997 0b24 0401     		.2byte	0x104
  2998 0b26 49000000 		.4byte	0x49
  2999 0b2a 4E010000 		.4byte	.LLST11
  3000 0b2e 00       		.byte	0x0
@@ -3211,7 +3211,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3005 0b36 26       		.uleb128 0x26
  3006 0b37 4F020000 		.4byte	.LASF124
  3007 0b3b 01       		.byte	0x1
- 3008 0b3c B2       		.byte	0xb2
+ 3008 0b3c B3       		.byte	0xb3
  3009 0b3d 01       		.byte	0x1
  3010 0b3e 00000000 		.4byte	.LFB68
  3011 0b42 30000000 		.4byte	.LFE68
@@ -3220,13 +3220,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3014 0b4e 2F       		.uleb128 0x2f
  3015 0b4f 8B050000 		.4byte	.LASF119
  3016 0b53 01       		.byte	0x1
- 3017 0b54 B2       		.byte	0xb2
+ 3017 0b54 B3       		.byte	0xb3
  3018 0b55 F0040000 		.4byte	0x4f0
  3019 0b59 8D010000 		.4byte	.LLST13
  3020 0b5d 30       		.uleb128 0x30
  3021 0b5e E6010000 		.4byte	.LASF125
  3022 0b62 01       		.byte	0x1
- 3023 0b63 B5       		.byte	0xb5
+ 3023 0b63 B6       		.byte	0xb6
  3024 0b64 930B0000 		.4byte	0xb93
  3025 0b68 02       		.byte	0x2
  3026 0b69 91       		.byte	0x91
@@ -3234,16 +3234,16 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3028 0b6b 31       		.uleb128 0x31
  3029 0b6c 6C00     		.ascii	"l\000"
  3030 0b6e 01       		.byte	0x1
- 3031 0b6f B6       		.byte	0xb6
+ 3031 0b6f B7       		.byte	0xb7
  3032 0b70 29000000 		.4byte	0x29
  3033 0b74 05       		.byte	0x5
  3034 0b75 28       		.uleb128 0x28
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 55
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 55
 
 
  3035 0b76 6900     		.ascii	"i\000"
  3036 0b78 01       		.byte	0x1
- 3037 0b79 B7       		.byte	0xb7
+ 3037 0b79 B8       		.byte	0xb8
  3038 0b7a 29000000 		.4byte	0x29
  3039 0b7e A0010000 		.4byte	.LLST14
  3040 0b82 00       		.byte	0x0
@@ -3259,7 +3259,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3050 0b98 26       		.uleb128 0x26
  3051 0b99 C3010000 		.4byte	.LASF126
  3052 0b9d 01       		.byte	0x1
- 3053 0b9e A7       		.byte	0xa7
+ 3053 0b9e A8       		.byte	0xa8
  3054 0b9f 01       		.byte	0x1
  3055 0ba0 00000000 		.4byte	.LFB67
  3056 0ba4 30000000 		.4byte	.LFE67
@@ -3268,13 +3268,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3059 0bb0 2F       		.uleb128 0x2f
  3060 0bb1 8B050000 		.4byte	.LASF119
  3061 0bb5 01       		.byte	0x1
- 3062 0bb6 A7       		.byte	0xa7
+ 3062 0bb6 A8       		.byte	0xa8
  3063 0bb7 F0040000 		.4byte	0x4f0
  3064 0bbb E0010000 		.4byte	.LLST16
  3065 0bbf 30       		.uleb128 0x30
  3066 0bc0 E6010000 		.4byte	.LASF125
  3067 0bc4 01       		.byte	0x1
- 3068 0bc5 AA       		.byte	0xaa
+ 3068 0bc5 AB       		.byte	0xab
  3069 0bc6 F50B0000 		.4byte	0xbf5
  3070 0bca 02       		.byte	0x2
  3071 0bcb 91       		.byte	0x91
@@ -3282,13 +3282,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3073 0bcd 31       		.uleb128 0x31
  3074 0bce 6C00     		.ascii	"l\000"
  3075 0bd0 01       		.byte	0x1
- 3076 0bd1 AB       		.byte	0xab
+ 3076 0bd1 AC       		.byte	0xac
  3077 0bd2 29000000 		.4byte	0x29
  3078 0bd6 0F       		.byte	0xf
  3079 0bd7 28       		.uleb128 0x28
  3080 0bd8 6900     		.ascii	"i\000"
  3081 0bda 01       		.byte	0x1
- 3082 0bdb AC       		.byte	0xac
+ 3082 0bdb AD       		.byte	0xad
  3083 0bdc 29000000 		.4byte	0x29
  3084 0be0 F3010000 		.4byte	.LLST17
  3085 0be4 00       		.byte	0x0
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3089 0bee 32       		.uleb128 0x32
  3090 0bef 42030000 		.4byte	0x342
  3091 0bf3 0F       		.byte	0xf
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 56
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 56
 
 
  3092 0bf4 00       		.byte	0x0
@@ -3307,7 +3307,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3095 0bfa 26       		.uleb128 0x26
  3096 0bfb E6000000 		.4byte	.LASF127
  3097 0bff 01       		.byte	0x1
- 3098 0c00 EB       		.byte	0xeb
+ 3098 0c00 EC       		.byte	0xec
  3099 0c01 01       		.byte	0x1
  3100 0c02 00000000 		.4byte	.LFB74
  3101 0c06 18000000 		.4byte	.LFE74
@@ -3316,20 +3316,20 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3104 0c12 27       		.uleb128 0x27
  3105 0c13 61726700 		.ascii	"arg\000"
  3106 0c17 01       		.byte	0x1
- 3107 0c18 EB       		.byte	0xeb
+ 3107 0c18 EC       		.byte	0xec
  3108 0c19 F0040000 		.4byte	0x4f0
  3109 0c1d 27020000 		.4byte	.LLST19
  3110 0c21 28       		.uleb128 0x28
  3111 0c22 7600     		.ascii	"v\000"
  3112 0c24 01       		.byte	0x1
- 3113 0c25 ED       		.byte	0xed
+ 3113 0c25 EE       		.byte	0xee
  3114 0c26 86000000 		.4byte	0x86
  3115 0c2a 3A020000 		.4byte	.LLST20
  3116 0c2e 00       		.byte	0x0
  3117 0c2f 26       		.uleb128 0x26
  3118 0c30 38020000 		.4byte	.LASF128
  3119 0c34 01       		.byte	0x1
- 3120 0c35 E5       		.byte	0xe5
+ 3120 0c35 E6       		.byte	0xe6
  3121 0c36 01       		.byte	0x1
  3122 0c37 00000000 		.4byte	.LFB73
  3123 0c3b 0A000000 		.4byte	.LFE73
@@ -3338,38 +3338,38 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3126 0c47 27       		.uleb128 0x27
  3127 0c48 61726700 		.ascii	"arg\000"
  3128 0c4c 01       		.byte	0x1
- 3129 0c4d E5       		.byte	0xe5
+ 3129 0c4d E6       		.byte	0xe6
  3130 0c4e F0040000 		.4byte	0x4f0
  3131 0c52 86020000 		.4byte	.LLST22
  3132 0c56 28       		.uleb128 0x28
  3133 0c57 7600     		.ascii	"v\000"
  3134 0c59 01       		.byte	0x1
- 3135 0c5a E7       		.byte	0xe7
+ 3135 0c5a E8       		.byte	0xe8
  3136 0c5b 49000000 		.4byte	0x49
  3137 0c5f 99020000 		.4byte	.LLST23
  3138 0c63 00       		.byte	0x0
  3139 0c64 26       		.uleb128 0x26
  3140 0c65 20050000 		.4byte	.LASF129
  3141 0c69 01       		.byte	0x1
- 3142 0c6a D1       		.byte	0xd1
+ 3142 0c6a D2       		.byte	0xd2
  3143 0c6b 01       		.byte	0x1
  3144 0c6c 00000000 		.4byte	.LFB72
  3145 0c70 3E000000 		.4byte	.LFE72
  3146 0c74 AD020000 		.4byte	.LLST24
  3147 0c78 BE0C0000 		.4byte	0xcbe
  3148 0c7c 2F       		.uleb128 0x2f
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 57
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 57
 
 
  3149 0c7d 8B050000 		.4byte	.LASF119
  3150 0c81 01       		.byte	0x1
- 3151 0c82 D1       		.byte	0xd1
+ 3151 0c82 D2       		.byte	0xd2
  3152 0c83 F0040000 		.4byte	0x4f0
  3153 0c87 D9020000 		.4byte	.LLST25
  3154 0c8b 2A       		.uleb128 0x2a
  3155 0c8c 72657300 		.ascii	"res\000"
  3156 0c90 01       		.byte	0x1
- 3157 0c91 D4       		.byte	0xd4
+ 3157 0c91 D5       		.byte	0xd5
  3158 0c92 BE0C0000 		.4byte	0xcbe
  3159 0c96 02       		.byte	0x2
  3160 0c97 91       		.byte	0x91
@@ -3377,7 +3377,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3162 0c99 28       		.uleb128 0x28
  3163 0c9a 6900     		.ascii	"i\000"
  3164 0c9c 01       		.byte	0x1
- 3165 0c9d D6       		.byte	0xd6
+ 3165 0c9d D7       		.byte	0xd7
  3166 0c9e 29000000 		.4byte	0x29
  3167 0ca2 EC020000 		.4byte	.LLST26
  3168 0ca6 33       		.uleb128 0x33
@@ -3386,7 +3386,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3171 0caf 28       		.uleb128 0x28
  3172 0cb0 6200     		.ascii	"b\000"
  3173 0cb2 01       		.byte	0x1
- 3174 0cb3 D9       		.byte	0xd9
+ 3174 0cb3 DA       		.byte	0xda
  3175 0cb4 49000000 		.4byte	0x49
  3176 0cb8 00030000 		.4byte	.LLST27
  3177 0cbc 00       		.byte	0x0
@@ -3401,7 +3401,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3186 0cce 26       		.uleb128 0x26
  3187 0ccf 82030000 		.4byte	.LASF130
  3188 0cd3 01       		.byte	0x1
- 3189 0cd4 CA       		.byte	0xca
+ 3189 0cd4 CB       		.byte	0xcb
  3190 0cd5 01       		.byte	0x1
  3191 0cd6 00000000 		.4byte	.LFB71
  3192 0cda 1A000000 		.4byte	.LFE71
@@ -3410,27 +3410,27 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3195 0ce6 2F       		.uleb128 0x2f
  3196 0ce7 8B050000 		.4byte	.LASF119
  3197 0ceb 01       		.byte	0x1
- 3198 0cec CA       		.byte	0xca
+ 3198 0cec CB       		.byte	0xcb
  3199 0ced F0040000 		.4byte	0x4f0
  3200 0cf1 3A030000 		.4byte	.LLST29
  3201 0cf5 1E       		.uleb128 0x1e
  3202 0cf6 8B010000 		.4byte	.LASF131
  3203 0cfa 01       		.byte	0x1
- 3204 0cfb CC       		.byte	0xcc
+ 3204 0cfb CD       		.byte	0xcd
  3205 0cfc 29000000 		.4byte	0x29
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 58
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 58
 
 
  3206 0d00 1E       		.uleb128 0x1e
  3207 0d01 3B030000 		.4byte	.LASF132
  3208 0d05 01       		.byte	0x1
- 3209 0d06 CD       		.byte	0xcd
+ 3209 0d06 CE       		.byte	0xce
  3210 0d07 29000000 		.4byte	0x29
  3211 0d0b 00       		.byte	0x0
  3212 0d0c 26       		.uleb128 0x26
  3213 0d0d 79030000 		.4byte	.LASF133
  3214 0d11 01       		.byte	0x1
- 3215 0d12 C3       		.byte	0xc3
+ 3215 0d12 C4       		.byte	0xc4
  3216 0d13 01       		.byte	0x1
  3217 0d14 00000000 		.4byte	.LFB70
  3218 0d18 1A000000 		.4byte	.LFE70
@@ -3439,24 +3439,24 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3221 0d24 2F       		.uleb128 0x2f
  3222 0d25 8B050000 		.4byte	.LASF119
  3223 0d29 01       		.byte	0x1
- 3224 0d2a C3       		.byte	0xc3
+ 3224 0d2a C4       		.byte	0xc4
  3225 0d2b F0040000 		.4byte	0x4f0
  3226 0d2f 6D030000 		.4byte	.LLST31
  3227 0d33 1E       		.uleb128 0x1e
  3228 0d34 8B010000 		.4byte	.LASF131
  3229 0d38 01       		.byte	0x1
- 3230 0d39 C5       		.byte	0xc5
+ 3230 0d39 C6       		.byte	0xc6
  3231 0d3a 29000000 		.4byte	0x29
  3232 0d3e 1E       		.uleb128 0x1e
  3233 0d3f 3B030000 		.4byte	.LASF132
  3234 0d43 01       		.byte	0x1
- 3235 0d44 C6       		.byte	0xc6
+ 3235 0d44 C7       		.byte	0xc7
  3236 0d45 29000000 		.4byte	0x29
  3237 0d49 00       		.byte	0x0
  3238 0d4a 26       		.uleb128 0x26
  3239 0d4b F4020000 		.4byte	.LASF134
  3240 0d4f 01       		.byte	0x1
- 3241 0d50 BD       		.byte	0xbd
+ 3241 0d50 BE       		.byte	0xbe
  3242 0d51 01       		.byte	0x1
  3243 0d52 00000000 		.4byte	.LFB69
  3244 0d56 0A000000 		.4byte	.LFE69
@@ -3465,7 +3465,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3247 0d62 2F       		.uleb128 0x2f
  3248 0d63 8B050000 		.4byte	.LASF119
  3249 0d67 01       		.byte	0x1
- 3250 0d68 BD       		.byte	0xbd
+ 3250 0d68 BE       		.byte	0xbe
  3251 0d69 F0040000 		.4byte	0x4f0
  3252 0d6d A0030000 		.4byte	.LLST33
  3253 0d71 00       		.byte	0x0
@@ -3473,19 +3473,19 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3255 0d73 01       		.byte	0x1
  3256 0d74 E8040000 		.4byte	.LASF145
  3257 0d78 01       		.byte	0x1
- 3258 0d79 29       		.byte	0x29
+ 3258 0d79 2A       		.byte	0x2a
  3259 0d7a 01       		.byte	0x1
  3260 0d7b 00000000 		.4byte	.LFB62
  3261 0d7f 50000000 		.4byte	.LFE62
  3262 0d83 B3030000 		.4byte	.LLST34
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 59
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 59
 
 
  3263 0d87 35       		.uleb128 0x35
  3264 0d88 01       		.byte	0x1
  3265 0d89 8C040000 		.4byte	.LASF146
  3266 0d8d 01       		.byte	0x1
- 3267 0d8e 3A       		.byte	0x3a
+ 3267 0d8e 3B       		.byte	0x3b
  3268 0d8f 01       		.byte	0x1
  3269 0d90 00000000 		.4byte	.LFB63
  3270 0d94 C4000000 		.4byte	.LFE63
@@ -3494,7 +3494,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3273 0da0 30       		.uleb128 0x30
  3274 0da1 62050000 		.4byte	.LASF135
  3275 0da5 01       		.byte	0x1
- 3276 0da6 3C       		.byte	0x3c
+ 3276 0da6 3D       		.byte	0x3d
  3277 0da7 49000000 		.4byte	0x49
  3278 0dab 05       		.byte	0x5
  3279 0dac 03       		.byte	0x3
@@ -3502,7 +3502,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3281 0db1 30       		.uleb128 0x30
  3282 0db2 85000000 		.4byte	.LASF136
  3283 0db6 01       		.byte	0x1
- 3284 0db7 3D       		.byte	0x3d
+ 3284 0db7 3E       		.byte	0x3e
  3285 0db8 29000000 		.4byte	0x29
  3286 0dbc 05       		.byte	0x5
  3287 0dbd 03       		.byte	0x3
@@ -3510,13 +3510,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3289 0dc2 28       		.uleb128 0x28
  3290 0dc3 6D736700 		.ascii	"msg\000"
  3291 0dc7 01       		.byte	0x1
- 3292 0dc8 48       		.byte	0x48
+ 3292 0dc8 49       		.byte	0x49
  3293 0dc9 E8000000 		.4byte	0xe8
  3294 0dcd F3030000 		.4byte	.LLST36
  3295 0dd1 29       		.uleb128 0x29
  3296 0dd2 05020000 		.4byte	.LASF123
  3297 0dd6 01       		.byte	0x1
- 3298 0dd7 4A       		.byte	0x4a
+ 3298 0dd7 4B       		.byte	0x4b
  3299 0dd8 49000000 		.4byte	0x49
  3300 0ddc 13040000 		.4byte	.LLST37
  3301 0de0 2D       		.uleb128 0x2d
@@ -3524,7 +3524,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3303 0de5 28       		.uleb128 0x28
  3304 0de6 7600     		.ascii	"v\000"
  3305 0de8 01       		.byte	0x1
- 3306 0de9 4D       		.byte	0x4d
+ 3306 0de9 4E       		.byte	0x4e
  3307 0dea 49000000 		.4byte	0x49
  3308 0dee 4D040000 		.4byte	.LLST38
  3309 0df2 36       		.uleb128 0x36
@@ -3532,13 +3532,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3311 0df7 1C000000 		.4byte	.LBB18
  3312 0dfb 48000000 		.4byte	.Ldebug_ranges0+0x48
  3313 0dff 01       		.byte	0x1
- 3314 0e00 54       		.byte	0x54
+ 3314 0e00 55       		.byte	0x55
  3315 0e01 37       		.uleb128 0x37
  3316 0e02 9D090000 		.4byte	0x99d
  3317 0e06 76040000 		.4byte	.LLST39
  3318 0e0a 37       		.uleb128 0x37
  3319 0e0b 92090000 		.4byte	0x992
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 60
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 60
 
 
  3320 0e0f C1040000 		.4byte	.LLST40
@@ -3558,7 +3558,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3334 0e38 2C000000 		.4byte	.LBB23
  3335 0e3c A8000000 		.4byte	.Ldebug_ranges0+0xa8
  3336 0e40 01       		.byte	0x1
- 3337 0e41 7C       		.byte	0x7c
+ 3337 0e41 7D       		.byte	0x7d
  3338 0e42 2D       		.uleb128 0x2d
  3339 0e43 C8000000 		.4byte	.Ldebug_ranges0+0xc8
  3340 0e47 38       		.uleb128 0x38
@@ -3577,7 +3577,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3353 0e5d 01       		.byte	0x1
  3354 0e5e 73000000 		.4byte	.LASF147
  3355 0e62 01       		.byte	0x1
- 3356 0e63 67       		.byte	0x67
+ 3356 0e63 68       		.byte	0x68
  3357 0e64 01       		.byte	0x1
  3358 0e65 F0040000 		.4byte	0x4f0
  3359 0e69 00000000 		.4byte	.LFB64
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3374 0e88 FB       		.byte	0xfb
  3375 0e89 D1070000 		.4byte	0x7d1
  3376 0e8d 01       		.byte	0x1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 61
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 61
 
 
  3377 0e8e 01       		.byte	0x1
@@ -3612,7 +3612,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3385 0e9f 30       		.uleb128 0x30
  3386 0ea0 B5040000 		.4byte	.LASF138
  3387 0ea4 01       		.byte	0x1
- 3388 0ea5 18       		.byte	0x18
+ 3388 0ea5 19       		.byte	0x19
  3389 0ea6 8F0E0000 		.4byte	0xe8f
  3390 0eaa 05       		.byte	0x5
  3391 0eab 03       		.byte	0x3
@@ -3620,7 +3620,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3393 0eb0 30       		.uleb128 0x30
  3394 0eb1 8B050000 		.4byte	.LASF119
  3395 0eb5 01       		.byte	0x1
- 3396 0eb6 19       		.byte	0x19
+ 3396 0eb6 1A       		.byte	0x1a
  3397 0eb7 8F0E0000 		.4byte	0xe8f
  3398 0ebb 05       		.byte	0x5
  3399 0ebc 03       		.byte	0x3
@@ -3628,7 +3628,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3401 0ec1 30       		.uleb128 0x30
  3402 0ec2 B2030000 		.4byte	.LASF139
  3403 0ec6 01       		.byte	0x1
- 3404 0ec7 20       		.byte	0x20
+ 3404 0ec7 21       		.byte	0x21
  3405 0ec8 D20E0000 		.4byte	0xed2
  3406 0ecc 05       		.byte	0x5
  3407 0ecd 03       		.byte	0x3
@@ -3645,7 +3645,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3418 0ee7 30       		.uleb128 0x30
  3419 0ee8 29000000 		.4byte	.LASF140
  3420 0eec 01       		.byte	0x1
- 3421 0eed 8E       		.byte	0x8e
+ 3421 0eed 8F       		.byte	0x8f
  3422 0eee F80E0000 		.4byte	0xef8
  3423 0ef2 05       		.byte	0x5
  3424 0ef3 03       		.byte	0x3
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3431 0f03 9404     		.2byte	0x494
  3432 0f05 36060000 		.4byte	0x636
  3433 0f09 01       		.byte	0x1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 62
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 62
 
 
  3434 0f0a 01       		.byte	0x1
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3488 002c 00       		.byte	0x0
  3489 002d 04       		.uleb128 0x4
  3490 002e 24       		.uleb128 0x24
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 63
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 63
 
 
  3491 002f 00       		.byte	0x0
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3545 0065 08       		.uleb128 0x8
  3546 0066 13       		.uleb128 0x13
  3547 0067 01       		.byte	0x1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 64
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 64
 
 
  3548 0068 0B       		.uleb128 0xb
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3602 009e 00       		.byte	0x0
  3603 009f 00       		.byte	0x0
  3604 00a0 0D       		.uleb128 0xd
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 65
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 65
 
 
  3605 00a1 35       		.uleb128 0x35
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3659 00d7 13       		.uleb128 0x13
  3660 00d8 00       		.byte	0x0
  3661 00d9 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 66
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 66
 
 
  3662 00da 13       		.uleb128 0x13
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3716 0110 13       		.uleb128 0x13
  3717 0111 38       		.uleb128 0x38
  3718 0112 0A       		.uleb128 0xa
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 67
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 67
 
 
  3719 0113 00       		.byte	0x0
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3773 0149 05       		.uleb128 0x5
  3774 014a 00       		.byte	0x0
  3775 014b 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 68
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 68
 
 
  3776 014c 1D       		.uleb128 0x1d
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3830 0182 00       		.byte	0x0
  3831 0183 00       		.byte	0x0
  3832 0184 21       		.uleb128 0x21
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 69
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 69
 
 
  3833 0185 2E       		.uleb128 0x2e
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3887 01bb 00       		.byte	0x0
  3888 01bc 00       		.byte	0x0
  3889 01bd 24       		.uleb128 0x24
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 70
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 70
 
 
  3890 01be 05       		.uleb128 0x5
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  3944 01f4 27       		.uleb128 0x27
  3945 01f5 05       		.uleb128 0x5
  3946 01f6 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 71
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 71
 
 
  3947 01f7 03       		.uleb128 0x3
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4001 022d 0A       		.uleb128 0xa
  4002 022e 00       		.byte	0x0
  4003 022f 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 72
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 72
 
 
  4004 0230 2B       		.uleb128 0x2b
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4058 0266 06       		.uleb128 0x6
  4059 0267 00       		.byte	0x0
  4060 0268 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 73
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 73
 
 
  4061 0269 30       		.uleb128 0x30
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4115 029f 0E       		.uleb128 0xe
  4116 02a0 3A       		.uleb128 0x3a
  4117 02a1 0B       		.uleb128 0xb
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 74
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 74
 
 
  4118 02a2 3B       		.uleb128 0x3b
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4172 02d8 13       		.uleb128 0x13
  4173 02d9 02       		.uleb128 0x2
  4174 02da 06       		.uleb128 0x6
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 75
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 75
 
 
  4175 02db 00       		.byte	0x0
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4229 0311 3F       		.uleb128 0x3f
  4230 0312 0C       		.uleb128 0xc
  4231 0313 3C       		.uleb128 0x3c
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 76
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 76
 
 
  4232 0314 0C       		.uleb128 0xc
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4275      00
  4276 0032 74000000 		.4byte	0x74
  4277 0036 696E7433 		.ascii	"int32_t\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 77
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 77
 
 
  4277      325F7400 
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4306 00fb 82020000 		.4byte	0x282
  4307 00ff 73746B61 		.ascii	"stkalign_t\000"
  4307      6C69676E 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 78
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 78
 
 
  4307      5F7400
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4335      75745175 
  4335      65756500 
  4336 01d3 F2050000 		.4byte	0x5f2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 79
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 79
 
 
  4337 01d7 696F666C 		.ascii	"ioflags_t\000"
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4365 0010 00000000 		.4byte	.LFB76
  4366 0014 02000000 		.4byte	.LFE76-.LFB76
  4367 0018 00000000 		.4byte	.LFB77
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 80
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 80
 
 
  4368 001c 02000000 		.4byte	.LFE77-.LFB77
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4422 004c 1E000000 		.4byte	.LBE18
  4423 0050 92000000 		.4byte	.LBB31
  4424 0054 C4000000 		.4byte	.LBE31
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 81
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 81
 
 
  4425 0058 66000000 		.4byte	.LBB30
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4479 0130 00000000 		.4byte	.LFB73
  4480 0134 0A000000 		.4byte	.LFE73
  4481 0138 00000000 		.4byte	.LFB72
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 82
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 82
 
 
  4482 013c 3E000000 		.4byte	.LFE72
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4518              	.LASF14:
  4519 005c 6C6F6E67 		.ascii	"long long unsigned int\000"
  4519      206C6F6E 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 83
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 83
 
 
  4519      6720756E 
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4547      70657269 
  4547      6F6400
  4548              	.LASF48:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 84
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 84
 
 
  4549 00f5 6D5F7175 		.ascii	"m_queue\000"
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4577 0196 756E7369 		.ascii	"unsigned int\000"
  4577      676E6564 
  4577      20696E74 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 85
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 85
 
 
  4577      00
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4605      6E7400
  4606              	.LASF120:
  4607 022d 73776565 		.ascii	"sweep_both\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 86
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 86
 
 
  4607      705F626F 
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4633 02c6 73746B61 		.ascii	"stkalign_t\000"
  4633      6C69676E 
  4633      5F7400
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 87
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 87
 
 
  4634              	.LASF122:
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4663 0354 52455345 		.ascii	"RESERVED2\000"
  4663      52564544 
  4663      3200
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 88
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 88
 
 
  4664              	.LASF81:
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4693 03e5 70726F63 		.ascii	"process_command\000"
  4693      6573735F 
  4693      636F6D6D 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 89
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 89
 
 
  4693      616E6400 
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4722              	.LASF61:
  4723 047b 63686172 		.ascii	"char\000"
  4723      00
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 90
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 90
 
 
  4724              	.LASF121:
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4754              	.LASF30:
  4755 0502 705F6E61 		.ascii	"p_name\000"
  4755      6D6500
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 91
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 91
 
 
  4756              	.LASF56:
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4787      00
  4788              	.LASF49:
  4789 0590 6D5F6F77 		.ascii	"m_owner\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 92
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 92
 
 
  4789      6E657200 
@@ -5470,72 +5470,72 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 1
  4793      6974696E 
  4793      6700
  4794              		.ident	"GCC: (GNU) 4.5.0"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 93
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 93
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 cpu_io.c
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:24     .text.sweep_dac1:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:29     .text.sweep_dac1:00000000 sweep_dac1
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:44     .text.sweep_dac2:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:49     .text.sweep_dac2:00000000 sweep_dac2
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:63     .text.sweep_both:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:68     .text.sweep_both:00000000 sweep_both
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:82     .text.writeResult:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:87     .text.writeResult:00000000 writeResult
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:128    .text.writeResult:00000030 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:133    .text.writeEom:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:138    .text.writeEom:00000000 writeEom
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:159    .text.writeEom:00000010 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:164    .text.get_osc_data:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:169    .text.get_osc_data:00000000 get_osc_data
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:266    .text.firmware_version:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:271    .text.firmware_version:00000000 firmware_version
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:316    .text.firmware_version:0000002c $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:321    .text.hardware_version:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:326    .text.hardware_version:00000000 hardware_version
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:370    .text.hardware_version:0000002c $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:375    .text.set_osc_period:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:380    .text.set_osc_period:00000000 set_osc_period
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:416    .text.set_osc_signals:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:421    .text.set_osc_signals:00000000 set_osc_signals
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:443    .text.get_adc:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:448    .text.get_adc:00000000 get_adc
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:507    .text.set_dac2:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:512    .text.set_dac2:00000000 set_dac2
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:544    .text.set_dac1:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:549    .text.set_dac1:00000000 set_dac1
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:581    .text.set_led:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:586    .text.set_led:00000000 set_led
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:608    .text.initCpuIo:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:614    .text.initCpuIo:00000000 initCpuIo
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:897    .rodata.serial_cfg:00000000 .LANCHOR0
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:661    .text.processCpuIo:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:667    .text.processCpuIo:00000000 processCpuIo
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:852    .text.processCpuIo:000000a8 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:868    .text.funcArgs:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:874    .text.funcArgs:00000000 funcArgs
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:947    .bss.args:00000000 .LANCHOR4
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:893    .bss.slash.3767:00000000 slash.3767
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:894    .bss.slash.3767:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:896    .rodata.serial_cfg:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:900    .rodata.serial_cfg:00000000 serial_cfg
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:907    .bss.out_index.3768:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:911    .bss.out_index.3768:00000000 out_index.3768
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:914    .rodata.funcs:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:918    .rodata.funcs:00000000 funcs
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:932    .bss.buffer:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:936    .bss.buffer:00000000 buffer
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:939    .rodata.str1.4:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:946    .bss.args:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:950    .bss.args:00000000 args
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:24     .text.sweep_dac1:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:29     .text.sweep_dac1:00000000 sweep_dac1
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:44     .text.sweep_dac2:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:49     .text.sweep_dac2:00000000 sweep_dac2
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:63     .text.sweep_both:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:68     .text.sweep_both:00000000 sweep_both
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:82     .text.writeResult:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:87     .text.writeResult:00000000 writeResult
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:128    .text.writeResult:00000030 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:133    .text.writeEom:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:138    .text.writeEom:00000000 writeEom
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:159    .text.writeEom:00000010 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:164    .text.get_osc_data:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:169    .text.get_osc_data:00000000 get_osc_data
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:266    .text.firmware_version:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:271    .text.firmware_version:00000000 firmware_version
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:316    .text.firmware_version:0000002c $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:321    .text.hardware_version:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:326    .text.hardware_version:00000000 hardware_version
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:370    .text.hardware_version:0000002c $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:375    .text.set_osc_period:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:380    .text.set_osc_period:00000000 set_osc_period
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:416    .text.set_osc_signals:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:421    .text.set_osc_signals:00000000 set_osc_signals
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:443    .text.get_adc:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:448    .text.get_adc:00000000 get_adc
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:507    .text.set_dac2:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:512    .text.set_dac2:00000000 set_dac2
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:544    .text.set_dac1:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:549    .text.set_dac1:00000000 set_dac1
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:581    .text.set_led:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:586    .text.set_led:00000000 set_led
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:608    .text.initCpuIo:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:614    .text.initCpuIo:00000000 initCpuIo
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:897    .rodata.serial_cfg:00000000 .LANCHOR0
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:661    .text.processCpuIo:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:667    .text.processCpuIo:00000000 processCpuIo
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:852    .text.processCpuIo:000000a8 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:868    .text.funcArgs:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:874    .text.funcArgs:00000000 funcArgs
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:947    .bss.args:00000000 .LANCHOR4
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:893    .bss.slash.3767:00000000 slash.3767
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:894    .bss.slash.3767:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:896    .rodata.serial_cfg:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:900    .rodata.serial_cfg:00000000 serial_cfg
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:907    .bss.out_index.3768:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:911    .bss.out_index.3768:00000000 out_index.3768
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:914    .rodata.funcs:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:918    .rodata.funcs:00000000 funcs
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:932    .bss.buffer:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:936    .bss.buffer:00000000 buffer
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:939    .rodata.str1.4:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:946    .bss.args:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:950    .bss.args:00000000 args
                      .debug_frame:00000010 $d
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s 			page 94
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccSx45O2.s 			page 94
 
 
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:132    .text.writeResult:00000034 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:163    .text.writeEom:00000014 $t
-C:\Users\z80\AppData\Local\Temp\ccD7fyTM.s:867    .text.processCpuIo:000000c4 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:132    .text.writeResult:00000034 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:163    .text.writeEom:00000014 $t
+C:\Users\z80\AppData\Local\Temp\ccSx45O2.s:867    .text.processCpuIo:000000c4 $t
 
 UNDEFINED SYMBOLS
 chOQPutTimeout
