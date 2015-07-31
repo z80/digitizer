@@ -91,10 +91,24 @@ Bipot::~Bipot()
     delete pd;
 }
 
-bool Bipot::open()
+QStringList Bipot::deviceList()
 {
     VoltampIo & io = *(pd->io);
-    bool res = io.open( 0 );
+    QStringList l = io.enumDevices();
+    return l;
+}
+
+bool Bipot::open( int index )
+{
+    VoltampIo & io = *(pd->io);
+    bool res = io.open( index );
+    return res;
+}
+
+bool Bipot::isOpen()
+{
+    VoltampIo & io = *(pd->io);
+    bool res = io.isOpen();
     return res;
 }
 
@@ -102,6 +116,26 @@ void Bipot::close()
 {
     VoltampIo & io = *(pd->io);
     io.close();
+}
+
+QString Bipot::hardwareVersion()
+{
+    VoltampIo & io = *(pd->io);
+    QString stri;
+    bool res = io.hardware_version( stri );    
+    if ( !res )
+        return QString();
+    return stri;
+}
+
+QString Bipot::firmwareVersion()
+{
+    VoltampIo & io = *(pd->io);
+    QString stri;
+    bool res = io.firmware_version( stri );    
+    if ( !res )
+        return QString();
+    return stri;
 }
 
 bool Bipot::setWorkRaw( int a, int b )

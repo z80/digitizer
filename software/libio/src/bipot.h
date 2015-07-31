@@ -11,8 +11,13 @@ public:
     ~Bipot();
 
     // Opening. closing the hardware.
-    bool open();
+    QStringList deviceList();
+    bool open( int index = 0 );
+    bool isOpen();
     void close();
+
+    QString hardwareVersion();
+    QString firmwareVersion();
 
     // Simple operations and oscilloscope.
     bool setWorkRaw( int a, int b );
