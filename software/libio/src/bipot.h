@@ -38,6 +38,7 @@ public:
 
     // Calibrations.
     void setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB );
+    void setVoltScale( qreal scaleWork, qreal scaleProbe );
 
     void clearCalibrationWorkDac();
     bool loadCalibrationWorkDac( const QString & fileName = "./work_dac.dat" );

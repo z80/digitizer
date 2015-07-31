@@ -34,12 +34,13 @@ public:
     qreal adc2workI( int adc );
     qreal adc2probeI( int adc );
 
-    VoltampIo * io;
+    VoltampIo  * io;
     QMutex       mutex;
     bool         sigs[4];
     QVector<int> data;
 
     qreal workA, workB, probeA, probeB;
+    qreal workGain, probeGain;
 
     QList<CalibrationDac> clbrDacWork, 
                           clbrDacProbe;
@@ -79,10 +80,12 @@ Bipot::Bipot()
     VoltampIo * io = new VoltampIo();
     pd->io = io;
 
-    pd->workA = 1.0;
-    pd->workB = 0.0;
+    pd->workA  = 1.0;
+    pd->workB  = 0.0;
     pd->probeA = 1.0;
     pd->probeB = 0.0;
+    pd->workGain  = 1.0;
+    pd->probeGain = 1.0;
 }
 
 Bipot::~Bipot()
@@ -298,9 +301,16 @@ void Bipot::setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB )
         pd->probeB = probeB;
 }
 
+void Bipot::setVoltScale( qreal scaleWork, qreal scaleProbe )
+{
+    QMutexLocker lock( &pd->mutex );
+        pd->workGain  = scaleWork;
+        pd->probeGain = scaleProbe;
+}
+
 void Bipot::clearCalibrationWorkDac()
 {
-        pd->clbrDacWork.clear();
+    pd->clbrDacWork.clear();
 }
 
 bool Bipot::loadCalibrationWorkDac( const QString & fileName )
