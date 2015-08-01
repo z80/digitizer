@@ -136,9 +136,13 @@ static void get_adc( uint8_t * args );
 static void set_osc_signals( uint8_t * args );
 static void set_osc_period( uint8_t * args );
 static void get_osc_data( uint8_t * args );
-static void sweep_dac1( uint8_t * args );
-static void sweep_dac2( uint8_t * args );
-static void sweep_both( uint8_t * args );
+static void set_sweep( uint8_t * args );
+static void set_sweep_osc( uint8_t * args );
+static void get_sweep_data( uint8_t * args );
+static void firmware_upgrade( uint8_t * args );
+static void set_trigger( uint8_t * args );
+static void set_trigger_sweep( uint8_t * args );
+static void get_trigger_data( uint8_t * args );
 
 static TFunc funcs[] =
 {
@@ -151,9 +155,13 @@ static TFunc funcs[] =
 	set_osc_signals,
 	set_osc_period,
 	get_osc_data,
-	sweep_dac1,
-	sweep_dac2,
-	sweep_both
+	set_sweep,
+	set_sweep_osc,
+	get_sweep_data,
+	firmware_upgrade,
+	set_trigger,
+	set_trigger_sweep,
+	get_trigger_data
 };
 
 static void exec_func( void )
@@ -264,20 +272,43 @@ static void get_osc_data( uint8_t * arg )
 	writeEom();
 }
 
-static void sweep_dac1( uint8_t * args )
+static void set_sweep( uint8_t * args )
+{
+	(void)args;
+
+}
+
+static void set_sweep_osc( uint8_t * args )
 {
 	(void)args;
 }
 
-static void sweep_dac2( uint8_t * args )
+static void get_sweep_data( uint8_t * args )
 {
 	(void)args;
 }
 
-static void sweep_both( uint8_t * args )
+static void firmware_upgrade( uint8_t * args )
 {
 	(void)args;
 }
+
+static void set_trigger( uint8_t * args )
+{
+	(void)args;
+}
+
+static void set_trigger_sweep( uint8_t * args )
+{
+	(void)args;
+}
+
+static void get_trigger_data( uint8_t * args )
+{
+	(void)args;
+}
+
+
 
 
 

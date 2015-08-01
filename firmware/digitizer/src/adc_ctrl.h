@@ -13,6 +13,13 @@ void instantAdc( int * vals );
 void setOscSignals( int mask );
 void setOscPeriod( uint32_t interval );
 
+// Program simple sweep.
+InputQueue * sweepData( void );
+void setSweepOsc( uint8_t sigs, uint32_t period );
+void setSweep( uint16_t * from, uint16_t * to, uint32_t period );
+
+
+
 #endif
 
 
