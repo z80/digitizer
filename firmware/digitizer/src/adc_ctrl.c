@@ -53,8 +53,8 @@ void initAdc( void )
 	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
 	chOQInit( &sweepCmdQueue, sweepCmdBuffer,     2,              0 );
 
-    palSetPadMode( GPIOA, 0, PAL_MODE_OUTPUT_PUSHPULL );              /* SCK. */
-    palSetPadMode( GPIOA, 1, PAL_MODE_OUTPUT_PUSHPULL );              /* MISO.*/
+    palSetPadMode( GPIOA, ADC_MUX_0, PAL_MODE_OUTPUT_PUSHPULL );              /* SCK. */
+    palSetPadMode( GPIOA, ADC_MUX_1, PAL_MODE_OUTPUT_PUSHPULL );              /* MISO.*/
 
 	palSetPadMode( GPIOA, 5, PAL_MODE_STM32_ALTERNATE_PUSHPULL );     /* SCK. */
     palSetPadMode( GPIOA, 6, PAL_MODE_STM32_ALTERNATE_PUSHPULL );     /* MISO.*/
@@ -238,7 +238,7 @@ static uint32_t sweepOscPeriod = 8000;
 void setSweepOsc( uint8_t sigs, uint32_t period )
 {
 	sweepSigs   = sigs;
-	sweepPeriod = period;
+	sweepOscPeriod = period;
 }
 
 static uint16_t sweepDacsFrom[4];

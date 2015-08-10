@@ -41,19 +41,16 @@ static const SerialConfig serial_cfg =
 
 void initCpuIo( void )
 {
-	// Initialize serial driver.
-	sdStart( &SERIAL, &serial_cfg );
-
 	// Setup pad settings.
 	palSetPadMode( GPIOA, 9, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
 	palSetPadMode( GPIOA, 10, PAL_MODE_INPUT );
-
 	// Setup RTS.
 	palSetPadMode( GPIOA, 11, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
-
 	// Setup CTS.
 	palSetPadMode( GPIOA, 12, PAL_MODE_INPUT );
 
+	// Initialize serial driver.
+	sdStart( &SERIAL, &serial_cfg );
 }
 
 void processCpuIo( void )

@@ -50,7 +50,6 @@ build/obj/serial_usb.o: ../chibios_2.4.x/os/hal/src/serial_usb.c \
  ../chibios_2.4.x/os/hal/include/gpt.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h \
  ../chibios_2.4.x/os/hal/include/i2c.h \
- ../chibios_2.4.x/os/hal/platforms/STM32/i2c_lld.h \
  ../chibios_2.4.x/os/hal/include/icu.h \
  ../chibios_2.4.x/os/hal/include/mac.h \
  ../chibios_2.4.x/os/hal/include/pwm.h \
@@ -175,8 +174,6 @@ mcuconf.h:
 ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h:
 
 ../chibios_2.4.x/os/hal/include/i2c.h:
-
-../chibios_2.4.x/os/hal/platforms/STM32/i2c_lld.h:
 
 ../chibios_2.4.x/os/hal/include/icu.h:
 
