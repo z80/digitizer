@@ -1,5 +1,5 @@
 /*
-    ChibiOS/RT - Copyright (C) 2006-2013 Giovanni Di Sirio
+    ChibiOS - Copyright (C) 2006..2015 Giovanni Di Sirio
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -23,11 +23,14 @@
 #define LED_1_PORT   GPIOC
 #define LED_1_PIN    13
 
+
+static void onSpiComplete( SPIDriver * spid );
+
 /*
  * Maximum speed SPI configuration (18MHz, CPHA=0, CPOL=0, MSb first).
  */
 static const SPIConfig hs_spicfg = {
-  NULL,
+  onSpiComplete,
   GPIOA,
   GPIOA_SPI1NSS,
   0
@@ -37,7 +40,7 @@ static const SPIConfig hs_spicfg = {
  * Low speed SPI configuration (281.250kHz, CPHA=0, CPOL=0, MSb first).
  */
 static const SPIConfig ls_spicfg = {
-  NULL,
+  onSpiComplete,
   GPIOA,
   GPIOA_SPI1NSS,
   SPI_CR1_BR_2 | SPI_CR1_BR_1
@@ -52,41 +55,43 @@ static uint8_t rxbuf[512];
 /*
  * SPI bus contender 1.
  */
-static WORKING_AREA(spi_thread_1_wa, 256);
-static msg_t spi_thread_1(void *p) {
+static THD_WORKING_AREA(spi_thread_1_wa, 256);
+static THD_FUNCTION(spi_thread_1, p) {
 
   (void)p;
+
   chRegSetThreadName("SPI thread 1");
-  while (TRUE) {
+  while (true) {
     spiAcquireBus(&SPID1);              /* Acquire ownership of the bus.    */
-    palClearPad( LED_0_PORT, LED_0_PIN );    /* LED ON.                          */
+    palSetPad(LED_0_PORT, LED_0_PIN);    /* LED ON.                          */
     spiStart(&SPID1, &hs_spicfg);       /* Setup transfer parameters.       */
     spiSelect(&SPID1);                  /* Slave Select assertion.          */
-    spiReceive( &SPID1, 3, rxbuf );          /* Atomic transfer operations.      */
+    spiExchange(&SPID1, 512,
+                txbuf, rxbuf);          /* Atomic transfer operations.      */
     spiUnselect(&SPID1);                /* Slave Select de-assertion.       */
     spiReleaseBus(&SPID1);              /* Ownership release.               */
   }
-  return 0;
 }
 
 /*
  * SPI bus contender 2.
  */
-static WORKING_AREA(spi_thread_2_wa, 256);
-static msg_t spi_thread_2(void *p) {
+static THD_WORKING_AREA(spi_thread_2_wa, 256);
+static THD_FUNCTION(spi_thread_2, p) {
 
   (void)p;
+
   chRegSetThreadName("SPI thread 2");
-  while (TRUE) {
+  while (true) {
     spiAcquireBus(&SPID1);              /* Acquire ownership of the bus.    */
-    palSetPad( LED_0_PORT, LED_0_PIN );      /* LED OFF.                         */
+    palSetPad(LED_0_PORT, LED_0_PIN);      /* LED OFF.                         */
     spiStart(&SPID1, &ls_spicfg);       /* Setup transfer parameters.       */
     spiSelect(&SPID1);                  /* Slave Select assertion.          */
-    spiReceive(&SPID1, 3, rxbuf);          /* Atomic transfer operations.      */
+    spiExchange(&SPID1, 512,
+                txbuf, rxbuf);          /* Atomic transfer operations.      */
     spiUnselect(&SPID1);                /* Slave Select de-assertion.       */
     spiReleaseBus(&SPID1);              /* Ownership release.               */
   }
-  return 0;
 }
 
 /*
@@ -114,6 +119,8 @@ int main(void) {
   palSetPadMode(IOPORT1, GPIOA_SPI1NSS, PAL_MODE_OUTPUT_PUSHPULL);
   palSetPad(IOPORT1, GPIOA_SPI1NSS);
 
+  palSetPadMode(LED_0_PORT, LED_0_PIN, PAL_MODE_OUTPUT_PUSHPULL);
+  palClearPad( LED_0_PORT, LED_0_PIN );
   /*
    * Prepare transmit pattern.
    */
@@ -125,14 +132,24 @@ int main(void) {
    */
   chThdCreateStatic(spi_thread_1_wa, sizeof(spi_thread_1_wa),
                     NORMALPRIO + 1, spi_thread_1, NULL);
+  /*
   chThdCreateStatic(spi_thread_2_wa, sizeof(spi_thread_2_wa),
                     NORMALPRIO + 1, spi_thread_2, NULL);
-
+*/
   /*
    * Normal main() thread activity, in this demo it does nothing.
    */
-  while (TRUE) {
+  while (true) {
     chThdSleepMilliseconds(500);
   }
   return 0;
 }
+
+static void onSpiComplete( SPIDriver * spid )
+{
+	palClearPad( IOPORT3, GPIOC_LED );
+}
+
+
+
+
