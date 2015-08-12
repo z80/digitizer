@@ -17,12 +17,12 @@ int main(void)
     initLed();
     initAdc();
     initDac();
-    //initCpuIo();
     initTimer();
+    initCpuIo();
 
     while ( 1 )
     {
-    	//processCpuIo();
+    	processCpuIo();
 
     	/*
     	setLeds( 1 );
@@ -30,6 +30,8 @@ int main(void)
     	setLeds( 2 );
     	chThdSleepMilliseconds( 1000 );
     	*/
+
+    	/*
         setDac( 0, 32767 );
         chThdSleepMilliseconds( 50 );
         setDac( 1, 32767 );
@@ -48,6 +50,7 @@ int main(void)
         chThdSleepMilliseconds( 50 );
         setDac( 3, 65530 );
         chThdSleepMilliseconds( 50 );
+        */
     }
     return 0;
 }
