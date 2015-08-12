@@ -53,12 +53,11 @@ void initAdc( void )
 	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
 	chOQInit( &sweepCmdQueue, sweepCmdBuffer,     2,              0 );
 
-    palSetPadMode( GPIOA, ADC_MUX_0, PAL_MODE_OUTPUT_PUSHPULL );              /* SCK. */
-    palSetPadMode( GPIOA, ADC_MUX_1, PAL_MODE_OUTPUT_PUSHPULL );              /* MISO.*/
+    palSetPadMode( GPIOA, ADC_MUX_0, PAL_MODE_OUTPUT_PUSHPULL ); 		// MUX_0
+    palSetPadMode( GPIOA, ADC_MUX_1, PAL_MODE_OUTPUT_PUSHPULL );        // MUX_1
 
-	palSetPadMode( GPIOA, 5, PAL_MODE_STM32_ALTERNATE_PUSHPULL );     /* SCK. */
-    palSetPadMode( GPIOA, 6, PAL_MODE_STM32_ALTERNATE_PUSHPULL );     /* MISO.*/
-    palSetPadMode( GPIOA, 7, PAL_MODE_STM32_ALTERNATE_PUSHPULL );     /* MOSI.*/
+    palSetPadMode( GPIOA, 5, PAL_MODE_STM32_ALTERNATE_PUSHPULL );     	// SCK
+    palSetPadMode( GPIOA, 6, PAL_MODE_STM32_ALTERNATE_PUSHPULL );     	// MISO
     palSetPadMode( GPIOA, GPIOA_SPI1NSS, PAL_MODE_OUTPUT_PUSHPULL );
     palSetPad( GPIOA, GPIOA_SPI1NSS );
 
@@ -69,10 +68,8 @@ void initAdc( void )
 
 void queryAdcI( void )
 {
-	chSysLockFromIsr();
-		spiSelectI( &SPID1 );
-		spiStartReceiveI( &SPID1, 3, adc_rx_buffer );
-	chSysUnlockFromIsr();
+	spiSelectI( &SPID1 );
+	spiStartReceiveI( &SPID1, 3, adc_rx_buffer );
 }
 
 void onSpiComplete( SPIDriver * spid )
@@ -86,9 +83,9 @@ void onSpiComplete( SPIDriver * spid )
 		// Unselect SPI slave.
 		spiUnselectI( &SPID1 );
 
-		int value = (int)(adc_rx_buffer[0]) +
+		int value = (int)(adc_rx_buffer[2]) +
 					((int)(adc_rx_buffer[1]) << 8) +
-					((int)(adc_rx_buffer[1]) << 16);
+					((int)(adc_rx_buffer[0]) << 16);
     		instantAdcData[prevIndex] = value;
 
 		// if (adcIndex == 0) this means it was 3 just
