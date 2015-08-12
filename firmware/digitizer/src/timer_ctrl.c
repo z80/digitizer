@@ -9,7 +9,7 @@ static void gptCb( GPTDriver * gptp );
 
 static const GPTConfig gptCfg =
 {
-  10000,   // 9MHz timer clock.
+  1000000,   // 1MHz timer clock.
   gptCb      // Timer callback.
 };
 
@@ -63,7 +63,7 @@ static SPIConfig hs_spicfg =
 void initTimer( void )
 {
     gptStart( &GPTD1, &gptCfg );
-    gptStartContinuous( &GPTD1, 90 );
+    gptStartContinuous( &GPTD1, 100 );
 }
 
 static void gptCb(GPTDriver *gptp)
@@ -76,28 +76,23 @@ static void gptCb(GPTDriver *gptp)
 
 
 
+		/*
 	    palSetPadMode( GPIOB, DAC_CS_0, PAL_MODE_OUTPUT_PUSHPULL );
 	    palSetPadMode( GPIOB, DAC_CS_1, PAL_MODE_OUTPUT_PUSHPULL );
 	    palSetPadMode( GPIOB, DAC_CS_2, PAL_MODE_OUTPUT_PUSHPULL );
 	    palSetPadMode( GPIOB, DAC_CS_3, PAL_MODE_OUTPUT_PUSHPULL );
+	    */
 
 
 
 		// Get All data from output queue.
-		if ( chOQGetFullI( &dac_queue ) >= 3 )
+		int queueSize = chOQGetFullI( &dac_queue );
+		if ( queueSize >= 3 )
 		{
 			int i;
 			msg_t res;
 			res = chOQGetI( &dac_queue );
 			i = (int)res;
-
-			/*
-			static int val = 32767;
-			if ( val > 0 )
-				val = 0;
-			else
-				val = 65535;
-			*/
 
 			int val;
 			res = chOQGetI( &dac_queue );
@@ -107,7 +102,6 @@ static void gptCb(GPTDriver *gptp)
 
 			i = i % 4;
 
-			//i = 0;
 
 			newValues[i] = val;
 
@@ -117,27 +111,27 @@ static void gptCb(GPTDriver *gptp)
 				{
 				case 0:
 					hs_spicfg.sspad = DAC_CS_0;
-					palClearPad( GPIOB, DAC_CS_0 );
+					//palClearPad( GPIOB, DAC_CS_0 );
 					break;
 				case 1:
 					hs_spicfg.sspad = DAC_CS_1;
-					palClearPad( GPIOB, DAC_CS_1 );
+					//palClearPad( GPIOB, DAC_CS_1 );
 					break;
 				case 2:
 					hs_spicfg.sspad = DAC_CS_2;
-					palClearPad( GPIOB, DAC_CS_2 );
+					//palClearPad( GPIOB, DAC_CS_2 );
 					break;
 				case 3:
 					hs_spicfg.sspad = DAC_CS_3;
-					palClearPad( GPIOB, DAC_CS_3 );
+					//palClearPad( GPIOB, DAC_CS_3 );
 					break;
 				}
 				dacValues[i] = newValues[i];
 				dac_tx_buffer[0] = (uint8_t)((newValues[i] >> 8) & 0xFF);
 				dac_tx_buffer[1] = (uint8_t)(newValues[i] & 0xFF);
 
-				//spiSelectI( &SPID2 );
-				palClearPad( GPIOB, hs_spicfg.sspad );
+				spiSelectI( &SPID2 );
+				//palClearPad( GPIOB, hs_spicfg.sspad );
 				spiStartSendI( &SPID2, 2, dac_tx_buffer );
 				// Only one DAC could be set at once due to they all are
 				// connected to one and the same SPI bus.
@@ -312,8 +306,11 @@ static void onDacSpiComplete( SPIDriver * spid )
 {
 	(void)spid;
 	chSysLockFromIsr();
-		//spiUnselectI( &SPID2 );
-		palSetPad( GPIOB, hs_spicfg.sspad );
+		spiUnselectI( &SPID2 );
+		//palSetPad( GPIOB, DAC_CS_0 );
+		//palSetPad( GPIOB, DAC_CS_1 );
+		//palSetPad( GPIOB, DAC_CS_2 );
+		//palSetPad( GPIOB, DAC_CS_3 );
 	chSysUnlockFromIsr();
 }
 

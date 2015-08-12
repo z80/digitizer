@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 1
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 1
 
 
    1              		.syntax unified
@@ -20,7 +20,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 1
   17              	.Ldebug_info0:
   18              		.section	.debug_line,"",%progbits
   19              	.Ldebug_line0:
-  20 0000 35010000 		.text
+  20 0000 53010000 		.text
   20      0200E100 
   20      00000201 
   20      FB0E0D00 
@@ -58,446 +58,464 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 1
   51 0012 FFF7FEFF 		bl	initDac
   52              		.loc 1 21 0
   53 0016 FFF7FEFF 		bl	initTimer
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 2
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 2
 
 
   54              	.L2:
   55              		.loc 1 33 0 discriminator 1
-  56 001a 4FF00500 		mov	r0, #5
-  57 001e FFF7FEFF 		bl	chThdSleep
-  58              		.loc 1 34 0 discriminator 1
-  59 0022 4FF00000 		mov	r0, #0
-  60 0026 47F6FF71 		movw	r1, #32767
-  61 002a FFF7FEFF 		bl	setDac
+  56 001a 4FF00000 		mov	r0, #0
+  57 001e 47F6FF71 		movw	r1, #32767
+  58 0022 FFF7FEFF 		bl	setDac
+  59              		.loc 1 34 0 discriminator 1
+  60 0026 4FF01900 		mov	r0, #25
+  61 002a FFF7FEFF 		bl	chThdSleep
   62              		.loc 1 35 0 discriminator 1
   63 002e 4FF00100 		mov	r0, #1
   64 0032 47F6FF71 		movw	r1, #32767
   65 0036 FFF7FEFF 		bl	setDac
   66              		.loc 1 36 0 discriminator 1
-  67 003a 4FF00200 		mov	r0, #2
-  68 003e 47F6FF71 		movw	r1, #32767
-  69 0042 FFF7FEFF 		bl	setDac
-  70              		.loc 1 37 0 discriminator 1
-  71 0046 4FF00300 		mov	r0, #3
-  72 004a 47F6FF71 		movw	r1, #32767
-  73 004e FFF7FEFF 		bl	setDac
-  74              		.loc 1 38 0 discriminator 1
-  75 0052 4FF00500 		mov	r0, #5
-  76 0056 FFF7FEFF 		bl	chThdSleep
-  77              		.loc 1 39 0 discriminator 1
-  78 005a 4FF00000 		mov	r0, #0
-  79 005e 4FF6FA71 		movw	r1, #65530
-  80 0062 FFF7FEFF 		bl	setDac
-  81              		.loc 1 40 0 discriminator 1
-  82 0066 4FF00100 		mov	r0, #1
-  83 006a 4FF6FA71 		movw	r1, #65530
-  84 006e FFF7FEFF 		bl	setDac
-  85              		.loc 1 41 0 discriminator 1
-  86 0072 4FF00200 		mov	r0, #2
-  87 0076 4FF6FA71 		movw	r1, #65530
-  88 007a FFF7FEFF 		bl	setDac
-  89              		.loc 1 42 0 discriminator 1
-  90 007e 4FF00300 		mov	r0, #3
-  91 0082 4FF6FA71 		movw	r1, #65530
-  92 0086 FFF7FEFF 		bl	setDac
-  93              		.loc 1 43 0 discriminator 1
-  94 008a C6E7     		b	.L2
-  95              		.cfi_endproc
-  96              	.LFE62:
-  97              		.size	main, .-main
-  98 008c AFF30080 		.text
-  99              	.Letext0:
- 100              		.section	.debug_loc,"",%progbits
- 101              	.Ldebug_loc0:
- 102              	.LLST0:
- 103 0000 00000000 		.4byte	.LFB62
- 104 0004 02000000 		.4byte	.LCFI0
- 105 0008 0200     		.2byte	0x2
- 106 000a 7D       		.byte	0x7d
- 107 000b 00       		.sleb128 0
- 108 000c 02000000 		.4byte	.LCFI0
- 109 0010 8C000000 		.4byte	.LFE62
- 110 0014 0200     		.2byte	0x2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 3
+  67 003a 4FF01900 		mov	r0, #25
+  68 003e FFF7FEFF 		bl	chThdSleep
+  69              		.loc 1 37 0 discriminator 1
+  70 0042 4FF00200 		mov	r0, #2
+  71 0046 47F6FF71 		movw	r1, #32767
+  72 004a FFF7FEFF 		bl	setDac
+  73              		.loc 1 38 0 discriminator 1
+  74 004e 4FF01900 		mov	r0, #25
+  75 0052 FFF7FEFF 		bl	chThdSleep
+  76              		.loc 1 39 0 discriminator 1
+  77 0056 4FF00300 		mov	r0, #3
+  78 005a 47F6FF71 		movw	r1, #32767
+  79 005e FFF7FEFF 		bl	setDac
+  80              		.loc 1 40 0 discriminator 1
+  81 0062 4FF01900 		mov	r0, #25
+  82 0066 FFF7FEFF 		bl	chThdSleep
+  83              		.loc 1 43 0 discriminator 1
+  84 006a 4FF00000 		mov	r0, #0
+  85 006e 4FF6FA71 		movw	r1, #65530
+  86 0072 FFF7FEFF 		bl	setDac
+  87              		.loc 1 44 0 discriminator 1
+  88 0076 4FF01900 		mov	r0, #25
+  89 007a FFF7FEFF 		bl	chThdSleep
+  90              		.loc 1 45 0 discriminator 1
+  91 007e 4FF00100 		mov	r0, #1
+  92 0082 4FF6FA71 		movw	r1, #65530
+  93 0086 FFF7FEFF 		bl	setDac
+  94              		.loc 1 46 0 discriminator 1
+  95 008a 4FF01900 		mov	r0, #25
+  96 008e FFF7FEFF 		bl	chThdSleep
+  97              		.loc 1 47 0 discriminator 1
+  98 0092 4FF00200 		mov	r0, #2
+  99 0096 4FF6FA71 		movw	r1, #65530
+ 100 009a FFF7FEFF 		bl	setDac
+ 101              		.loc 1 48 0 discriminator 1
+ 102 009e 4FF01900 		mov	r0, #25
+ 103 00a2 FFF7FEFF 		bl	chThdSleep
+ 104              		.loc 1 49 0 discriminator 1
+ 105 00a6 4FF00300 		mov	r0, #3
+ 106 00aa 4FF6FA71 		movw	r1, #65530
+ 107 00ae FFF7FEFF 		bl	setDac
+ 108              		.loc 1 50 0 discriminator 1
+ 109 00b2 4FF01900 		mov	r0, #25
+ 110 00b6 FFF7FEFF 		bl	chThdSleep
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 3
 
 
- 111 0016 7D       		.byte	0x7d
- 112 0017 08       		.sleb128 8
- 113 0018 00000000 		.4byte	0x0
- 114 001c 00000000 		.4byte	0x0
- 115              		.file 2 "c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h"
- 116              		.file 3 "../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h"
- 117              		.file 4 "../chibios_2.4.x/os/ports/common/ARMCMx/CMSIS/include/core_cm3.h"
- 118              		.section	.debug_info
- 119 0000 D1000000 		.4byte	0xd1
- 120 0004 0200     		.2byte	0x2
- 121 0006 00000000 		.4byte	.Ldebug_abbrev0
- 122 000a 04       		.byte	0x4
- 123 000b 01       		.uleb128 0x1
- 124 000c 57000000 		.4byte	.LASF14
- 125 0010 01       		.byte	0x1
- 126 0011 63000000 		.4byte	.LASF15
- 127 0015 95000000 		.4byte	.LASF16
- 128 0019 00000000 		.4byte	0x0
- 129 001d 00000000 		.4byte	0x0
- 130 0021 00000000 		.4byte	.Ldebug_ranges0+0x0
- 131 0025 00000000 		.4byte	.Ldebug_line0
- 132 0029 02       		.uleb128 0x2
- 133 002a 04       		.byte	0x4
- 134 002b 05       		.byte	0x5
- 135 002c 696E7400 		.ascii	"int\000"
- 136 0030 03       		.uleb128 0x3
- 137 0031 04       		.byte	0x4
- 138 0032 07       		.byte	0x7
- 139 0033 21000000 		.4byte	.LASF0
- 140 0037 03       		.uleb128 0x3
- 141 0038 01       		.byte	0x1
- 142 0039 06       		.byte	0x6
- 143 003a CF000000 		.4byte	.LASF1
- 144 003e 03       		.uleb128 0x3
- 145 003f 01       		.byte	0x1
- 146 0040 08       		.byte	0x8
- 147 0041 70000000 		.4byte	.LASF2
- 148 0045 03       		.uleb128 0x3
- 149 0046 02       		.byte	0x2
- 150 0047 05       		.byte	0x5
- 151 0048 E5000000 		.4byte	.LASF3
- 152 004c 03       		.uleb128 0x3
- 153 004d 02       		.byte	0x2
- 154 004e 07       		.byte	0x7
- 155 004f 0E000000 		.4byte	.LASF4
- 156 0053 04       		.uleb128 0x4
- 157 0054 EF000000 		.4byte	.LASF6
- 158 0058 02       		.byte	0x2
- 159 0059 4F       		.byte	0x4f
- 160 005a 5E000000 		.4byte	0x5e
- 161 005e 03       		.uleb128 0x3
- 162 005f 04       		.byte	0x4
- 163 0060 05       		.byte	0x5
- 164 0061 8C000000 		.4byte	.LASF5
- 165 0065 04       		.uleb128 0x4
- 166 0066 83000000 		.4byte	.LASF7
- 167 006a 02       		.byte	0x2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 4
+ 111              		.loc 1 51 0 discriminator 1
+ 112 00ba AEE7     		b	.L2
+ 113              		.cfi_endproc
+ 114              	.LFE62:
+ 115              		.size	main, .-main
+ 116 00bc AFF30080 		.text
+ 117              	.Letext0:
+ 118              		.section	.debug_loc,"",%progbits
+ 119              	.Ldebug_loc0:
+ 120              	.LLST0:
+ 121 0000 00000000 		.4byte	.LFB62
+ 122 0004 02000000 		.4byte	.LCFI0
+ 123 0008 0200     		.2byte	0x2
+ 124 000a 7D       		.byte	0x7d
+ 125 000b 00       		.sleb128 0
+ 126 000c 02000000 		.4byte	.LCFI0
+ 127 0010 BC000000 		.4byte	.LFE62
+ 128 0014 0200     		.2byte	0x2
+ 129 0016 7D       		.byte	0x7d
+ 130 0017 08       		.sleb128 8
+ 131 0018 00000000 		.4byte	0x0
+ 132 001c 00000000 		.4byte	0x0
+ 133              		.file 2 "c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h"
+ 134              		.file 3 "../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h"
+ 135              		.file 4 "../chibios_2.4.x/os/ports/common/ARMCMx/CMSIS/include/core_cm3.h"
+ 136              		.section	.debug_info
+ 137 0000 D1000000 		.4byte	0xd1
+ 138 0004 0200     		.2byte	0x2
+ 139 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 140 000a 04       		.byte	0x4
+ 141 000b 01       		.uleb128 0x1
+ 142 000c 57000000 		.4byte	.LASF14
+ 143 0010 01       		.byte	0x1
+ 144 0011 63000000 		.4byte	.LASF15
+ 145 0015 95000000 		.4byte	.LASF16
+ 146 0019 00000000 		.4byte	0x0
+ 147 001d 00000000 		.4byte	0x0
+ 148 0021 00000000 		.4byte	.Ldebug_ranges0+0x0
+ 149 0025 00000000 		.4byte	.Ldebug_line0
+ 150 0029 02       		.uleb128 0x2
+ 151 002a 04       		.byte	0x4
+ 152 002b 05       		.byte	0x5
+ 153 002c 696E7400 		.ascii	"int\000"
+ 154 0030 03       		.uleb128 0x3
+ 155 0031 04       		.byte	0x4
+ 156 0032 07       		.byte	0x7
+ 157 0033 21000000 		.4byte	.LASF0
+ 158 0037 03       		.uleb128 0x3
+ 159 0038 01       		.byte	0x1
+ 160 0039 06       		.byte	0x6
+ 161 003a CF000000 		.4byte	.LASF1
+ 162 003e 03       		.uleb128 0x3
+ 163 003f 01       		.byte	0x1
+ 164 0040 08       		.byte	0x8
+ 165 0041 70000000 		.4byte	.LASF2
+ 166 0045 03       		.uleb128 0x3
+ 167 0046 02       		.byte	0x2
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 4
 
 
- 168 006b 50       		.byte	0x50
- 169 006c 70000000 		.4byte	0x70
- 170 0070 03       		.uleb128 0x3
- 171 0071 04       		.byte	0x4
- 172 0072 07       		.byte	0x7
- 173 0073 2E000000 		.4byte	.LASF8
- 174 0077 03       		.uleb128 0x3
- 175 0078 08       		.byte	0x8
- 176 0079 05       		.byte	0x5
- 177 007a 00000000 		.4byte	.LASF9
- 178 007e 03       		.uleb128 0x3
- 179 007f 08       		.byte	0x8
- 180 0080 07       		.byte	0x7
- 181 0081 40000000 		.4byte	.LASF10
- 182 0085 04       		.uleb128 0x4
- 183 0086 DB000000 		.4byte	.LASF11
- 184 008a 03       		.byte	0x3
- 185 008b 36       		.byte	0x36
- 186 008c 65000000 		.4byte	0x65
- 187 0090 05       		.uleb128 0x5
- 188 0091 04       		.byte	0x4
- 189 0092 07       		.byte	0x7
- 190 0093 03       		.uleb128 0x3
- 191 0094 01       		.byte	0x1
- 192 0095 08       		.byte	0x8
- 193 0096 F7000000 		.4byte	.LASF12
- 194 009a 06       		.uleb128 0x6
- 195 009b 53000000 		.4byte	0x53
- 196 009f 07       		.uleb128 0x7
- 197 00a0 01       		.byte	0x1
- 198 00a1 7E000000 		.4byte	.LASF17
- 199 00a5 01       		.byte	0x1
- 200 00a6 0C       		.byte	0xc
- 201 00a7 01       		.byte	0x1
- 202 00a8 29000000 		.4byte	0x29
- 203 00ac 00000000 		.4byte	.LFB62
- 204 00b0 8C000000 		.4byte	.LFE62
- 205 00b4 00000000 		.4byte	.LLST0
- 206 00b8 08       		.uleb128 0x8
- 207 00b9 C2000000 		.4byte	.LASF13
- 208 00bd 04       		.byte	0x4
- 209 00be 9404     		.2byte	0x494
- 210 00c0 9A000000 		.4byte	0x9a
- 211 00c4 01       		.byte	0x1
- 212 00c5 01       		.byte	0x1
- 213 00c6 08       		.uleb128 0x8
- 214 00c7 C2000000 		.4byte	.LASF13
- 215 00cb 04       		.byte	0x4
- 216 00cc 9404     		.2byte	0x494
- 217 00ce 9A000000 		.4byte	0x9a
- 218 00d2 01       		.byte	0x1
- 219 00d3 01       		.byte	0x1
- 220 00d4 00       		.byte	0x0
- 221              		.section	.debug_abbrev
- 222 0000 01       		.uleb128 0x1
- 223 0001 11       		.uleb128 0x11
- 224 0002 01       		.byte	0x1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 5
+ 168 0047 05       		.byte	0x5
+ 169 0048 E5000000 		.4byte	.LASF3
+ 170 004c 03       		.uleb128 0x3
+ 171 004d 02       		.byte	0x2
+ 172 004e 07       		.byte	0x7
+ 173 004f 0E000000 		.4byte	.LASF4
+ 174 0053 04       		.uleb128 0x4
+ 175 0054 EF000000 		.4byte	.LASF6
+ 176 0058 02       		.byte	0x2
+ 177 0059 4F       		.byte	0x4f
+ 178 005a 5E000000 		.4byte	0x5e
+ 179 005e 03       		.uleb128 0x3
+ 180 005f 04       		.byte	0x4
+ 181 0060 05       		.byte	0x5
+ 182 0061 8C000000 		.4byte	.LASF5
+ 183 0065 04       		.uleb128 0x4
+ 184 0066 83000000 		.4byte	.LASF7
+ 185 006a 02       		.byte	0x2
+ 186 006b 50       		.byte	0x50
+ 187 006c 70000000 		.4byte	0x70
+ 188 0070 03       		.uleb128 0x3
+ 189 0071 04       		.byte	0x4
+ 190 0072 07       		.byte	0x7
+ 191 0073 2E000000 		.4byte	.LASF8
+ 192 0077 03       		.uleb128 0x3
+ 193 0078 08       		.byte	0x8
+ 194 0079 05       		.byte	0x5
+ 195 007a 00000000 		.4byte	.LASF9
+ 196 007e 03       		.uleb128 0x3
+ 197 007f 08       		.byte	0x8
+ 198 0080 07       		.byte	0x7
+ 199 0081 40000000 		.4byte	.LASF10
+ 200 0085 04       		.uleb128 0x4
+ 201 0086 DB000000 		.4byte	.LASF11
+ 202 008a 03       		.byte	0x3
+ 203 008b 36       		.byte	0x36
+ 204 008c 65000000 		.4byte	0x65
+ 205 0090 05       		.uleb128 0x5
+ 206 0091 04       		.byte	0x4
+ 207 0092 07       		.byte	0x7
+ 208 0093 03       		.uleb128 0x3
+ 209 0094 01       		.byte	0x1
+ 210 0095 08       		.byte	0x8
+ 211 0096 F7000000 		.4byte	.LASF12
+ 212 009a 06       		.uleb128 0x6
+ 213 009b 53000000 		.4byte	0x53
+ 214 009f 07       		.uleb128 0x7
+ 215 00a0 01       		.byte	0x1
+ 216 00a1 7E000000 		.4byte	.LASF17
+ 217 00a5 01       		.byte	0x1
+ 218 00a6 0C       		.byte	0xc
+ 219 00a7 01       		.byte	0x1
+ 220 00a8 29000000 		.4byte	0x29
+ 221 00ac 00000000 		.4byte	.LFB62
+ 222 00b0 BC000000 		.4byte	.LFE62
+ 223 00b4 00000000 		.4byte	.LLST0
+ 224 00b8 08       		.uleb128 0x8
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 5
 
 
- 225 0003 25       		.uleb128 0x25
- 226 0004 0E       		.uleb128 0xe
- 227 0005 13       		.uleb128 0x13
- 228 0006 0B       		.uleb128 0xb
- 229 0007 03       		.uleb128 0x3
- 230 0008 0E       		.uleb128 0xe
- 231 0009 1B       		.uleb128 0x1b
- 232 000a 0E       		.uleb128 0xe
- 233 000b 11       		.uleb128 0x11
- 234 000c 01       		.uleb128 0x1
- 235 000d 52       		.uleb128 0x52
- 236 000e 01       		.uleb128 0x1
- 237 000f 55       		.uleb128 0x55
- 238 0010 06       		.uleb128 0x6
- 239 0011 10       		.uleb128 0x10
- 240 0012 06       		.uleb128 0x6
- 241 0013 00       		.byte	0x0
- 242 0014 00       		.byte	0x0
- 243 0015 02       		.uleb128 0x2
- 244 0016 24       		.uleb128 0x24
- 245 0017 00       		.byte	0x0
- 246 0018 0B       		.uleb128 0xb
- 247 0019 0B       		.uleb128 0xb
- 248 001a 3E       		.uleb128 0x3e
- 249 001b 0B       		.uleb128 0xb
- 250 001c 03       		.uleb128 0x3
- 251 001d 08       		.uleb128 0x8
- 252 001e 00       		.byte	0x0
- 253 001f 00       		.byte	0x0
- 254 0020 03       		.uleb128 0x3
- 255 0021 24       		.uleb128 0x24
- 256 0022 00       		.byte	0x0
- 257 0023 0B       		.uleb128 0xb
- 258 0024 0B       		.uleb128 0xb
- 259 0025 3E       		.uleb128 0x3e
- 260 0026 0B       		.uleb128 0xb
- 261 0027 03       		.uleb128 0x3
- 262 0028 0E       		.uleb128 0xe
- 263 0029 00       		.byte	0x0
- 264 002a 00       		.byte	0x0
- 265 002b 04       		.uleb128 0x4
- 266 002c 16       		.uleb128 0x16
- 267 002d 00       		.byte	0x0
- 268 002e 03       		.uleb128 0x3
- 269 002f 0E       		.uleb128 0xe
- 270 0030 3A       		.uleb128 0x3a
- 271 0031 0B       		.uleb128 0xb
- 272 0032 3B       		.uleb128 0x3b
- 273 0033 0B       		.uleb128 0xb
- 274 0034 49       		.uleb128 0x49
- 275 0035 13       		.uleb128 0x13
- 276 0036 00       		.byte	0x0
- 277 0037 00       		.byte	0x0
- 278 0038 05       		.uleb128 0x5
- 279 0039 24       		.uleb128 0x24
- 280 003a 00       		.byte	0x0
- 281 003b 0B       		.uleb128 0xb
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 6
+ 225 00b9 C2000000 		.4byte	.LASF13
+ 226 00bd 04       		.byte	0x4
+ 227 00be 9404     		.2byte	0x494
+ 228 00c0 9A000000 		.4byte	0x9a
+ 229 00c4 01       		.byte	0x1
+ 230 00c5 01       		.byte	0x1
+ 231 00c6 08       		.uleb128 0x8
+ 232 00c7 C2000000 		.4byte	.LASF13
+ 233 00cb 04       		.byte	0x4
+ 234 00cc 9404     		.2byte	0x494
+ 235 00ce 9A000000 		.4byte	0x9a
+ 236 00d2 01       		.byte	0x1
+ 237 00d3 01       		.byte	0x1
+ 238 00d4 00       		.byte	0x0
+ 239              		.section	.debug_abbrev
+ 240 0000 01       		.uleb128 0x1
+ 241 0001 11       		.uleb128 0x11
+ 242 0002 01       		.byte	0x1
+ 243 0003 25       		.uleb128 0x25
+ 244 0004 0E       		.uleb128 0xe
+ 245 0005 13       		.uleb128 0x13
+ 246 0006 0B       		.uleb128 0xb
+ 247 0007 03       		.uleb128 0x3
+ 248 0008 0E       		.uleb128 0xe
+ 249 0009 1B       		.uleb128 0x1b
+ 250 000a 0E       		.uleb128 0xe
+ 251 000b 11       		.uleb128 0x11
+ 252 000c 01       		.uleb128 0x1
+ 253 000d 52       		.uleb128 0x52
+ 254 000e 01       		.uleb128 0x1
+ 255 000f 55       		.uleb128 0x55
+ 256 0010 06       		.uleb128 0x6
+ 257 0011 10       		.uleb128 0x10
+ 258 0012 06       		.uleb128 0x6
+ 259 0013 00       		.byte	0x0
+ 260 0014 00       		.byte	0x0
+ 261 0015 02       		.uleb128 0x2
+ 262 0016 24       		.uleb128 0x24
+ 263 0017 00       		.byte	0x0
+ 264 0018 0B       		.uleb128 0xb
+ 265 0019 0B       		.uleb128 0xb
+ 266 001a 3E       		.uleb128 0x3e
+ 267 001b 0B       		.uleb128 0xb
+ 268 001c 03       		.uleb128 0x3
+ 269 001d 08       		.uleb128 0x8
+ 270 001e 00       		.byte	0x0
+ 271 001f 00       		.byte	0x0
+ 272 0020 03       		.uleb128 0x3
+ 273 0021 24       		.uleb128 0x24
+ 274 0022 00       		.byte	0x0
+ 275 0023 0B       		.uleb128 0xb
+ 276 0024 0B       		.uleb128 0xb
+ 277 0025 3E       		.uleb128 0x3e
+ 278 0026 0B       		.uleb128 0xb
+ 279 0027 03       		.uleb128 0x3
+ 280 0028 0E       		.uleb128 0xe
+ 281 0029 00       		.byte	0x0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 6
 
 
- 282 003c 0B       		.uleb128 0xb
- 283 003d 3E       		.uleb128 0x3e
- 284 003e 0B       		.uleb128 0xb
- 285 003f 00       		.byte	0x0
- 286 0040 00       		.byte	0x0
- 287 0041 06       		.uleb128 0x6
- 288 0042 35       		.uleb128 0x35
- 289 0043 00       		.byte	0x0
- 290 0044 49       		.uleb128 0x49
- 291 0045 13       		.uleb128 0x13
- 292 0046 00       		.byte	0x0
- 293 0047 00       		.byte	0x0
- 294 0048 07       		.uleb128 0x7
- 295 0049 2E       		.uleb128 0x2e
- 296 004a 00       		.byte	0x0
- 297 004b 3F       		.uleb128 0x3f
- 298 004c 0C       		.uleb128 0xc
- 299 004d 03       		.uleb128 0x3
- 300 004e 0E       		.uleb128 0xe
- 301 004f 3A       		.uleb128 0x3a
- 302 0050 0B       		.uleb128 0xb
- 303 0051 3B       		.uleb128 0x3b
- 304 0052 0B       		.uleb128 0xb
- 305 0053 27       		.uleb128 0x27
- 306 0054 0C       		.uleb128 0xc
- 307 0055 49       		.uleb128 0x49
- 308 0056 13       		.uleb128 0x13
- 309 0057 11       		.uleb128 0x11
- 310 0058 01       		.uleb128 0x1
- 311 0059 12       		.uleb128 0x12
- 312 005a 01       		.uleb128 0x1
- 313 005b 40       		.uleb128 0x40
- 314 005c 06       		.uleb128 0x6
- 315 005d 00       		.byte	0x0
- 316 005e 00       		.byte	0x0
- 317 005f 08       		.uleb128 0x8
- 318 0060 34       		.uleb128 0x34
- 319 0061 00       		.byte	0x0
- 320 0062 03       		.uleb128 0x3
- 321 0063 0E       		.uleb128 0xe
- 322 0064 3A       		.uleb128 0x3a
- 323 0065 0B       		.uleb128 0xb
- 324 0066 3B       		.uleb128 0x3b
- 325 0067 05       		.uleb128 0x5
- 326 0068 49       		.uleb128 0x49
- 327 0069 13       		.uleb128 0x13
- 328 006a 3F       		.uleb128 0x3f
- 329 006b 0C       		.uleb128 0xc
- 330 006c 3C       		.uleb128 0x3c
- 331 006d 0C       		.uleb128 0xc
- 332 006e 00       		.byte	0x0
- 333 006f 00       		.byte	0x0
- 334 0070 00       		.byte	0x0
- 335              		.section	.debug_pubnames,"",%progbits
- 336 0000 17000000 		.4byte	0x17
- 337 0004 0200     		.2byte	0x2
- 338 0006 00000000 		.4byte	.Ldebug_info0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 7
+ 282 002a 00       		.byte	0x0
+ 283 002b 04       		.uleb128 0x4
+ 284 002c 16       		.uleb128 0x16
+ 285 002d 00       		.byte	0x0
+ 286 002e 03       		.uleb128 0x3
+ 287 002f 0E       		.uleb128 0xe
+ 288 0030 3A       		.uleb128 0x3a
+ 289 0031 0B       		.uleb128 0xb
+ 290 0032 3B       		.uleb128 0x3b
+ 291 0033 0B       		.uleb128 0xb
+ 292 0034 49       		.uleb128 0x49
+ 293 0035 13       		.uleb128 0x13
+ 294 0036 00       		.byte	0x0
+ 295 0037 00       		.byte	0x0
+ 296 0038 05       		.uleb128 0x5
+ 297 0039 24       		.uleb128 0x24
+ 298 003a 00       		.byte	0x0
+ 299 003b 0B       		.uleb128 0xb
+ 300 003c 0B       		.uleb128 0xb
+ 301 003d 3E       		.uleb128 0x3e
+ 302 003e 0B       		.uleb128 0xb
+ 303 003f 00       		.byte	0x0
+ 304 0040 00       		.byte	0x0
+ 305 0041 06       		.uleb128 0x6
+ 306 0042 35       		.uleb128 0x35
+ 307 0043 00       		.byte	0x0
+ 308 0044 49       		.uleb128 0x49
+ 309 0045 13       		.uleb128 0x13
+ 310 0046 00       		.byte	0x0
+ 311 0047 00       		.byte	0x0
+ 312 0048 07       		.uleb128 0x7
+ 313 0049 2E       		.uleb128 0x2e
+ 314 004a 00       		.byte	0x0
+ 315 004b 3F       		.uleb128 0x3f
+ 316 004c 0C       		.uleb128 0xc
+ 317 004d 03       		.uleb128 0x3
+ 318 004e 0E       		.uleb128 0xe
+ 319 004f 3A       		.uleb128 0x3a
+ 320 0050 0B       		.uleb128 0xb
+ 321 0051 3B       		.uleb128 0x3b
+ 322 0052 0B       		.uleb128 0xb
+ 323 0053 27       		.uleb128 0x27
+ 324 0054 0C       		.uleb128 0xc
+ 325 0055 49       		.uleb128 0x49
+ 326 0056 13       		.uleb128 0x13
+ 327 0057 11       		.uleb128 0x11
+ 328 0058 01       		.uleb128 0x1
+ 329 0059 12       		.uleb128 0x12
+ 330 005a 01       		.uleb128 0x1
+ 331 005b 40       		.uleb128 0x40
+ 332 005c 06       		.uleb128 0x6
+ 333 005d 00       		.byte	0x0
+ 334 005e 00       		.byte	0x0
+ 335 005f 08       		.uleb128 0x8
+ 336 0060 34       		.uleb128 0x34
+ 337 0061 00       		.byte	0x0
+ 338 0062 03       		.uleb128 0x3
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 7
 
 
- 339 000a D5000000 		.4byte	0xd5
- 340 000e 9F000000 		.4byte	0x9f
- 341 0012 6D61696E 		.ascii	"main\000"
- 341      00
- 342 0017 00000000 		.4byte	0x0
- 343              		.section	.debug_pubtypes,"",%progbits
- 344 0000 35000000 		.4byte	0x35
- 345 0004 0200     		.2byte	0x2
- 346 0006 00000000 		.4byte	.Ldebug_info0
- 347 000a D5000000 		.4byte	0xd5
- 348 000e 53000000 		.4byte	0x53
- 349 0012 696E7433 		.ascii	"int32_t\000"
- 349      325F7400 
- 350 001a 65000000 		.4byte	0x65
- 351 001e 75696E74 		.ascii	"uint32_t\000"
- 351      33325F74 
- 351      00
- 352 0027 85000000 		.4byte	0x85
- 353 002b 73797374 		.ascii	"systime_t\000"
- 353      696D655F 
- 353      7400
- 354 0035 00000000 		.4byte	0x0
- 355              		.section	.debug_aranges,"",%progbits
- 356 0000 1C000000 		.4byte	0x1c
- 357 0004 0200     		.2byte	0x2
- 358 0006 00000000 		.4byte	.Ldebug_info0
- 359 000a 04       		.byte	0x4
- 360 000b 00       		.byte	0x0
- 361 000c 0000     		.2byte	0x0
- 362 000e 0000     		.2byte	0x0
- 363 0010 00000000 		.4byte	.LFB62
- 364 0014 8C000000 		.4byte	.LFE62-.LFB62
- 365 0018 00000000 		.4byte	0x0
- 366 001c 00000000 		.4byte	0x0
- 367              		.section	.debug_ranges,"",%progbits
- 368              	.Ldebug_ranges0:
- 369 0000 00000000 		.4byte	.LFB62
- 370 0004 8C000000 		.4byte	.LFE62
- 371 0008 00000000 		.4byte	0x0
- 372 000c 00000000 		.4byte	0x0
- 373              		.section	.debug_str,"MS",%progbits,1
- 374              	.LASF9:
- 375 0000 6C6F6E67 		.ascii	"long long int\000"
- 375      206C6F6E 
- 375      6720696E 
- 375      7400
- 376              	.LASF4:
- 377 000e 73686F72 		.ascii	"short unsigned int\000"
- 377      7420756E 
- 377      7369676E 
- 377      65642069 
- 377      6E7400
- 378              	.LASF0:
- 379 0021 756E7369 		.ascii	"unsigned int\000"
- 379      676E6564 
- 379      20696E74 
- 379      00
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 8
+ 339 0063 0E       		.uleb128 0xe
+ 340 0064 3A       		.uleb128 0x3a
+ 341 0065 0B       		.uleb128 0xb
+ 342 0066 3B       		.uleb128 0x3b
+ 343 0067 05       		.uleb128 0x5
+ 344 0068 49       		.uleb128 0x49
+ 345 0069 13       		.uleb128 0x13
+ 346 006a 3F       		.uleb128 0x3f
+ 347 006b 0C       		.uleb128 0xc
+ 348 006c 3C       		.uleb128 0x3c
+ 349 006d 0C       		.uleb128 0xc
+ 350 006e 00       		.byte	0x0
+ 351 006f 00       		.byte	0x0
+ 352 0070 00       		.byte	0x0
+ 353              		.section	.debug_pubnames,"",%progbits
+ 354 0000 17000000 		.4byte	0x17
+ 355 0004 0200     		.2byte	0x2
+ 356 0006 00000000 		.4byte	.Ldebug_info0
+ 357 000a D5000000 		.4byte	0xd5
+ 358 000e 9F000000 		.4byte	0x9f
+ 359 0012 6D61696E 		.ascii	"main\000"
+ 359      00
+ 360 0017 00000000 		.4byte	0x0
+ 361              		.section	.debug_pubtypes,"",%progbits
+ 362 0000 35000000 		.4byte	0x35
+ 363 0004 0200     		.2byte	0x2
+ 364 0006 00000000 		.4byte	.Ldebug_info0
+ 365 000a D5000000 		.4byte	0xd5
+ 366 000e 53000000 		.4byte	0x53
+ 367 0012 696E7433 		.ascii	"int32_t\000"
+ 367      325F7400 
+ 368 001a 65000000 		.4byte	0x65
+ 369 001e 75696E74 		.ascii	"uint32_t\000"
+ 369      33325F74 
+ 369      00
+ 370 0027 85000000 		.4byte	0x85
+ 371 002b 73797374 		.ascii	"systime_t\000"
+ 371      696D655F 
+ 371      7400
+ 372 0035 00000000 		.4byte	0x0
+ 373              		.section	.debug_aranges,"",%progbits
+ 374 0000 1C000000 		.4byte	0x1c
+ 375 0004 0200     		.2byte	0x2
+ 376 0006 00000000 		.4byte	.Ldebug_info0
+ 377 000a 04       		.byte	0x4
+ 378 000b 00       		.byte	0x0
+ 379 000c 0000     		.2byte	0x0
+ 380 000e 0000     		.2byte	0x0
+ 381 0010 00000000 		.4byte	.LFB62
+ 382 0014 BC000000 		.4byte	.LFE62-.LFB62
+ 383 0018 00000000 		.4byte	0x0
+ 384 001c 00000000 		.4byte	0x0
+ 385              		.section	.debug_ranges,"",%progbits
+ 386              	.Ldebug_ranges0:
+ 387 0000 00000000 		.4byte	.LFB62
+ 388 0004 BC000000 		.4byte	.LFE62
+ 389 0008 00000000 		.4byte	0x0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 8
 
 
- 380              	.LASF8:
- 381 002e 6C6F6E67 		.ascii	"long unsigned int\000"
- 381      20756E73 
- 381      69676E65 
- 381      6420696E 
- 381      7400
- 382              	.LASF10:
- 383 0040 6C6F6E67 		.ascii	"long long unsigned int\000"
- 383      206C6F6E 
- 383      6720756E 
- 383      7369676E 
- 383      65642069 
- 384              	.LASF14:
- 385 0057 474E5520 		.ascii	"GNU C 4.5.0\000"
- 385      4320342E 
- 385      352E3000 
- 386              	.LASF15:
- 387 0063 2E2F7372 		.ascii	"./src/main.c\000"
- 387      632F6D61 
- 387      696E2E63 
- 387      00
- 388              	.LASF2:
- 389 0070 756E7369 		.ascii	"unsigned char\000"
- 389      676E6564 
- 389      20636861 
- 389      7200
- 390              	.LASF17:
- 391 007e 6D61696E 		.ascii	"main\000"
- 391      00
- 392              	.LASF7:
- 393 0083 75696E74 		.ascii	"uint32_t\000"
- 393      33325F74 
- 393      00
- 394              	.LASF5:
- 395 008c 6C6F6E67 		.ascii	"long int\000"
- 395      20696E74 
- 395      00
- 396              	.LASF16:
- 397 0095 433A5C70 		.ascii	"C:\\projects\\digitizer.git\\firmware\\digitizer\000"
- 397      726F6A65 
- 397      6374735C 
- 397      64696769 
- 397      74697A65 
- 398              	.LASF13:
- 399 00c2 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 399      52784275 
- 399      66666572 
- 399      00
- 400              	.LASF1:
- 401 00cf 7369676E 		.ascii	"signed char\000"
- 401      65642063 
- 401      68617200 
- 402              	.LASF11:
- 403 00db 73797374 		.ascii	"systime_t\000"
- 403      696D655F 
- 403      7400
- 404              	.LASF3:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 9
-
-
- 405 00e5 73686F72 		.ascii	"short int\000"
- 405      7420696E 
- 405      7400
- 406              	.LASF6:
- 407 00ef 696E7433 		.ascii	"int32_t\000"
- 407      325F7400 
- 408              	.LASF12:
- 409 00f7 63686172 		.ascii	"char\000"
+ 390 000c 00000000 		.4byte	0x0
+ 391              		.section	.debug_str,"MS",%progbits,1
+ 392              	.LASF9:
+ 393 0000 6C6F6E67 		.ascii	"long long int\000"
+ 393      206C6F6E 
+ 393      6720696E 
+ 393      7400
+ 394              	.LASF4:
+ 395 000e 73686F72 		.ascii	"short unsigned int\000"
+ 395      7420756E 
+ 395      7369676E 
+ 395      65642069 
+ 395      6E7400
+ 396              	.LASF0:
+ 397 0021 756E7369 		.ascii	"unsigned int\000"
+ 397      676E6564 
+ 397      20696E74 
+ 397      00
+ 398              	.LASF8:
+ 399 002e 6C6F6E67 		.ascii	"long unsigned int\000"
+ 399      20756E73 
+ 399      69676E65 
+ 399      6420696E 
+ 399      7400
+ 400              	.LASF10:
+ 401 0040 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 401      206C6F6E 
+ 401      6720756E 
+ 401      7369676E 
+ 401      65642069 
+ 402              	.LASF14:
+ 403 0057 474E5520 		.ascii	"GNU C 4.5.0\000"
+ 403      4320342E 
+ 403      352E3000 
+ 404              	.LASF15:
+ 405 0063 2E2F7372 		.ascii	"./src/main.c\000"
+ 405      632F6D61 
+ 405      696E2E63 
+ 405      00
+ 406              	.LASF2:
+ 407 0070 756E7369 		.ascii	"unsigned char\000"
+ 407      676E6564 
+ 407      20636861 
+ 407      7200
+ 408              	.LASF17:
+ 409 007e 6D61696E 		.ascii	"main\000"
  409      00
- 410              		.ident	"GCC: (GNU) 4.5.0"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccdspPRF.s 			page 10
+ 410              	.LASF7:
+ 411 0083 75696E74 		.ascii	"uint32_t\000"
+ 411      33325F74 
+ 411      00
+ 412              	.LASF5:
+ 413 008c 6C6F6E67 		.ascii	"long int\000"
+ 413      20696E74 
+ 413      00
+ 414              	.LASF16:
+ 415 0095 433A5C70 		.ascii	"C:\\projects\\digitizer.git\\firmware\\digitizer\000"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 9
+
+
+ 415      726F6A65 
+ 415      6374735C 
+ 415      64696769 
+ 415      74697A65 
+ 416              	.LASF13:
+ 417 00c2 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 417      52784275 
+ 417      66666572 
+ 417      00
+ 418              	.LASF1:
+ 419 00cf 7369676E 		.ascii	"signed char\000"
+ 419      65642063 
+ 419      68617200 
+ 420              	.LASF11:
+ 421 00db 73797374 		.ascii	"systime_t\000"
+ 421      696D655F 
+ 421      7400
+ 422              	.LASF3:
+ 423 00e5 73686F72 		.ascii	"short int\000"
+ 423      7420696E 
+ 423      7400
+ 424              	.LASF6:
+ 425 00ef 696E7433 		.ascii	"int32_t\000"
+ 425      325F7400 
+ 426              	.LASF12:
+ 427 00f7 63686172 		.ascii	"char\000"
+ 427      00
+ 428              		.ident	"GCC: (GNU) 4.5.0"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\z80\AppData\Local\Temp\ccdspPRF.s:24     .text.main:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccdspPRF.s:30     .text.main:00000000 main
+C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s:24     .text.main:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccDTOYYl.s:30     .text.main:00000000 main
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS
@@ -507,5 +525,5 @@ initLed
 initAdc
 initDac
 initTimer
-chThdSleep
 setDac
+chThdSleep
