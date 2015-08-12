@@ -17,7 +17,7 @@ int main(void)
     initLed();
     initAdc();
     initDac();
-    initCpuIo();
+    //initCpuIo();
     initTimer();
 
     while ( 1 )
