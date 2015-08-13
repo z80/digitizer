@@ -250,20 +250,28 @@ static void set_osc_period( uint8_t * arg )
 static void get_osc_data( uint8_t * arg )
 {
 	(void)arg;
-	msg_t msg;
-	uint8_t noData;
-	size_t cnt, i;
 	InputQueue * q = adcQueue();
 	chSysLock();
+		size_t cnt;
 		cnt = (chQSpaceI( q ) / 12);
 	chSysUnlock();
-	for ( i=0; i<cnt; i++ )
+	size_t recInd;
+	for ( recInd=0; recInd<cnt; recInd++ )
 	{
-		msg = chIQGetTimeout( q, TIME_IMMEDIATE );
-		noData = ( ( msg == Q_TIMEOUT ) || ( msg == Q_RESET ) ) ? 1 : 0;
-		uint8_t v;
-		v = ( noData ) ? 0 : (uint8_t)msg;
-		writeResult( v );
+		size_t sigInd;
+		for ( sigInd=0; sigInd<4; sigInd++ )
+		{
+			size_t byteInd;
+			for ( byteInd = 0; byteInd<3; byteInd++ )
+			{
+				uint8_t v;
+				msg_t msg;
+
+				msg = chIQGet( q );
+				v = (uint8_t)msg;
+				writeResult( v );
+			}
+		}
 	}
 	writeEom();
 }

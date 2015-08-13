@@ -86,6 +86,8 @@ Bipot::Bipot()
     pd->probeB = 0.0;
     pd->workGain  = 1.0;
     pd->probeGain = 1.0;
+
+    pd->sigs[0] = pd->sigs[1] = pd->sigs[2] = pd->sigs[3] = true;
 }
 
 Bipot::~Bipot()
@@ -205,10 +207,10 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
     data[0] = &workV;
     data[1] = &probeV;
     data[2] = &workI;
-    data[4] = &probeI;
+    data[3] = &probeI;
     bool res = io.oscData( dataRaw );
     if ( !res )
-    return false;
+        return false;
     // Unit convertion is to be applied here.
     int ind = 0;
     
@@ -221,16 +223,16 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
             switch ( ind )
             {
             case 0:
-                pd->adc2workV( adc );
+                v = pd->adc2workV( adc );
                 break;
             case 1:
-                pd->adc2probeV( adc );
+                v = pd->adc2probeV( adc );
                 break;
             case 2:
-                pd->adc2workI( adc );
+                v = pd->adc2workI( adc );
                 break;
             default:
-                pd->adc2probeI( adc );
+                v = pd->adc2probeI( adc );
                 break;
             }
             data[ind]->append( v );

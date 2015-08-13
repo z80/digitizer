@@ -58,6 +58,7 @@ OscilloscopeWnd::OscilloscopeWnd( QWidget * parent )
 
     curvesCntChanged();
     curveSizeChanged();
+    setPeriod( 10.0 );
 }
 
 OscilloscopeWnd::~OscilloscopeWnd()

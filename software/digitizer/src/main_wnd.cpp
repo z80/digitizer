@@ -16,10 +16,11 @@ MainWnd::MainWnd( QWidget * parent )
 
     terminate = false;
     io        = new Bipot();
-    future = QtConcurrent::run( boost::bind( &MainWnd::measure, this ) );
 
     loadSettings();
     refreshDevicesList();
+    future = QtConcurrent::run( boost::bind( &MainWnd::measure, this ) );
+
 
     QVBoxLayout * bl = new QVBoxLayout( ui.osc );
     oscWork = new OscilloscopeWnd( this );
@@ -181,15 +182,6 @@ void MainWnd::measure()
             }
 
             bool res;
-            qreal workV, probeV, workI, probeI;
-            // Probably instant data shouldn't be read here.
-            res = io->instantData( workV, probeV, workI, probeI );
-            if ( !res )
-            {
-                io->close();
-                Msleep::msleep( 1000 );
-                continue;
-            }
 
             // Read oscilloscope data.
             res = io->oscData( t_workV, t_workI, t_probeV, t_probeI );
@@ -201,7 +193,7 @@ void MainWnd::measure()
             }
 
             // Check total data cnt in all arrays.
-            int sz = t_workV.size() + t_workI.size() + t_probeV.size() + t_probeI.size();
+            int szMeasured = t_workV.size() + t_workI.size() + t_probeV.size() + t_probeI.size();
             // Now move data to paint data.
             mutex.lock();
                 for ( int i=0; i<t_workV.size(); i++ )
@@ -212,11 +204,24 @@ void MainWnd::measure()
                     p_probeV.enqueue( t_probeV.at( i ) );
                 for ( int i=0; i<t_probeI.size(); i++ )
                     p_probeI.enqueue( t_probeI.at( i ) );
+                int szCollected = p_workV.size() + p_workI.size() + p_probeV.size() + p_probeI.size();
             mutex.unlock();
             // Replot if necessary.
-            if ( sz > 12 )
+            if ( szCollected > 12 )
+            {
+                qreal workV, probeV, workI, probeI;
+                // Probably instant data shouldn't be read here.
+                res = io->instantData( workV, probeV, workI, probeI );
+                if ( !res )
+                {
+                    io->close();
+                    Msleep::msleep( 1000 );
+                    continue;
+                }
+                emit sigInstantValues( workV, probeV, workI, probeI );
                 emit sigReplot();
-            if ( sz < 30 )
+            }
+            if ( szMeasured < 24 )
                 Msleep::msleep( 10 );
         }
         else
@@ -230,7 +235,7 @@ void MainWnd::measure()
 void MainWnd::reopen()
 {
     io->close();
-    io->open();
+    io->open( devName );
 }
 
 void MainWnd::refreshDevicesList()
@@ -352,7 +357,12 @@ void MainWnd::slotSweepProbe()
 
 void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
 {
-    
+    QString stri= QString( "workV = %1, workI = %2, probeV = %3, probeI = %4" ).arg( wv, 8, 'f', 1, QChar( '0' ) ) 
+                                                                               .arg( wi, 8, 'f', 1, QChar( '0' ) )
+                                                                               .arg( pv, 8, 'f', 1, QChar( '0' ) )
+                                                                               .arg( pi, 8, 'f', 1, QChar( '0' ) );
+
+    setTitle( stri );
 }
 
 void MainWnd::slotReplot()
