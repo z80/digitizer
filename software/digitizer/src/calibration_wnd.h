@@ -40,7 +40,9 @@ private:
     Bipot * io;
 
     int dacA,
-        dacB;
+        dacB, 
+        dacC, 
+        dacD;
 };
 
 

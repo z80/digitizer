@@ -85,7 +85,7 @@ void CalibrationWnd::slotAddWorkVolt()
         return;
 
     qreal v = ui.voltDacWork->value();
-    io->addCalibrationWorkDac( this->dacA, this->dacB, v );
+    io->addCalibrationWorkDac( this->dacA, this->dacB, this->dacC, this->dacD, v );
     setRandomVolt();
 }
 
@@ -95,7 +95,7 @@ void CalibrationWnd::slotAddProbeVolt()
         return;
 
     qreal v = ui.voltDacProbe->value();
-    io->addCalibrationProbeDac( this->dacA, this->dacB, v );
+    io->addCalibrationProbeDac( this->dacA, this->dacB, this->dacC, this->dacD, v );
     setRandomVolt();
 }
 
@@ -138,20 +138,22 @@ void CalibrationWnd::setRandomVolt()
         QMessageBox::critical( this, "Error", "Failed to set voltage!" );
         return;
     }
+    this->dacA = dacA;
+    this->dacB = dacB;
 
     a = static_cast<qreal>( qrand() ) / static_cast<qreal>( RAND_MAX ) - 0.5;
-    dacA  = static_cast<int>( a * range ) + 32767;
+    int dacC  = static_cast<int>( a * range ) + 32767;
     a = static_cast<qreal>( qrand() ) / static_cast<qreal>( RAND_MAX ) - 0.5;
-    dacB = static_cast<int>( a * range ) + 32767;
-    res = io->setProbeRaw( dacA, dacB );
+    int dacD = static_cast<int>( a * range ) + 32767;
+    res = io->setProbeRaw( dacC, dacD );
     if ( !res )
     {
         QMessageBox::critical( this, "Error", "Failed to set voltage!" );
         return;
     }
 
-    this->dacA = dacA;
-    this->dacB = dacB;
+    this->dacC = dacC;
+    this->dacD = dacD;
 }
 
 void CalibrationWnd::openCalibrationFiles()

@@ -7,6 +7,8 @@ struct CalibrationDac
 {
     int   dacA;
     int   dacB;
+    int   dacC;
+    int   dacD;
     qreal volt;
 };
 
@@ -325,7 +327,7 @@ bool Bipot::loadCalibrationWorkDac( const QString & fileName )
         while ( !file.atEnd() )
         {
             stri = file.readLine();
-            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
@@ -336,6 +338,12 @@ bool Bipot::loadCalibrationWorkDac( const QString & fileName )
 
                 m = ex.cap( 2 );
                 d.dacB = m.toInt();
+
+                m = ex.cap( 2 );
+                d.dacC = m.toInt();
+
+                m = ex.cap( 2 );
+                d.dacD = m.toInt();
 
                 m = ex.cap( 3 );
                 d.volt = m.toDouble();
@@ -359,7 +367,7 @@ bool Bipot::saveCalibrationWorkDac( const QString & fileName )
         for ( QList<CalibrationDac>::const_iterator i=pd->clbrDacWork.begin(); i!=pd->clbrDacWork.end(); i++ )
         {
             const CalibrationDac d = *i;
-            QString stri = QString( "%1 %2 %3\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.volt );
+            QString stri = QString( "%1 %2 %3 %4 %5\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.dacC ).arg( d.dacD ).arg( d.volt );
             out << stri;
         }
         out.flush();
@@ -369,11 +377,13 @@ bool Bipot::saveCalibrationWorkDac( const QString & fileName )
     return false;
 }
 
-void Bipot::addCalibrationWorkDac( int dacA, int dacB, qreal mV )
+void Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
 {
     CalibrationDac d;
     d.dacA = dacA;
     d.dacB = dacB;
+    d.dacC = dacC;
+    d.dacD = dacD;
     d.volt = mV;
     pd->clbrDacWork.append( d );
 }
@@ -393,7 +403,7 @@ bool Bipot::loadCalibrationProbeDac( const QString & fileName )
         while ( !file.atEnd() )
         {
             stri = file.readLine();
-            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
@@ -406,6 +416,12 @@ bool Bipot::loadCalibrationProbeDac( const QString & fileName )
                 d.dacB = m.toInt();
 
                 m = ex.cap( 3 );
+                d.dacA = m.toInt();
+
+                m = ex.cap( 4 );
+                d.dacB = m.toInt();
+
+                m = ex.cap( 5 );
                 d.volt = m.toDouble();
 
                 pd->clbrDacProbe.append( d );
@@ -427,7 +443,7 @@ bool Bipot::saveCalibrationProbeDac( const QString & fileName )
         for ( QList<CalibrationDac>::const_iterator i=pd->clbrDacProbe.begin(); i!=pd->clbrDacProbe.end(); i++ )
         {
             const CalibrationDac d = *i;
-            QString stri = QString( "%1 %2 %3\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.volt );
+            QString stri = QString( "%1 %2 %3 %4 %5\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.dacC ).arg( d.dacD ).arg( d.volt );
             out << stri;
         }
         out.flush();
@@ -437,11 +453,13 @@ bool Bipot::saveCalibrationProbeDac( const QString & fileName )
     return false;
 }
 
-void Bipot::addCalibrationProbeDac( int dacA, int dacB, qreal mV )
+void Bipot::addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
 {
     CalibrationDac d;
     d.dacA = dacA;
     d.dacB = dacB;
+    d.dacC = dacC;
+    d.dacD = dacD;
     d.volt = mV;
     pd->clbrDacProbe.append( d );
 }
