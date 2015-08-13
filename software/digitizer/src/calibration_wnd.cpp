@@ -111,7 +111,9 @@ void CalibrationWnd::slotAddAdc()
     bool res = io->addCalibrationAdc( vA, vB, vC, vD );
     if ( !res )
        QMessageBox::critical( this, "Error", "Failed to retieve adc from the hardware!" ); 
-    setRandomVolt();
+    // Don't set voltage here.
+    // Voltage is set by rotating knobs.
+    //setRandomVolt();
 }
 
 void CalibrationWnd::slotClearFiles()
