@@ -28,7 +28,7 @@ static int instantAdcData[4] = { -1, -1, -1, -1 };
 
 // Oscilloscope parameters.
 int signalMask = 15;
-int period     = 500;
+int period     = 25;
 int elapsed    = 0;
 
 
@@ -86,7 +86,8 @@ void onSpiComplete( SPIDriver * spid )
 		int value = (int)(adc_rx_buffer[2]) +
 					((int)(adc_rx_buffer[1]) << 8) +
 					((int)(adc_rx_buffer[0]) << 16);
-    		instantAdcData[prevIndex] = value;
+		value = (value >> 1) & 0xFFFF;
+    	instantAdcData[prevIndex] = value;
 
 		// if (adcIndex == 0) this means it was 3 just
 		// in time of measure. So a full cycle was just completed.

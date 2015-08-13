@@ -25,6 +25,13 @@ struct CalibrationAdc
     qreal voltD;
 };
 
+struct CoefDac
+{
+    qreal a1; 
+    qreal a2;
+    qreal b;
+};
+
 class Bipot::PD
 {
 public:
@@ -47,6 +54,9 @@ public:
     QList<CalibrationDac> clbrDacWork, 
                           clbrDacProbe;
     QList<CalibrationAdc> clbrAdc;
+
+    CoefDac workDac;
+    CoefDac probeDac;
 };
 
 qreal Bipot::PD::adc2workV( int adc )
@@ -88,6 +98,14 @@ Bipot::Bipot()
     pd->probeB = 0.0;
     pd->workGain  = 1.0;
     pd->probeGain = 1.0;
+
+    pd->workDac.a1 = 0.3741271/8000.0;
+    pd->workDac.a2 = 0.3741271;
+    pd->workDac.b  = -11980.84;
+
+    pd->probeDac.a1 = 0.3741271/8000.0;
+    pd->probeDac.a2 = 0.3741271;
+    pd->probeDac.b  = -11980.84;
 
     pd->sigs[0] = pd->sigs[1] = pd->sigs[2] = pd->sigs[3] = true;
 }
@@ -154,7 +172,18 @@ bool Bipot::setWorkRaw( int a, int b )
 
 bool Bipot::setWorkMv( qreal mv )
 {
-    return true;
+    qreal aDacLow  = pd->workDac.a1;
+    qreal aDacHigh = pd->workDac.a2;
+    qreal bDac     = pd->workDac.b;
+
+    qreal fLow = 32767.0;
+    qreal fHigh = ceil( (mv - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
+    fLow = ceil( (mv - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
+    int dacLow  = static_cast<int>( fLow );
+    int dacHigh = static_cast<int>( fHigh );
+
+    bool res = setWorkRaw( dacLow, dacHigh );
+    return res;
 }
 
 bool Bipot::setProbeRaw( int a, int b )
@@ -166,7 +195,18 @@ bool Bipot::setProbeRaw( int a, int b )
 
 bool Bipot::setProbeMv( qreal mv )
 {
-    return true;
+    qreal aDacLow  = pd->probeDac.a1;
+    qreal aDacHigh = pd->probeDac.a2;
+    qreal bDac     = pd->probeDac.b;
+
+    qreal fLow = 32767.0;
+    qreal fHigh = ceil( (mv - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
+    fLow = ceil( (mv - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
+    int dacLow  = static_cast<int>( fLow );
+    int dacHigh = static_cast<int>( fHigh );
+
+    bool res = setProbeRaw( dacLow, dacHigh );
+    return res;
 }
 
 bool Bipot::setOscPeriod( int ptsCnt, qreal msTotal )
@@ -386,6 +426,10 @@ void Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal
     d.dacD = dacD;
     d.volt = mV;
     pd->clbrDacWork.append( d );
+}
+
+void Bipot::setCalibrationWorkDac( qreal a1, qreal a2, qreal b )
+{
 }
 
 void Bipot::clearCalibrationProbeDac()

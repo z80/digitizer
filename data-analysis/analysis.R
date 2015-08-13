@@ -8,6 +8,7 @@ wd$d3 <- wd$dac3 / 32767 - 1
 wd$d4 <- wd$dac4 / 32767 - 1
 wd$v <- wd$volt / 10000
 wobj <- lm( wd$v ~ wd$d1 + wd$d2 )
+wobj <- lm( wd$volt ~ wd$dac1 + wd$dac2 )
 wobj$coefficients
 plot( wd$dac2,  wd$volt )
 

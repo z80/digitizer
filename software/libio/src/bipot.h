@@ -44,11 +44,13 @@ public:
     bool loadCalibrationWorkDac( const QString & fileName = "./work_dac.dat" );
     bool saveCalibrationWorkDac( const QString & fileName = "./work_dac.dat" );
     void addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal mV );
+    void setCalibrationWorkDac( qreal a1, qreal a2, qreal b );
 
     void clearCalibrationProbeDac();
     bool loadCalibrationProbeDac( const QString & fileName = "./probe_dac.dat" );
     bool saveCalibrationProbeDac( const QString & fileName = "./probe_dac.dat" );
     void addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qreal mV );
+    void setCalibrationProbeDac( qreal a1, qreal a2, qreal b );
 
     void clearCalibrationAdc();
     bool loadCalibrationAdc( const QString & fileName = "./adc.dat" );

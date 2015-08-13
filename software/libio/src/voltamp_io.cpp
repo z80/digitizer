@@ -311,9 +311,9 @@ bool VoltampIo::oscData( QVector<int> & data )
     for ( int i=0; i<sz; i++ )
     {
         int v;
-        v  = static_cast<int>( d[i] );
-        v += static_cast<int>( d[i+1] << 8 );
-        v += static_cast<int>( d[i+2] << 16 );
+        v  = static_cast<int>( d[3*i] );
+        v += static_cast<int>( d[3*i+1] << 8 );
+        v += static_cast<int>( d[3*i+2] << 16 );
         data[i] = v;
     }
 
