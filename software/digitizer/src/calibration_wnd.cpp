@@ -126,12 +126,12 @@ void CalibrationWnd::setRandomVolt()
     if ( !io->isOpen() )
         return;
 
-    qreal range = static_cast<qreal>( ui.voltRange->value() * 4095 / 100 );
+    qreal range = static_cast<qreal>( ui.voltRange->value() * 65535 / 100 );
 
     qreal a = static_cast<qreal>( qrand() ) / static_cast<qreal>( RAND_MAX ) - 0.5;
-    int dacA  = static_cast<int>( a * range ) + 2047;
+    int dacA  = static_cast<int>( a * range ) + 32767;
     a = static_cast<qreal>( qrand() ) / static_cast<qreal>( RAND_MAX ) - 0.5;
-    int dacB = static_cast<int>( a * range ) + 2047;
+    int dacB = static_cast<int>( a * range ) + 32767;
     bool res = io->setWorkRaw( dacA, dacB );
     if ( !res )
     {
@@ -140,9 +140,9 @@ void CalibrationWnd::setRandomVolt()
     }
 
     a = static_cast<qreal>( qrand() ) / static_cast<qreal>( RAND_MAX ) - 0.5;
-    dacA  = static_cast<int>( a * range ) + 2047;
+    dacA  = static_cast<int>( a * range ) + 32767;
     a = static_cast<qreal>( qrand() ) / static_cast<qreal>( RAND_MAX ) - 0.5;
-    dacB = static_cast<int>( a * range ) + 2047;
+    dacB = static_cast<int>( a * range ) + 32767;
     res = io->setProbeRaw( dacA, dacB );
     if ( !res )
     {
