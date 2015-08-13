@@ -41,6 +41,13 @@ int main( int argc, char * argv[] )
     qDebug() << stri;
     res = io.firmware_version( stri );
     qDebug() << stri;
+
+    res = io.setDac1( 0, 0 );
+    res = io.setDac2( 65535, 65535 );
+
+    res = io.setDac1( 65535, 65535 );
+    res = io.setDac2( 0, 0 );
+    /*
     int adc[4];
     for ( int i=0; i<64; i++ )
     {
@@ -51,6 +58,7 @@ int main( int argc, char * argv[] )
         QString s3= QString( "0x%1" ).arg( adc[3] , 8, 16, QChar( '0' ) );
         qDebug() << s0 << s1 << s2 << s3;
     }
+    */
 
     io.close();
     
