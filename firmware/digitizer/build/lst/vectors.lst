@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 1
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 1
 
 
    1              		.syntax unified
@@ -10,7 +10,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 1
    7              		.eabi_attribute 24, 1
    8              		.eabi_attribute 25, 1
    9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 30, 2
   11              		.eabi_attribute 18, 4
   12              		.thumb
   13              		.file	"vectors.c"
@@ -20,652 +20,651 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 1
   17              	.Ldebug_info0:
   18              		.section	.debug_line,"",%progbits
   19              	.Ldebug_line0:
-  20 0000 6A000000 		.text
+  20 0000 65000000 		.text
   20      02004F00 
   20      00000201 
   20      FB0E0D00 
   20      01010101 
   21              	.Ltext0:
   22              		.cfi_sections	.debug_frame
-  23              		.global	_vectors
-  24              		.section	vectors,"aw",%progbits
-  25              		.align	2
-  26              		.type	_vectors, %object
-  27              		.size	_vectors, 236
-  28              	_vectors:
-  29 0000 00000000 		.word	__main_stack_end__
-  30 0004 00000000 		.word	ResetHandler
-  31 0008 00000000 		.word	NMIVector
-  32 000c 00000000 		.word	HardFaultVector
-  33 0010 00000000 		.word	MemManageVector
-  34 0014 00000000 		.word	BusFaultVector
-  35 0018 00000000 		.word	UsageFaultVector
-  36 001c 00000000 		.word	Vector1C
-  37 0020 00000000 		.word	Vector20
-  38 0024 00000000 		.word	Vector24
-  39 0028 00000000 		.word	Vector28
-  40 002c 00000000 		.word	SVCallVector
-  41 0030 00000000 		.word	DebugMonitorVector
-  42 0034 00000000 		.word	Vector34
-  43 0038 00000000 		.word	PendSVVector
-  44 003c 00000000 		.word	SysTickVector
-  45 0040 00000000 		.word	Vector40
-  46 0044 00000000 		.word	Vector44
-  47 0048 00000000 		.word	Vector48
-  48 004c 00000000 		.word	Vector4C
-  49 0050 00000000 		.word	Vector50
-  50 0054 00000000 		.word	Vector54
-  51 0058 00000000 		.word	Vector58
-  52 005c 00000000 		.word	Vector5C
-  53 0060 00000000 		.word	Vector60
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 2
+  23              		.section	.text._unhandled_exception,"ax",%progbits
+  24              		.align	2
+  25              		.p2align 4,,15
+  26              		.global	_unhandled_exception
+  27              		.thumb
+  28              		.thumb_func
+  29              		.type	_unhandled_exception, %function
+  30              	_unhandled_exception:
+  31              	.LFB7:
+  32              		.file 1 "../chibios_2.4.x/os/ports/GCC/ARMCMx/STM32F1xx/vectors.c"
+  33              		.loc 1 201 0
+  34              		.cfi_startproc
+  35              		@ Naked Function: prologue and epilogue provided by programmer.
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38              	.L2:
+  39 0000 FEE7     		b	.L2
+  40              		.cfi_endproc
+  41              	.LFE7:
+  42              		.size	_unhandled_exception, .-_unhandled_exception
+  43              		.global	_vectors
+  44              		.weak	NMIVector
+  45              		.thumb_set NMIVector,_unhandled_exception
+  46              		.weak	HardFaultVector
+  47              		.thumb_set HardFaultVector,_unhandled_exception
+  48              		.weak	MemManageVector
+  49              		.thumb_set MemManageVector,_unhandled_exception
+  50              		.weak	BusFaultVector
+  51              		.thumb_set BusFaultVector,_unhandled_exception
+  52              		.weak	UsageFaultVector
+  53              		.thumb_set UsageFaultVector,_unhandled_exception
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 2
 
 
-  54 0064 00000000 		.word	Vector64
-  55 0068 00000000 		.word	Vector68
-  56 006c 00000000 		.word	Vector6C
-  57 0070 00000000 		.word	Vector70
-  58 0074 00000000 		.word	Vector74
-  59 0078 00000000 		.word	Vector78
-  60 007c 00000000 		.word	Vector7C
-  61 0080 00000000 		.word	Vector80
-  62 0084 00000000 		.word	Vector84
-  63 0088 00000000 		.word	Vector88
-  64 008c 00000000 		.word	Vector8C
-  65 0090 00000000 		.word	Vector90
-  66 0094 00000000 		.word	Vector94
-  67 0098 00000000 		.word	Vector98
-  68 009c 00000000 		.word	Vector9C
-  69 00a0 00000000 		.word	VectorA0
-  70 00a4 00000000 		.word	VectorA4
-  71 00a8 00000000 		.word	VectorA8
-  72 00ac 00000000 		.word	VectorAC
-  73 00b0 00000000 		.word	VectorB0
-  74 00b4 00000000 		.word	VectorB4
-  75 00b8 00000000 		.word	VectorB8
-  76 00bc 00000000 		.word	VectorBC
-  77 00c0 00000000 		.word	VectorC0
-  78 00c4 00000000 		.word	VectorC4
-  79 00c8 00000000 		.word	VectorC8
-  80 00cc 00000000 		.word	VectorCC
-  81 00d0 00000000 		.word	VectorD0
-  82 00d4 00000000 		.word	VectorD4
-  83 00d8 00000000 		.word	VectorD8
-  84 00dc 00000000 		.word	VectorDC
-  85 00e0 00000000 		.word	VectorE0
-  86 00e4 00000000 		.word	VectorE4
-  87 00e8 00000000 		.word	VectorE8
-  88              		.section	.text._unhandled_exception,"ax",%progbits
-  89              		.align	2
-  90              		.p2align 4,,15
-  91              		.global	_unhandled_exception
-  92              		.thumb
-  93              		.thumb_func
-  94              		.type	_unhandled_exception, %function
-  95              	_unhandled_exception:
-  96              	.LFB7:
-  97              		.file 1 "../chibios_2.4.x/os/ports/GCC/ARMCMx/STM32F1xx/vectors.c"
-  98              		.loc 1 201 0
-  99              		.cfi_startproc
- 100              		@ Naked Function: prologue and epilogue provided by programmer.
- 101              		@ args = 0, pretend = 0, frame = 0
- 102              		@ frame_needed = 0, uses_anonymous_args = 0
- 103              	.L2:
- 104              		.loc 1 204 0 discriminator 1
- 105 0000 FEE7     		b	.L2
- 106              		.cfi_endproc
- 107              	.LFE7:
- 108              		.size	_unhandled_exception, .-_unhandled_exception
- 109              		.weak	NMIVector
- 110              		.thumb_set NMIVector,_unhandled_exception
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 3
+  54              		.weak	Vector1C
+  55              		.thumb_set Vector1C,_unhandled_exception
+  56              		.weak	Vector20
+  57              		.thumb_set Vector20,_unhandled_exception
+  58              		.weak	Vector24
+  59              		.thumb_set Vector24,_unhandled_exception
+  60              		.weak	Vector28
+  61              		.thumb_set Vector28,_unhandled_exception
+  62              		.weak	SVCallVector
+  63              		.thumb_set SVCallVector,_unhandled_exception
+  64              		.weak	DebugMonitorVector
+  65              		.thumb_set DebugMonitorVector,_unhandled_exception
+  66              		.weak	Vector34
+  67              		.thumb_set Vector34,_unhandled_exception
+  68              		.weak	PendSVVector
+  69              		.thumb_set PendSVVector,_unhandled_exception
+  70              		.weak	SysTickVector
+  71              		.thumb_set SysTickVector,_unhandled_exception
+  72              		.weak	Vector40
+  73              		.thumb_set Vector40,_unhandled_exception
+  74              		.weak	Vector44
+  75              		.thumb_set Vector44,_unhandled_exception
+  76              		.weak	Vector48
+  77              		.thumb_set Vector48,_unhandled_exception
+  78              		.weak	Vector4C
+  79              		.thumb_set Vector4C,_unhandled_exception
+  80              		.weak	Vector50
+  81              		.thumb_set Vector50,_unhandled_exception
+  82              		.weak	Vector54
+  83              		.thumb_set Vector54,_unhandled_exception
+  84              		.weak	Vector58
+  85              		.thumb_set Vector58,_unhandled_exception
+  86              		.weak	Vector5C
+  87              		.thumb_set Vector5C,_unhandled_exception
+  88              		.weak	Vector60
+  89              		.thumb_set Vector60,_unhandled_exception
+  90              		.weak	Vector64
+  91              		.thumb_set Vector64,_unhandled_exception
+  92              		.weak	Vector68
+  93              		.thumb_set Vector68,_unhandled_exception
+  94              		.weak	Vector6C
+  95              		.thumb_set Vector6C,_unhandled_exception
+  96              		.weak	Vector70
+  97              		.thumb_set Vector70,_unhandled_exception
+  98              		.weak	Vector74
+  99              		.thumb_set Vector74,_unhandled_exception
+ 100              		.weak	Vector78
+ 101              		.thumb_set Vector78,_unhandled_exception
+ 102              		.weak	Vector7C
+ 103              		.thumb_set Vector7C,_unhandled_exception
+ 104              		.weak	Vector80
+ 105              		.thumb_set Vector80,_unhandled_exception
+ 106              		.weak	Vector84
+ 107              		.thumb_set Vector84,_unhandled_exception
+ 108              		.weak	Vector88
+ 109              		.thumb_set Vector88,_unhandled_exception
+ 110              		.weak	Vector8C
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 3
 
 
- 111              		.weak	HardFaultVector
- 112              		.thumb_set HardFaultVector,_unhandled_exception
- 113              		.weak	MemManageVector
- 114              		.thumb_set MemManageVector,_unhandled_exception
- 115              		.weak	BusFaultVector
- 116              		.thumb_set BusFaultVector,_unhandled_exception
- 117              		.weak	UsageFaultVector
- 118              		.thumb_set UsageFaultVector,_unhandled_exception
- 119              		.weak	Vector1C
- 120              		.thumb_set Vector1C,_unhandled_exception
- 121              		.weak	Vector20
- 122              		.thumb_set Vector20,_unhandled_exception
- 123              		.weak	Vector24
- 124              		.thumb_set Vector24,_unhandled_exception
- 125              		.weak	Vector28
- 126              		.thumb_set Vector28,_unhandled_exception
- 127              		.weak	SVCallVector
- 128              		.thumb_set SVCallVector,_unhandled_exception
- 129              		.weak	DebugMonitorVector
- 130              		.thumb_set DebugMonitorVector,_unhandled_exception
- 131              		.weak	Vector34
- 132              		.thumb_set Vector34,_unhandled_exception
- 133              		.weak	PendSVVector
- 134              		.thumb_set PendSVVector,_unhandled_exception
- 135              		.weak	SysTickVector
- 136              		.thumb_set SysTickVector,_unhandled_exception
- 137              		.weak	Vector40
- 138              		.thumb_set Vector40,_unhandled_exception
- 139              		.weak	Vector44
- 140              		.thumb_set Vector44,_unhandled_exception
- 141              		.weak	Vector48
- 142              		.thumb_set Vector48,_unhandled_exception
- 143              		.weak	Vector4C
- 144              		.thumb_set Vector4C,_unhandled_exception
- 145              		.weak	Vector50
- 146              		.thumb_set Vector50,_unhandled_exception
- 147              		.weak	Vector54
- 148              		.thumb_set Vector54,_unhandled_exception
- 149              		.weak	Vector58
- 150              		.thumb_set Vector58,_unhandled_exception
- 151              		.weak	Vector5C
- 152              		.thumb_set Vector5C,_unhandled_exception
- 153              		.weak	Vector60
- 154              		.thumb_set Vector60,_unhandled_exception
- 155              		.weak	Vector64
- 156              		.thumb_set Vector64,_unhandled_exception
- 157              		.weak	Vector68
- 158              		.thumb_set Vector68,_unhandled_exception
- 159              		.weak	Vector6C
- 160              		.thumb_set Vector6C,_unhandled_exception
- 161              		.weak	Vector70
- 162              		.thumb_set Vector70,_unhandled_exception
- 163              		.weak	Vector74
- 164              		.thumb_set Vector74,_unhandled_exception
- 165              		.weak	Vector78
- 166              		.thumb_set Vector78,_unhandled_exception
- 167              		.weak	Vector7C
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 4
+ 111              		.thumb_set Vector8C,_unhandled_exception
+ 112              		.weak	Vector90
+ 113              		.thumb_set Vector90,_unhandled_exception
+ 114              		.weak	Vector94
+ 115              		.thumb_set Vector94,_unhandled_exception
+ 116              		.weak	Vector98
+ 117              		.thumb_set Vector98,_unhandled_exception
+ 118              		.weak	Vector9C
+ 119              		.thumb_set Vector9C,_unhandled_exception
+ 120              		.weak	VectorA0
+ 121              		.thumb_set VectorA0,_unhandled_exception
+ 122              		.weak	VectorA4
+ 123              		.thumb_set VectorA4,_unhandled_exception
+ 124              		.weak	VectorA8
+ 125              		.thumb_set VectorA8,_unhandled_exception
+ 126              		.weak	VectorAC
+ 127              		.thumb_set VectorAC,_unhandled_exception
+ 128              		.weak	VectorB0
+ 129              		.thumb_set VectorB0,_unhandled_exception
+ 130              		.weak	VectorB4
+ 131              		.thumb_set VectorB4,_unhandled_exception
+ 132              		.weak	VectorB8
+ 133              		.thumb_set VectorB8,_unhandled_exception
+ 134              		.weak	VectorBC
+ 135              		.thumb_set VectorBC,_unhandled_exception
+ 136              		.weak	VectorC0
+ 137              		.thumb_set VectorC0,_unhandled_exception
+ 138              		.weak	VectorC4
+ 139              		.thumb_set VectorC4,_unhandled_exception
+ 140              		.weak	VectorC8
+ 141              		.thumb_set VectorC8,_unhandled_exception
+ 142              		.weak	VectorCC
+ 143              		.thumb_set VectorCC,_unhandled_exception
+ 144              		.weak	VectorD0
+ 145              		.thumb_set VectorD0,_unhandled_exception
+ 146              		.weak	VectorD4
+ 147              		.thumb_set VectorD4,_unhandled_exception
+ 148              		.weak	VectorD8
+ 149              		.thumb_set VectorD8,_unhandled_exception
+ 150              		.weak	VectorDC
+ 151              		.thumb_set VectorDC,_unhandled_exception
+ 152              		.weak	VectorE0
+ 153              		.thumb_set VectorE0,_unhandled_exception
+ 154              		.weak	VectorE4
+ 155              		.thumb_set VectorE4,_unhandled_exception
+ 156              		.weak	VectorE8
+ 157              		.thumb_set VectorE8,_unhandled_exception
+ 158 0002 00BFAFF3 		.section	vectors,"aw",%progbits
+ 158      0080AFF3 
+ 158      0080AFF3 
+ 158      0080
+ 159              		.align	2
+ 160              		.type	_vectors, %object
+ 161              		.size	_vectors, 236
+ 162              	_vectors:
+ 163 0000 00000000 		.word	__main_stack_end__
+ 164 0004 00000000 		.word	ResetHandler
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 4
 
 
- 168              		.thumb_set Vector7C,_unhandled_exception
- 169              		.weak	Vector80
- 170              		.thumb_set Vector80,_unhandled_exception
- 171              		.weak	Vector84
- 172              		.thumb_set Vector84,_unhandled_exception
- 173              		.weak	Vector88
- 174              		.thumb_set Vector88,_unhandled_exception
- 175              		.weak	Vector8C
- 176              		.thumb_set Vector8C,_unhandled_exception
- 177              		.weak	Vector90
- 178              		.thumb_set Vector90,_unhandled_exception
- 179              		.weak	Vector94
- 180              		.thumb_set Vector94,_unhandled_exception
- 181              		.weak	Vector98
- 182              		.thumb_set Vector98,_unhandled_exception
- 183              		.weak	Vector9C
- 184              		.thumb_set Vector9C,_unhandled_exception
- 185              		.weak	VectorA0
- 186              		.thumb_set VectorA0,_unhandled_exception
- 187              		.weak	VectorA4
- 188              		.thumb_set VectorA4,_unhandled_exception
- 189              		.weak	VectorA8
- 190              		.thumb_set VectorA8,_unhandled_exception
- 191              		.weak	VectorAC
- 192              		.thumb_set VectorAC,_unhandled_exception
- 193              		.weak	VectorB0
- 194              		.thumb_set VectorB0,_unhandled_exception
- 195              		.weak	VectorB4
- 196              		.thumb_set VectorB4,_unhandled_exception
- 197              		.weak	VectorB8
- 198              		.thumb_set VectorB8,_unhandled_exception
- 199              		.weak	VectorBC
- 200              		.thumb_set VectorBC,_unhandled_exception
- 201              		.weak	VectorC0
- 202              		.thumb_set VectorC0,_unhandled_exception
- 203              		.weak	VectorC4
- 204              		.thumb_set VectorC4,_unhandled_exception
- 205              		.weak	VectorC8
- 206              		.thumb_set VectorC8,_unhandled_exception
- 207              		.weak	VectorCC
- 208              		.thumb_set VectorCC,_unhandled_exception
- 209              		.weak	VectorD0
- 210              		.thumb_set VectorD0,_unhandled_exception
- 211              		.weak	VectorD4
- 212              		.thumb_set VectorD4,_unhandled_exception
- 213              		.weak	VectorD8
- 214              		.thumb_set VectorD8,_unhandled_exception
- 215              		.weak	VectorDC
- 216              		.thumb_set VectorDC,_unhandled_exception
- 217              		.weak	VectorE0
- 218              		.thumb_set VectorE0,_unhandled_exception
- 219              		.weak	VectorE4
- 220              		.thumb_set VectorE4,_unhandled_exception
- 221              		.weak	VectorE8
- 222              		.thumb_set VectorE8,_unhandled_exception
- 223 0002 00BFAFF3 		.text
- 223      0080AFF3 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 5
+ 165 0008 00000000 		.word	NMIVector
+ 166 000c 00000000 		.word	HardFaultVector
+ 167 0010 00000000 		.word	MemManageVector
+ 168 0014 00000000 		.word	BusFaultVector
+ 169 0018 00000000 		.word	UsageFaultVector
+ 170 001c 00000000 		.word	Vector1C
+ 171 0020 00000000 		.word	Vector20
+ 172 0024 00000000 		.word	Vector24
+ 173 0028 00000000 		.word	Vector28
+ 174 002c 00000000 		.word	SVCallVector
+ 175 0030 00000000 		.word	DebugMonitorVector
+ 176 0034 00000000 		.word	Vector34
+ 177 0038 00000000 		.word	PendSVVector
+ 178 003c 00000000 		.word	SysTickVector
+ 179 0040 00000000 		.word	Vector40
+ 180 0044 00000000 		.word	Vector44
+ 181 0048 00000000 		.word	Vector48
+ 182 004c 00000000 		.word	Vector4C
+ 183 0050 00000000 		.word	Vector50
+ 184 0054 00000000 		.word	Vector54
+ 185 0058 00000000 		.word	Vector58
+ 186 005c 00000000 		.word	Vector5C
+ 187 0060 00000000 		.word	Vector60
+ 188 0064 00000000 		.word	Vector64
+ 189 0068 00000000 		.word	Vector68
+ 190 006c 00000000 		.word	Vector6C
+ 191 0070 00000000 		.word	Vector70
+ 192 0074 00000000 		.word	Vector74
+ 193 0078 00000000 		.word	Vector78
+ 194 007c 00000000 		.word	Vector7C
+ 195 0080 00000000 		.word	Vector80
+ 196 0084 00000000 		.word	Vector84
+ 197 0088 00000000 		.word	Vector88
+ 198 008c 00000000 		.word	Vector8C
+ 199 0090 00000000 		.word	Vector90
+ 200 0094 00000000 		.word	Vector94
+ 201 0098 00000000 		.word	Vector98
+ 202 009c 00000000 		.word	Vector9C
+ 203 00a0 00000000 		.word	VectorA0
+ 204 00a4 00000000 		.word	VectorA4
+ 205 00a8 00000000 		.word	VectorA8
+ 206 00ac 00000000 		.word	VectorAC
+ 207 00b0 00000000 		.word	VectorB0
+ 208 00b4 00000000 		.word	VectorB4
+ 209 00b8 00000000 		.word	VectorB8
+ 210 00bc 00000000 		.word	VectorBC
+ 211 00c0 00000000 		.word	VectorC0
+ 212 00c4 00000000 		.word	VectorC4
+ 213 00c8 00000000 		.word	VectorC8
+ 214 00cc 00000000 		.word	VectorCC
+ 215 00d0 00000000 		.word	VectorD0
+ 216 00d4 00000000 		.word	VectorD4
+ 217 00d8 00000000 		.word	VectorD8
+ 218 00dc 00000000 		.word	VectorDC
+ 219 00e0 00000000 		.word	VectorE0
+ 220 00e4 00000000 		.word	VectorE4
+ 221 00e8 00000000 		.word	VectorE8
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 5
 
 
- 223      0080AFF3 
- 223      0080
- 224              	.Letext0:
- 225              		.section	.debug_info
- 226 0000 B4000000 		.4byte	0xb4
- 227 0004 0200     		.2byte	0x2
- 228 0006 00000000 		.4byte	.Ldebug_abbrev0
- 229 000a 04       		.byte	0x4
- 230 000b 01       		.uleb128 0x1
- 231 000c 71000000 		.4byte	.LASF10
- 232 0010 01       		.byte	0x1
- 233 0011 90000000 		.4byte	.LASF11
- 234 0015 0E000000 		.4byte	.LASF12
- 235 0019 00000000 		.4byte	0x0
- 236 001d 00000000 		.4byte	0x0
- 237 0021 00000000 		.4byte	.Ldebug_ranges0+0x0
- 238 0025 00000000 		.4byte	.Ldebug_line0
- 239 0029 02       		.uleb128 0x2
- 240 002a 04       		.byte	0x4
- 241 002b 05       		.byte	0x5
- 242 002c 696E7400 		.ascii	"int\000"
- 243 0030 03       		.uleb128 0x3
- 244 0031 04       		.byte	0x4
- 245 0032 07       		.byte	0x7
- 246 0033 3B000000 		.4byte	.LASF0
- 247 0037 03       		.uleb128 0x3
- 248 0038 01       		.byte	0x1
- 249 0039 06       		.byte	0x6
- 250 003a EE000000 		.4byte	.LASF1
- 251 003e 03       		.uleb128 0x3
- 252 003f 01       		.byte	0x1
- 253 0040 08       		.byte	0x8
- 254 0041 7D000000 		.4byte	.LASF2
- 255 0045 03       		.uleb128 0x3
- 256 0046 02       		.byte	0x2
- 257 0047 05       		.byte	0x5
- 258 0048 0F010000 		.4byte	.LASF3
- 259 004c 03       		.uleb128 0x3
- 260 004d 02       		.byte	0x2
- 261 004e 07       		.byte	0x7
- 262 004f DB000000 		.4byte	.LASF4
- 263 0053 03       		.uleb128 0x3
- 264 0054 04       		.byte	0x4
- 265 0055 05       		.byte	0x5
- 266 0056 C9000000 		.4byte	.LASF5
- 267 005a 03       		.uleb128 0x3
- 268 005b 04       		.byte	0x4
- 269 005c 07       		.byte	0x7
- 270 005d 48000000 		.4byte	.LASF6
- 271 0061 03       		.uleb128 0x3
- 272 0062 08       		.byte	0x8
- 273 0063 05       		.byte	0x5
- 274 0064 00000000 		.4byte	.LASF7
- 275 0068 03       		.uleb128 0x3
- 276 0069 08       		.byte	0x8
- 277 006a 07       		.byte	0x7
- 278 006b 5A000000 		.4byte	.LASF8
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 6
+ 222              		.text
+ 223              	.Letext0:
+ 224              		.section	.debug_info
+ 225 0000 B4000000 		.4byte	0xb4
+ 226 0004 0200     		.2byte	0x2
+ 227 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 228 000a 04       		.byte	0x4
+ 229 000b 01       		.uleb128 0x1
+ 230 000c 71000000 		.4byte	.LASF10
+ 231 0010 01       		.byte	0x1
+ 232 0011 90000000 		.4byte	.LASF11
+ 233 0015 0E000000 		.4byte	.LASF12
+ 234 0019 00000000 		.4byte	0x0
+ 235 001d 00000000 		.4byte	0x0
+ 236 0021 00000000 		.4byte	.Ldebug_ranges0+0x0
+ 237 0025 00000000 		.4byte	.Ldebug_line0
+ 238 0029 02       		.uleb128 0x2
+ 239 002a 04       		.byte	0x4
+ 240 002b 05       		.byte	0x5
+ 241 002c 696E7400 		.ascii	"int\000"
+ 242 0030 03       		.uleb128 0x3
+ 243 0031 04       		.byte	0x4
+ 244 0032 07       		.byte	0x7
+ 245 0033 3B000000 		.4byte	.LASF0
+ 246 0037 03       		.uleb128 0x3
+ 247 0038 01       		.byte	0x1
+ 248 0039 06       		.byte	0x6
+ 249 003a EE000000 		.4byte	.LASF1
+ 250 003e 03       		.uleb128 0x3
+ 251 003f 01       		.byte	0x1
+ 252 0040 08       		.byte	0x8
+ 253 0041 7D000000 		.4byte	.LASF2
+ 254 0045 03       		.uleb128 0x3
+ 255 0046 02       		.byte	0x2
+ 256 0047 05       		.byte	0x5
+ 257 0048 0F010000 		.4byte	.LASF3
+ 258 004c 03       		.uleb128 0x3
+ 259 004d 02       		.byte	0x2
+ 260 004e 07       		.byte	0x7
+ 261 004f DB000000 		.4byte	.LASF4
+ 262 0053 03       		.uleb128 0x3
+ 263 0054 04       		.byte	0x4
+ 264 0055 05       		.byte	0x5
+ 265 0056 C9000000 		.4byte	.LASF5
+ 266 005a 03       		.uleb128 0x3
+ 267 005b 04       		.byte	0x4
+ 268 005c 07       		.byte	0x7
+ 269 005d 48000000 		.4byte	.LASF6
+ 270 0061 03       		.uleb128 0x3
+ 271 0062 08       		.byte	0x8
+ 272 0063 05       		.byte	0x5
+ 273 0064 00000000 		.4byte	.LASF7
+ 274 0068 03       		.uleb128 0x3
+ 275 0069 08       		.byte	0x8
+ 276 006a 07       		.byte	0x7
+ 277 006b 5A000000 		.4byte	.LASF8
+ 278 006f 04       		.uleb128 0x4
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 6
 
 
- 279 006f 04       		.uleb128 0x4
- 280 0070 04       		.byte	0x4
- 281 0071 07       		.byte	0x7
- 282 0072 03       		.uleb128 0x3
- 283 0073 01       		.byte	0x1
- 284 0074 08       		.byte	0x8
- 285 0075 8B000000 		.4byte	.LASF9
- 286 0079 05       		.uleb128 0x5
- 287 007a 01       		.byte	0x1
- 288 007b FA000000 		.4byte	.LASF13
- 289 007f 01       		.byte	0x1
- 290 0080 C9       		.byte	0xc9
- 291 0081 01       		.byte	0x1
- 292 0082 00000000 		.4byte	.LFB7
- 293 0086 02000000 		.4byte	.LFE7
- 294 008a 02       		.byte	0x2
- 295 008b 7D       		.byte	0x7d
- 296 008c 00       		.sleb128 0
- 297 008d 06       		.uleb128 0x6
- 298 008e 9F000000 		.4byte	0x9f
- 299 0092 9D000000 		.4byte	0x9d
- 300 0096 07       		.uleb128 0x7
- 301 0097 6F000000 		.4byte	0x6f
- 302 009b 3A       		.byte	0x3a
- 303 009c 00       		.byte	0x0
- 304 009d 08       		.uleb128 0x8
- 305 009e 01       		.byte	0x1
- 306 009f 09       		.uleb128 0x9
- 307 00a0 04       		.byte	0x4
- 308 00a1 9D000000 		.4byte	0x9d
- 309 00a5 0A       		.uleb128 0xa
- 310 00a6 D2000000 		.4byte	.LASF14
- 311 00aa 01       		.byte	0x1
- 312 00ab 9F       		.byte	0x9f
- 313 00ac 8D000000 		.4byte	0x8d
- 314 00b0 01       		.byte	0x1
- 315 00b1 05       		.byte	0x5
- 316 00b2 03       		.byte	0x3
- 317 00b3 00000000 		.4byte	_vectors
- 318 00b7 00       		.byte	0x0
- 319              		.section	.debug_abbrev
- 320 0000 01       		.uleb128 0x1
- 321 0001 11       		.uleb128 0x11
- 322 0002 01       		.byte	0x1
- 323 0003 25       		.uleb128 0x25
- 324 0004 0E       		.uleb128 0xe
- 325 0005 13       		.uleb128 0x13
- 326 0006 0B       		.uleb128 0xb
- 327 0007 03       		.uleb128 0x3
- 328 0008 0E       		.uleb128 0xe
- 329 0009 1B       		.uleb128 0x1b
- 330 000a 0E       		.uleb128 0xe
- 331 000b 11       		.uleb128 0x11
- 332 000c 01       		.uleb128 0x1
- 333 000d 52       		.uleb128 0x52
- 334 000e 01       		.uleb128 0x1
- 335 000f 55       		.uleb128 0x55
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 7
+ 279 0070 04       		.byte	0x4
+ 280 0071 07       		.byte	0x7
+ 281 0072 03       		.uleb128 0x3
+ 282 0073 01       		.byte	0x1
+ 283 0074 08       		.byte	0x8
+ 284 0075 8B000000 		.4byte	.LASF9
+ 285 0079 05       		.uleb128 0x5
+ 286 007a 01       		.byte	0x1
+ 287 007b FA000000 		.4byte	.LASF13
+ 288 007f 01       		.byte	0x1
+ 289 0080 C9       		.byte	0xc9
+ 290 0081 01       		.byte	0x1
+ 291 0082 00000000 		.4byte	.LFB7
+ 292 0086 02000000 		.4byte	.LFE7
+ 293 008a 02       		.byte	0x2
+ 294 008b 7D       		.byte	0x7d
+ 295 008c 00       		.sleb128 0
+ 296 008d 06       		.uleb128 0x6
+ 297 008e 9F000000 		.4byte	0x9f
+ 298 0092 9D000000 		.4byte	0x9d
+ 299 0096 07       		.uleb128 0x7
+ 300 0097 6F000000 		.4byte	0x6f
+ 301 009b 3A       		.byte	0x3a
+ 302 009c 00       		.byte	0x0
+ 303 009d 08       		.uleb128 0x8
+ 304 009e 01       		.byte	0x1
+ 305 009f 09       		.uleb128 0x9
+ 306 00a0 04       		.byte	0x4
+ 307 00a1 9D000000 		.4byte	0x9d
+ 308 00a5 0A       		.uleb128 0xa
+ 309 00a6 D2000000 		.4byte	.LASF14
+ 310 00aa 01       		.byte	0x1
+ 311 00ab 9F       		.byte	0x9f
+ 312 00ac 8D000000 		.4byte	0x8d
+ 313 00b0 01       		.byte	0x1
+ 314 00b1 05       		.byte	0x5
+ 315 00b2 03       		.byte	0x3
+ 316 00b3 00000000 		.4byte	_vectors
+ 317 00b7 00       		.byte	0x0
+ 318              		.section	.debug_abbrev
+ 319 0000 01       		.uleb128 0x1
+ 320 0001 11       		.uleb128 0x11
+ 321 0002 01       		.byte	0x1
+ 322 0003 25       		.uleb128 0x25
+ 323 0004 0E       		.uleb128 0xe
+ 324 0005 13       		.uleb128 0x13
+ 325 0006 0B       		.uleb128 0xb
+ 326 0007 03       		.uleb128 0x3
+ 327 0008 0E       		.uleb128 0xe
+ 328 0009 1B       		.uleb128 0x1b
+ 329 000a 0E       		.uleb128 0xe
+ 330 000b 11       		.uleb128 0x11
+ 331 000c 01       		.uleb128 0x1
+ 332 000d 52       		.uleb128 0x52
+ 333 000e 01       		.uleb128 0x1
+ 334 000f 55       		.uleb128 0x55
+ 335 0010 06       		.uleb128 0x6
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 7
 
 
- 336 0010 06       		.uleb128 0x6
- 337 0011 10       		.uleb128 0x10
- 338 0012 06       		.uleb128 0x6
- 339 0013 00       		.byte	0x0
- 340 0014 00       		.byte	0x0
- 341 0015 02       		.uleb128 0x2
- 342 0016 24       		.uleb128 0x24
- 343 0017 00       		.byte	0x0
- 344 0018 0B       		.uleb128 0xb
- 345 0019 0B       		.uleb128 0xb
- 346 001a 3E       		.uleb128 0x3e
- 347 001b 0B       		.uleb128 0xb
- 348 001c 03       		.uleb128 0x3
- 349 001d 08       		.uleb128 0x8
- 350 001e 00       		.byte	0x0
- 351 001f 00       		.byte	0x0
- 352 0020 03       		.uleb128 0x3
- 353 0021 24       		.uleb128 0x24
- 354 0022 00       		.byte	0x0
- 355 0023 0B       		.uleb128 0xb
- 356 0024 0B       		.uleb128 0xb
- 357 0025 3E       		.uleb128 0x3e
- 358 0026 0B       		.uleb128 0xb
- 359 0027 03       		.uleb128 0x3
- 360 0028 0E       		.uleb128 0xe
- 361 0029 00       		.byte	0x0
- 362 002a 00       		.byte	0x0
- 363 002b 04       		.uleb128 0x4
- 364 002c 24       		.uleb128 0x24
- 365 002d 00       		.byte	0x0
- 366 002e 0B       		.uleb128 0xb
- 367 002f 0B       		.uleb128 0xb
- 368 0030 3E       		.uleb128 0x3e
- 369 0031 0B       		.uleb128 0xb
- 370 0032 00       		.byte	0x0
- 371 0033 00       		.byte	0x0
- 372 0034 05       		.uleb128 0x5
- 373 0035 2E       		.uleb128 0x2e
- 374 0036 00       		.byte	0x0
- 375 0037 3F       		.uleb128 0x3f
- 376 0038 0C       		.uleb128 0xc
- 377 0039 03       		.uleb128 0x3
- 378 003a 0E       		.uleb128 0xe
- 379 003b 3A       		.uleb128 0x3a
- 380 003c 0B       		.uleb128 0xb
- 381 003d 3B       		.uleb128 0x3b
- 382 003e 0B       		.uleb128 0xb
- 383 003f 27       		.uleb128 0x27
- 384 0040 0C       		.uleb128 0xc
- 385 0041 11       		.uleb128 0x11
- 386 0042 01       		.uleb128 0x1
- 387 0043 12       		.uleb128 0x12
- 388 0044 01       		.uleb128 0x1
- 389 0045 40       		.uleb128 0x40
- 390 0046 0A       		.uleb128 0xa
- 391 0047 00       		.byte	0x0
- 392 0048 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 8
+ 336 0011 10       		.uleb128 0x10
+ 337 0012 06       		.uleb128 0x6
+ 338 0013 00       		.byte	0x0
+ 339 0014 00       		.byte	0x0
+ 340 0015 02       		.uleb128 0x2
+ 341 0016 24       		.uleb128 0x24
+ 342 0017 00       		.byte	0x0
+ 343 0018 0B       		.uleb128 0xb
+ 344 0019 0B       		.uleb128 0xb
+ 345 001a 3E       		.uleb128 0x3e
+ 346 001b 0B       		.uleb128 0xb
+ 347 001c 03       		.uleb128 0x3
+ 348 001d 08       		.uleb128 0x8
+ 349 001e 00       		.byte	0x0
+ 350 001f 00       		.byte	0x0
+ 351 0020 03       		.uleb128 0x3
+ 352 0021 24       		.uleb128 0x24
+ 353 0022 00       		.byte	0x0
+ 354 0023 0B       		.uleb128 0xb
+ 355 0024 0B       		.uleb128 0xb
+ 356 0025 3E       		.uleb128 0x3e
+ 357 0026 0B       		.uleb128 0xb
+ 358 0027 03       		.uleb128 0x3
+ 359 0028 0E       		.uleb128 0xe
+ 360 0029 00       		.byte	0x0
+ 361 002a 00       		.byte	0x0
+ 362 002b 04       		.uleb128 0x4
+ 363 002c 24       		.uleb128 0x24
+ 364 002d 00       		.byte	0x0
+ 365 002e 0B       		.uleb128 0xb
+ 366 002f 0B       		.uleb128 0xb
+ 367 0030 3E       		.uleb128 0x3e
+ 368 0031 0B       		.uleb128 0xb
+ 369 0032 00       		.byte	0x0
+ 370 0033 00       		.byte	0x0
+ 371 0034 05       		.uleb128 0x5
+ 372 0035 2E       		.uleb128 0x2e
+ 373 0036 00       		.byte	0x0
+ 374 0037 3F       		.uleb128 0x3f
+ 375 0038 0C       		.uleb128 0xc
+ 376 0039 03       		.uleb128 0x3
+ 377 003a 0E       		.uleb128 0xe
+ 378 003b 3A       		.uleb128 0x3a
+ 379 003c 0B       		.uleb128 0xb
+ 380 003d 3B       		.uleb128 0x3b
+ 381 003e 0B       		.uleb128 0xb
+ 382 003f 27       		.uleb128 0x27
+ 383 0040 0C       		.uleb128 0xc
+ 384 0041 11       		.uleb128 0x11
+ 385 0042 01       		.uleb128 0x1
+ 386 0043 12       		.uleb128 0x12
+ 387 0044 01       		.uleb128 0x1
+ 388 0045 40       		.uleb128 0x40
+ 389 0046 0A       		.uleb128 0xa
+ 390 0047 00       		.byte	0x0
+ 391 0048 00       		.byte	0x0
+ 392 0049 06       		.uleb128 0x6
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 8
 
 
- 393 0049 06       		.uleb128 0x6
- 394 004a 01       		.uleb128 0x1
- 395 004b 01       		.byte	0x1
- 396 004c 49       		.uleb128 0x49
- 397 004d 13       		.uleb128 0x13
- 398 004e 01       		.uleb128 0x1
- 399 004f 13       		.uleb128 0x13
- 400 0050 00       		.byte	0x0
- 401 0051 00       		.byte	0x0
- 402 0052 07       		.uleb128 0x7
- 403 0053 21       		.uleb128 0x21
- 404 0054 00       		.byte	0x0
- 405 0055 49       		.uleb128 0x49
- 406 0056 13       		.uleb128 0x13
- 407 0057 2F       		.uleb128 0x2f
- 408 0058 0B       		.uleb128 0xb
- 409 0059 00       		.byte	0x0
- 410 005a 00       		.byte	0x0
- 411 005b 08       		.uleb128 0x8
- 412 005c 15       		.uleb128 0x15
- 413 005d 00       		.byte	0x0
- 414 005e 27       		.uleb128 0x27
- 415 005f 0C       		.uleb128 0xc
- 416 0060 00       		.byte	0x0
- 417 0061 00       		.byte	0x0
- 418 0062 09       		.uleb128 0x9
- 419 0063 0F       		.uleb128 0xf
- 420 0064 00       		.byte	0x0
- 421 0065 0B       		.uleb128 0xb
- 422 0066 0B       		.uleb128 0xb
- 423 0067 49       		.uleb128 0x49
- 424 0068 13       		.uleb128 0x13
- 425 0069 00       		.byte	0x0
- 426 006a 00       		.byte	0x0
- 427 006b 0A       		.uleb128 0xa
- 428 006c 34       		.uleb128 0x34
- 429 006d 00       		.byte	0x0
- 430 006e 03       		.uleb128 0x3
- 431 006f 0E       		.uleb128 0xe
- 432 0070 3A       		.uleb128 0x3a
- 433 0071 0B       		.uleb128 0xb
- 434 0072 3B       		.uleb128 0x3b
- 435 0073 0B       		.uleb128 0xb
- 436 0074 49       		.uleb128 0x49
- 437 0075 13       		.uleb128 0x13
- 438 0076 3F       		.uleb128 0x3f
- 439 0077 0C       		.uleb128 0xc
- 440 0078 02       		.uleb128 0x2
- 441 0079 0A       		.uleb128 0xa
- 442 007a 00       		.byte	0x0
- 443 007b 00       		.byte	0x0
- 444 007c 00       		.byte	0x0
- 445              		.section	.debug_pubnames,"",%progbits
- 446 0000 34000000 		.4byte	0x34
- 447 0004 0200     		.2byte	0x2
- 448 0006 00000000 		.4byte	.Ldebug_info0
- 449 000a B8000000 		.4byte	0xb8
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 9
+ 393 004a 01       		.uleb128 0x1
+ 394 004b 01       		.byte	0x1
+ 395 004c 49       		.uleb128 0x49
+ 396 004d 13       		.uleb128 0x13
+ 397 004e 01       		.uleb128 0x1
+ 398 004f 13       		.uleb128 0x13
+ 399 0050 00       		.byte	0x0
+ 400 0051 00       		.byte	0x0
+ 401 0052 07       		.uleb128 0x7
+ 402 0053 21       		.uleb128 0x21
+ 403 0054 00       		.byte	0x0
+ 404 0055 49       		.uleb128 0x49
+ 405 0056 13       		.uleb128 0x13
+ 406 0057 2F       		.uleb128 0x2f
+ 407 0058 0B       		.uleb128 0xb
+ 408 0059 00       		.byte	0x0
+ 409 005a 00       		.byte	0x0
+ 410 005b 08       		.uleb128 0x8
+ 411 005c 15       		.uleb128 0x15
+ 412 005d 00       		.byte	0x0
+ 413 005e 27       		.uleb128 0x27
+ 414 005f 0C       		.uleb128 0xc
+ 415 0060 00       		.byte	0x0
+ 416 0061 00       		.byte	0x0
+ 417 0062 09       		.uleb128 0x9
+ 418 0063 0F       		.uleb128 0xf
+ 419 0064 00       		.byte	0x0
+ 420 0065 0B       		.uleb128 0xb
+ 421 0066 0B       		.uleb128 0xb
+ 422 0067 49       		.uleb128 0x49
+ 423 0068 13       		.uleb128 0x13
+ 424 0069 00       		.byte	0x0
+ 425 006a 00       		.byte	0x0
+ 426 006b 0A       		.uleb128 0xa
+ 427 006c 34       		.uleb128 0x34
+ 428 006d 00       		.byte	0x0
+ 429 006e 03       		.uleb128 0x3
+ 430 006f 0E       		.uleb128 0xe
+ 431 0070 3A       		.uleb128 0x3a
+ 432 0071 0B       		.uleb128 0xb
+ 433 0072 3B       		.uleb128 0x3b
+ 434 0073 0B       		.uleb128 0xb
+ 435 0074 49       		.uleb128 0x49
+ 436 0075 13       		.uleb128 0x13
+ 437 0076 3F       		.uleb128 0x3f
+ 438 0077 0C       		.uleb128 0xc
+ 439 0078 02       		.uleb128 0x2
+ 440 0079 0A       		.uleb128 0xa
+ 441 007a 00       		.byte	0x0
+ 442 007b 00       		.byte	0x0
+ 443 007c 00       		.byte	0x0
+ 444              		.section	.debug_pubnames,"",%progbits
+ 445 0000 34000000 		.4byte	0x34
+ 446 0004 0200     		.2byte	0x2
+ 447 0006 00000000 		.4byte	.Ldebug_info0
+ 448 000a B8000000 		.4byte	0xb8
+ 449 000e 79000000 		.4byte	0x79
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 9
 
 
- 450 000e 79000000 		.4byte	0x79
- 451 0012 5F756E68 		.ascii	"_unhandled_exception\000"
- 451      616E646C 
- 451      65645F65 
- 451      78636570 
- 451      74696F6E 
- 452 0027 A5000000 		.4byte	0xa5
- 453 002b 5F766563 		.ascii	"_vectors\000"
- 453      746F7273 
- 453      00
- 454 0034 00000000 		.4byte	0x0
- 455              		.section	.debug_pubtypes,"",%progbits
- 456 0000 0E000000 		.4byte	0xe
- 457 0004 0200     		.2byte	0x2
- 458 0006 00000000 		.4byte	.Ldebug_info0
- 459 000a B8000000 		.4byte	0xb8
- 460 000e 00000000 		.4byte	0x0
- 461              		.section	.debug_aranges,"",%progbits
- 462 0000 1C000000 		.4byte	0x1c
- 463 0004 0200     		.2byte	0x2
- 464 0006 00000000 		.4byte	.Ldebug_info0
- 465 000a 04       		.byte	0x4
- 466 000b 00       		.byte	0x0
- 467 000c 0000     		.2byte	0x0
- 468 000e 0000     		.2byte	0x0
- 469 0010 00000000 		.4byte	.LFB7
- 470 0014 02000000 		.4byte	.LFE7-.LFB7
- 471 0018 00000000 		.4byte	0x0
- 472 001c 00000000 		.4byte	0x0
- 473              		.section	.debug_ranges,"",%progbits
- 474              	.Ldebug_ranges0:
- 475 0000 00000000 		.4byte	.LFB7
- 476 0004 02000000 		.4byte	.LFE7
- 477 0008 00000000 		.4byte	0x0
- 478 000c 00000000 		.4byte	0x0
- 479              		.section	.debug_str,"MS",%progbits,1
- 480              	.LASF7:
- 481 0000 6C6F6E67 		.ascii	"long long int\000"
- 481      206C6F6E 
- 481      6720696E 
- 481      7400
- 482              	.LASF12:
- 483 000e 433A5C70 		.ascii	"C:\\projects\\digitizer.git\\firmware\\digitizer\000"
- 483      726F6A65 
- 483      6374735C 
- 483      64696769 
- 483      74697A65 
- 484              	.LASF0:
- 485 003b 756E7369 		.ascii	"unsigned int\000"
- 485      676E6564 
- 485      20696E74 
- 485      00
- 486              	.LASF6:
- 487 0048 6C6F6E67 		.ascii	"long unsigned int\000"
- 487      20756E73 
- 487      69676E65 
- 487      6420696E 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 10
+ 450 0012 5F756E68 		.ascii	"_unhandled_exception\000"
+ 450      616E646C 
+ 450      65645F65 
+ 450      78636570 
+ 450      74696F6E 
+ 451 0027 A5000000 		.4byte	0xa5
+ 452 002b 5F766563 		.ascii	"_vectors\000"
+ 452      746F7273 
+ 452      00
+ 453 0034 00000000 		.4byte	0x0
+ 454              		.section	.debug_pubtypes,"",%progbits
+ 455 0000 0E000000 		.4byte	0xe
+ 456 0004 0200     		.2byte	0x2
+ 457 0006 00000000 		.4byte	.Ldebug_info0
+ 458 000a B8000000 		.4byte	0xb8
+ 459 000e 00000000 		.4byte	0x0
+ 460              		.section	.debug_aranges,"",%progbits
+ 461 0000 1C000000 		.4byte	0x1c
+ 462 0004 0200     		.2byte	0x2
+ 463 0006 00000000 		.4byte	.Ldebug_info0
+ 464 000a 04       		.byte	0x4
+ 465 000b 00       		.byte	0x0
+ 466 000c 0000     		.2byte	0x0
+ 467 000e 0000     		.2byte	0x0
+ 468 0010 00000000 		.4byte	.LFB7
+ 469 0014 02000000 		.4byte	.LFE7-.LFB7
+ 470 0018 00000000 		.4byte	0x0
+ 471 001c 00000000 		.4byte	0x0
+ 472              		.section	.debug_ranges,"",%progbits
+ 473              	.Ldebug_ranges0:
+ 474 0000 00000000 		.4byte	.LFB7
+ 475 0004 02000000 		.4byte	.LFE7
+ 476 0008 00000000 		.4byte	0x0
+ 477 000c 00000000 		.4byte	0x0
+ 478              		.section	.debug_str,"MS",%progbits,1
+ 479              	.LASF7:
+ 480 0000 6C6F6E67 		.ascii	"long long int\000"
+ 480      206C6F6E 
+ 480      6720696E 
+ 480      7400
+ 481              	.LASF12:
+ 482 000e 433A5C70 		.ascii	"C:\\projects\\digitizer.git\\firmware\\digitizer\000"
+ 482      726F6A65 
+ 482      6374735C 
+ 482      64696769 
+ 482      74697A65 
+ 483              	.LASF0:
+ 484 003b 756E7369 		.ascii	"unsigned int\000"
+ 484      676E6564 
+ 484      20696E74 
+ 484      00
+ 485              	.LASF6:
+ 486 0048 6C6F6E67 		.ascii	"long unsigned int\000"
+ 486      20756E73 
+ 486      69676E65 
+ 486      6420696E 
+ 486      7400
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 10
 
 
- 487      7400
- 488              	.LASF8:
- 489 005a 6C6F6E67 		.ascii	"long long unsigned int\000"
- 489      206C6F6E 
- 489      6720756E 
- 489      7369676E 
- 489      65642069 
- 490              	.LASF10:
- 491 0071 474E5520 		.ascii	"GNU C 4.5.0\000"
- 491      4320342E 
- 491      352E3000 
- 492              	.LASF2:
- 493 007d 756E7369 		.ascii	"unsigned char\000"
- 493      676E6564 
- 493      20636861 
- 493      7200
- 494              	.LASF9:
- 495 008b 63686172 		.ascii	"char\000"
- 495      00
- 496              	.LASF11:
- 497 0090 2E2E2F63 		.ascii	"../chibios_2.4.x/os/ports/GCC/ARMCMx/STM32F1xx/vect"
- 497      68696269 
- 497      6F735F32 
- 497      2E342E78 
- 497      2F6F732F 
- 498 00c3 6F72732E 		.ascii	"ors.c\000"
- 498      6300
- 499              	.LASF5:
- 500 00c9 6C6F6E67 		.ascii	"long int\000"
- 500      20696E74 
- 500      00
- 501              	.LASF14:
- 502 00d2 5F766563 		.ascii	"_vectors\000"
- 502      746F7273 
- 502      00
- 503              	.LASF4:
- 504 00db 73686F72 		.ascii	"short unsigned int\000"
- 504      7420756E 
- 504      7369676E 
- 504      65642069 
- 504      6E7400
- 505              	.LASF1:
- 506 00ee 7369676E 		.ascii	"signed char\000"
- 506      65642063 
- 506      68617200 
- 507              	.LASF13:
- 508 00fa 5F756E68 		.ascii	"_unhandled_exception\000"
- 508      616E646C 
- 508      65645F65 
- 508      78636570 
- 508      74696F6E 
- 509              	.LASF3:
- 510 010f 73686F72 		.ascii	"short int\000"
- 510      7420696E 
- 510      7400
- 511              		.ident	"GCC: (GNU) 4.5.0"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 11
+ 487              	.LASF8:
+ 488 005a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 488      206C6F6E 
+ 488      6720756E 
+ 488      7369676E 
+ 488      65642069 
+ 489              	.LASF10:
+ 490 0071 474E5520 		.ascii	"GNU C 4.5.0\000"
+ 490      4320342E 
+ 490      352E3000 
+ 491              	.LASF2:
+ 492 007d 756E7369 		.ascii	"unsigned char\000"
+ 492      676E6564 
+ 492      20636861 
+ 492      7200
+ 493              	.LASF9:
+ 494 008b 63686172 		.ascii	"char\000"
+ 494      00
+ 495              	.LASF11:
+ 496 0090 2E2E2F63 		.ascii	"../chibios_2.4.x/os/ports/GCC/ARMCMx/STM32F1xx/vect"
+ 496      68696269 
+ 496      6F735F32 
+ 496      2E342E78 
+ 496      2F6F732F 
+ 497 00c3 6F72732E 		.ascii	"ors.c\000"
+ 497      6300
+ 498              	.LASF5:
+ 499 00c9 6C6F6E67 		.ascii	"long int\000"
+ 499      20696E74 
+ 499      00
+ 500              	.LASF14:
+ 501 00d2 5F766563 		.ascii	"_vectors\000"
+ 501      746F7273 
+ 501      00
+ 502              	.LASF4:
+ 503 00db 73686F72 		.ascii	"short unsigned int\000"
+ 503      7420756E 
+ 503      7369676E 
+ 503      65642069 
+ 503      6E7400
+ 504              	.LASF1:
+ 505 00ee 7369676E 		.ascii	"signed char\000"
+ 505      65642063 
+ 505      68617200 
+ 506              	.LASF13:
+ 507 00fa 5F756E68 		.ascii	"_unhandled_exception\000"
+ 507      616E646C 
+ 507      65645F65 
+ 507      78636570 
+ 507      74696F6E 
+ 508              	.LASF3:
+ 509 010f 73686F72 		.ascii	"short int\000"
+ 509      7420696E 
+ 509      7400
+ 510              		.ident	"GCC: (GNU) 4.5.0"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 vectors.c
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:28     vectors:00000000 _vectors
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:25     vectors:00000000 $d
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 NMIVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 HardFaultVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 MemManageVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 BusFaultVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 UsageFaultVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector1C
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector20
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector24
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector28
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 SVCallVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 DebugMonitorVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector34
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 PendSVVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 SysTickVector
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector40
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector44
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector48
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector4C
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector50
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector54
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector58
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector5C
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector60
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector64
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector68
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector6C
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector70
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector74
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector78
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector7C
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector80
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector84
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector88
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector8C
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector90
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector94
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector98
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 Vector9C
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorA0
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorA4
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorA8
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorAC
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorB0
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorB4
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorB8
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorBC
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorC0
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorC4
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorC8
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorCC
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorD0
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorD4
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorD8
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cchzfjUh.s 			page 12
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:24     .text._unhandled_exception:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 _unhandled_exception
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:162    vectors:00000000 _vectors
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 NMIVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 HardFaultVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 MemManageVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 BusFaultVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 UsageFaultVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector1C
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector20
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector24
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector28
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 SVCallVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 DebugMonitorVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector34
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 PendSVVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 SysTickVector
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector40
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector44
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector48
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector4C
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector50
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector54
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector58
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector5C
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector60
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector64
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector68
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector6C
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector70
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector74
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector78
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector7C
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector80
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector84
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector88
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector8C
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector90
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector94
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector98
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 Vector9C
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorA0
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorA4
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorA8
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorAC
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorB0
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorB4
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorB8
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorBC
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorC0
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorC4
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorC8
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorCC
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorD0
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorD4
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s 			page 12
 
 
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorDC
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorE0
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorE4
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 VectorE8
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:89     .text._unhandled_exception:00000000 $t
-C:\Users\z80\AppData\Local\Temp\cchzfjUh.s:95     .text._unhandled_exception:00000000 _unhandled_exception
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorD8
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorDC
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorE0
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorE4
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:30     .text._unhandled_exception:00000000 VectorE8
+C:\Users\z80\AppData\Local\Temp\ccPbTUQd.s:159    vectors:00000000 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

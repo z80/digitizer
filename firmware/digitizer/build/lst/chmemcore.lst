@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 1
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 1
 
 
    1              		.syntax unified
@@ -10,7 +10,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 1
    7              		.eabi_attribute 24, 1
    8              		.eabi_attribute 25, 1
    9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 30, 2
   11              		.eabi_attribute 18, 4
   12              		.thumb
   13              		.file	"chmemcore.c"
@@ -20,996 +20,1054 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 1
   17              	.Ldebug_info0:
   18              		.section	.debug_line,"",%progbits
   19              	.Ldebug_line0:
-  20 0000 2D010000 		.text
+  20 0000 33010000 		.text
   20      0200D400 
   20      00000201 
   20      FB0E0D00 
   20      01010101 
   21              	.Ltext0:
   22              		.cfi_sections	.debug_frame
-  23              		.section	.bss.nextmem,"aw",%nobits
+  23              		.section	.text._core_init,"ax",%progbits
   24              		.align	2
-  25              		.type	nextmem, %object
-  26              		.size	nextmem, 4
-  27              	nextmem:
-  28 0000 00000000 		.space	4
-  29              		.section	.bss.endmem,"aw",%nobits
-  30              		.align	2
-  31              		.type	endmem, %object
-  32              		.size	endmem, 4
-  33              	endmem:
-  34 0000 00000000 		.space	4
-  35              		.section	.text._core_init,"ax",%progbits
-  36              		.align	2
-  37              		.p2align 4,,15
-  38              		.global	_core_init
-  39              		.thumb
-  40              		.thumb_func
-  41              		.type	_core_init, %function
-  42              	_core_init:
-  43              	.LFB7:
-  44              		.file 1 "../chibios_2.4.x/os/kernel/src/chmemcore.c"
-  45              		.loc 1 66 0
-  46              		.cfi_startproc
-  47              		@ args = 0, pretend = 0, frame = 0
-  48              		@ frame_needed = 0, uses_anonymous_args = 0
-  49              		@ link register save eliminated.
-  50              		.loc 1 70 0
-  51 0000 40F20003 		movw	r3, #:lower16:__heap_base__
-  52 0004 C0F20003 		movt	r3, #:upper16:__heap_base__
-  53 0008 03F10703 		add	r3, r3, #7
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 2
+  25              		.p2align 4,,15
+  26              		.global	_core_init
+  27              		.thumb
+  28              		.thumb_func
+  29              		.type	_core_init, %function
+  30              	_core_init:
+  31              	.LFB7:
+  32              		.file 1 "../chibios_2.4.x/os/kernel/src/chmemcore.c"
+  33              		.loc 1 66 0
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 0
+  36              		@ frame_needed = 0, uses_anonymous_args = 0
+  37              		@ link register save eliminated.
+  38              		.loc 1 71 0
+  39 0000 40F20001 		movw	r1, #:lower16:__heap_end__
+  40              		.loc 1 70 0
+  41 0004 0848     		ldr	r0, .L2
+  42 0006 40F20002 		movw	r2, #:lower16:.LANCHOR0
+  43              		.loc 1 71 0
+  44 000a 40F20003 		movw	r3, #:lower16:.LANCHOR1
+  45 000e C0F20001 		movt	r1, #:upper16:__heap_end__
+  46              		.loc 1 70 0
+  47 0012 C0F20002 		movt	r2, #:upper16:.LANCHOR0
+  48 0016 20F00700 		bic	r0, r0, #7
+  49              		.loc 1 71 0
+  50 001a C0F20003 		movt	r3, #:upper16:.LANCHOR1
+  51 001e 21F00701 		bic	r1, r1, #7
+  52              		.loc 1 70 0
+  53 0022 1060     		str	r0, [r2, #0]
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 2
 
 
-  54 000c 23F00703 		bic	r3, r3, #7
-  55 0010 1A46     		mov	r2, r3
-  56 0012 40F20003 		movw	r3, #:lower16:nextmem
-  57 0016 C0F20003 		movt	r3, #:upper16:nextmem
-  58 001a 1A60     		str	r2, [r3, #0]
-  59              		.loc 1 71 0
-  60 001c 40F20003 		movw	r3, #:lower16:__heap_end__
-  61 0020 C0F20003 		movt	r3, #:upper16:__heap_end__
-  62 0024 23F00703 		bic	r3, r3, #7
-  63 0028 1A46     		mov	r2, r3
-  64 002a 40F20003 		movw	r3, #:lower16:endmem
-  65 002e C0F20003 		movt	r3, #:upper16:endmem
-  66 0032 1A60     		str	r2, [r3, #0]
-  67              		.loc 1 77 0
-  68 0034 7047     		bx	lr
-  69              		.cfi_endproc
-  70              	.LFE7:
-  71              		.size	_core_init, .-_core_init
-  72 0036 00BFAFF3 		.section	.text.chCoreAlloc,"ax",%progbits
-  72      0080AFF3 
-  72      0080
-  73              		.align	2
-  74              		.p2align 4,,15
-  75              		.global	chCoreAlloc
-  76              		.thumb
-  77              		.thumb_func
-  78              		.type	chCoreAlloc, %function
-  79              	chCoreAlloc:
-  80              	.LFB8:
-  81              		.loc 1 91 0
-  82              		.cfi_startproc
-  83              		@ args = 0, pretend = 0, frame = 16
-  84              		@ frame_needed = 0, uses_anonymous_args = 0
-  85 0000 00B5     		push	{lr}
-  86              	.LCFI0:
-  87              		.cfi_def_cfa_offset 4
-  88 0002 85B0     		sub	sp, sp, #20
-  89              	.LCFI1:
-  90              		.cfi_def_cfa_offset 24
-  91 0004 0190     		str	r0, [sp, #4]
-  92              	.LBB2:
-  93              		.loc 1 94 0
-  94 0006 4FF02003 		mov	r3, #32
-  95              	@ 94 "../chibios_2.4.x/os/kernel/src/chmemcore.c" 1
-  96 000a 83F31188 		msr     BASEPRI, r3
-  97              	@ 0 "" 2
-  98              		.thumb
-  99              	.LBE2:
- 100              		.cfi_offset 14, -4
- 101 000e FFF7FEFF 		bl	dbg_check_lock
- 102              		.loc 1 95 0
- 103 0012 0198     		ldr	r0, [sp, #4]
- 104 0014 FFF7FEFF 		bl	chCoreAllocI
- 105 0018 0346     		mov	r3, r0
- 106 001a 0393     		str	r3, [sp, #12]
- 107              		.loc 1 96 0
- 108 001c FFF7FEFF 		bl	dbg_check_unlock
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 3
+  54              		.loc 1 71 0
+  55 0024 1960     		str	r1, [r3, #0]
+  56              		.loc 1 77 0
+  57 0026 7047     		bx	lr
+  58              	.L3:
+  59              		.align	2
+  60              	.L2:
+  61 0028 07000000 		.word	__heap_base__+7
+  62              		.cfi_endproc
+  63              	.LFE7:
+  64              		.size	_core_init, .-_core_init
+  65 002c AFF30080 		.section	.text.chCoreAllocI,"ax",%progbits
+  66              		.align	2
+  67              		.p2align 4,,15
+  68              		.global	chCoreAllocI
+  69              		.thumb
+  70              		.thumb_func
+  71              		.type	chCoreAllocI, %function
+  72              	chCoreAllocI:
+  73              	.LFB9:
+  74              		.loc 1 112 0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              	.LVL0:
+  79 0000 10B5     		push	{r4, lr}
+  80              	.LCFI0:
+  81              		.cfi_def_cfa_offset 8
+  82              		.loc 1 112 0
+  83 0002 0446     		mov	r4, r0
+  84              		.cfi_offset 14, -4
+  85              		.cfi_offset 4, -8
+  86              		.loc 1 115 0
+  87 0004 FFF7FEFF 		bl	chDbgCheckClassI
+  88              	.LVL1:
+  89              		.loc 1 118 0
+  90 0008 074A     		ldr	r2, .L8
+  91 000a 0849     		ldr	r1, .L8+4
+  92 000c 1368     		ldr	r3, [r2, #0]
+  93 000e 0968     		ldr	r1, [r1, #0]
+  94              		.loc 1 117 0
+  95 0010 E01D     		adds	r0, r4, #7
+  96 0012 20F00700 		bic	r0, r0, #7
+  97              	.LVL2:
+  98              		.loc 1 118 0
+  99 0016 C91A     		subs	r1, r1, r3
+ 100 0018 8842     		cmp	r0, r1
+ 101 001a 03D8     		bhi	.L6
+ 102              	.LVL3:
+ 103              		.loc 1 121 0
+ 104 001c 1818     		adds	r0, r3, r0
+ 105              	.LVL4:
+ 106 001e 1060     		str	r0, [r2, #0]
+ 107              		.loc 1 122 0
+ 108 0020 1846     		mov	r0, r3
+ 109              	.LVL5:
+ 110              	.L5:
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 3
 
 
- 109              	.LBB3:
- 110 0020 4FF00003 		mov	r3, #0
- 111              	@ 96 "../chibios_2.4.x/os/kernel/src/chmemcore.c" 1
- 112 0024 83F31188 		msr     BASEPRI, r3
- 113              	@ 0 "" 2
- 114              		.thumb
- 115              	.LBE3:
- 116              		.loc 1 97 0
- 117 0028 039B     		ldr	r3, [sp, #12]
- 118              		.loc 1 98 0
- 119 002a 1846     		mov	r0, r3
- 120 002c 05B0     		add	sp, sp, #20
- 121 002e 00BD     		pop	{pc}
- 122              		.cfi_endproc
- 123              	.LFE8:
- 124              		.size	chCoreAlloc, .-chCoreAlloc
- 125              		.section	.text.chCoreAllocI,"ax",%progbits
- 126              		.align	2
- 127              		.p2align 4,,15
- 128              		.global	chCoreAllocI
- 129              		.thumb
- 130              		.thumb_func
- 131              		.type	chCoreAllocI, %function
- 132              	chCoreAllocI:
- 133              	.LFB9:
- 134              		.loc 1 112 0
- 135              		.cfi_startproc
- 136              		@ args = 0, pretend = 0, frame = 16
- 137              		@ frame_needed = 0, uses_anonymous_args = 0
- 138 0000 00B5     		push	{lr}
- 139              	.LCFI2:
- 140              		.cfi_def_cfa_offset 4
- 141 0002 85B0     		sub	sp, sp, #20
- 142              	.LCFI3:
- 143              		.cfi_def_cfa_offset 24
- 144 0004 0190     		str	r0, [sp, #4]
- 145              		.loc 1 115 0
- 146              		.cfi_offset 14, -4
- 147 0006 FFF7FEFF 		bl	chDbgCheckClassI
- 148              		.loc 1 117 0
- 149 000a 019B     		ldr	r3, [sp, #4]
- 150 000c 03F10703 		add	r3, r3, #7
- 151 0010 23F00703 		bic	r3, r3, #7
- 152 0014 0193     		str	r3, [sp, #4]
- 153              		.loc 1 118 0
- 154 0016 40F20003 		movw	r3, #:lower16:endmem
- 155 001a C0F20003 		movt	r3, #:upper16:endmem
- 156 001e 1B68     		ldr	r3, [r3, #0]
- 157 0020 1A46     		mov	r2, r3
- 158 0022 40F20003 		movw	r3, #:lower16:nextmem
- 159 0026 C0F20003 		movt	r3, #:upper16:nextmem
- 160 002a 1B68     		ldr	r3, [r3, #0]
- 161 002c C3EB0203 		rsb	r3, r3, r2
- 162 0030 1A46     		mov	r2, r3
- 163 0032 019B     		ldr	r3, [sp, #4]
- 164 0034 9A42     		cmp	r2, r3
- 165 0036 02D2     		bcs	.L4
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 4
+ 111              		.loc 1 123 0
+ 112 0022 10BD     		pop	{r4, pc}
+ 113              	.LVL6:
+ 114              	.L6:
+ 115              		.loc 1 119 0
+ 116 0024 0020     		movs	r0, #0
+ 117              	.LVL7:
+ 118 0026 FCE7     		b	.L5
+ 119              	.L9:
+ 120              		.align	2
+ 121              	.L8:
+ 122 0028 00000000 		.word	.LANCHOR0
+ 123 002c 00000000 		.word	.LANCHOR1
+ 124              		.cfi_endproc
+ 125              	.LFE9:
+ 126              		.size	chCoreAllocI, .-chCoreAllocI
+ 127              		.section	.text.chCoreAlloc,"ax",%progbits
+ 128              		.align	2
+ 129              		.p2align 4,,15
+ 130              		.global	chCoreAlloc
+ 131              		.thumb
+ 132              		.thumb_func
+ 133              		.type	chCoreAlloc, %function
+ 134              	chCoreAlloc:
+ 135              	.LFB8:
+ 136              		.loc 1 91 0
+ 137              		.cfi_startproc
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              	.LVL8:
+ 141 0000 10B5     		push	{r4, lr}
+ 142              	.LCFI1:
+ 143              		.cfi_def_cfa_offset 8
+ 144              	.LBB2:
+ 145              		.loc 1 94 0
+ 146 0002 2023     		movs	r3, #32
+ 147              	.LVL9:
+ 148              	.LBE2:
+ 149              		.loc 1 91 0
+ 150 0004 0446     		mov	r4, r0
+ 151              		.cfi_offset 14, -4
+ 152              		.cfi_offset 4, -8
+ 153              	.LBB3:
+ 154              		.loc 1 94 0
+ 155              	@ 94 "../chibios_2.4.x/os/kernel/src/chmemcore.c" 1
+ 156 0006 83F31188 		msr     BASEPRI, r3
+ 157              	@ 0 "" 2
+ 158              	.LVL10:
+ 159              		.thumb
+ 160              	.LBE3:
+ 161 000a FFF7FEFF 		bl	dbg_check_lock
+ 162              	.LVL11:
+ 163              		.loc 1 95 0
+ 164 000e 2046     		mov	r0, r4
+ 165 0010 FFF7FEFF 		bl	chCoreAllocI
+ 166 0014 0446     		mov	r4, r0
+ 167              	.LVL12:
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 4
 
 
- 166              		.loc 1 119 0
- 167 0038 4FF00003 		mov	r3, #0
- 168 003c 12E0     		b	.L5
- 169              	.L4:
- 170              		.loc 1 120 0
- 171 003e 40F20003 		movw	r3, #:lower16:nextmem
- 172 0042 C0F20003 		movt	r3, #:upper16:nextmem
- 173 0046 1B68     		ldr	r3, [r3, #0]
- 174 0048 0393     		str	r3, [sp, #12]
- 175              		.loc 1 121 0
- 176 004a 40F20003 		movw	r3, #:lower16:nextmem
- 177 004e C0F20003 		movt	r3, #:upper16:nextmem
- 178 0052 1A68     		ldr	r2, [r3, #0]
- 179 0054 019B     		ldr	r3, [sp, #4]
- 180 0056 1A44     		add	r2, r2, r3
- 181 0058 40F20003 		movw	r3, #:lower16:nextmem
- 182 005c C0F20003 		movt	r3, #:upper16:nextmem
- 183 0060 1A60     		str	r2, [r3, #0]
- 184              		.loc 1 122 0
- 185 0062 039B     		ldr	r3, [sp, #12]
- 186              	.L5:
- 187              		.loc 1 123 0
- 188 0064 1846     		mov	r0, r3
- 189 0066 05B0     		add	sp, sp, #20
- 190 0068 00BD     		pop	{pc}
- 191              		.cfi_endproc
- 192              	.LFE9:
- 193              		.size	chCoreAllocI, .-chCoreAllocI
- 194 006a 00BFAFF3 		.section	.text.chCoreStatus,"ax",%progbits
- 194      0080
- 195              		.align	2
- 196              		.p2align 4,,15
- 197              		.global	chCoreStatus
- 198              		.thumb
- 199              		.thumb_func
- 200              		.type	chCoreStatus, %function
- 201              	chCoreStatus:
- 202              	.LFB10:
- 203              		.loc 1 132 0
- 204              		.cfi_startproc
- 205              		@ args = 0, pretend = 0, frame = 0
- 206              		@ frame_needed = 0, uses_anonymous_args = 0
- 207              		@ link register save eliminated.
- 208              		.loc 1 134 0
- 209 0000 40F20003 		movw	r3, #:lower16:endmem
- 210 0004 C0F20003 		movt	r3, #:upper16:endmem
- 211 0008 1B68     		ldr	r3, [r3, #0]
- 212 000a 1A46     		mov	r2, r3
- 213 000c 40F20003 		movw	r3, #:lower16:nextmem
- 214 0010 C0F20003 		movt	r3, #:upper16:nextmem
- 215 0014 1B68     		ldr	r3, [r3, #0]
- 216 0016 C3EB0203 		rsb	r3, r3, r2
- 217              		.loc 1 135 0
- 218 001a 1846     		mov	r0, r3
- 219 001c 7047     		bx	lr
- 220              		.cfi_endproc
- 221              	.LFE10:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 5
+ 168              		.loc 1 96 0
+ 169 0016 FFF7FEFF 		bl	dbg_check_unlock
+ 170              	.LVL13:
+ 171              	.LBB4:
+ 172 001a 0023     		movs	r3, #0
+ 173              	.LVL14:
+ 174              	@ 96 "../chibios_2.4.x/os/kernel/src/chmemcore.c" 1
+ 175 001c 83F31188 		msr     BASEPRI, r3
+ 176              	@ 0 "" 2
+ 177              	.LVL15:
+ 178              		.thumb
+ 179              	.LBE4:
+ 180              		.loc 1 98 0
+ 181 0020 2046     		mov	r0, r4
+ 182 0022 10BD     		pop	{r4, pc}
+ 183              		.cfi_endproc
+ 184              	.LFE8:
+ 185              		.size	chCoreAlloc, .-chCoreAlloc
+ 186 0024 AFF30080 		.section	.text.chCoreStatus,"ax",%progbits
+ 186      AFF30080 
+ 186      AFF30080 
+ 187              		.align	2
+ 188              		.p2align 4,,15
+ 189              		.global	chCoreStatus
+ 190              		.thumb
+ 191              		.thumb_func
+ 192              		.type	chCoreStatus, %function
+ 193              	chCoreStatus:
+ 194              	.LFB10:
+ 195              		.loc 1 132 0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199              		@ link register save eliminated.
+ 200              		.loc 1 134 0
+ 201 0000 40F20002 		movw	r2, #:lower16:.LANCHOR1
+ 202 0004 40F20003 		movw	r3, #:lower16:.LANCHOR0
+ 203 0008 C0F20002 		movt	r2, #:upper16:.LANCHOR1
+ 204 000c C0F20003 		movt	r3, #:upper16:.LANCHOR0
+ 205 0010 1068     		ldr	r0, [r2, #0]
+ 206 0012 1B68     		ldr	r3, [r3, #0]
+ 207 0014 C01A     		subs	r0, r0, r3
+ 208              		.loc 1 135 0
+ 209 0016 7047     		bx	lr
+ 210              		.cfi_endproc
+ 211              	.LFE10:
+ 212              		.size	chCoreStatus, .-chCoreStatus
+ 213 0018 AFF30080 		.section	.bss.endmem,"aw",%nobits
+ 213      AFF30080 
+ 214              		.align	2
+ 215              		.set	.LANCHOR1,. + 0
+ 216              		.type	endmem, %object
+ 217              		.size	endmem, 4
+ 218              	endmem:
+ 219 0000 00000000 		.space	4
+ 220              		.section	.bss.nextmem,"aw",%nobits
+ 221              		.align	2
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 5
 
 
- 222              		.size	chCoreStatus, .-chCoreStatus
- 223 001e 00BF     		.text
- 224              	.Letext0:
- 225              		.section	.debug_loc,"",%progbits
- 226              	.Ldebug_loc0:
- 227              	.LLST0:
- 228 0000 00000000 		.4byte	.LFB8
- 229 0004 02000000 		.4byte	.LCFI0
- 230 0008 0200     		.2byte	0x2
- 231 000a 7D       		.byte	0x7d
- 232 000b 00       		.sleb128 0
- 233 000c 02000000 		.4byte	.LCFI0
- 234 0010 04000000 		.4byte	.LCFI1
- 235 0014 0200     		.2byte	0x2
- 236 0016 7D       		.byte	0x7d
- 237 0017 04       		.sleb128 4
- 238 0018 04000000 		.4byte	.LCFI1
- 239 001c 30000000 		.4byte	.LFE8
- 240 0020 0200     		.2byte	0x2
- 241 0022 7D       		.byte	0x7d
- 242 0023 18       		.sleb128 24
- 243 0024 00000000 		.4byte	0x0
- 244 0028 00000000 		.4byte	0x0
- 245              	.LLST1:
- 246 002c 00000000 		.4byte	.LFB9
- 247 0030 02000000 		.4byte	.LCFI2
- 248 0034 0200     		.2byte	0x2
- 249 0036 7D       		.byte	0x7d
- 250 0037 00       		.sleb128 0
- 251 0038 02000000 		.4byte	.LCFI2
- 252 003c 04000000 		.4byte	.LCFI3
- 253 0040 0200     		.2byte	0x2
- 254 0042 7D       		.byte	0x7d
- 255 0043 04       		.sleb128 4
- 256 0044 04000000 		.4byte	.LCFI3
- 257 0048 6A000000 		.4byte	.LFE9
- 258 004c 0200     		.2byte	0x2
- 259 004e 7D       		.byte	0x7d
- 260 004f 18       		.sleb128 24
- 261 0050 00000000 		.4byte	0x0
- 262 0054 00000000 		.4byte	0x0
- 263              		.file 2 "c:\\programs\\yagarto\\bin\\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h"
- 264              		.file 3 "c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h"
- 265              		.section	.debug_info
- 266 0000 D3010000 		.4byte	0x1d3
- 267 0004 0200     		.2byte	0x2
- 268 0006 00000000 		.4byte	.Ldebug_abbrev0
- 269 000a 04       		.byte	0x4
- 270 000b 01       		.uleb128 0x1
- 271 000c 74000000 		.4byte	.LASF20
- 272 0010 01       		.byte	0x1
- 273 0011 80000000 		.4byte	.LASF21
- 274 0015 EB000000 		.4byte	.LASF22
- 275 0019 00000000 		.4byte	0x0
- 276 001d 00000000 		.4byte	0x0
- 277 0021 00000000 		.4byte	.Ldebug_ranges0+0x0
- 278 0025 00000000 		.4byte	.Ldebug_line0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 6
+ 222              		.set	.LANCHOR0,. + 0
+ 223              		.type	nextmem, %object
+ 224              		.size	nextmem, 4
+ 225              	nextmem:
+ 226 0000 00000000 		.space	4
+ 227              		.text
+ 228              	.Letext0:
+ 229              		.section	.debug_loc,"",%progbits
+ 230              	.Ldebug_loc0:
+ 231              	.LLST0:
+ 232 0000 00000000 		.4byte	.LFB9
+ 233 0004 02000000 		.4byte	.LCFI0
+ 234 0008 0200     		.2byte	0x2
+ 235 000a 7D       		.byte	0x7d
+ 236 000b 00       		.sleb128 0
+ 237 000c 02000000 		.4byte	.LCFI0
+ 238 0010 30000000 		.4byte	.LFE9
+ 239 0014 0200     		.2byte	0x2
+ 240 0016 7D       		.byte	0x7d
+ 241 0017 08       		.sleb128 8
+ 242 0018 00000000 		.4byte	0x0
+ 243 001c 00000000 		.4byte	0x0
+ 244              	.LLST1:
+ 245 0020 00000000 		.4byte	.LVL0
+ 246 0024 07000000 		.4byte	.LVL1-1
+ 247 0028 0100     		.2byte	0x1
+ 248 002a 50       		.byte	0x50
+ 249 002b 07000000 		.4byte	.LVL1-1
+ 250 002f 16000000 		.4byte	.LVL2
+ 251 0033 0100     		.2byte	0x1
+ 252 0035 54       		.byte	0x54
+ 253 0036 16000000 		.4byte	.LVL2
+ 254 003a 1E000000 		.4byte	.LVL4
+ 255 003e 0100     		.2byte	0x1
+ 256 0040 50       		.byte	0x50
+ 257 0041 24000000 		.4byte	.LVL6
+ 258 0045 26000000 		.4byte	.LVL7
+ 259 0049 0100     		.2byte	0x1
+ 260 004b 50       		.byte	0x50
+ 261 004c 00000000 		.4byte	0x0
+ 262 0050 00000000 		.4byte	0x0
+ 263              	.LLST2:
+ 264 0054 1C000000 		.4byte	.LVL3
+ 265 0058 22000000 		.4byte	.LVL5
+ 266 005c 0500     		.2byte	0x5
+ 267 005e 03       		.byte	0x3
+ 268 005f 00000000 		.4byte	nextmem
+ 269 0063 00000000 		.4byte	0x0
+ 270 0067 00000000 		.4byte	0x0
+ 271              	.LLST3:
+ 272 006b 00000000 		.4byte	.LFB8
+ 273 006f 02000000 		.4byte	.LCFI1
+ 274 0073 0200     		.2byte	0x2
+ 275 0075 7D       		.byte	0x7d
+ 276 0076 00       		.sleb128 0
+ 277 0077 02000000 		.4byte	.LCFI1
+ 278 007b 24000000 		.4byte	.LFE8
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 6
 
 
- 279 0029 02       		.uleb128 0x2
- 280 002a 04       		.byte	0x4
- 281 002b 05       		.byte	0x5
- 282 002c 696E7400 		.ascii	"int\000"
- 283 0030 03       		.uleb128 0x3
- 284 0031 21000000 		.4byte	.LASF2
- 285 0035 02       		.byte	0x2
- 286 0036 D3       		.byte	0xd3
- 287 0037 3B000000 		.4byte	0x3b
- 288 003b 04       		.uleb128 0x4
- 289 003c 04       		.byte	0x4
- 290 003d 07       		.byte	0x7
- 291 003e 4B010000 		.4byte	.LASF0
- 292 0042 04       		.uleb128 0x4
- 293 0043 01       		.byte	0x1
- 294 0044 06       		.byte	0x6
- 295 0045 25010000 		.4byte	.LASF1
- 296 0049 03       		.uleb128 0x3
- 297 004a AB000000 		.4byte	.LASF3
- 298 004e 03       		.byte	0x3
- 299 004f 2A       		.byte	0x2a
- 300 0050 54000000 		.4byte	0x54
- 301 0054 04       		.uleb128 0x4
- 302 0055 01       		.byte	0x1
- 303 0056 08       		.byte	0x8
- 304 0057 B3000000 		.4byte	.LASF4
- 305 005b 04       		.uleb128 0x4
- 306 005c 02       		.byte	0x2
- 307 005d 05       		.byte	0x5
- 308 005e 41010000 		.4byte	.LASF5
- 309 0062 04       		.uleb128 0x4
- 310 0063 02       		.byte	0x2
- 311 0064 07       		.byte	0x7
- 312 0065 0E000000 		.4byte	.LASF6
- 313 0069 04       		.uleb128 0x4
- 314 006a 04       		.byte	0x4
- 315 006b 05       		.byte	0x5
- 316 006c DB000000 		.4byte	.LASF7
- 317 0070 03       		.uleb128 0x3
- 318 0071 D2000000 		.4byte	.LASF8
- 319 0075 03       		.byte	0x3
- 320 0076 50       		.byte	0x50
- 321 0077 7B000000 		.4byte	0x7b
- 322 007b 04       		.uleb128 0x4
- 323 007c 04       		.byte	0x4
- 324 007d 07       		.byte	0x7
- 325 007e 4B000000 		.4byte	.LASF9
- 326 0082 04       		.uleb128 0x4
- 327 0083 08       		.byte	0x8
- 328 0084 05       		.byte	0x5
- 329 0085 00000000 		.4byte	.LASF10
- 330 0089 04       		.uleb128 0x4
- 331 008a 08       		.byte	0x8
- 332 008b 07       		.byte	0x7
- 333 008c 5D000000 		.4byte	.LASF11
- 334 0090 05       		.uleb128 0x5
- 335 0091 04       		.byte	0x4
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 7
+ 279 007f 0200     		.2byte	0x2
+ 280 0081 7D       		.byte	0x7d
+ 281 0082 08       		.sleb128 8
+ 282 0083 00000000 		.4byte	0x0
+ 283 0087 00000000 		.4byte	0x0
+ 284              	.LLST4:
+ 285 008b 00000000 		.4byte	.LVL8
+ 286 008f 0D000000 		.4byte	.LVL11-1
+ 287 0093 0100     		.2byte	0x1
+ 288 0095 50       		.byte	0x50
+ 289 0096 0D000000 		.4byte	.LVL11-1
+ 290 009a 16000000 		.4byte	.LVL12
+ 291 009e 0100     		.2byte	0x1
+ 292 00a0 54       		.byte	0x54
+ 293 00a1 00000000 		.4byte	0x0
+ 294 00a5 00000000 		.4byte	0x0
+ 295              	.LLST5:
+ 296 00a9 16000000 		.4byte	.LVL12
+ 297 00ad 19000000 		.4byte	.LVL13-1
+ 298 00b1 0100     		.2byte	0x1
+ 299 00b3 50       		.byte	0x50
+ 300 00b4 19000000 		.4byte	.LVL13-1
+ 301 00b8 24000000 		.4byte	.LFE8
+ 302 00bc 0100     		.2byte	0x1
+ 303 00be 54       		.byte	0x54
+ 304 00bf 00000000 		.4byte	0x0
+ 305 00c3 00000000 		.4byte	0x0
+ 306              	.LLST6:
+ 307 00c7 0A000000 		.4byte	.LVL10
+ 308 00cb 0D000000 		.4byte	.LVL11-1
+ 309 00cf 0100     		.2byte	0x1
+ 310 00d1 53       		.byte	0x53
+ 311 00d2 00000000 		.4byte	0x0
+ 312 00d6 00000000 		.4byte	0x0
+ 313              	.LLST7:
+ 314 00da 20000000 		.4byte	.LVL15
+ 315 00de 24000000 		.4byte	.LFE8
+ 316 00e2 0100     		.2byte	0x1
+ 317 00e4 53       		.byte	0x53
+ 318 00e5 00000000 		.4byte	0x0
+ 319 00e9 00000000 		.4byte	0x0
+ 320              		.file 2 "c:\\programs\\yagarto\\bin\\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h"
+ 321              		.file 3 "c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h"
+ 322              		.section	.debug_info
+ 323 0000 D7010000 		.4byte	0x1d7
+ 324 0004 0200     		.2byte	0x2
+ 325 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 326 000a 04       		.byte	0x4
+ 327 000b 01       		.uleb128 0x1
+ 328 000c 74000000 		.4byte	.LASF20
+ 329 0010 01       		.byte	0x1
+ 330 0011 80000000 		.4byte	.LASF21
+ 331 0015 EB000000 		.4byte	.LASF22
+ 332 0019 00000000 		.4byte	0x0
+ 333 001d 00000000 		.4byte	0x0
+ 334 0021 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 335 0025 00000000 		.4byte	.Ldebug_line0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 7
 
 
- 336 0092 06       		.uleb128 0x6
- 337 0093 04       		.byte	0x4
- 338 0094 07       		.byte	0x7
- 339 0095 04       		.uleb128 0x4
- 340 0096 01       		.byte	0x1
- 341 0097 08       		.byte	0x8
- 342 0098 C1000000 		.4byte	.LASF12
- 343 009c 07       		.uleb128 0x7
- 344 009d 04       		.byte	0x4
- 345 009e 49000000 		.4byte	0x49
- 346 00a2 08       		.uleb128 0x8
- 347 00a3 01       		.byte	0x1
- 348 00a4 36010000 		.4byte	.LASF23
- 349 00a8 01       		.byte	0x1
- 350 00a9 42       		.byte	0x42
- 351 00aa 01       		.byte	0x1
- 352 00ab 00000000 		.4byte	.LFB7
- 353 00af 36000000 		.4byte	.LFE7
- 354 00b3 02       		.byte	0x2
- 355 00b4 7D       		.byte	0x7d
- 356 00b5 00       		.sleb128 0
- 357 00b6 D5000000 		.4byte	0xd5
- 358 00ba 09       		.uleb128 0x9
- 359 00bb 3D000000 		.4byte	.LASF13
- 360 00bf 01       		.byte	0x1
- 361 00c0 44       		.byte	0x44
- 362 00c1 D5000000 		.4byte	0xd5
- 363 00c5 01       		.byte	0x1
- 364 00c6 01       		.byte	0x1
- 365 00c7 09       		.uleb128 0x9
- 366 00c8 30000000 		.4byte	.LASF14
- 367 00cc 01       		.byte	0x1
- 368 00cd 45       		.byte	0x45
- 369 00ce D5000000 		.4byte	0xd5
- 370 00d2 01       		.byte	0x1
- 371 00d3 01       		.byte	0x1
- 372 00d4 00       		.byte	0x0
- 373 00d5 0A       		.uleb128 0xa
- 374 00d6 49000000 		.4byte	0x49
- 375 00da E0000000 		.4byte	0xe0
- 376 00de 0B       		.uleb128 0xb
- 377 00df 00       		.byte	0x0
- 378 00e0 0C       		.uleb128 0xc
- 379 00e1 01       		.byte	0x1
- 380 00e2 C6000000 		.4byte	.LASF15
- 381 00e6 01       		.byte	0x1
- 382 00e7 5B       		.byte	0x5b
- 383 00e8 01       		.byte	0x1
- 384 00e9 90000000 		.4byte	0x90
- 385 00ed 00000000 		.4byte	.LFB8
- 386 00f1 30000000 		.4byte	.LFE8
- 387 00f5 00000000 		.4byte	.LLST0
- 388 00f9 4A010000 		.4byte	0x14a
- 389 00fd 0D       		.uleb128 0xd
- 390 00fe 31010000 		.4byte	.LASF17
- 391 0102 01       		.byte	0x1
- 392 0103 5B       		.byte	0x5b
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 8
+ 336 0029 02       		.uleb128 0x2
+ 337 002a 04       		.byte	0x4
+ 338 002b 05       		.byte	0x5
+ 339 002c 696E7400 		.ascii	"int\000"
+ 340 0030 03       		.uleb128 0x3
+ 341 0031 21000000 		.4byte	.LASF2
+ 342 0035 02       		.byte	0x2
+ 343 0036 D3       		.byte	0xd3
+ 344 0037 3B000000 		.4byte	0x3b
+ 345 003b 04       		.uleb128 0x4
+ 346 003c 04       		.byte	0x4
+ 347 003d 07       		.byte	0x7
+ 348 003e 4B010000 		.4byte	.LASF0
+ 349 0042 04       		.uleb128 0x4
+ 350 0043 01       		.byte	0x1
+ 351 0044 06       		.byte	0x6
+ 352 0045 25010000 		.4byte	.LASF1
+ 353 0049 03       		.uleb128 0x3
+ 354 004a AB000000 		.4byte	.LASF3
+ 355 004e 03       		.byte	0x3
+ 356 004f 2A       		.byte	0x2a
+ 357 0050 54000000 		.4byte	0x54
+ 358 0054 04       		.uleb128 0x4
+ 359 0055 01       		.byte	0x1
+ 360 0056 08       		.byte	0x8
+ 361 0057 B3000000 		.4byte	.LASF4
+ 362 005b 04       		.uleb128 0x4
+ 363 005c 02       		.byte	0x2
+ 364 005d 05       		.byte	0x5
+ 365 005e 41010000 		.4byte	.LASF5
+ 366 0062 04       		.uleb128 0x4
+ 367 0063 02       		.byte	0x2
+ 368 0064 07       		.byte	0x7
+ 369 0065 0E000000 		.4byte	.LASF6
+ 370 0069 04       		.uleb128 0x4
+ 371 006a 04       		.byte	0x4
+ 372 006b 05       		.byte	0x5
+ 373 006c DB000000 		.4byte	.LASF7
+ 374 0070 03       		.uleb128 0x3
+ 375 0071 D2000000 		.4byte	.LASF8
+ 376 0075 03       		.byte	0x3
+ 377 0076 50       		.byte	0x50
+ 378 0077 7B000000 		.4byte	0x7b
+ 379 007b 04       		.uleb128 0x4
+ 380 007c 04       		.byte	0x4
+ 381 007d 07       		.byte	0x7
+ 382 007e 4B000000 		.4byte	.LASF9
+ 383 0082 04       		.uleb128 0x4
+ 384 0083 08       		.byte	0x8
+ 385 0084 05       		.byte	0x5
+ 386 0085 00000000 		.4byte	.LASF10
+ 387 0089 04       		.uleb128 0x4
+ 388 008a 08       		.byte	0x8
+ 389 008b 07       		.byte	0x7
+ 390 008c 5D000000 		.4byte	.LASF11
+ 391 0090 05       		.uleb128 0x5
+ 392 0091 04       		.byte	0x4
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 8
 
 
- 393 0104 30000000 		.4byte	0x30
- 394 0108 02       		.byte	0x2
- 395 0109 91       		.byte	0x91
- 396 010a 6C       		.sleb128 -20
- 397 010b 0E       		.uleb128 0xe
- 398 010c 7000     		.ascii	"p\000"
- 399 010e 01       		.byte	0x1
- 400 010f 5C       		.byte	0x5c
- 401 0110 90000000 		.4byte	0x90
- 402 0114 02       		.byte	0x2
- 403 0115 91       		.byte	0x91
- 404 0116 74       		.sleb128 -12
- 405 0117 0F       		.uleb128 0xf
- 406 0118 06000000 		.4byte	.LBB2
- 407 011c 0E000000 		.4byte	.LBE2
- 408 0120 32010000 		.4byte	0x132
- 409 0124 0E       		.uleb128 0xe
- 410 0125 746D7000 		.ascii	"tmp\000"
- 411 0129 01       		.byte	0x1
- 412 012a 5E       		.byte	0x5e
- 413 012b 70000000 		.4byte	0x70
- 414 012f 01       		.byte	0x1
- 415 0130 53       		.byte	0x53
- 416 0131 00       		.byte	0x0
- 417 0132 10       		.uleb128 0x10
- 418 0133 20000000 		.4byte	.LBB3
- 419 0137 28000000 		.4byte	.LBE3
- 420 013b 0E       		.uleb128 0xe
- 421 013c 746D7000 		.ascii	"tmp\000"
- 422 0140 01       		.byte	0x1
- 423 0141 60       		.byte	0x60
- 424 0142 70000000 		.4byte	0x70
- 425 0146 01       		.byte	0x1
- 426 0147 53       		.byte	0x53
- 427 0148 00       		.byte	0x0
- 428 0149 00       		.byte	0x0
- 429 014a 0C       		.uleb128 0xc
- 430 014b 01       		.byte	0x1
- 431 014c 18010000 		.4byte	.LASF16
- 432 0150 01       		.byte	0x1
- 433 0151 70       		.byte	0x70
- 434 0152 01       		.byte	0x1
- 435 0153 90000000 		.4byte	0x90
- 436 0157 00000000 		.4byte	.LFB9
- 437 015b 6A000000 		.4byte	.LFE9
- 438 015f 2C000000 		.4byte	.LLST1
- 439 0163 82010000 		.4byte	0x182
- 440 0167 0D       		.uleb128 0xd
- 441 0168 31010000 		.4byte	.LASF17
- 442 016c 01       		.byte	0x1
- 443 016d 70       		.byte	0x70
- 444 016e 30000000 		.4byte	0x30
- 445 0172 02       		.byte	0x2
- 446 0173 91       		.byte	0x91
- 447 0174 6C       		.sleb128 -20
- 448 0175 0E       		.uleb128 0xe
- 449 0176 7000     		.ascii	"p\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 9
+ 393 0092 06       		.uleb128 0x6
+ 394 0093 04       		.byte	0x4
+ 395 0094 07       		.byte	0x7
+ 396 0095 04       		.uleb128 0x4
+ 397 0096 01       		.byte	0x1
+ 398 0097 08       		.byte	0x8
+ 399 0098 C1000000 		.4byte	.LASF12
+ 400 009c 07       		.uleb128 0x7
+ 401 009d 04       		.byte	0x4
+ 402 009e 49000000 		.4byte	0x49
+ 403 00a2 08       		.uleb128 0x8
+ 404 00a3 01       		.byte	0x1
+ 405 00a4 36010000 		.4byte	.LASF23
+ 406 00a8 01       		.byte	0x1
+ 407 00a9 42       		.byte	0x42
+ 408 00aa 01       		.byte	0x1
+ 409 00ab 00000000 		.4byte	.LFB7
+ 410 00af 2C000000 		.4byte	.LFE7
+ 411 00b3 02       		.byte	0x2
+ 412 00b4 7D       		.byte	0x7d
+ 413 00b5 00       		.sleb128 0
+ 414 00b6 D5000000 		.4byte	0xd5
+ 415 00ba 09       		.uleb128 0x9
+ 416 00bb 3D000000 		.4byte	.LASF13
+ 417 00bf 01       		.byte	0x1
+ 418 00c0 44       		.byte	0x44
+ 419 00c1 D5000000 		.4byte	0xd5
+ 420 00c5 01       		.byte	0x1
+ 421 00c6 01       		.byte	0x1
+ 422 00c7 09       		.uleb128 0x9
+ 423 00c8 30000000 		.4byte	.LASF14
+ 424 00cc 01       		.byte	0x1
+ 425 00cd 45       		.byte	0x45
+ 426 00ce D5000000 		.4byte	0xd5
+ 427 00d2 01       		.byte	0x1
+ 428 00d3 01       		.byte	0x1
+ 429 00d4 00       		.byte	0x0
+ 430 00d5 0A       		.uleb128 0xa
+ 431 00d6 49000000 		.4byte	0x49
+ 432 00da E0000000 		.4byte	0xe0
+ 433 00de 0B       		.uleb128 0xb
+ 434 00df 00       		.byte	0x0
+ 435 00e0 0C       		.uleb128 0xc
+ 436 00e1 01       		.byte	0x1
+ 437 00e2 18010000 		.4byte	.LASF15
+ 438 00e6 01       		.byte	0x1
+ 439 00e7 70       		.byte	0x70
+ 440 00e8 01       		.byte	0x1
+ 441 00e9 90000000 		.4byte	0x90
+ 442 00ed 00000000 		.4byte	.LFB9
+ 443 00f1 30000000 		.4byte	.LFE9
+ 444 00f5 00000000 		.4byte	.LLST0
+ 445 00f9 1A010000 		.4byte	0x11a
+ 446 00fd 0D       		.uleb128 0xd
+ 447 00fe 31010000 		.4byte	.LASF17
+ 448 0102 01       		.byte	0x1
+ 449 0103 70       		.byte	0x70
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 9
 
 
- 450 0178 01       		.byte	0x1
- 451 0179 71       		.byte	0x71
- 452 017a 90000000 		.4byte	0x90
- 453 017e 02       		.byte	0x2
- 454 017f 91       		.byte	0x91
- 455 0180 74       		.sleb128 -12
- 456 0181 00       		.byte	0x0
- 457 0182 11       		.uleb128 0x11
- 458 0183 01       		.byte	0x1
- 459 0184 58010000 		.4byte	.LASF24
- 460 0188 01       		.byte	0x1
- 461 0189 84       		.byte	0x84
- 462 018a 01       		.byte	0x1
- 463 018b 30000000 		.4byte	0x30
- 464 018f 00000000 		.4byte	.LFB10
- 465 0193 1E000000 		.4byte	.LFE10
- 466 0197 02       		.byte	0x2
- 467 0198 7D       		.byte	0x7d
- 468 0199 00       		.sleb128 0
- 469 019a 12       		.uleb128 0x12
- 470 019b 28000000 		.4byte	.LASF18
- 471 019f 01       		.byte	0x1
- 472 01a0 3A       		.byte	0x3a
- 473 01a1 9C000000 		.4byte	0x9c
- 474 01a5 05       		.byte	0x5
- 475 01a6 03       		.byte	0x3
- 476 01a7 00000000 		.4byte	nextmem
- 477 01ab 12       		.uleb128 0x12
- 478 01ac E4000000 		.4byte	.LASF19
- 479 01b0 01       		.byte	0x1
- 480 01b1 3B       		.byte	0x3b
- 481 01b2 9C000000 		.4byte	0x9c
- 482 01b6 05       		.byte	0x5
- 483 01b7 03       		.byte	0x3
- 484 01b8 00000000 		.4byte	endmem
- 485 01bc 09       		.uleb128 0x9
- 486 01bd 3D000000 		.4byte	.LASF13
- 487 01c1 01       		.byte	0x1
- 488 01c2 44       		.byte	0x44
- 489 01c3 D5000000 		.4byte	0xd5
- 490 01c7 01       		.byte	0x1
- 491 01c8 01       		.byte	0x1
- 492 01c9 09       		.uleb128 0x9
- 493 01ca 30000000 		.4byte	.LASF14
- 494 01ce 01       		.byte	0x1
- 495 01cf 45       		.byte	0x45
- 496 01d0 D5000000 		.4byte	0xd5
- 497 01d4 01       		.byte	0x1
- 498 01d5 01       		.byte	0x1
- 499 01d6 00       		.byte	0x0
- 500              		.section	.debug_abbrev
- 501 0000 01       		.uleb128 0x1
- 502 0001 11       		.uleb128 0x11
- 503 0002 01       		.byte	0x1
- 504 0003 25       		.uleb128 0x25
- 505 0004 0E       		.uleb128 0xe
- 506 0005 13       		.uleb128 0x13
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 10
+ 450 0104 30000000 		.4byte	0x30
+ 451 0108 20000000 		.4byte	.LLST1
+ 452 010c 0E       		.uleb128 0xe
+ 453 010d 7000     		.ascii	"p\000"
+ 454 010f 01       		.byte	0x1
+ 455 0110 71       		.byte	0x71
+ 456 0111 90000000 		.4byte	0x90
+ 457 0115 54000000 		.4byte	.LLST2
+ 458 0119 00       		.byte	0x0
+ 459 011a 0C       		.uleb128 0xc
+ 460 011b 01       		.byte	0x1
+ 461 011c C6000000 		.4byte	.LASF16
+ 462 0120 01       		.byte	0x1
+ 463 0121 5B       		.byte	0x5b
+ 464 0122 01       		.byte	0x1
+ 465 0123 90000000 		.4byte	0x90
+ 466 0127 00000000 		.4byte	.LFB8
+ 467 012b 24000000 		.4byte	.LFE8
+ 468 012f 6B000000 		.4byte	.LLST3
+ 469 0133 86010000 		.4byte	0x186
+ 470 0137 0D       		.uleb128 0xd
+ 471 0138 31010000 		.4byte	.LASF17
+ 472 013c 01       		.byte	0x1
+ 473 013d 5B       		.byte	0x5b
+ 474 013e 30000000 		.4byte	0x30
+ 475 0142 8B000000 		.4byte	.LLST4
+ 476 0146 0E       		.uleb128 0xe
+ 477 0147 7000     		.ascii	"p\000"
+ 478 0149 01       		.byte	0x1
+ 479 014a 5C       		.byte	0x5c
+ 480 014b 90000000 		.4byte	0x90
+ 481 014f A9000000 		.4byte	.LLST5
+ 482 0153 0F       		.uleb128 0xf
+ 483 0154 00000000 		.4byte	.Ldebug_ranges0+0x0
+ 484 0158 6C010000 		.4byte	0x16c
+ 485 015c 0E       		.uleb128 0xe
+ 486 015d 746D7000 		.ascii	"tmp\000"
+ 487 0161 01       		.byte	0x1
+ 488 0162 5E       		.byte	0x5e
+ 489 0163 70000000 		.4byte	0x70
+ 490 0167 C7000000 		.4byte	.LLST6
+ 491 016b 00       		.byte	0x0
+ 492 016c 10       		.uleb128 0x10
+ 493 016d 1A000000 		.4byte	.LBB4
+ 494 0171 20000000 		.4byte	.LBE4
+ 495 0175 0E       		.uleb128 0xe
+ 496 0176 746D7000 		.ascii	"tmp\000"
+ 497 017a 01       		.byte	0x1
+ 498 017b 60       		.byte	0x60
+ 499 017c 70000000 		.4byte	0x70
+ 500 0180 DA000000 		.4byte	.LLST7
+ 501 0184 00       		.byte	0x0
+ 502 0185 00       		.byte	0x0
+ 503 0186 11       		.uleb128 0x11
+ 504 0187 01       		.byte	0x1
+ 505 0188 58010000 		.4byte	.LASF24
+ 506 018c 01       		.byte	0x1
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 10
 
 
- 507 0006 0B       		.uleb128 0xb
- 508 0007 03       		.uleb128 0x3
- 509 0008 0E       		.uleb128 0xe
- 510 0009 1B       		.uleb128 0x1b
- 511 000a 0E       		.uleb128 0xe
- 512 000b 11       		.uleb128 0x11
- 513 000c 01       		.uleb128 0x1
- 514 000d 52       		.uleb128 0x52
- 515 000e 01       		.uleb128 0x1
- 516 000f 55       		.uleb128 0x55
- 517 0010 06       		.uleb128 0x6
- 518 0011 10       		.uleb128 0x10
- 519 0012 06       		.uleb128 0x6
- 520 0013 00       		.byte	0x0
- 521 0014 00       		.byte	0x0
- 522 0015 02       		.uleb128 0x2
- 523 0016 24       		.uleb128 0x24
- 524 0017 00       		.byte	0x0
- 525 0018 0B       		.uleb128 0xb
- 526 0019 0B       		.uleb128 0xb
- 527 001a 3E       		.uleb128 0x3e
- 528 001b 0B       		.uleb128 0xb
- 529 001c 03       		.uleb128 0x3
- 530 001d 08       		.uleb128 0x8
- 531 001e 00       		.byte	0x0
- 532 001f 00       		.byte	0x0
- 533 0020 03       		.uleb128 0x3
- 534 0021 16       		.uleb128 0x16
- 535 0022 00       		.byte	0x0
- 536 0023 03       		.uleb128 0x3
- 537 0024 0E       		.uleb128 0xe
- 538 0025 3A       		.uleb128 0x3a
- 539 0026 0B       		.uleb128 0xb
- 540 0027 3B       		.uleb128 0x3b
- 541 0028 0B       		.uleb128 0xb
- 542 0029 49       		.uleb128 0x49
- 543 002a 13       		.uleb128 0x13
- 544 002b 00       		.byte	0x0
- 545 002c 00       		.byte	0x0
- 546 002d 04       		.uleb128 0x4
- 547 002e 24       		.uleb128 0x24
- 548 002f 00       		.byte	0x0
- 549 0030 0B       		.uleb128 0xb
- 550 0031 0B       		.uleb128 0xb
- 551 0032 3E       		.uleb128 0x3e
- 552 0033 0B       		.uleb128 0xb
- 553 0034 03       		.uleb128 0x3
- 554 0035 0E       		.uleb128 0xe
- 555 0036 00       		.byte	0x0
- 556 0037 00       		.byte	0x0
- 557 0038 05       		.uleb128 0x5
- 558 0039 0F       		.uleb128 0xf
- 559 003a 00       		.byte	0x0
- 560 003b 0B       		.uleb128 0xb
- 561 003c 0B       		.uleb128 0xb
- 562 003d 00       		.byte	0x0
- 563 003e 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 11
+ 507 018d 84       		.byte	0x84
+ 508 018e 01       		.byte	0x1
+ 509 018f 30000000 		.4byte	0x30
+ 510 0193 00000000 		.4byte	.LFB10
+ 511 0197 18000000 		.4byte	.LFE10
+ 512 019b 02       		.byte	0x2
+ 513 019c 7D       		.byte	0x7d
+ 514 019d 00       		.sleb128 0
+ 515 019e 12       		.uleb128 0x12
+ 516 019f 28000000 		.4byte	.LASF18
+ 517 01a3 01       		.byte	0x1
+ 518 01a4 3A       		.byte	0x3a
+ 519 01a5 9C000000 		.4byte	0x9c
+ 520 01a9 05       		.byte	0x5
+ 521 01aa 03       		.byte	0x3
+ 522 01ab 00000000 		.4byte	nextmem
+ 523 01af 12       		.uleb128 0x12
+ 524 01b0 E4000000 		.4byte	.LASF19
+ 525 01b4 01       		.byte	0x1
+ 526 01b5 3B       		.byte	0x3b
+ 527 01b6 9C000000 		.4byte	0x9c
+ 528 01ba 05       		.byte	0x5
+ 529 01bb 03       		.byte	0x3
+ 530 01bc 00000000 		.4byte	endmem
+ 531 01c0 09       		.uleb128 0x9
+ 532 01c1 3D000000 		.4byte	.LASF13
+ 533 01c5 01       		.byte	0x1
+ 534 01c6 44       		.byte	0x44
+ 535 01c7 D5000000 		.4byte	0xd5
+ 536 01cb 01       		.byte	0x1
+ 537 01cc 01       		.byte	0x1
+ 538 01cd 09       		.uleb128 0x9
+ 539 01ce 30000000 		.4byte	.LASF14
+ 540 01d2 01       		.byte	0x1
+ 541 01d3 45       		.byte	0x45
+ 542 01d4 D5000000 		.4byte	0xd5
+ 543 01d8 01       		.byte	0x1
+ 544 01d9 01       		.byte	0x1
+ 545 01da 00       		.byte	0x0
+ 546              		.section	.debug_abbrev
+ 547 0000 01       		.uleb128 0x1
+ 548 0001 11       		.uleb128 0x11
+ 549 0002 01       		.byte	0x1
+ 550 0003 25       		.uleb128 0x25
+ 551 0004 0E       		.uleb128 0xe
+ 552 0005 13       		.uleb128 0x13
+ 553 0006 0B       		.uleb128 0xb
+ 554 0007 03       		.uleb128 0x3
+ 555 0008 0E       		.uleb128 0xe
+ 556 0009 1B       		.uleb128 0x1b
+ 557 000a 0E       		.uleb128 0xe
+ 558 000b 11       		.uleb128 0x11
+ 559 000c 01       		.uleb128 0x1
+ 560 000d 52       		.uleb128 0x52
+ 561 000e 01       		.uleb128 0x1
+ 562 000f 55       		.uleb128 0x55
+ 563 0010 06       		.uleb128 0x6
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 11
 
 
- 564 003f 06       		.uleb128 0x6
- 565 0040 24       		.uleb128 0x24
- 566 0041 00       		.byte	0x0
- 567 0042 0B       		.uleb128 0xb
- 568 0043 0B       		.uleb128 0xb
- 569 0044 3E       		.uleb128 0x3e
- 570 0045 0B       		.uleb128 0xb
- 571 0046 00       		.byte	0x0
- 572 0047 00       		.byte	0x0
- 573 0048 07       		.uleb128 0x7
- 574 0049 0F       		.uleb128 0xf
- 575 004a 00       		.byte	0x0
- 576 004b 0B       		.uleb128 0xb
- 577 004c 0B       		.uleb128 0xb
- 578 004d 49       		.uleb128 0x49
- 579 004e 13       		.uleb128 0x13
- 580 004f 00       		.byte	0x0
- 581 0050 00       		.byte	0x0
- 582 0051 08       		.uleb128 0x8
- 583 0052 2E       		.uleb128 0x2e
- 584 0053 01       		.byte	0x1
- 585 0054 3F       		.uleb128 0x3f
- 586 0055 0C       		.uleb128 0xc
- 587 0056 03       		.uleb128 0x3
- 588 0057 0E       		.uleb128 0xe
- 589 0058 3A       		.uleb128 0x3a
- 590 0059 0B       		.uleb128 0xb
- 591 005a 3B       		.uleb128 0x3b
- 592 005b 0B       		.uleb128 0xb
- 593 005c 27       		.uleb128 0x27
- 594 005d 0C       		.uleb128 0xc
- 595 005e 11       		.uleb128 0x11
- 596 005f 01       		.uleb128 0x1
- 597 0060 12       		.uleb128 0x12
- 598 0061 01       		.uleb128 0x1
- 599 0062 40       		.uleb128 0x40
- 600 0063 0A       		.uleb128 0xa
- 601 0064 01       		.uleb128 0x1
- 602 0065 13       		.uleb128 0x13
- 603 0066 00       		.byte	0x0
- 604 0067 00       		.byte	0x0
- 605 0068 09       		.uleb128 0x9
- 606 0069 34       		.uleb128 0x34
- 607 006a 00       		.byte	0x0
- 608 006b 03       		.uleb128 0x3
- 609 006c 0E       		.uleb128 0xe
- 610 006d 3A       		.uleb128 0x3a
- 611 006e 0B       		.uleb128 0xb
- 612 006f 3B       		.uleb128 0x3b
- 613 0070 0B       		.uleb128 0xb
- 614 0071 49       		.uleb128 0x49
- 615 0072 13       		.uleb128 0x13
- 616 0073 3F       		.uleb128 0x3f
- 617 0074 0C       		.uleb128 0xc
- 618 0075 3C       		.uleb128 0x3c
- 619 0076 0C       		.uleb128 0xc
- 620 0077 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 12
+ 564 0011 10       		.uleb128 0x10
+ 565 0012 06       		.uleb128 0x6
+ 566 0013 00       		.byte	0x0
+ 567 0014 00       		.byte	0x0
+ 568 0015 02       		.uleb128 0x2
+ 569 0016 24       		.uleb128 0x24
+ 570 0017 00       		.byte	0x0
+ 571 0018 0B       		.uleb128 0xb
+ 572 0019 0B       		.uleb128 0xb
+ 573 001a 3E       		.uleb128 0x3e
+ 574 001b 0B       		.uleb128 0xb
+ 575 001c 03       		.uleb128 0x3
+ 576 001d 08       		.uleb128 0x8
+ 577 001e 00       		.byte	0x0
+ 578 001f 00       		.byte	0x0
+ 579 0020 03       		.uleb128 0x3
+ 580 0021 16       		.uleb128 0x16
+ 581 0022 00       		.byte	0x0
+ 582 0023 03       		.uleb128 0x3
+ 583 0024 0E       		.uleb128 0xe
+ 584 0025 3A       		.uleb128 0x3a
+ 585 0026 0B       		.uleb128 0xb
+ 586 0027 3B       		.uleb128 0x3b
+ 587 0028 0B       		.uleb128 0xb
+ 588 0029 49       		.uleb128 0x49
+ 589 002a 13       		.uleb128 0x13
+ 590 002b 00       		.byte	0x0
+ 591 002c 00       		.byte	0x0
+ 592 002d 04       		.uleb128 0x4
+ 593 002e 24       		.uleb128 0x24
+ 594 002f 00       		.byte	0x0
+ 595 0030 0B       		.uleb128 0xb
+ 596 0031 0B       		.uleb128 0xb
+ 597 0032 3E       		.uleb128 0x3e
+ 598 0033 0B       		.uleb128 0xb
+ 599 0034 03       		.uleb128 0x3
+ 600 0035 0E       		.uleb128 0xe
+ 601 0036 00       		.byte	0x0
+ 602 0037 00       		.byte	0x0
+ 603 0038 05       		.uleb128 0x5
+ 604 0039 0F       		.uleb128 0xf
+ 605 003a 00       		.byte	0x0
+ 606 003b 0B       		.uleb128 0xb
+ 607 003c 0B       		.uleb128 0xb
+ 608 003d 00       		.byte	0x0
+ 609 003e 00       		.byte	0x0
+ 610 003f 06       		.uleb128 0x6
+ 611 0040 24       		.uleb128 0x24
+ 612 0041 00       		.byte	0x0
+ 613 0042 0B       		.uleb128 0xb
+ 614 0043 0B       		.uleb128 0xb
+ 615 0044 3E       		.uleb128 0x3e
+ 616 0045 0B       		.uleb128 0xb
+ 617 0046 00       		.byte	0x0
+ 618 0047 00       		.byte	0x0
+ 619 0048 07       		.uleb128 0x7
+ 620 0049 0F       		.uleb128 0xf
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 12
 
 
- 621 0078 00       		.byte	0x0
- 622 0079 0A       		.uleb128 0xa
- 623 007a 01       		.uleb128 0x1
- 624 007b 01       		.byte	0x1
- 625 007c 49       		.uleb128 0x49
- 626 007d 13       		.uleb128 0x13
- 627 007e 01       		.uleb128 0x1
- 628 007f 13       		.uleb128 0x13
- 629 0080 00       		.byte	0x0
- 630 0081 00       		.byte	0x0
- 631 0082 0B       		.uleb128 0xb
- 632 0083 21       		.uleb128 0x21
- 633 0084 00       		.byte	0x0
- 634 0085 00       		.byte	0x0
- 635 0086 00       		.byte	0x0
- 636 0087 0C       		.uleb128 0xc
- 637 0088 2E       		.uleb128 0x2e
- 638 0089 01       		.byte	0x1
- 639 008a 3F       		.uleb128 0x3f
- 640 008b 0C       		.uleb128 0xc
- 641 008c 03       		.uleb128 0x3
- 642 008d 0E       		.uleb128 0xe
- 643 008e 3A       		.uleb128 0x3a
- 644 008f 0B       		.uleb128 0xb
- 645 0090 3B       		.uleb128 0x3b
- 646 0091 0B       		.uleb128 0xb
- 647 0092 27       		.uleb128 0x27
- 648 0093 0C       		.uleb128 0xc
- 649 0094 49       		.uleb128 0x49
- 650 0095 13       		.uleb128 0x13
- 651 0096 11       		.uleb128 0x11
- 652 0097 01       		.uleb128 0x1
- 653 0098 12       		.uleb128 0x12
- 654 0099 01       		.uleb128 0x1
- 655 009a 40       		.uleb128 0x40
- 656 009b 06       		.uleb128 0x6
- 657 009c 01       		.uleb128 0x1
- 658 009d 13       		.uleb128 0x13
- 659 009e 00       		.byte	0x0
- 660 009f 00       		.byte	0x0
- 661 00a0 0D       		.uleb128 0xd
- 662 00a1 05       		.uleb128 0x5
- 663 00a2 00       		.byte	0x0
- 664 00a3 03       		.uleb128 0x3
- 665 00a4 0E       		.uleb128 0xe
- 666 00a5 3A       		.uleb128 0x3a
- 667 00a6 0B       		.uleb128 0xb
- 668 00a7 3B       		.uleb128 0x3b
- 669 00a8 0B       		.uleb128 0xb
- 670 00a9 49       		.uleb128 0x49
- 671 00aa 13       		.uleb128 0x13
- 672 00ab 02       		.uleb128 0x2
- 673 00ac 0A       		.uleb128 0xa
- 674 00ad 00       		.byte	0x0
- 675 00ae 00       		.byte	0x0
- 676 00af 0E       		.uleb128 0xe
- 677 00b0 34       		.uleb128 0x34
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 13
+ 621 004a 00       		.byte	0x0
+ 622 004b 0B       		.uleb128 0xb
+ 623 004c 0B       		.uleb128 0xb
+ 624 004d 49       		.uleb128 0x49
+ 625 004e 13       		.uleb128 0x13
+ 626 004f 00       		.byte	0x0
+ 627 0050 00       		.byte	0x0
+ 628 0051 08       		.uleb128 0x8
+ 629 0052 2E       		.uleb128 0x2e
+ 630 0053 01       		.byte	0x1
+ 631 0054 3F       		.uleb128 0x3f
+ 632 0055 0C       		.uleb128 0xc
+ 633 0056 03       		.uleb128 0x3
+ 634 0057 0E       		.uleb128 0xe
+ 635 0058 3A       		.uleb128 0x3a
+ 636 0059 0B       		.uleb128 0xb
+ 637 005a 3B       		.uleb128 0x3b
+ 638 005b 0B       		.uleb128 0xb
+ 639 005c 27       		.uleb128 0x27
+ 640 005d 0C       		.uleb128 0xc
+ 641 005e 11       		.uleb128 0x11
+ 642 005f 01       		.uleb128 0x1
+ 643 0060 12       		.uleb128 0x12
+ 644 0061 01       		.uleb128 0x1
+ 645 0062 40       		.uleb128 0x40
+ 646 0063 0A       		.uleb128 0xa
+ 647 0064 01       		.uleb128 0x1
+ 648 0065 13       		.uleb128 0x13
+ 649 0066 00       		.byte	0x0
+ 650 0067 00       		.byte	0x0
+ 651 0068 09       		.uleb128 0x9
+ 652 0069 34       		.uleb128 0x34
+ 653 006a 00       		.byte	0x0
+ 654 006b 03       		.uleb128 0x3
+ 655 006c 0E       		.uleb128 0xe
+ 656 006d 3A       		.uleb128 0x3a
+ 657 006e 0B       		.uleb128 0xb
+ 658 006f 3B       		.uleb128 0x3b
+ 659 0070 0B       		.uleb128 0xb
+ 660 0071 49       		.uleb128 0x49
+ 661 0072 13       		.uleb128 0x13
+ 662 0073 3F       		.uleb128 0x3f
+ 663 0074 0C       		.uleb128 0xc
+ 664 0075 3C       		.uleb128 0x3c
+ 665 0076 0C       		.uleb128 0xc
+ 666 0077 00       		.byte	0x0
+ 667 0078 00       		.byte	0x0
+ 668 0079 0A       		.uleb128 0xa
+ 669 007a 01       		.uleb128 0x1
+ 670 007b 01       		.byte	0x1
+ 671 007c 49       		.uleb128 0x49
+ 672 007d 13       		.uleb128 0x13
+ 673 007e 01       		.uleb128 0x1
+ 674 007f 13       		.uleb128 0x13
+ 675 0080 00       		.byte	0x0
+ 676 0081 00       		.byte	0x0
+ 677 0082 0B       		.uleb128 0xb
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 13
 
 
- 678 00b1 00       		.byte	0x0
- 679 00b2 03       		.uleb128 0x3
- 680 00b3 08       		.uleb128 0x8
- 681 00b4 3A       		.uleb128 0x3a
- 682 00b5 0B       		.uleb128 0xb
- 683 00b6 3B       		.uleb128 0x3b
- 684 00b7 0B       		.uleb128 0xb
- 685 00b8 49       		.uleb128 0x49
- 686 00b9 13       		.uleb128 0x13
- 687 00ba 02       		.uleb128 0x2
- 688 00bb 0A       		.uleb128 0xa
- 689 00bc 00       		.byte	0x0
- 690 00bd 00       		.byte	0x0
- 691 00be 0F       		.uleb128 0xf
- 692 00bf 0B       		.uleb128 0xb
- 693 00c0 01       		.byte	0x1
- 694 00c1 11       		.uleb128 0x11
- 695 00c2 01       		.uleb128 0x1
- 696 00c3 12       		.uleb128 0x12
- 697 00c4 01       		.uleb128 0x1
- 698 00c5 01       		.uleb128 0x1
- 699 00c6 13       		.uleb128 0x13
- 700 00c7 00       		.byte	0x0
- 701 00c8 00       		.byte	0x0
- 702 00c9 10       		.uleb128 0x10
- 703 00ca 0B       		.uleb128 0xb
- 704 00cb 01       		.byte	0x1
- 705 00cc 11       		.uleb128 0x11
- 706 00cd 01       		.uleb128 0x1
- 707 00ce 12       		.uleb128 0x12
- 708 00cf 01       		.uleb128 0x1
- 709 00d0 00       		.byte	0x0
- 710 00d1 00       		.byte	0x0
- 711 00d2 11       		.uleb128 0x11
- 712 00d3 2E       		.uleb128 0x2e
- 713 00d4 00       		.byte	0x0
- 714 00d5 3F       		.uleb128 0x3f
- 715 00d6 0C       		.uleb128 0xc
- 716 00d7 03       		.uleb128 0x3
- 717 00d8 0E       		.uleb128 0xe
- 718 00d9 3A       		.uleb128 0x3a
- 719 00da 0B       		.uleb128 0xb
- 720 00db 3B       		.uleb128 0x3b
- 721 00dc 0B       		.uleb128 0xb
- 722 00dd 27       		.uleb128 0x27
- 723 00de 0C       		.uleb128 0xc
- 724 00df 49       		.uleb128 0x49
- 725 00e0 13       		.uleb128 0x13
- 726 00e1 11       		.uleb128 0x11
- 727 00e2 01       		.uleb128 0x1
- 728 00e3 12       		.uleb128 0x12
- 729 00e4 01       		.uleb128 0x1
- 730 00e5 40       		.uleb128 0x40
- 731 00e6 0A       		.uleb128 0xa
- 732 00e7 00       		.byte	0x0
- 733 00e8 00       		.byte	0x0
- 734 00e9 12       		.uleb128 0x12
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 14
+ 678 0083 21       		.uleb128 0x21
+ 679 0084 00       		.byte	0x0
+ 680 0085 00       		.byte	0x0
+ 681 0086 00       		.byte	0x0
+ 682 0087 0C       		.uleb128 0xc
+ 683 0088 2E       		.uleb128 0x2e
+ 684 0089 01       		.byte	0x1
+ 685 008a 3F       		.uleb128 0x3f
+ 686 008b 0C       		.uleb128 0xc
+ 687 008c 03       		.uleb128 0x3
+ 688 008d 0E       		.uleb128 0xe
+ 689 008e 3A       		.uleb128 0x3a
+ 690 008f 0B       		.uleb128 0xb
+ 691 0090 3B       		.uleb128 0x3b
+ 692 0091 0B       		.uleb128 0xb
+ 693 0092 27       		.uleb128 0x27
+ 694 0093 0C       		.uleb128 0xc
+ 695 0094 49       		.uleb128 0x49
+ 696 0095 13       		.uleb128 0x13
+ 697 0096 11       		.uleb128 0x11
+ 698 0097 01       		.uleb128 0x1
+ 699 0098 12       		.uleb128 0x12
+ 700 0099 01       		.uleb128 0x1
+ 701 009a 40       		.uleb128 0x40
+ 702 009b 06       		.uleb128 0x6
+ 703 009c 01       		.uleb128 0x1
+ 704 009d 13       		.uleb128 0x13
+ 705 009e 00       		.byte	0x0
+ 706 009f 00       		.byte	0x0
+ 707 00a0 0D       		.uleb128 0xd
+ 708 00a1 05       		.uleb128 0x5
+ 709 00a2 00       		.byte	0x0
+ 710 00a3 03       		.uleb128 0x3
+ 711 00a4 0E       		.uleb128 0xe
+ 712 00a5 3A       		.uleb128 0x3a
+ 713 00a6 0B       		.uleb128 0xb
+ 714 00a7 3B       		.uleb128 0x3b
+ 715 00a8 0B       		.uleb128 0xb
+ 716 00a9 49       		.uleb128 0x49
+ 717 00aa 13       		.uleb128 0x13
+ 718 00ab 02       		.uleb128 0x2
+ 719 00ac 06       		.uleb128 0x6
+ 720 00ad 00       		.byte	0x0
+ 721 00ae 00       		.byte	0x0
+ 722 00af 0E       		.uleb128 0xe
+ 723 00b0 34       		.uleb128 0x34
+ 724 00b1 00       		.byte	0x0
+ 725 00b2 03       		.uleb128 0x3
+ 726 00b3 08       		.uleb128 0x8
+ 727 00b4 3A       		.uleb128 0x3a
+ 728 00b5 0B       		.uleb128 0xb
+ 729 00b6 3B       		.uleb128 0x3b
+ 730 00b7 0B       		.uleb128 0xb
+ 731 00b8 49       		.uleb128 0x49
+ 732 00b9 13       		.uleb128 0x13
+ 733 00ba 02       		.uleb128 0x2
+ 734 00bb 06       		.uleb128 0x6
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 14
 
 
- 735 00ea 34       		.uleb128 0x34
- 736 00eb 00       		.byte	0x0
- 737 00ec 03       		.uleb128 0x3
- 738 00ed 0E       		.uleb128 0xe
- 739 00ee 3A       		.uleb128 0x3a
- 740 00ef 0B       		.uleb128 0xb
- 741 00f0 3B       		.uleb128 0x3b
- 742 00f1 0B       		.uleb128 0xb
- 743 00f2 49       		.uleb128 0x49
- 744 00f3 13       		.uleb128 0x13
- 745 00f4 02       		.uleb128 0x2
- 746 00f5 0A       		.uleb128 0xa
- 747 00f6 00       		.byte	0x0
- 748 00f7 00       		.byte	0x0
- 749 00f8 00       		.byte	0x0
- 750              		.section	.debug_pubnames,"",%progbits
- 751 0000 4F000000 		.4byte	0x4f
- 752 0004 0200     		.2byte	0x2
- 753 0006 00000000 		.4byte	.Ldebug_info0
- 754 000a D7010000 		.4byte	0x1d7
- 755 000e A2000000 		.4byte	0xa2
- 756 0012 5F636F72 		.ascii	"_core_init\000"
- 756      655F696E 
- 756      697400
- 757 001d E0000000 		.4byte	0xe0
- 758 0021 6368436F 		.ascii	"chCoreAlloc\000"
- 758      7265416C 
- 758      6C6F6300 
- 759 002d 4A010000 		.4byte	0x14a
- 760 0031 6368436F 		.ascii	"chCoreAllocI\000"
- 760      7265416C 
- 760      6C6F6349 
- 760      00
- 761 003e 82010000 		.4byte	0x182
- 762 0042 6368436F 		.ascii	"chCoreStatus\000"
- 762      72655374 
- 762      61747573 
- 762      00
- 763 004f 00000000 		.4byte	0x0
- 764              		.section	.debug_pubtypes,"",%progbits
- 765 0000 32000000 		.4byte	0x32
- 766 0004 0200     		.2byte	0x2
- 767 0006 00000000 		.4byte	.Ldebug_info0
- 768 000a D7010000 		.4byte	0x1d7
- 769 000e 30000000 		.4byte	0x30
- 770 0012 73697A65 		.ascii	"size_t\000"
- 770      5F7400
- 771 0019 49000000 		.4byte	0x49
- 772 001d 75696E74 		.ascii	"uint8_t\000"
- 772      385F7400 
- 773 0025 70000000 		.4byte	0x70
- 774 0029 75696E74 		.ascii	"uint32_t\000"
- 774      33325F74 
- 774      00
- 775 0032 00000000 		.4byte	0x0
- 776              		.section	.debug_aranges,"",%progbits
- 777 0000 34000000 		.4byte	0x34
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 15
+ 735 00bc 00       		.byte	0x0
+ 736 00bd 00       		.byte	0x0
+ 737 00be 0F       		.uleb128 0xf
+ 738 00bf 0B       		.uleb128 0xb
+ 739 00c0 01       		.byte	0x1
+ 740 00c1 55       		.uleb128 0x55
+ 741 00c2 06       		.uleb128 0x6
+ 742 00c3 01       		.uleb128 0x1
+ 743 00c4 13       		.uleb128 0x13
+ 744 00c5 00       		.byte	0x0
+ 745 00c6 00       		.byte	0x0
+ 746 00c7 10       		.uleb128 0x10
+ 747 00c8 0B       		.uleb128 0xb
+ 748 00c9 01       		.byte	0x1
+ 749 00ca 11       		.uleb128 0x11
+ 750 00cb 01       		.uleb128 0x1
+ 751 00cc 12       		.uleb128 0x12
+ 752 00cd 01       		.uleb128 0x1
+ 753 00ce 00       		.byte	0x0
+ 754 00cf 00       		.byte	0x0
+ 755 00d0 11       		.uleb128 0x11
+ 756 00d1 2E       		.uleb128 0x2e
+ 757 00d2 00       		.byte	0x0
+ 758 00d3 3F       		.uleb128 0x3f
+ 759 00d4 0C       		.uleb128 0xc
+ 760 00d5 03       		.uleb128 0x3
+ 761 00d6 0E       		.uleb128 0xe
+ 762 00d7 3A       		.uleb128 0x3a
+ 763 00d8 0B       		.uleb128 0xb
+ 764 00d9 3B       		.uleb128 0x3b
+ 765 00da 0B       		.uleb128 0xb
+ 766 00db 27       		.uleb128 0x27
+ 767 00dc 0C       		.uleb128 0xc
+ 768 00dd 49       		.uleb128 0x49
+ 769 00de 13       		.uleb128 0x13
+ 770 00df 11       		.uleb128 0x11
+ 771 00e0 01       		.uleb128 0x1
+ 772 00e1 12       		.uleb128 0x12
+ 773 00e2 01       		.uleb128 0x1
+ 774 00e3 40       		.uleb128 0x40
+ 775 00e4 0A       		.uleb128 0xa
+ 776 00e5 00       		.byte	0x0
+ 777 00e6 00       		.byte	0x0
+ 778 00e7 12       		.uleb128 0x12
+ 779 00e8 34       		.uleb128 0x34
+ 780 00e9 00       		.byte	0x0
+ 781 00ea 03       		.uleb128 0x3
+ 782 00eb 0E       		.uleb128 0xe
+ 783 00ec 3A       		.uleb128 0x3a
+ 784 00ed 0B       		.uleb128 0xb
+ 785 00ee 3B       		.uleb128 0x3b
+ 786 00ef 0B       		.uleb128 0xb
+ 787 00f0 49       		.uleb128 0x49
+ 788 00f1 13       		.uleb128 0x13
+ 789 00f2 02       		.uleb128 0x2
+ 790 00f3 0A       		.uleb128 0xa
+ 791 00f4 00       		.byte	0x0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 15
 
 
- 778 0004 0200     		.2byte	0x2
- 779 0006 00000000 		.4byte	.Ldebug_info0
- 780 000a 04       		.byte	0x4
- 781 000b 00       		.byte	0x0
- 782 000c 0000     		.2byte	0x0
- 783 000e 0000     		.2byte	0x0
- 784 0010 00000000 		.4byte	.LFB7
- 785 0014 36000000 		.4byte	.LFE7-.LFB7
- 786 0018 00000000 		.4byte	.LFB8
- 787 001c 30000000 		.4byte	.LFE8-.LFB8
- 788 0020 00000000 		.4byte	.LFB9
- 789 0024 6A000000 		.4byte	.LFE9-.LFB9
- 790 0028 00000000 		.4byte	.LFB10
- 791 002c 1E000000 		.4byte	.LFE10-.LFB10
- 792 0030 00000000 		.4byte	0x0
- 793 0034 00000000 		.4byte	0x0
- 794              		.section	.debug_ranges,"",%progbits
- 795              	.Ldebug_ranges0:
- 796 0000 00000000 		.4byte	.LFB7
- 797 0004 36000000 		.4byte	.LFE7
- 798 0008 00000000 		.4byte	.LFB8
- 799 000c 30000000 		.4byte	.LFE8
- 800 0010 00000000 		.4byte	.LFB9
- 801 0014 6A000000 		.4byte	.LFE9
- 802 0018 00000000 		.4byte	.LFB10
- 803 001c 1E000000 		.4byte	.LFE10
- 804 0020 00000000 		.4byte	0x0
- 805 0024 00000000 		.4byte	0x0
- 806              		.section	.debug_str,"MS",%progbits,1
- 807              	.LASF10:
- 808 0000 6C6F6E67 		.ascii	"long long int\000"
- 808      206C6F6E 
- 808      6720696E 
- 808      7400
- 809              	.LASF6:
- 810 000e 73686F72 		.ascii	"short unsigned int\000"
- 810      7420756E 
- 810      7369676E 
- 810      65642069 
- 810      6E7400
- 811              	.LASF2:
- 812 0021 73697A65 		.ascii	"size_t\000"
- 812      5F7400
- 813              	.LASF18:
- 814 0028 6E657874 		.ascii	"nextmem\000"
- 814      6D656D00 
- 815              	.LASF14:
- 816 0030 5F5F6865 		.ascii	"__heap_end__\000"
- 816      61705F65 
- 816      6E645F5F 
- 816      00
- 817              	.LASF13:
- 818 003d 5F5F6865 		.ascii	"__heap_base__\000"
- 818      61705F62 
- 818      6173655F 
- 818      5F00
- 819              	.LASF9:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 16
+ 792 00f5 00       		.byte	0x0
+ 793 00f6 00       		.byte	0x0
+ 794              		.section	.debug_pubnames,"",%progbits
+ 795 0000 4F000000 		.4byte	0x4f
+ 796 0004 0200     		.2byte	0x2
+ 797 0006 00000000 		.4byte	.Ldebug_info0
+ 798 000a DB010000 		.4byte	0x1db
+ 799 000e A2000000 		.4byte	0xa2
+ 800 0012 5F636F72 		.ascii	"_core_init\000"
+ 800      655F696E 
+ 800      697400
+ 801 001d E0000000 		.4byte	0xe0
+ 802 0021 6368436F 		.ascii	"chCoreAllocI\000"
+ 802      7265416C 
+ 802      6C6F6349 
+ 802      00
+ 803 002e 1A010000 		.4byte	0x11a
+ 804 0032 6368436F 		.ascii	"chCoreAlloc\000"
+ 804      7265416C 
+ 804      6C6F6300 
+ 805 003e 86010000 		.4byte	0x186
+ 806 0042 6368436F 		.ascii	"chCoreStatus\000"
+ 806      72655374 
+ 806      61747573 
+ 806      00
+ 807 004f 00000000 		.4byte	0x0
+ 808              		.section	.debug_pubtypes,"",%progbits
+ 809 0000 32000000 		.4byte	0x32
+ 810 0004 0200     		.2byte	0x2
+ 811 0006 00000000 		.4byte	.Ldebug_info0
+ 812 000a DB010000 		.4byte	0x1db
+ 813 000e 30000000 		.4byte	0x30
+ 814 0012 73697A65 		.ascii	"size_t\000"
+ 814      5F7400
+ 815 0019 49000000 		.4byte	0x49
+ 816 001d 75696E74 		.ascii	"uint8_t\000"
+ 816      385F7400 
+ 817 0025 70000000 		.4byte	0x70
+ 818 0029 75696E74 		.ascii	"uint32_t\000"
+ 818      33325F74 
+ 818      00
+ 819 0032 00000000 		.4byte	0x0
+ 820              		.section	.debug_aranges,"",%progbits
+ 821 0000 34000000 		.4byte	0x34
+ 822 0004 0200     		.2byte	0x2
+ 823 0006 00000000 		.4byte	.Ldebug_info0
+ 824 000a 04       		.byte	0x4
+ 825 000b 00       		.byte	0x0
+ 826 000c 0000     		.2byte	0x0
+ 827 000e 0000     		.2byte	0x0
+ 828 0010 00000000 		.4byte	.LFB7
+ 829 0014 2C000000 		.4byte	.LFE7-.LFB7
+ 830 0018 00000000 		.4byte	.LFB9
+ 831 001c 30000000 		.4byte	.LFE9-.LFB9
+ 832 0020 00000000 		.4byte	.LFB8
+ 833 0024 24000000 		.4byte	.LFE8-.LFB8
+ 834 0028 00000000 		.4byte	.LFB10
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 16
 
 
- 820 004b 6C6F6E67 		.ascii	"long unsigned int\000"
- 820      20756E73 
- 820      69676E65 
- 820      6420696E 
- 820      7400
- 821              	.LASF11:
- 822 005d 6C6F6E67 		.ascii	"long long unsigned int\000"
- 822      206C6F6E 
- 822      6720756E 
- 822      7369676E 
- 822      65642069 
- 823              	.LASF20:
- 824 0074 474E5520 		.ascii	"GNU C 4.5.0\000"
- 824      4320342E 
- 824      352E3000 
- 825              	.LASF21:
- 826 0080 2E2E2F63 		.ascii	"../chibios_2.4.x/os/kernel/src/chmemcore.c\000"
- 826      68696269 
- 826      6F735F32 
- 826      2E342E78 
- 826      2F6F732F 
- 827              	.LASF3:
- 828 00ab 75696E74 		.ascii	"uint8_t\000"
- 828      385F7400 
- 829              	.LASF4:
- 830 00b3 756E7369 		.ascii	"unsigned char\000"
- 830      676E6564 
- 830      20636861 
- 830      7200
- 831              	.LASF12:
- 832 00c1 63686172 		.ascii	"char\000"
- 832      00
- 833              	.LASF15:
- 834 00c6 6368436F 		.ascii	"chCoreAlloc\000"
- 834      7265416C 
- 834      6C6F6300 
- 835              	.LASF8:
- 836 00d2 75696E74 		.ascii	"uint32_t\000"
- 836      33325F74 
- 836      00
- 837              	.LASF7:
- 838 00db 6C6F6E67 		.ascii	"long int\000"
- 838      20696E74 
- 838      00
- 839              	.LASF19:
- 840 00e4 656E646D 		.ascii	"endmem\000"
- 840      656D00
- 841              	.LASF22:
- 842 00eb 433A5C70 		.ascii	"C:\\projects\\digitizer.git\\firmware\\digitizer\000"
- 842      726F6A65 
- 842      6374735C 
- 842      64696769 
- 842      74697A65 
- 843              	.LASF16:
- 844 0118 6368436F 		.ascii	"chCoreAllocI\000"
- 844      7265416C 
- 844      6C6F6349 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 17
+ 835 002c 18000000 		.4byte	.LFE10-.LFB10
+ 836 0030 00000000 		.4byte	0x0
+ 837 0034 00000000 		.4byte	0x0
+ 838              		.section	.debug_ranges,"",%progbits
+ 839              	.Ldebug_ranges0:
+ 840 0000 02000000 		.4byte	.LBB2
+ 841 0004 04000000 		.4byte	.LBE2
+ 842 0008 06000000 		.4byte	.LBB3
+ 843 000c 0A000000 		.4byte	.LBE3
+ 844 0010 00000000 		.4byte	0x0
+ 845 0014 00000000 		.4byte	0x0
+ 846 0018 00000000 		.4byte	.LFB7
+ 847 001c 2C000000 		.4byte	.LFE7
+ 848 0020 00000000 		.4byte	.LFB9
+ 849 0024 30000000 		.4byte	.LFE9
+ 850 0028 00000000 		.4byte	.LFB8
+ 851 002c 24000000 		.4byte	.LFE8
+ 852 0030 00000000 		.4byte	.LFB10
+ 853 0034 18000000 		.4byte	.LFE10
+ 854 0038 00000000 		.4byte	0x0
+ 855 003c 00000000 		.4byte	0x0
+ 856              		.section	.debug_str,"MS",%progbits,1
+ 857              	.LASF10:
+ 858 0000 6C6F6E67 		.ascii	"long long int\000"
+ 858      206C6F6E 
+ 858      6720696E 
+ 858      7400
+ 859              	.LASF6:
+ 860 000e 73686F72 		.ascii	"short unsigned int\000"
+ 860      7420756E 
+ 860      7369676E 
+ 860      65642069 
+ 860      6E7400
+ 861              	.LASF2:
+ 862 0021 73697A65 		.ascii	"size_t\000"
+ 862      5F7400
+ 863              	.LASF18:
+ 864 0028 6E657874 		.ascii	"nextmem\000"
+ 864      6D656D00 
+ 865              	.LASF14:
+ 866 0030 5F5F6865 		.ascii	"__heap_end__\000"
+ 866      61705F65 
+ 866      6E645F5F 
+ 866      00
+ 867              	.LASF13:
+ 868 003d 5F5F6865 		.ascii	"__heap_base__\000"
+ 868      61705F62 
+ 868      6173655F 
+ 868      5F00
+ 869              	.LASF9:
+ 870 004b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 870      20756E73 
+ 870      69676E65 
+ 870      6420696E 
+ 870      7400
+ 871              	.LASF11:
+ 872 005d 6C6F6E67 		.ascii	"long long unsigned int\000"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 17
 
 
- 844      00
- 845              	.LASF1:
- 846 0125 7369676E 		.ascii	"signed char\000"
- 846      65642063 
- 846      68617200 
- 847              	.LASF17:
- 848 0131 73697A65 		.ascii	"size\000"
- 848      00
- 849              	.LASF23:
- 850 0136 5F636F72 		.ascii	"_core_init\000"
- 850      655F696E 
- 850      697400
- 851              	.LASF5:
- 852 0141 73686F72 		.ascii	"short int\000"
- 852      7420696E 
- 852      7400
- 853              	.LASF0:
- 854 014b 756E7369 		.ascii	"unsigned int\000"
- 854      676E6564 
- 854      20696E74 
- 854      00
- 855              	.LASF24:
- 856 0158 6368436F 		.ascii	"chCoreStatus\000"
- 856      72655374 
- 856      61747573 
- 856      00
- 857              		.ident	"GCC: (GNU) 4.5.0"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccre0CCb.s 			page 18
+ 872      206C6F6E 
+ 872      6720756E 
+ 872      7369676E 
+ 872      65642069 
+ 873              	.LASF20:
+ 874 0074 474E5520 		.ascii	"GNU C 4.5.0\000"
+ 874      4320342E 
+ 874      352E3000 
+ 875              	.LASF21:
+ 876 0080 2E2E2F63 		.ascii	"../chibios_2.4.x/os/kernel/src/chmemcore.c\000"
+ 876      68696269 
+ 876      6F735F32 
+ 876      2E342E78 
+ 876      2F6F732F 
+ 877              	.LASF3:
+ 878 00ab 75696E74 		.ascii	"uint8_t\000"
+ 878      385F7400 
+ 879              	.LASF4:
+ 880 00b3 756E7369 		.ascii	"unsigned char\000"
+ 880      676E6564 
+ 880      20636861 
+ 880      7200
+ 881              	.LASF12:
+ 882 00c1 63686172 		.ascii	"char\000"
+ 882      00
+ 883              	.LASF16:
+ 884 00c6 6368436F 		.ascii	"chCoreAlloc\000"
+ 884      7265416C 
+ 884      6C6F6300 
+ 885              	.LASF8:
+ 886 00d2 75696E74 		.ascii	"uint32_t\000"
+ 886      33325F74 
+ 886      00
+ 887              	.LASF7:
+ 888 00db 6C6F6E67 		.ascii	"long int\000"
+ 888      20696E74 
+ 888      00
+ 889              	.LASF19:
+ 890 00e4 656E646D 		.ascii	"endmem\000"
+ 890      656D00
+ 891              	.LASF22:
+ 892 00eb 433A5C70 		.ascii	"C:\\projects\\digitizer.git\\firmware\\digitizer\000"
+ 892      726F6A65 
+ 892      6374735C 
+ 892      64696769 
+ 892      74697A65 
+ 893              	.LASF15:
+ 894 0118 6368436F 		.ascii	"chCoreAllocI\000"
+ 894      7265416C 
+ 894      6C6F6349 
+ 894      00
+ 895              	.LASF1:
+ 896 0125 7369676E 		.ascii	"signed char\000"
+ 896      65642063 
+ 896      68617200 
+ 897              	.LASF17:
+ 898 0131 73697A65 		.ascii	"size\000"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 18
+
+
+ 898      00
+ 899              	.LASF23:
+ 900 0136 5F636F72 		.ascii	"_core_init\000"
+ 900      655F696E 
+ 900      697400
+ 901              	.LASF5:
+ 902 0141 73686F72 		.ascii	"short int\000"
+ 902      7420696E 
+ 902      7400
+ 903              	.LASF0:
+ 904 014b 756E7369 		.ascii	"unsigned int\000"
+ 904      676E6564 
+ 904      20696E74 
+ 904      00
+ 905              	.LASF24:
+ 906 0158 6368436F 		.ascii	"chCoreStatus\000"
+ 906      72655374 
+ 906      61747573 
+ 906      00
+ 907              		.ident	"GCC: (GNU) 4.5.0"
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccZciEz6.s 			page 19
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 chmemcore.c
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:24     .bss.nextmem:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:27     .bss.nextmem:00000000 nextmem
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:30     .bss.endmem:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:33     .bss.endmem:00000000 endmem
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:36     .text._core_init:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:42     .text._core_init:00000000 _core_init
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:73     .text.chCoreAlloc:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:79     .text.chCoreAlloc:00000000 chCoreAlloc
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:132    .text.chCoreAllocI:00000000 chCoreAllocI
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:126    .text.chCoreAllocI:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:195    .text.chCoreStatus:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccre0CCb.s:201    .text.chCoreStatus:00000000 chCoreStatus
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:24     .text._core_init:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:30     .text._core_init:00000000 _core_init
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:222    .bss.nextmem:00000000 .LANCHOR0
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:215    .bss.endmem:00000000 .LANCHOR1
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:61     .text._core_init:00000028 $d
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:66     .text.chCoreAllocI:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:72     .text.chCoreAllocI:00000000 chCoreAllocI
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:122    .text.chCoreAllocI:00000028 $d
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:128    .text.chCoreAlloc:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:134    .text.chCoreAlloc:00000000 chCoreAlloc
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:187    .text.chCoreStatus:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:193    .text.chCoreStatus:00000000 chCoreStatus
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:214    .bss.endmem:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:218    .bss.endmem:00000000 endmem
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:221    .bss.nextmem:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:225    .bss.nextmem:00000000 nextmem
                      .debug_frame:00000010 $d
+C:\Users\z80\AppData\Local\Temp\ccZciEz6.s:65     .text._core_init:0000002c $t
 
 UNDEFINED SYMBOLS
-__heap_base__
 __heap_end__
+__heap_base__
+chDbgCheckClassI
 dbg_check_lock
 dbg_check_unlock
-chDbgCheckClassI
