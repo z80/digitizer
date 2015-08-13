@@ -376,7 +376,7 @@ int VoltampIo::readData( quint8 * data, int dataSz )
 int VoltampIo::write( quint8 * data, int dataSz )
 {
     //pd->encodeData( data, dataSz );
-    int cnt = pd->io->write( reinterpret_cast<quint8 *>( pd->buffer.data() ), pd->buffer.size() );
+    int cnt = pd->io->write( data, dataSz );
     return cnt;
 }
 

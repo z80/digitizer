@@ -862,6 +862,8 @@ Discarded input sections
  .text          0x00000000        0x0 build/obj/cpu_io.o
  .data          0x00000000        0x0 build/obj/cpu_io.o
  .bss           0x00000000        0x0 build/obj/cpu_io.o
+ .rodata.serial_cfg
+                0x00000000        0xc build/obj/cpu_io.o
  .text.funcArgs
                 0x00000000       0x10 build/obj/cpu_io.o
  .text          0x00000000        0x0 build/obj/led_ctrl.o
@@ -1042,7 +1044,7 @@ destructors     0x080000ec        0x0
  *(SORT(.fini_array.*))
                 0x080000ec                PROVIDE (__fini_array_end, .)
 
-.text           0x080000f0     0x4cc8
+.text           0x080000f0     0x4cb8
  *(.text.startup.*)
  *(.text)
  *(.text.*)
@@ -1573,14 +1575,11 @@ destructors     0x080000ec        0x0
                 0x08004d50       0x3c build/obj/board.o
                 0x08004d50                pal_default_config
  *fill*         0x08004d8c        0x4 00
- .rodata.serial_cfg
-                0x08004d90        0xc build/obj/cpu_io.o
- *fill*         0x08004d9c        0x4 00
  .rodata.hs_spicfg
-                0x08004da0        0xc build/obj/adc_ctrl.o
- *fill*         0x08004dac        0x4 00
+                0x08004d90        0xc build/obj/adc_ctrl.o
+ *fill*         0x08004d9c        0x4 00
  .rodata.gptCfg
-                0x08004db0        0x8 build/obj/timer_ctrl.o
+                0x08004da0        0x8 build/obj/timer_ctrl.o
  *(.glue_7t)
  .glue_7t       0x00000000        0x0 linker stubs
  *(.glue_7)
@@ -1596,10 +1595,10 @@ destructors     0x080000ec        0x0
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM.exidx      0x08004db8        0x0
-                0x08004db8                PROVIDE (__exidx_start, .)
+.ARM.exidx      0x08004da8        0x0
+                0x08004da8                PROVIDE (__exidx_start, .)
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x08004db8                PROVIDE (__exidx_end, .)
+                0x08004da8                PROVIDE (__exidx_end, .)
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
@@ -1607,11 +1606,11 @@ destructors     0x080000ec        0x0
 .eh_frame
  *(.eh_frame)
 
-.textalign      0x08004db8        0x0
-                0x08004db8                . = ALIGN (0x8)
-                0x08004db8                . = ALIGN (0x4)
-                0x08004db8                _etext = .
-                0x08004db8                _textdata = _etext
+.textalign      0x08004da8        0x0
+                0x08004da8                . = ALIGN (0x8)
+                0x08004da8                . = ALIGN (0x4)
+                0x08004da8                _etext = .
+                0x08004da8                _textdata = _etext
 
 .stacks         0x20000000      0x800
                 0x20000000                . = ALIGN (0x8)
@@ -1628,7 +1627,7 @@ destructors     0x080000ec        0x0
                 0x20000800                __process_stack_end__ = .
                 0x20000800                __main_thread_stack_end__ = .
 
-.data           0x20000800       0x84 load address 0x08004db8
+.data           0x20000800       0x84 load address 0x08004da8
                 0x20000800                . = ALIGN (0x4)
                 0x20000800                PROVIDE (_data, .)
  *(.data)
@@ -1655,7 +1654,7 @@ destructors     0x080000ec        0x0
                 0x20000884                . = ALIGN (0x4)
                 0x20000884                PROVIDE (_edata, .)
 
-.bss            0x20000888     0x13c0 load address 0x08004e3c
+.bss            0x20000888     0x13c0 load address 0x08004e2c
                 0x20000888                . = ALIGN (0x4)
                 0x20000888                PROVIDE (_bss_start, .)
  *(.bss)
@@ -1846,7 +1845,7 @@ OUTPUT(build/digitizer.elf elf32-littlearm)
  .debug_abbrev  0x00005ea2       0x94 c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-strspn.o)
  .debug_abbrev  0x00005f36       0x6c c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-ctype_.o)
 
-.debug_info     0x00000000    0x19d28
+.debug_info     0x00000000    0x19d26
  .debug_info    0x00000000      0x34f build/obj/crt0.o
  .debug_info    0x0000034f       0xb8 build/obj/vectors.o
  .debug_info    0x00000407       0x8e build/obj/chcore.o
@@ -1926,17 +1925,17 @@ OUTPUT(build/digitizer.elf elf32-littlearm)
  .debug_info    0x00016028      0x293 build/obj/iwdg.o
  .debug_info    0x000162bb      0x259 build/obj/iwdg_lld.o
  .debug_info    0x00016514       0xbf build/obj/main.o
- .debug_info    0x000165d3      0xf87 build/obj/cpu_io.o
- .debug_info    0x0001755a      0x63e build/obj/led_ctrl.o
- .debug_info    0x00017b98      0xd3f build/obj/adc_ctrl.o
- .debug_info    0x000188d7      0xb6e build/obj/dac_ctrl.o
- .debug_info    0x00019445      0x445 build/obj/timer_ctrl.o
- .debug_info    0x0001988a        0x0 build/obj/sweep_ctrl.o
- .debug_info    0x0001988a      0x117 c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-memset.o)
- .debug_info    0x000199a1      0x15e c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-strcasecmp.o)
- .debug_info    0x00019aff       0xc8 c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-strpbrk.o)
- .debug_info    0x00019bc7       0xda c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-strspn.o)
- .debug_info    0x00019ca1       0x87 c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-ctype_.o)
+ .debug_info    0x000165d3      0xf85 build/obj/cpu_io.o
+ .debug_info    0x00017558      0x63e build/obj/led_ctrl.o
+ .debug_info    0x00017b96      0xd3f build/obj/adc_ctrl.o
+ .debug_info    0x000188d5      0xb6e build/obj/dac_ctrl.o
+ .debug_info    0x00019443      0x445 build/obj/timer_ctrl.o
+ .debug_info    0x00019888        0x0 build/obj/sweep_ctrl.o
+ .debug_info    0x00019888      0x117 c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-memset.o)
+ .debug_info    0x0001999f      0x15e c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-strcasecmp.o)
+ .debug_info    0x00019afd       0xc8 c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-strpbrk.o)
+ .debug_info    0x00019bc5       0xda c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-strspn.o)
+ .debug_info    0x00019c9f       0x87 c:/programs/yagarto/bin/../lib/gcc/arm-none-eabi/4.5.0/../../../../arm-none-eabi/lib/thumb/v7m\libc.a(lib_a-ctype_.o)
 
 .debug_line     0x00000000     0x93d9
  .debug_line    0x00000000      0x129 build/obj/crt0.o

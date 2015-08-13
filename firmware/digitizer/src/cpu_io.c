@@ -50,24 +50,24 @@ void initCpuIo( void )
 	palSetPadMode( GPIOA, 12, PAL_MODE_INPUT );
 
 	// Initialize serial driver.
-	sdStart( &SERIAL, &serial_cfg );
+	//sdStart( &SERIAL, &serial_cfg );
+	sdStart( &SERIAL, 0 );
 }
 
 void processCpuIo( void )
 {
 	static uint8_t slash = 0;
 	static int out_index = 0;
-
-	// Try reading serial.
-	/*
 	msg_t msg;
+
+	/*
+	// Try reading serial.
 	msg = sdGetTimeout( &SERIAL, TIME_INFINITE );
 	sdPut( &SERIAL, msg );
 	return;
 	*/
 
 
-	msg_t msg;
 	msg = sdGetTimeout( &SERIAL, TIME_INFINITE );
 	uint8_t noData = ( ( msg == Q_TIMEOUT ) || ( msg == Q_RESET ) ) ? 1 : 0;
 	if ( !noData )
@@ -95,7 +95,6 @@ void processCpuIo( void )
 		// Just in case of crazy command
 		out_index = ( out_index < BUFFER_SZ ) ? out_index : BUFFER_SZ;
 	}
-
 }
 
 uint8_t * funcArgs( void )

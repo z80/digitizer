@@ -68,7 +68,9 @@ bool Io::open( int index )
     port = new QextSerialPort( portName );
     port->setQueryMode( QextSerialPort::Polling );
     port->setBaudRate( BAUD115200 );
-    port->setFlowControl( FLOW_HARDWARE );
+    //port->setBaudRate( BAUD9600 );
+    //port->setFlowControl( FLOW_HARDWARE );
+    port->setFlowControl( FLOW_OFF );
     port->setParity( PAR_NONE );
     port->setDataBits( DATA_8 );
     port->setStopBits( STOP_1 );

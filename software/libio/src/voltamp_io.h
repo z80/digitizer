@@ -30,7 +30,7 @@ public:
     bool setArgs( quint8 * data, int dataSz );
     bool execFunc( quint16 funcId );
     int  readData( quint8 * data, int dataSz );
-protected:
+public:
     int write( quint8 * data, int dataSz );
     int read( quint8 * data, int dataSz, bool & eom );
 
