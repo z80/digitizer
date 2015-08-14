@@ -24,7 +24,7 @@ static const GPTConfig gptCfg =
 void initTimer( void )
 {
     gptStart( &GPTD1, &gptCfg );
-    gptStartContinuous( &GPTD1, 100 );
+    gptStartContinuous( &GPTD1, 5000 );
 }
 
 static void gptCb(GPTDriver *gptp)
