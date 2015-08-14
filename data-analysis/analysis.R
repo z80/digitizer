@@ -38,3 +38,16 @@ library(corrplot)
 M <- cor( pd )
 corrplot( M, method = "circle" )
 
+
+
+
+
+adc <- read.table( './adc.dat' )
+names( adc ) <- c('adc0', 'adc1', 'adc2', 'adc3', 'v0', 'v1', 'v2', 'v3' )
+library(corrplot)
+adcM <- cor( adc )
+corrplot( adcM, method = "circle" )
+
+
+
+

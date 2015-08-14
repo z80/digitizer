@@ -43,7 +43,7 @@ static const SPIConfig hs_spicfg =
     onSpiComplete,
     GPIOA,
     GPIOA_SPI1NSS,
-    SPI_CR1_BR_1
+    SPI_CR1_BR_2 + SPI_CR1_BR_0 + SPI_CR1_CPOL
 };
 
 
@@ -86,7 +86,7 @@ void onSpiComplete( SPIDriver * spid )
 		int value = (int)(adc_rx_buffer[2]) +
 					((int)(adc_rx_buffer[1]) << 8) +
 					((int)(adc_rx_buffer[0]) << 16);
-		value = (value >> 2) & 0xFFFF;
+		value = (value >> 1) & 0xFFFF;
     	instantAdcData[prevIndex] = value;
 
 		// if (adcIndex == 0) this means it was 3 just
