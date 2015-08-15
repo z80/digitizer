@@ -5098,4 +5098,38 @@ Wire Wire Line
 	23600 2650 24400 2650
 NoConn ~ 7850 16700
 NoConn ~ 7850 15150
+Wire Notes Line
+	23600 1650 23800 1650
+Wire Notes Line
+	23800 1700 23800 1600
+Wire Notes Line
+	23800 1600 24050 1600
+Wire Notes Line
+	24050 1600 24050 1700
+Wire Notes Line
+	24050 1700 23800 1700
+Wire Notes Line
+	24050 1650 24250 1650
+Wire Notes Line
+	23700 1800 23850 1800
+Wire Notes Line
+	23950 1750 23900 1850
+Wire Notes Line
+	24050 1750 24000 1850
+Wire Notes Line
+	24100 1800 24200 1800
+Wire Notes Line
+	23600 1950 23800 1950
+Wire Notes Line
+	23800 2000 23800 1900
+Wire Notes Line
+	23800 1900 24050 1900
+Wire Notes Line
+	24050 1900 24050 2000
+Wire Notes Line
+	24050 2000 23800 2000
+Wire Notes Line
+	24050 1950 24250 1950
+Text Notes 23350 1450 0    60   ~ 0
+Add 1k resistors here. Without resistors \nMUX switch spike is handled by filter as \ndelta function feedback. And it causes \nmutual interference of signals. And this \nintergerence is pure nonlinear and can't be \ncompensated by math.
 $EndSCHEMATC
