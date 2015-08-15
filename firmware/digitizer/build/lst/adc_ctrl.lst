@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 1
 
 
    1              		.syntax unified
@@ -36,7 +36,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
   29              	onSpiComplete:
   30              	.LFB64:
   31              		.file 1 "./src/adc_ctrl.c"
-  32              		.loc 1 76 0
+  32              		.loc 1 79 0
   33              		.cfi_startproc
   34              		@ args = 0, pretend = 0, frame = 0
   35              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -45,7 +45,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
   38              	.LCFI0:
   39              		.cfi_def_cfa_offset 24
   40              	.LBB9:
-  41              		.loc 1 78 0
+  41              		.loc 1 81 0
   42 0002 2023     		movs	r3, #32
   43              		.cfi_offset 14, -4
   44              		.cfi_offset 7, -8
@@ -54,22 +54,22 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
   47              		.cfi_offset 4, -20
   48              		.cfi_offset 3, -24
   49              	.LVL1:
-  50              	@ 78 "./src/adc_ctrl.c" 1
+  50              	@ 81 "./src/adc_ctrl.c" 1
   51 0004 83F31188 		msr     BASEPRI, r3
   52              	@ 0 "" 2
   53              	.LVL2:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 2
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 2
 
 
   54              		.thumb
   55              	.LBE9:
   56 0008 FFF7FEFF 		bl	dbg_check_lock_from_isr
   57              	.LVL3:
-  58              		.loc 1 80 0
+  58              		.loc 1 83 0
   59 000c 544A     		ldr	r2, .L16
   60 000e 1568     		ldr	r5, [r2, #0]
   61              	.LVL4:
-  62              		.loc 1 81 0
+  62              		.loc 1 84 0
   63 0010 681C     		adds	r0, r5, #1
   64 0012 C117     		asrs	r1, r0, #31
   65 0014 890F     		lsrs	r1, r1, #30
@@ -78,29 +78,29 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
   68 001c 5B1A     		subs	r3, r3, r1
   69              	.LBB10:
   70              	.LBB12:
-  71              		.loc 1 173 0
+  71              		.loc 1 176 0
   72 001e 13F0010F 		tst	r3, #1
   73              	.LBE12:
   74              	.LBE10:
-  75              		.loc 1 81 0
+  75              		.loc 1 84 0
   76 0022 1360     		str	r3, [r2, #0]
   77              	.LVL5:
   78              	.LBB14:
   79              	.LBB11:
-  80              		.loc 1 173 0
+  80              		.loc 1 176 0
   81 0024 26D0     		beq	.L2
-  82              		.loc 1 174 0
+  82              		.loc 1 177 0
   83 0026 4FF40062 		mov	r2, #2048
   84 002a 0121     		movs	r1, #1
   85 002c C4F20102 		movt	r2, 16385
-  86              		.loc 1 178 0
+  86              		.loc 1 181 0
   87 0030 13F0020F 		tst	r3, #2
-  88              		.loc 1 174 0
+  88              		.loc 1 177 0
   89 0034 1161     		str	r1, [r2, #16]
-  90              		.loc 1 178 0
+  90              		.loc 1 181 0
   91 0036 26D0     		beq	.L4
   92              	.L12:
-  93              		.loc 1 179 0
+  93              		.loc 1 182 0
   94 0038 4FF40063 		mov	r3, #2048
   95              	.LVL6:
   96 003c C4F20103 		movt	r3, 16385
@@ -109,68 +109,68 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
   99              	.L5:
  100              	.LBE11:
  101              	.LBE14:
- 102              		.loc 1 84 0
+ 102              		.loc 1 87 0
  103 0044 4748     		ldr	r0, .L16+4
  104 0046 FFF7FEFF 		bl	spi_lld_unselect
  105              	.LVL7:
- 106              		.loc 1 87 0
+ 106              		.loc 1 90 0
  107 004a 474B     		ldr	r3, .L16+8
- 108              		.loc 1 90 0
+ 108              		.loc 1 93 0
  109 004c 474C     		ldr	r4, .L16+12
- 110              		.loc 1 88 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 3
+ 110              		.loc 1 91 0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 3
 
 
  111 004e 1978     		ldrb	r1, [r3, #0]	@ zero_extendqisi2
- 112              		.loc 1 87 0
+ 112              		.loc 1 90 0
  113 0050 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
- 114              		.loc 1 88 0
+ 114              		.loc 1 91 0
  115 0052 0904     		lsls	r1, r1, #16
- 116              		.loc 1 86 0
+ 116              		.loc 1 89 0
  117 0054 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
  118 0056 01EB0023 		add	r3, r1, r0, lsl #8
  119 005a 9B18     		adds	r3, r3, r2
  120              	.LVL8:
- 121              		.loc 1 89 0
+ 121              		.loc 1 92 0
  122 005c C3F34F03 		ubfx	r3, r3, #1, #16
  123              	.LVL9:
- 124              		.loc 1 96 0
+ 124              		.loc 1 99 0
  125 0060 032D     		cmp	r5, #3
- 126              		.loc 1 90 0
+ 126              		.loc 1 93 0
  127 0062 44F82530 		str	r3, [r4, r5, lsl #2]
- 128              		.loc 1 96 0
+ 128              		.loc 1 99 0
  129 0066 15D0     		beq	.L11
  130              	.LVL10:
  131              	.L6:
- 132              		.loc 1 163 0
+ 132              		.loc 1 166 0
  133 0068 FFF7FEFF 		bl	dbg_check_unlock_from_isr
  134              	.LBB15:
  135 006c 0023     		movs	r3, #0
  136              	.LVL11:
- 137              	@ 163 "./src/adc_ctrl.c" 1
+ 137              	@ 166 "./src/adc_ctrl.c" 1
  138 006e 83F31188 		msr     BASEPRI, r3
  139              	@ 0 "" 2
  140              	.LVL12:
  141              		.thumb
  142              	.LBE15:
- 143              		.loc 1 164 0
+ 143              		.loc 1 167 0
  144 0072 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
  145              	.LVL13:
  146              	.L2:
  147              	.LBB16:
  148              	.LBB13:
- 149              		.loc 1 176 0
+ 149              		.loc 1 179 0
  150 0074 4FF40062 		mov	r2, #2048
  151 0078 0121     		movs	r1, #1
  152 007a C4F20102 		movt	r2, 16385
- 153              		.loc 1 178 0
+ 153              		.loc 1 181 0
  154 007e 13F0020F 		tst	r3, #2
- 155              		.loc 1 176 0
+ 155              		.loc 1 179 0
  156 0082 5161     		str	r1, [r2, #20]
- 157              		.loc 1 178 0
+ 157              		.loc 1 181 0
  158 0084 D8D1     		bne	.L12
  159              	.L4:
- 160              		.loc 1 181 0
+ 160              		.loc 1 184 0
  161 0086 4FF40063 		mov	r3, #2048
  162              	.LVL14:
  163 008a C4F20103 		movt	r3, 16385
@@ -178,99 +178,99 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  165 0090 5A61     		str	r2, [r3, #20]
  166 0092 D7E7     		b	.L5
  167              	.LVL15:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 4
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 4
 
 
  168              	.L11:
  169              	.LBE13:
  170              	.LBE16:
- 171              		.loc 1 98 0
+ 171              		.loc 1 101 0
  172 0094 364B     		ldr	r3, .L16+16
- 173              		.loc 1 99 0
+ 173              		.loc 1 102 0
  174 0096 3749     		ldr	r1, .L16+20
- 175              		.loc 1 98 0
+ 175              		.loc 1 101 0
  176 0098 1A68     		ldr	r2, [r3, #0]
- 177              		.loc 1 99 0
+ 177              		.loc 1 102 0
  178 009a 0968     		ldr	r1, [r1, #0]
- 179              		.loc 1 98 0
+ 179              		.loc 1 101 0
  180 009c 0132     		adds	r2, r2, #1
- 181              		.loc 1 99 0
+ 181              		.loc 1 102 0
  182 009e 8A42     		cmp	r2, r1
- 183              		.loc 1 98 0
+ 183              		.loc 1 101 0
  184 00a0 1A60     		str	r2, [r3, #0]
- 185              		.loc 1 99 0
+ 185              		.loc 1 102 0
  186 00a2 E1DB     		blt	.L6
- 187              		.loc 1 102 0
+ 187              		.loc 1 105 0
  188 00a4 344D     		ldr	r5, .L16+24
  189              	.LVL16:
- 190              		.loc 1 101 0
+ 190              		.loc 1 104 0
  191 00a6 521A     		subs	r2, r2, r1
- 192              		.loc 1 102 0
+ 192              		.loc 1 105 0
  193 00a8 D5F810C0 		ldr	ip, [r5, #16]
  194 00ac E868     		ldr	r0, [r5, #12]
  195 00ae A968     		ldr	r1, [r5, #8]
  196 00b0 C0EB0C00 		rsb	r0, r0, ip
  197 00b4 401A     		subs	r0, r0, r1
  198 00b6 0B28     		cmp	r0, #11
- 199              		.loc 1 101 0
+ 199              		.loc 1 104 0
  200 00b8 1A60     		str	r2, [r3, #0]
- 201              		.loc 1 102 0
+ 201              		.loc 1 105 0
  202 00ba D5D9     		bls	.L6
  203              	.LBB17:
- 204              		.loc 1 109 0
+ 204              		.loc 1 112 0
  205 00bc 2F4E     		ldr	r6, .L16+28
  206 00be 3368     		ldr	r3, [r6, #0]
  207 00c0 13F0010F 		tst	r3, #1
  208 00c4 18D1     		bne	.L13
  209              	.L7:
- 210              		.loc 1 122 0
+ 210              		.loc 1 125 0
  211 00c6 13F0020F 		tst	r3, #2
  212 00ca 37D1     		bne	.L14
  213              	.L8:
- 214              		.loc 1 135 0
+ 214              		.loc 1 138 0
  215 00cc 13F0040F 		tst	r3, #4
  216 00d0 23D1     		bne	.L15
  217              	.L9:
- 218              		.loc 1 148 0
+ 218              		.loc 1 151 0
  219 00d2 13F0080F 		tst	r3, #8
  220 00d6 C7D0     		beq	.L6
- 221              		.loc 1 150 0
+ 221              		.loc 1 153 0
  222 00d8 E468     		ldr	r4, [r4, #12]
  223              	.LVL17:
- 224              		.loc 1 152 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 5
+ 224              		.loc 1 155 0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 5
 
 
  225 00da 2748     		ldr	r0, .L16+24
  226 00dc E1B2     		uxtb	r1, r4
  227 00de FFF7FEFF 		bl	chIQPutI
  228              	.LVL18:
- 229              		.loc 1 155 0
+ 229              		.loc 1 158 0
  230 00e2 C4F30721 		ubfx	r1, r4, #8, #8
  231 00e6 2448     		ldr	r0, .L16+24
  232 00e8 FFF7FEFF 		bl	chIQPutI
  233              	.LVL19:
- 234              		.loc 1 158 0
+ 234              		.loc 1 161 0
  235 00ec C4F30741 		ubfx	r1, r4, #16, #8
  236 00f0 2148     		ldr	r0, .L16+24
  237 00f2 FFF7FEFF 		bl	chIQPutI
  238 00f6 B7E7     		b	.L6
  239              	.LVL20:
  240              	.L13:
- 241              		.loc 1 111 0
+ 241              		.loc 1 114 0
  242 00f8 2768     		ldr	r7, [r4, #0]
  243              	.LVL21:
- 244              		.loc 1 113 0
+ 244              		.loc 1 116 0
  245 00fa 2846     		mov	r0, r5
  246 00fc F9B2     		uxtb	r1, r7
  247 00fe FFF7FEFF 		bl	chIQPutI
  248              	.LVL22:
- 249              		.loc 1 116 0
+ 249              		.loc 1 119 0
  250 0102 C7F30721 		ubfx	r1, r7, #8, #8
  251 0106 2846     		mov	r0, r5
  252 0108 FFF7FEFF 		bl	chIQPutI
  253              	.LVL23:
- 254              		.loc 1 119 0
+ 254              		.loc 1 122 0
  255 010c C7F30741 		ubfx	r1, r7, #16, #8
  256 0110 2846     		mov	r0, r5
  257 0112 FFF7FEFF 		bl	chIQPutI
@@ -278,44 +278,44 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  259 0118 D5E7     		b	.L7
  260              	.LVL24:
  261              	.L15:
- 262              		.loc 1 137 0
+ 262              		.loc 1 140 0
  263 011a A568     		ldr	r5, [r4, #8]
  264              	.LVL25:
- 265              		.loc 1 139 0
+ 265              		.loc 1 142 0
  266 011c 1648     		ldr	r0, .L16+24
  267 011e E9B2     		uxtb	r1, r5
  268 0120 FFF7FEFF 		bl	chIQPutI
  269              	.LVL26:
- 270              		.loc 1 142 0
+ 270              		.loc 1 145 0
  271 0124 C5F30721 		ubfx	r1, r5, #8, #8
  272 0128 1348     		ldr	r0, .L16+24
  273 012a FFF7FEFF 		bl	chIQPutI
  274              	.LVL27:
- 275              		.loc 1 145 0
+ 275              		.loc 1 148 0
  276 012e C5F30741 		ubfx	r1, r5, #16, #8
  277 0132 1148     		ldr	r0, .L16+24
  278 0134 FFF7FEFF 		bl	chIQPutI
  279 0138 3368     		ldr	r3, [r6, #0]
  280 013a CAE7     		b	.L9
  281              	.LVL28:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 6
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 6
 
 
  282              	.L14:
- 283              		.loc 1 124 0
+ 283              		.loc 1 127 0
  284 013c 6568     		ldr	r5, [r4, #4]
  285              	.LVL29:
- 286              		.loc 1 126 0
+ 286              		.loc 1 129 0
  287 013e 0E48     		ldr	r0, .L16+24
  288 0140 E9B2     		uxtb	r1, r5
  289 0142 FFF7FEFF 		bl	chIQPutI
  290              	.LVL30:
- 291              		.loc 1 129 0
+ 291              		.loc 1 132 0
  292 0146 C5F30721 		ubfx	r1, r5, #8, #8
  293 014a 0B48     		ldr	r0, .L16+24
  294 014c FFF7FEFF 		bl	chIQPutI
  295              	.LVL31:
- 296              		.loc 1 132 0
+ 296              		.loc 1 135 0
  297 0150 C5F30741 		ubfx	r1, r5, #16, #8
  298 0154 0848     		ldr	r0, .L16+24
  299 0156 FFF7FEFF 		bl	chIQPutI
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  336 0006 2A49     		ldr	r1, .L24+4
  337 0008 4FF4A072 		mov	r2, #320
  338              		.cfi_offset 14, -4
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 7
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 7
 
 
  339              		.cfi_offset 4, -8
@@ -416,22 +416,22 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  391 006a 2261     		str	r2, [r4, #16]
  392              	.LBB18:
  393              	.LBB19:
- 394              		.loc 1 173 0
+ 394              		.loc 1 176 0
  395 006c 13F0010F 		tst	r3, #1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 8
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 8
 
 
  396 0070 0FD0     		beq	.L19
- 397              		.loc 1 174 0
+ 397              		.loc 1 177 0
  398 0072 0122     		movs	r2, #1
- 399              		.loc 1 178 0
+ 399              		.loc 1 181 0
  400 0074 13F0020F 		tst	r3, #2
- 401              		.loc 1 174 0
+ 401              		.loc 1 177 0
  402 0078 2261     		str	r2, [r4, #16]
- 403              		.loc 1 178 0
+ 403              		.loc 1 181 0
  404 007a 0FD1     		bne	.L23
  405              	.L21:
- 406              		.loc 1 181 0
+ 406              		.loc 1 184 0
  407 007c 4FF40063 		mov	r3, #2048
  408 0080 C4F20103 		movt	r3, 16385
  409 0084 0222     		movs	r2, #2
@@ -450,16 +450,16 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  422              	.L19:
  423              	.LBB21:
  424              	.LBB20:
- 425              		.loc 1 176 0
+ 425              		.loc 1 179 0
  426 0092 0122     		movs	r2, #1
- 427              		.loc 1 178 0
+ 427              		.loc 1 181 0
  428 0094 13F0020F 		tst	r3, #2
- 429              		.loc 1 176 0
+ 429              		.loc 1 179 0
  430 0098 6261     		str	r2, [r4, #20]
- 431              		.loc 1 178 0
+ 431              		.loc 1 181 0
  432 009a EFD0     		beq	.L21
  433              	.L23:
- 434              		.loc 1 179 0
+ 434              		.loc 1 182 0
  435 009c 4FF40063 		mov	r3, #2048
  436              	.LVL35:
  437 00a0 C4F20103 		movt	r3, 16385
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  450 00c4 00000000 		.word	.LANCHOR0
  451 00c8 00000000 		.word	SPID1
  452 00cc 00000000 		.word	.LANCHOR12
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 9
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 9
 
 
  453              	.LBE20:
@@ -516,7 +516,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  485 001a 2046     		mov	r0, r4
  486 001c 2170     		strb	r1, [r4, #0]
  487 001e FFF7FEFF 		bl	spi_lld_receive
- 488              		.loc 1 73 0
+ 488              		.loc 1 76 0
  489 0022 10BD     		pop	{r4, pc}
  490              		.cfi_endproc
  491              	.LFE63:
@@ -532,18 +532,18 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  499              		.type	adcQueue, %function
  500              	adcQueue:
  501              	.LFB65:
- 502              		.loc 1 167 0
+ 502              		.loc 1 170 0
  503              		.cfi_startproc
  504              		@ args = 0, pretend = 0, frame = 0
  505              		@ frame_needed = 0, uses_anonymous_args = 0
  506              		@ link register save eliminated.
- 507              		.loc 1 168 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 10
+ 507              		.loc 1 171 0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 10
 
 
  508 0000 40F20000 		movw	r0, #:lower16:.LANCHOR5
  509 0004 C0F20000 		movt	r0, #:upper16:.LANCHOR5
- 510              		.loc 1 169 0
+ 510              		.loc 1 172 0
  511 0008 7047     		bx	lr
  512              		.cfi_endproc
  513              	.LFE65:
@@ -558,7 +558,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  521              		.type	instantAdc, %function
  522              	instantAdc:
  523              	.LFB67:
- 524              		.loc 1 202 0
+ 524              		.loc 1 205 0
  525              		.cfi_startproc
  526              		@ args = 0, pretend = 0, frame = 0
  527              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -566,17 +566,17 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  529 0000 10B5     		push	{r4, lr}
  530              	.LCFI3:
  531              		.cfi_def_cfa_offset 8
- 532              		.loc 1 202 0
+ 532              		.loc 1 205 0
  533 0002 0446     		mov	r4, r0
  534              		.cfi_offset 14, -4
  535              		.cfi_offset 4, -8
- 536              		.loc 1 203 0
+ 536              		.loc 1 206 0
  537 0004 90B1     		cbz	r0, .L28
  538              	.LBB22:
- 539              		.loc 1 205 0
+ 539              		.loc 1 208 0
  540 0006 2023     		movs	r3, #32
  541              	.LVL37:
- 542              	@ 205 "./src/adc_ctrl.c" 1
+ 542              	@ 208 "./src/adc_ctrl.c" 1
  543 0008 83F31188 		msr     BASEPRI, r3
  544              	@ 0 "" 2
  545              	.LVL38:
@@ -584,35 +584,35 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  547              	.LBE22:
  548 000c FFF7FEFF 		bl	dbg_check_lock
  549              	.LVL39:
- 550              		.loc 1 206 0
+ 550              		.loc 1 209 0
  551 0010 074B     		ldr	r3, .L30
  552 0012 1A68     		ldr	r2, [r3, #0]
  553 0014 2260     		str	r2, [r4, #0]
- 554              		.loc 1 207 0
+ 554              		.loc 1 210 0
  555 0016 5A68     		ldr	r2, [r3, #4]
  556 0018 6260     		str	r2, [r4, #4]
- 557              		.loc 1 208 0
+ 557              		.loc 1 211 0
  558 001a 9A68     		ldr	r2, [r3, #8]
  559 001c A260     		str	r2, [r4, #8]
- 560              		.loc 1 209 0
+ 560              		.loc 1 212 0
  561 001e DB68     		ldr	r3, [r3, #12]
  562 0020 E360     		str	r3, [r4, #12]
- 563              		.loc 1 210 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 11
+ 563              		.loc 1 213 0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 11
 
 
  564 0022 FFF7FEFF 		bl	dbg_check_unlock
  565              	.LBB23:
  566 0026 0023     		movs	r3, #0
  567              	.LVL40:
- 568              	@ 210 "./src/adc_ctrl.c" 1
+ 568              	@ 213 "./src/adc_ctrl.c" 1
  569 0028 83F31188 		msr     BASEPRI, r3
  570              	@ 0 "" 2
  571              	.LVL41:
  572              		.thumb
  573              	.L28:
  574              	.LBE23:
- 575              		.loc 1 212 0
+ 575              		.loc 1 215 0
  576 002c 10BD     		pop	{r4, pc}
  577              	.L31:
  578 002e 00BF     		.align	2
@@ -632,7 +632,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  590              		.type	setOscSignals, %function
  591              	setOscSignals:
  592              	.LFB68:
- 593              		.loc 1 215 0
+ 593              		.loc 1 218 0
  594              		.cfi_startproc
  595              		@ args = 0, pretend = 0, frame = 0
  596              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -641,43 +641,43 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  599              	.LCFI4:
  600              		.cfi_def_cfa_offset 8
  601              	.LBB24:
- 602              		.loc 1 216 0
+ 602              		.loc 1 219 0
  603 0002 2023     		movs	r3, #32
  604              	.LVL43:
  605              	.LBE24:
- 606              		.loc 1 215 0
+ 606              		.loc 1 218 0
  607 0004 0446     		mov	r4, r0
  608              		.cfi_offset 14, -4
  609              		.cfi_offset 4, -8
  610              	.LBB25:
- 611              		.loc 1 216 0
- 612              	@ 216 "./src/adc_ctrl.c" 1
+ 611              		.loc 1 219 0
+ 612              	@ 219 "./src/adc_ctrl.c" 1
  613 0006 83F31188 		msr     BASEPRI, r3
  614              	@ 0 "" 2
  615              	.LVL44:
  616              		.thumb
  617              	.LBE25:
  618 000a FFF7FEFF 		bl	dbg_check_lock
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 12
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 12
 
 
  619              	.LVL45:
- 620              		.loc 1 217 0
+ 620              		.loc 1 220 0
  621 000e 40F20003 		movw	r3, #:lower16:.LANCHOR6
  622 0012 C0F20003 		movt	r3, #:upper16:.LANCHOR6
  623 0016 1C60     		str	r4, [r3, #0]
- 624              		.loc 1 218 0
+ 624              		.loc 1 221 0
  625 0018 FFF7FEFF 		bl	dbg_check_unlock
  626              	.LBB26:
  627 001c 0023     		movs	r3, #0
  628              	.LVL46:
- 629              	@ 218 "./src/adc_ctrl.c" 1
+ 629              	@ 221 "./src/adc_ctrl.c" 1
  630 001e 83F31188 		msr     BASEPRI, r3
  631              	@ 0 "" 2
  632              	.LVL47:
  633              		.thumb
  634              	.LBE26:
- 635              		.loc 1 219 0
+ 635              		.loc 1 222 0
  636 0022 10BD     		pop	{r4, pc}
  637              		.cfi_endproc
  638              	.LFE68:
@@ -693,7 +693,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  646              		.type	setOscPeriod, %function
  647              	setOscPeriod:
  648              	.LFB69:
- 649              		.loc 1 222 0
+ 649              		.loc 1 225 0
  650              		.cfi_startproc
  651              		@ args = 0, pretend = 0, frame = 0
  652              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -702,43 +702,43 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  655              	.LCFI5:
  656              		.cfi_def_cfa_offset 8
  657              	.LBB27:
- 658              		.loc 1 223 0
+ 658              		.loc 1 226 0
  659 0002 2023     		movs	r3, #32
  660              	.LVL49:
  661              	.LBE27:
- 662              		.loc 1 222 0
+ 662              		.loc 1 225 0
  663 0004 0446     		mov	r4, r0
  664              		.cfi_offset 14, -4
  665              		.cfi_offset 4, -8
  666              	.LBB28:
- 667              		.loc 1 223 0
- 668              	@ 223 "./src/adc_ctrl.c" 1
+ 667              		.loc 1 226 0
+ 668              	@ 226 "./src/adc_ctrl.c" 1
  669 0006 83F31188 		msr     BASEPRI, r3
  670              	@ 0 "" 2
  671              	.LVL50:
  672              		.thumb
  673              	.LBE28:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 13
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 13
 
 
  674 000a FFF7FEFF 		bl	dbg_check_lock
  675              	.LVL51:
- 676              		.loc 1 224 0
+ 676              		.loc 1 227 0
  677 000e 40F20003 		movw	r3, #:lower16:.LANCHOR4
  678 0012 C0F20003 		movt	r3, #:upper16:.LANCHOR4
  679 0016 1C60     		str	r4, [r3, #0]
- 680              		.loc 1 225 0
+ 680              		.loc 1 228 0
  681 0018 FFF7FEFF 		bl	dbg_check_unlock
  682              	.LBB29:
  683 001c 0023     		movs	r3, #0
  684              	.LVL52:
- 685              	@ 225 "./src/adc_ctrl.c" 1
+ 685              	@ 228 "./src/adc_ctrl.c" 1
  686 001e 83F31188 		msr     BASEPRI, r3
  687              	@ 0 "" 2
  688              	.LVL53:
  689              		.thumb
  690              	.LBE29:
- 691              		.loc 1 226 0
+ 691              		.loc 1 229 0
  692 0022 10BD     		pop	{r4, pc}
  693              		.cfi_endproc
  694              	.LFE69:
@@ -754,15 +754,15 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  702              		.type	sweepData, %function
  703              	sweepData:
  704              	.LFB70:
- 705              		.loc 1 229 0
+ 705              		.loc 1 232 0
  706              		.cfi_startproc
  707              		@ args = 0, pretend = 0, frame = 0
  708              		@ frame_needed = 0, uses_anonymous_args = 0
  709              		@ link register save eliminated.
- 710              		.loc 1 230 0
+ 710              		.loc 1 233 0
  711 0000 40F20000 		movw	r0, #:lower16:.LANCHOR8
  712 0004 C0F20000 		movt	r0, #:upper16:.LANCHOR8
- 713              		.loc 1 231 0
+ 713              		.loc 1 234 0
  714 0008 7047     		bx	lr
  715              		.cfi_endproc
  716              	.LFE70:
@@ -777,8 +777,8 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  724              		.type	setSweepOsc, %function
  725              	setSweepOsc:
  726              	.LFB71:
- 727              		.loc 1 237 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 14
+ 727              		.loc 1 240 0
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 14
 
 
  728              		.cfi_startproc
@@ -786,19 +786,19 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  730              		@ frame_needed = 0, uses_anonymous_args = 0
  731              		@ link register save eliminated.
  732              	.LVL54:
- 733              		.loc 1 238 0
+ 733              		.loc 1 241 0
  734 0000 40F20002 		movw	r2, #:lower16:.LANCHOR13
- 735              		.loc 1 239 0
+ 735              		.loc 1 242 0
  736 0004 40F20003 		movw	r3, #:lower16:.LANCHOR14
- 737              		.loc 1 238 0
+ 737              		.loc 1 241 0
  738 0008 C0F20002 		movt	r2, #:upper16:.LANCHOR13
- 739              		.loc 1 239 0
+ 739              		.loc 1 242 0
  740 000c C0F20003 		movt	r3, #:upper16:.LANCHOR14
- 741              		.loc 1 238 0
+ 741              		.loc 1 241 0
  742 0010 1070     		strb	r0, [r2, #0]
- 743              		.loc 1 239 0
+ 743              		.loc 1 242 0
  744 0012 1960     		str	r1, [r3, #0]
- 745              		.loc 1 240 0
+ 745              		.loc 1 243 0
  746 0014 7047     		bx	lr
  747              		.cfi_endproc
  748              	.LFE71:
@@ -814,7 +814,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  756              		.type	setSweep, %function
  757              	setSweep:
  758              	.LFB72:
- 759              		.loc 1 247 0
+ 759              		.loc 1 250 0
  760              		.cfi_startproc
  761              		@ args = 0, pretend = 0, frame = 0
  762              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -822,62 +822,62 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  764 0000 08B5     		push	{r3, lr}
  765              	.LCFI6:
  766              		.cfi_def_cfa_offset 8
- 767              		.loc 1 248 0
+ 767              		.loc 1 251 0
  768 0002 B0F800C0 		ldrh	ip, [r0, #0]
  769 0006 40F20003 		movw	r3, #:lower16:.LANCHOR15
  770              		.cfi_offset 14, -4
  771              		.cfi_offset 3, -8
  772 000a C0F20003 		movt	r3, #:upper16:.LANCHOR15
  773 000e A3F800C0 		strh	ip, [r3, #0]	@ movhi
- 774              		.loc 1 249 0
+ 774              		.loc 1 252 0
  775 0012 B0F802E0 		ldrh	lr, [r0, #2]
  776 0016 A3F802E0 		strh	lr, [r3, #2]	@ movhi
- 777              		.loc 1 250 0
+ 777              		.loc 1 253 0
  778 001a B0F804C0 		ldrh	ip, [r0, #4]
  779 001e A3F804C0 		strh	ip, [r3, #4]	@ movhi
- 780              		.loc 1 251 0
+ 780              		.loc 1 254 0
  781 0022 C088     		ldrh	r0, [r0, #6]
  782              	.LVL56:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 15
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 15
 
 
- 783              		.loc 1 253 0
+ 783              		.loc 1 256 0
  784 0024 40F2000C 		movw	ip, #:lower16:.LANCHOR16
- 785              		.loc 1 251 0
+ 785              		.loc 1 254 0
  786 0028 D880     		strh	r0, [r3, #6]	@ movhi
- 787              		.loc 1 253 0
+ 787              		.loc 1 256 0
  788 002a B1F800E0 		ldrh	lr, [r1, #0]
  789 002e C0F2000C 		movt	ip, #:upper16:.LANCHOR16
  790 0032 ACF800E0 		strh	lr, [ip, #0]	@ movhi
- 791              		.loc 1 254 0
+ 791              		.loc 1 257 0
  792 0036 4B88     		ldrh	r3, [r1, #2]
- 793              		.loc 1 260 0
+ 793              		.loc 1 263 0
  794 0038 40F20000 		movw	r0, #:lower16:.LANCHOR10
- 795              		.loc 1 254 0
+ 795              		.loc 1 257 0
  796 003c ACF80230 		strh	r3, [ip, #2]	@ movhi
- 797              		.loc 1 255 0
+ 797              		.loc 1 258 0
  798 0040 B1F804E0 		ldrh	lr, [r1, #4]
- 799              		.loc 1 258 0
+ 799              		.loc 1 261 0
  800 0044 40F20003 		movw	r3, #:lower16:.LANCHOR17
- 801              		.loc 1 255 0
+ 801              		.loc 1 258 0
  802 0048 ACF804E0 		strh	lr, [ip, #4]	@ movhi
- 803              		.loc 1 256 0
+ 803              		.loc 1 259 0
  804 004c C988     		ldrh	r1, [r1, #6]
  805              	.LVL57:
- 806              		.loc 1 258 0
+ 806              		.loc 1 261 0
  807 004e C0F20003 		movt	r3, #:upper16:.LANCHOR17
- 808              		.loc 1 256 0
+ 808              		.loc 1 259 0
  809 0052 ACF80610 		strh	r1, [ip, #6]	@ movhi
- 810              		.loc 1 258 0
+ 810              		.loc 1 261 0
  811 0056 1A60     		str	r2, [r3, #0]
- 812              		.loc 1 260 0
+ 812              		.loc 1 263 0
  813 0058 0121     		movs	r1, #1
  814 005a 4FF0FF32 		mov	r2, #-1
  815              	.LVL58:
  816 005e C0F20000 		movt	r0, #:upper16:.LANCHOR10
  817 0062 FFF7FEFF 		bl	chOQPutTimeout
  818              	.LVL59:
- 819              		.loc 1 261 0
+ 819              		.loc 1 264 0
  820 0066 08BD     		pop	{r3, pc}
  821              		.cfi_endproc
  822              	.LFE72:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  836              		.set	.LANCHOR15,. + 0
  837              		.type	sweepDacsFrom, %object
  838              		.size	sweepDacsFrom, 8
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 16
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 16
 
 
  839              	sweepDacsFrom:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  879              		.size	sweepPeriod, 4
  880              	sweepPeriod:
  881 0000 00127A00 		.word	8000000
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 17
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 17
 
 
  882              		.section	.data.instantAdcData,"aw",%progbits
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  932              	adcIndex:
  933 0000 00000000 		.space	4
  934              		.section	.data.period,"aw",%progbits
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 18
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 18
 
 
  935              		.align	2
@@ -1026,7 +1026,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  937              		.type	period, %object
  938              		.size	period, 4
  939              	period:
- 940 0000 01000000 		.word	1
+ 940 0000 19000000 		.word	25
  941              		.section	.rodata.hs_spicfg,"a",%progbits
  942              		.align	2
  943              		.set	.LANCHOR12,. + 0
@@ -1036,7 +1036,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  947 0000 00000000 		.word	onSpiComplete
  948 0004 00080140 		.word	1073809408
  949 0008 0400     		.short	4
- 950 000a 2A00     		.short	42
+ 950 000a 1200     		.short	18
  951              		.section	.bss.elapsed,"aw",%nobits
  952              		.align	2
  953              		.set	.LANCHOR3,. + 0
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  985 0028 0100     		.2byte	0x1
  986 002a 50       		.byte	0x50
  987 002b 00000000 		.4byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 19
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 19
 
 
  988 002f 00000000 		.4byte	0x0
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1042 00be 0100     		.2byte	0x1
  1043 00c0 55       		.byte	0x55
  1044 00c1 3E010000 		.4byte	.LVL29
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 20
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 20
 
 
  1045 00c5 45010000 		.4byte	.LVL30-1
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1099 015e 54       		.byte	0x54
  1100 015f FA000000 		.4byte	.LVL21
  1101 0163 01010000 		.4byte	.LVL22-1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 21
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 21
 
 
  1102 0167 0500     		.2byte	0x5
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1156 01fa 00000000 		.4byte	adcIndex
  1157 01fe 00000000 		.4byte	0x0
  1158 0202 00000000 		.4byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 22
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 22
 
 
  1159              	.LLST10:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1213 0292 0200     		.2byte	0x2
  1214 0294 7D       		.byte	0x7d
  1215 0295 00       		.sleb128 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 23
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 23
 
 
  1216 0296 02000000 		.4byte	.LCFI4
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1270 0324 00000000 		.4byte	0x0
  1271 0328 00000000 		.4byte	0x0
  1272              	.LLST21:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 24
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 24
 
 
  1273 032c 0A000000 		.4byte	.LVL50
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1327              		.file 4 "../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h"
  1328              		.file 5 "../chibios_2.4.x/os/kernel/include/chlists.h"
  1329              		.file 6 "../chibios_2.4.x/os/kernel/include/chthreads.h"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 25
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 25
 
 
  1330              		.file 7 "../chibios_2.4.x/os/ports/GCC/ARMCMx/chcore_v7m.h"
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1384 0063 6E020000 		.4byte	.LASF6
  1385 0067 03       		.byte	0x3
  1386 0068 36       		.byte	0x36
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 26
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 26
 
 
  1387 0069 6D000000 		.4byte	0x6d
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1441 00d8 33       		.byte	0x33
  1442 00d9 74000000 		.4byte	0x74
  1443 00dd 03       		.uleb128 0x3
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 27
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 27
 
 
  1444 00de D5020000 		.4byte	.LASF19
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1498 0147 06       		.byte	0x6
  1499 0148 66       		.byte	0x66
  1500 0149 2C020000 		.4byte	0x22c
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 28
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 28
 
 
  1501 014d 02       		.byte	0x2
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1555 01aa AE       		.byte	0xae
  1556 01ab 7C030000 		.4byte	0x37c
  1557 01af 02       		.byte	0x2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 29
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 29
 
 
  1558 01b0 23       		.byte	0x23
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1612 020a 61       		.byte	0x61
  1613 020b 2C020000 		.4byte	0x22c
  1614 020f 06       		.uleb128 0x6
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 30
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 30
 
 
  1615 0210 8B040000 		.4byte	.LASF22
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1669 0273 9F000000 		.4byte	0x9f
  1670 0277 05       		.uleb128 0x5
  1671 0278 75050000 		.4byte	.LASF43
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 31
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 31
 
 
  1672 027c 24       		.byte	0x24
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1726 02dc 07       		.byte	0x7
  1727 02dd 1701     		.2byte	0x117
  1728 02df 5F020000 		.4byte	0x25f
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 32
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 32
 
 
  1729 02e3 02       		.byte	0x2
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1783 0346 2D       		.byte	0x2d
  1784 0347 32020000 		.4byte	0x232
  1785 034b 02       		.byte	0x2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 33
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 33
 
 
  1786 034c 23       		.byte	0x23
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1840 03b2 04       		.byte	0x4
  1841 03b3 B7030000 		.4byte	0x3b7
  1842 03b7 11       		.uleb128 0x11
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 34
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 34
 
 
  1843 03b8 BC030000 		.4byte	0x3bc
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1897 041e 06       		.uleb128 0x6
  1898 041f D5010000 		.4byte	.LASF59
  1899 0423 09       		.byte	0x9
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 35
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 35
 
 
  1900 0424 4B       		.byte	0x4b
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  1954 048d 0D       		.uleb128 0xd
  1955 048e 74000000 		.4byte	0x74
  1956 0492 14       		.uleb128 0x14
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 36
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 36
 
 
  1957 0493 10       		.byte	0x10
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2011 04fb 00       		.uleb128 0x0
  2012 04fc 0B       		.uleb128 0xb
  2013 04fd 43524800 		.ascii	"CRH\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 37
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 37
 
 
  2014 0501 0A       		.byte	0xa
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2068 0565 0A       		.byte	0xa
  2069 0566 9704     		.2byte	0x497
  2070 0568 79060000 		.4byte	0x679
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 38
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 38
 
 
  2071 056c 0B       		.uleb128 0xb
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2125 05d1 23       		.byte	0x23
  2126 05d2 0C       		.uleb128 0xc
  2127 05d3 15       		.uleb128 0x15
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 39
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 39
 
 
  2128 05d4 BF030000 		.4byte	.LASF75
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2182 063b 1A       		.uleb128 0x1a
  2183 063c 15       		.uleb128 0x15
  2184 063d 28010000 		.4byte	.LASF82
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 40
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 40
 
 
  2185 0641 0A       		.byte	0xa
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2239 06a6 02       		.byte	0x2
  2240 06a7 23       		.byte	0x23
  2241 06a8 04       		.uleb128 0x4
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 41
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 41
 
 
  2242 06a9 06       		.uleb128 0x6
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2296 070f 18       		.uleb128 0x18
  2297 0710 86050000 		.4byte	.LASF95
  2298 0714 00       		.sleb128 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 42
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 42
 
 
  2299 0715 18       		.uleb128 0x18
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2353 0780 00000000 		.4byte	.LASF104
  2354 0784 0E       		.byte	0xe
  2355 0785 4F01     		.2byte	0x14f
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 43
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 43
 
 
  2356 0787 43080000 		.4byte	0x843
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2410 07ef 1801     		.2byte	0x118
  2411 07f1 BC070000 		.4byte	0x7bc
  2412 07f5 02       		.byte	0x2
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 44
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 44
 
 
  2413 07f6 23       		.byte	0x23
@@ -2629,23 +2629,23 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2458 084e 19       		.uleb128 0x19
  2459 084f 65030000 		.4byte	.LASF152
  2460 0853 01       		.byte	0x1
- 2461 0854 AB       		.byte	0xab
+ 2461 0854 AE       		.byte	0xae
  2462 0855 01       		.byte	0x1
  2463 0856 01       		.byte	0x1
  2464 0857 67080000 		.4byte	0x867
  2465 085b 1A       		.uleb128 0x1a
  2466 085c 35050000 		.4byte	.LASF153
  2467 0860 01       		.byte	0x1
- 2468 0861 AB       		.byte	0xab
+ 2468 0861 AE       		.byte	0xae
  2469 0862 29000000 		.4byte	0x29
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 45
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 45
 
 
  2470 0866 00       		.byte	0x0
  2471 0867 1B       		.uleb128 0x1b
  2472 0868 3C020000 		.4byte	.LASF154
  2473 086c 01       		.byte	0x1
- 2474 086d 4B       		.byte	0x4b
+ 2474 086d 4E       		.byte	0x4e
  2475 086e 01       		.byte	0x1
  2476 086f 00000000 		.4byte	.LFB64
  2477 0873 80010000 		.4byte	.LFE64
@@ -2654,19 +2654,19 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2480 087f 1C       		.uleb128 0x1c
  2481 0880 A8050000 		.4byte	.LASF117
  2482 0884 01       		.byte	0x1
- 2483 0885 4B       		.byte	0x4b
+ 2483 0885 4E       		.byte	0x4e
  2484 0886 DA070000 		.4byte	0x7da
  2485 088a 20000000 		.4byte	.LLST1
  2486 088e 1D       		.uleb128 0x1d
  2487 088f B9020000 		.4byte	.LASF113
  2488 0893 01       		.byte	0x1
- 2489 0894 50       		.byte	0x50
+ 2489 0894 53       		.byte	0x53
  2490 0895 29000000 		.4byte	0x29
  2491 0899 33000000 		.4byte	.LLST2
  2492 089d 1D       		.uleb128 0x1d
  2493 089e 2C020000 		.4byte	.LASF114
  2494 08a2 01       		.byte	0x1
- 2495 08a3 56       		.byte	0x56
+ 2495 08a3 59       		.byte	0x59
  2496 08a4 29000000 		.4byte	0x29
  2497 08a8 60000000 		.4byte	.LLST3
  2498 08ac 1E       		.uleb128 0x1e
@@ -2676,7 +2676,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2502 08b9 1F       		.uleb128 0x1f
  2503 08ba 746D7000 		.ascii	"tmp\000"
  2504 08be 01       		.byte	0x1
- 2505 08bf 4E       		.byte	0x4e
+ 2505 08bf 51       		.byte	0x51
  2506 08c0 86000000 		.4byte	0x86
  2507 08c4 E3000000 		.4byte	.LLST4
  2508 08c8 00       		.byte	0x0
@@ -2685,7 +2685,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2511 08ce 1E000000 		.4byte	.LBB10
  2512 08d2 00000000 		.4byte	.Ldebug_ranges0+0x0
  2513 08d6 01       		.byte	0x1
- 2514 08d7 52       		.byte	0x52
+ 2514 08d7 55       		.byte	0x55
  2515 08d8 E6080000 		.4byte	0x8e6
  2516 08dc 21       		.uleb128 0x21
  2517 08dd 5B080000 		.4byte	0x85b
@@ -2698,10 +2698,10 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2524 08f3 1F       		.uleb128 0x1f
  2525 08f4 746D7000 		.ascii	"tmp\000"
  2526 08f8 01       		.byte	0x1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 46
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 46
 
 
- 2527 08f9 A3       		.byte	0xa3
+ 2527 08f9 A6       		.byte	0xa6
  2528 08fa 86000000 		.4byte	0x86
  2529 08fe 32010000 		.4byte	.LLST6
  2530 0902 00       		.byte	0x0
@@ -2711,7 +2711,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2534 090c 1F       		.uleb128 0x1f
  2535 090d 7600     		.ascii	"v\000"
  2536 090f 01       		.byte	0x1
- 2537 0910 6C       		.byte	0x6c
+ 2537 0910 6F       		.byte	0x6f
  2538 0911 49000000 		.4byte	0x49
  2539 0915 45010000 		.4byte	.LLST7
  2540 0919 00       		.byte	0x0
@@ -2750,7 +2750,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2573 0964 01       		.byte	0x1
  2574 0965 E1000000 		.4byte	.LASF123
  2575 0969 01       		.byte	0x1
- 2576 096a A6       		.byte	0xa6
+ 2576 096a A9       		.byte	0xa9
  2577 096b 01       		.byte	0x1
  2578 096c 7B090000 		.4byte	0x97b
  2579 0970 00000000 		.4byte	.LFB65
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2581 0978 02       		.byte	0x2
  2582 0979 7D       		.byte	0x7d
  2583 097a 00       		.sleb128 0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 47
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 47
 
 
  2584 097b 09       		.uleb128 0x9
@@ -2768,7 +2768,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2588 0982 01       		.byte	0x1
  2589 0983 4F010000 		.4byte	.LASF116
  2590 0987 01       		.byte	0x1
- 2591 0988 C9       		.byte	0xc9
+ 2591 0988 CC       		.byte	0xcc
  2592 0989 01       		.byte	0x1
  2593 098a 00000000 		.4byte	.LFB67
  2594 098e 34000000 		.4byte	.LFE67
@@ -2777,7 +2777,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2597 099a 1C       		.uleb128 0x1c
  2598 099b 13030000 		.4byte	.LASF118
  2599 099f 01       		.byte	0x1
- 2600 09a0 C9       		.byte	0xc9
+ 2600 09a0 CC       		.byte	0xcc
  2601 09a1 E0090000 		.4byte	0x9e0
  2602 09a5 46020000 		.4byte	.LLST12
  2603 09a9 1E       		.uleb128 0x1e
@@ -2787,7 +2787,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2607 09b6 1F       		.uleb128 0x1f
  2608 09b7 746D7000 		.ascii	"tmp\000"
  2609 09bb 01       		.byte	0x1
- 2610 09bc CD       		.byte	0xcd
+ 2610 09bc D0       		.byte	0xd0
  2611 09bd 86000000 		.4byte	0x86
  2612 09c1 64020000 		.4byte	.LLST13
  2613 09c5 00       		.byte	0x0
@@ -2797,7 +2797,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2617 09cf 1F       		.uleb128 0x1f
  2618 09d0 746D7000 		.ascii	"tmp\000"
  2619 09d4 01       		.byte	0x1
- 2620 09d5 D2       		.byte	0xd2
+ 2620 09d5 D5       		.byte	0xd5
  2621 09d6 86000000 		.4byte	0x86
  2622 09da 77020000 		.4byte	.LLST14
  2623 09de 00       		.byte	0x0
@@ -2809,7 +2809,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2629 09e7 01       		.byte	0x1
  2630 09e8 B0040000 		.4byte	.LASF119
  2631 09ec 01       		.byte	0x1
- 2632 09ed D6       		.byte	0xd6
+ 2632 09ed D9       		.byte	0xd9
  2633 09ee 01       		.byte	0x1
  2634 09ef 00000000 		.4byte	.LFB68
  2635 09f3 24000000 		.4byte	.LFE68
@@ -2818,10 +2818,10 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2638 09ff 1C       		.uleb128 0x1c
  2639 0a00 06020000 		.4byte	.LASF120
  2640 0a04 01       		.byte	0x1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 48
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 48
 
 
- 2641 0a05 D6       		.byte	0xd6
+ 2641 0a05 D9       		.byte	0xd9
  2642 0a06 29000000 		.4byte	0x29
  2643 0a0a AA020000 		.4byte	.LLST16
  2644 0a0e 27       		.uleb128 0x27
@@ -2830,7 +2830,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2647 0a17 1F       		.uleb128 0x1f
  2648 0a18 746D7000 		.ascii	"tmp\000"
  2649 0a1c 01       		.byte	0x1
- 2650 0a1d D8       		.byte	0xd8
+ 2650 0a1d DB       		.byte	0xdb
  2651 0a1e 86000000 		.4byte	0x86
  2652 0a22 C8020000 		.4byte	.LLST17
  2653 0a26 00       		.byte	0x0
@@ -2840,7 +2840,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2657 0a30 1F       		.uleb128 0x1f
  2658 0a31 746D7000 		.ascii	"tmp\000"
  2659 0a35 01       		.byte	0x1
- 2660 0a36 DA       		.byte	0xda
+ 2660 0a36 DD       		.byte	0xdd
  2661 0a37 86000000 		.4byte	0x86
  2662 0a3b DB020000 		.4byte	.LLST18
  2663 0a3f 00       		.byte	0x0
@@ -2849,7 +2849,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2666 0a42 01       		.byte	0x1
  2667 0a43 C5000000 		.4byte	.LASF121
  2668 0a47 01       		.byte	0x1
- 2669 0a48 DD       		.byte	0xdd
+ 2669 0a48 E0       		.byte	0xe0
  2670 0a49 01       		.byte	0x1
  2671 0a4a 00000000 		.4byte	.LFB69
  2672 0a4e 24000000 		.4byte	.LFE69
@@ -2858,7 +2858,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2675 0a5a 1C       		.uleb128 0x1c
  2676 0a5b FD010000 		.4byte	.LASF122
  2677 0a5f 01       		.byte	0x1
- 2678 0a60 DD       		.byte	0xdd
+ 2678 0a60 E0       		.byte	0xe0
  2679 0a61 86000000 		.4byte	0x86
  2680 0a65 0E030000 		.4byte	.LLST20
  2681 0a69 27       		.uleb128 0x27
@@ -2867,7 +2867,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2684 0a72 1F       		.uleb128 0x1f
  2685 0a73 746D7000 		.ascii	"tmp\000"
  2686 0a77 01       		.byte	0x1
- 2687 0a78 DF       		.byte	0xdf
+ 2687 0a78 E2       		.byte	0xe2
  2688 0a79 86000000 		.4byte	0x86
  2689 0a7d 2C030000 		.4byte	.LLST21
  2690 0a81 00       		.byte	0x0
@@ -2877,8 +2877,8 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2694 0a8b 1F       		.uleb128 0x1f
  2695 0a8c 746D7000 		.ascii	"tmp\000"
  2696 0a90 01       		.byte	0x1
- 2697 0a91 E1       		.byte	0xe1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 49
+ 2697 0a91 E4       		.byte	0xe4
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 49
 
 
  2698 0a92 86000000 		.4byte	0x86
@@ -2889,7 +2889,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2703 0a9d 01       		.byte	0x1
  2704 0a9e B6010000 		.4byte	.LASF124
  2705 0aa2 01       		.byte	0x1
- 2706 0aa3 E4       		.byte	0xe4
+ 2706 0aa3 E7       		.byte	0xe7
  2707 0aa4 01       		.byte	0x1
  2708 0aa5 7B090000 		.4byte	0x97b
  2709 0aa9 00000000 		.4byte	.LFB70
@@ -2901,7 +2901,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2715 0ab5 01       		.byte	0x1
  2716 0ab6 62020000 		.4byte	.LASF125
  2717 0aba 01       		.byte	0x1
- 2718 0abb EC       		.byte	0xec
+ 2718 0abb EF       		.byte	0xef
  2719 0abc 01       		.byte	0x1
  2720 0abd 00000000 		.4byte	.LFB71
  2721 0ac1 16000000 		.4byte	.LFE71
@@ -2912,14 +2912,14 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2726 0acc 29       		.uleb128 0x29
  2727 0acd C9050000 		.4byte	.LASF126
  2728 0ad1 01       		.byte	0x1
- 2729 0ad2 EC       		.byte	0xec
+ 2729 0ad2 EF       		.byte	0xef
  2730 0ad3 49000000 		.4byte	0x49
  2731 0ad7 01       		.byte	0x1
  2732 0ad8 50       		.byte	0x50
  2733 0ad9 29       		.uleb128 0x29
  2734 0ada 6A000000 		.4byte	.LASF127
  2735 0ade 01       		.byte	0x1
- 2736 0adf EC       		.byte	0xec
+ 2736 0adf EF       		.byte	0xef
  2737 0ae0 86000000 		.4byte	0x86
  2738 0ae4 01       		.byte	0x1
  2739 0ae5 51       		.byte	0x51
@@ -2928,7 +2928,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2742 0ae8 01       		.byte	0x1
  2743 0ae9 46040000 		.4byte	.LASF128
  2744 0aed 01       		.byte	0x1
- 2745 0aee F6       		.byte	0xf6
+ 2745 0aee F9       		.byte	0xf9
  2746 0aef 01       		.byte	0x1
  2747 0af0 00000000 		.4byte	.LFB72
  2748 0af4 68000000 		.4byte	.LFE72
@@ -2937,8 +2937,8 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2751 0b00 1C       		.uleb128 0x1c
  2752 0b01 EC020000 		.4byte	.LASF129
  2753 0b05 01       		.byte	0x1
- 2754 0b06 F6       		.byte	0xf6
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 50
+ 2754 0b06 F9       		.byte	0xf9
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 50
 
 
  2755 0b07 2D0B0000 		.4byte	0xb2d
@@ -2946,13 +2946,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2757 0b0f 2A       		.uleb128 0x2a
  2758 0b10 746F00   		.ascii	"to\000"
  2759 0b13 01       		.byte	0x1
- 2760 0b14 F6       		.byte	0xf6
+ 2760 0b14 F9       		.byte	0xf9
  2761 0b15 2D0B0000 		.4byte	0xb2d
  2762 0b19 85030000 		.4byte	.LLST25
  2763 0b1d 1C       		.uleb128 0x1c
  2764 0b1e 6A000000 		.4byte	.LASF127
  2765 0b22 01       		.byte	0x1
- 2766 0b23 F6       		.byte	0xf6
+ 2766 0b23 F9       		.byte	0xf9
  2767 0b24 86000000 		.4byte	0x86
  2768 0b28 98030000 		.4byte	.LLST26
  2769 0b2c 00       		.byte	0x0
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2809 0b7b 91050000 		.4byte	.LASF134
  2810 0b7f 01       		.byte	0x1
  2811 0b80 12       		.byte	0x12
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 51
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 51
 
 
  2812 0b81 72040000 		.4byte	0x472
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2866 0bed 29000000 		.4byte	0x29
  2867 0bf1 FC0B0000 		.4byte	0xbfc
  2868 0bf5 2F       		.uleb128 0x2f
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 52
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 52
 
 
  2869 0bf6 2C030000 		.4byte	0x32c
@@ -3104,7 +3104,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2909 0c45 30       		.uleb128 0x30
  2910 0c46 CB020000 		.4byte	.LASF144
  2911 0c4a 01       		.byte	0x1
- 2912 0c4b E9       		.byte	0xe9
+ 2912 0c4b EC       		.byte	0xec
  2913 0c4c 49000000 		.4byte	0x49
  2914 0c50 05       		.byte	0x5
  2915 0c51 03       		.byte	0x3
@@ -3112,13 +3112,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2917 0c56 30       		.uleb128 0x30
  2918 0c57 75040000 		.4byte	.LASF145
  2919 0c5b 01       		.byte	0x1
- 2920 0c5c EA       		.byte	0xea
+ 2920 0c5c ED       		.byte	0xed
  2921 0c5d 86000000 		.4byte	0x86
  2922 0c61 05       		.byte	0x5
  2923 0c62 03       		.byte	0x3
  2924 0c63 00000000 		.4byte	sweepOscPeriod
  2925 0c67 2D       		.uleb128 0x2d
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 53
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 53
 
 
  2926 0c68 62000000 		.4byte	0x62
@@ -3130,7 +3130,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2932 0c77 30       		.uleb128 0x30
  2933 0c78 77000000 		.4byte	.LASF146
  2934 0c7c 01       		.byte	0x1
- 2935 0c7d F2       		.byte	0xf2
+ 2935 0c7d F5       		.byte	0xf5
  2936 0c7e 670C0000 		.4byte	0xc67
  2937 0c82 05       		.byte	0x5
  2938 0c83 03       		.byte	0x3
@@ -3138,7 +3138,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2940 0c88 30       		.uleb128 0x30
  2941 0c89 C0010000 		.4byte	.LASF147
  2942 0c8d 01       		.byte	0x1
- 2943 0c8e F3       		.byte	0xf3
+ 2943 0c8e F6       		.byte	0xf6
  2944 0c8f 670C0000 		.4byte	0xc67
  2945 0c93 05       		.byte	0x5
  2946 0c94 03       		.byte	0x3
@@ -3146,7 +3146,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2948 0c99 30       		.uleb128 0x30
  2949 0c9a 85000000 		.4byte	.LASF148
  2950 0c9e 01       		.byte	0x1
- 2951 0c9f F4       		.byte	0xf4
+ 2951 0c9f F7       		.byte	0xf7
  2952 0ca0 86000000 		.4byte	0x86
  2953 0ca4 05       		.byte	0x5
  2954 0ca5 03       		.byte	0x3
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  2980 0cd9 2A000000 		.4byte	.LASF133
  2981 0cdd 01       		.byte	0x1
  2982 0cde 10       		.byte	0x10
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 54
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 54
 
 
  2983 0cdf 5C0B0000 		.4byte	0xb5c
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3037 0d4b 29000000 		.4byte	0x29
  3038 0d4f 01       		.byte	0x1
  3039 0d50 05       		.byte	0x5
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 55
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 55
 
 
  3040 0d51 03       		.byte	0x3
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3094 0020 03       		.uleb128 0x3
  3095 0021 16       		.uleb128 0x16
  3096 0022 00       		.byte	0x0
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 56
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 56
 
 
  3097 0023 03       		.uleb128 0x3
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3151 0059 03       		.uleb128 0x3
  3152 005a 08       		.uleb128 0x8
  3153 005b 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 57
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 57
 
 
  3154 005c 0B       		.uleb128 0xb
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3208 0092 13       		.uleb128 0x13
  3209 0093 01       		.byte	0x1
  3210 0094 03       		.uleb128 0x3
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 58
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 58
 
 
  3211 0095 0E       		.uleb128 0xe
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3265 00cb 26       		.uleb128 0x26
  3266 00cc 00       		.byte	0x0
  3267 00cd 49       		.uleb128 0x49
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 59
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 59
 
 
  3268 00ce 13       		.uleb128 0x13
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3322 0104 3B       		.uleb128 0x3b
  3323 0105 05       		.uleb128 0x5
  3324 0106 49       		.uleb128 0x49
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 60
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 60
 
 
  3325 0107 13       		.uleb128 0x13
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3379 013d 00       		.byte	0x0
  3380 013e 1B       		.uleb128 0x1b
  3381 013f 2E       		.uleb128 0x2e
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 61
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 61
 
 
  3382 0140 01       		.byte	0x1
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3436 0176 12       		.uleb128 0x12
  3437 0177 01       		.uleb128 0x1
  3438 0178 01       		.uleb128 0x1
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 62
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 62
 
 
  3439 0179 13       		.uleb128 0x13
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3493 01af 2E       		.uleb128 0x2e
  3494 01b0 01       		.byte	0x1
  3495 01b1 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 63
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 63
 
 
  3496 01b2 0C       		.uleb128 0xc
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3550 01e8 00       		.byte	0x0
  3551 01e9 26       		.uleb128 0x26
  3552 01ea 2E       		.uleb128 0x2e
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 64
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 64
 
 
  3553 01eb 00       		.byte	0x0
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3607 0221 05       		.uleb128 0x5
  3608 0222 00       		.byte	0x0
  3609 0223 03       		.uleb128 0x3
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 65
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 65
 
 
  3610 0224 0E       		.uleb128 0xe
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3664 025a 3F       		.uleb128 0x3f
  3665 025b 0C       		.uleb128 0xc
  3666 025c 3C       		.uleb128 0x3c
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 66
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 66
 
 
  3667 025d 0C       		.uleb128 0xc
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3721 0293 49       		.uleb128 0x49
  3722 0294 13       		.uleb128 0x13
  3723 0295 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 67
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 67
 
 
  3724 0296 0C       		.uleb128 0xc
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3756      71756575 
  3756      655F6275 
  3756      66666572 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 68
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 68
 
 
  3756      00
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3786      325F7400 
  3787 003e 86000000 		.4byte	0x86
  3788 0042 75696E74 		.ascii	"uint32_t\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 69
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 69
 
 
  3788      33325F74 
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3818 0108 4D757465 		.ascii	"Mutex\000"
  3818      7800
  3819 010e 71030000 		.4byte	0x371
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 70
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 70
 
 
  3820 0112 4D757465 		.ascii	"Mutex\000"
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3844 01d7 696F706F 		.ascii	"ioportid_t\000"
  3844      72746964 
  3844      5F7400
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 71
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 71
 
 
  3845 01e2 2E070000 		.4byte	0x72e
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3888 0000 1E000000 		.4byte	.LBB10
  3889 0004 22000000 		.4byte	.LBE10
  3890 0008 74000000 		.4byte	.LBB16
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 72
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 72
 
 
  3891 000c 94000000 		.4byte	.LBE16
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3942      6164734C 
  3942      69737400 
  3943              	.LASF49:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 73
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 73
 
 
  3944 0019 7264796D 		.ascii	"rdymsg\000"
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3971              	.LASF101:
  3972 00a7 53504944 		.ascii	"SPIDriver\000"
  3972      72697665 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 74
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 74
 
 
  3972      7200
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  3998      7369676E 
  3998      65642069 
  3999              	.LASF46:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 75
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 75
 
 
  4000 0147 6D5F7175 		.ascii	"m_queue\000"
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4028 01ec 656E645F 		.ascii	"end_cb\000"
  4028      636200
  4029              	.LASF106:
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 76
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 76
 
 
  4030 01f3 7278646D 		.ascii	"rxdmamode\000"
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4056      00
  4057              	.LASF34:
  4058 027c 705F6D73 		.ascii	"p_msgqueue\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 77
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 77
 
 
  4058      67717565 
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4086 0308 73746B61 		.ascii	"stkalign_t\000"
  4086      6C69676E 
  4086      5F7400
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 78
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 78
 
 
  4087              	.LASF118:
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4114      7800
  4115              	.LASF72:
  4116 03a1 52455345 		.ascii	"RESERVED0\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 79
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 79
 
 
  4116      52564544 
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4144      325F646D 
  4144      615F7374 
  4144      7265616D 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 80
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 80
 
 
  4144      5F7400
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4173              	.LASF88:
  4174 04c9 69666372 		.ascii	"ifcr\000"
  4174      00
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 81
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 81
 
 
  4175              	.LASF79:
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4203              	.LASF38:
  4204 0557 705F7265 		.ascii	"p_realprio\000"
  4204      616C7072 
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 82
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 82
 
 
  4204      696F00
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4236      6A7000
  4237              	.LASF28:
  4238 05e1 705F6E61 		.ascii	"p_name\000"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 83
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 83
 
 
  4238      6D6500
@@ -4940,85 +4940,85 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 1
  4248      6974696E 
  4248      6700
  4249              		.ident	"GCC: (GNU) 4.5.0"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 84
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 84
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 adc_ctrl.c
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:24     .text.onSpiComplete:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:29     .text.onSpiComplete:00000000 onSpiComplete
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:305    .text.onSpiComplete:00000160 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:318    .text.initAdc:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:324    .text.initAdc:00000000 initAdc
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:444    .text.initAdc:000000ac $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:459    .text.queryAdcI:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:465    .text.queryAdcI:00000000 queryAdcI
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:901    .bss.adc_rx_buffer:00000000 .LANCHOR1
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:494    .text.adcQueue:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:500    .text.adcQueue:00000000 adcQueue
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:863    .bss.adc_queue:00000000 .LANCHOR5
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:516    .text.instantAdc:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:522    .text.instantAdc:00000000 instantAdc
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:580    .text.instantAdc:00000030 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:585    .text.setOscSignals:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:591    .text.setOscSignals:00000000 setOscSignals
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:922    .data.signalMask:00000000 .LANCHOR6
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:641    .text.setOscPeriod:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:647    .text.setOscPeriod:00000000 setOscPeriod
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:936    .data.period:00000000 .LANCHOR4
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:697    .text.sweepData:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:703    .text.sweepData:00000000 sweepData
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:915    .bss.sweep_queue:00000000 .LANCHOR8
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:719    .text.setSweepOsc:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:725    .text.setSweepOsc:00000000 setSweepOsc
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:849    .data.sweepSigs:00000000 .LANCHOR13
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:894    .data.sweepOscPeriod:00000000 .LANCHOR14
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:751    .text.setSweep:00000000 $t
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:757    .text.setSweep:00000000 setSweep
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:836    .bss.sweepDacsFrom:00000000 .LANCHOR15
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:856    .bss.sweepDacsTo:00000000 .LANCHOR16
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:870    .bss.sweepCmdQueue:00000000 .LANCHOR10
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:877    .data.sweepPeriod:00000000 .LANCHOR17
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:925    .data.signalMask:00000000 signalMask
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:939    .data.period:00000000 period
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:956    .bss.elapsed:00000000 elapsed
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:866    .bss.adc_queue:00000000 adc_queue
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:963    .bss.adc_queue_buffer:00000000 adc_queue_buffer
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:918    .bss.sweep_queue:00000000 sweep_queue
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:846    .bss.sweep_queue_buffer:00000000 sweep_queue_buffer
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:873    .bss.sweepCmdQueue:00000000 sweepCmdQueue
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:911    .bss.sweepCmdBuffer:00000000 sweepCmdBuffer
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:904    .bss.adc_rx_buffer:00000000 adc_rx_buffer
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:835    .bss.sweepDacsFrom:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:839    .bss.sweepDacsFrom:00000000 sweepDacsFrom
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:842    .bss.sweep_queue_buffer:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:852    .data.sweepSigs:00000000 sweepSigs
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:855    .bss.sweepDacsTo:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:859    .bss.sweepDacsTo:00000000 sweepDacsTo
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:862    .bss.adc_queue:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:869    .bss.sweepCmdQueue:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:876    .data.sweepPeriod:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:880    .data.sweepPeriod:00000000 sweepPeriod
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:883    .data.instantAdcData:00000000 $d
-ARM GAS  C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s 			page 85
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:24     .text.onSpiComplete:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:29     .text.onSpiComplete:00000000 onSpiComplete
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:305    .text.onSpiComplete:00000160 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:318    .text.initAdc:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:324    .text.initAdc:00000000 initAdc
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:444    .text.initAdc:000000ac $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:459    .text.queryAdcI:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:465    .text.queryAdcI:00000000 queryAdcI
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:901    .bss.adc_rx_buffer:00000000 .LANCHOR1
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:494    .text.adcQueue:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:500    .text.adcQueue:00000000 adcQueue
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:863    .bss.adc_queue:00000000 .LANCHOR5
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:516    .text.instantAdc:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:522    .text.instantAdc:00000000 instantAdc
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:580    .text.instantAdc:00000030 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:585    .text.setOscSignals:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:591    .text.setOscSignals:00000000 setOscSignals
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:922    .data.signalMask:00000000 .LANCHOR6
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:641    .text.setOscPeriod:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:647    .text.setOscPeriod:00000000 setOscPeriod
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:936    .data.period:00000000 .LANCHOR4
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:697    .text.sweepData:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:703    .text.sweepData:00000000 sweepData
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:915    .bss.sweep_queue:00000000 .LANCHOR8
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:719    .text.setSweepOsc:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:725    .text.setSweepOsc:00000000 setSweepOsc
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:849    .data.sweepSigs:00000000 .LANCHOR13
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:894    .data.sweepOscPeriod:00000000 .LANCHOR14
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:751    .text.setSweep:00000000 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:757    .text.setSweep:00000000 setSweep
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:836    .bss.sweepDacsFrom:00000000 .LANCHOR15
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:856    .bss.sweepDacsTo:00000000 .LANCHOR16
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:870    .bss.sweepCmdQueue:00000000 .LANCHOR10
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:877    .data.sweepPeriod:00000000 .LANCHOR17
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:925    .data.signalMask:00000000 signalMask
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:939    .data.period:00000000 period
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:956    .bss.elapsed:00000000 elapsed
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:866    .bss.adc_queue:00000000 adc_queue
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:963    .bss.adc_queue_buffer:00000000 adc_queue_buffer
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:918    .bss.sweep_queue:00000000 sweep_queue
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:846    .bss.sweep_queue_buffer:00000000 sweep_queue_buffer
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:873    .bss.sweepCmdQueue:00000000 sweepCmdQueue
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:911    .bss.sweepCmdBuffer:00000000 sweepCmdBuffer
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:904    .bss.adc_rx_buffer:00000000 adc_rx_buffer
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:835    .bss.sweepDacsFrom:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:839    .bss.sweepDacsFrom:00000000 sweepDacsFrom
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:842    .bss.sweep_queue_buffer:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:852    .data.sweepSigs:00000000 sweepSigs
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:855    .bss.sweepDacsTo:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:859    .bss.sweepDacsTo:00000000 sweepDacsTo
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:862    .bss.adc_queue:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:869    .bss.sweepCmdQueue:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:876    .data.sweepPeriod:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:880    .data.sweepPeriod:00000000 sweepPeriod
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:883    .data.instantAdcData:00000000 $d
+ARM GAS  C:\Users\z80\AppData\Local\Temp\ccQAeobB.s 			page 85
 
 
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:887    .data.instantAdcData:00000000 instantAdcData
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:893    .data.sweepOscPeriod:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:897    .data.sweepOscPeriod:00000000 sweepOscPeriod
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:900    .bss.adc_rx_buffer:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:907    .bss.sweepCmdBuffer:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:914    .bss.sweep_queue:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:921    .data.signalMask:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:928    .bss.adcIndex:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:932    .bss.adcIndex:00000000 adcIndex
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:935    .data.period:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:942    .rodata.hs_spicfg:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:946    .rodata.hs_spicfg:00000000 hs_spicfg
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:952    .bss.elapsed:00000000 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:959    .bss.adc_queue_buffer:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:887    .data.instantAdcData:00000000 instantAdcData
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:893    .data.sweepOscPeriod:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:897    .data.sweepOscPeriod:00000000 sweepOscPeriod
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:900    .bss.adc_rx_buffer:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:907    .bss.sweepCmdBuffer:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:914    .bss.sweep_queue:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:921    .data.signalMask:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:928    .bss.adcIndex:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:932    .bss.adcIndex:00000000 adcIndex
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:935    .data.period:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:942    .rodata.hs_spicfg:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:946    .rodata.hs_spicfg:00000000 hs_spicfg
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:952    .bss.elapsed:00000000 $d
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:959    .bss.adc_queue_buffer:00000000 $d
                      .debug_frame:00000010 $d
-C:\Users\z80\AppData\Local\Temp\ccyQK9zU.s:584    .text.instantAdc:00000034 $t
+C:\Users\z80\AppData\Local\Temp\ccQAeobB.s:584    .text.instantAdc:00000034 $t
 
 UNDEFINED SYMBOLS
 dbg_check_lock_from_isr

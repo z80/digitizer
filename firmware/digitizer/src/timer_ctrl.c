@@ -9,7 +9,7 @@ static void gptCb( GPTDriver * gptp );
 
 static const GPTConfig gptCfg =
 {
-  1000000,   // 1MHz timer clock.
+  1000000,   // 8MHz timer clock.
   gptCb      // Timer callback.
 };
 
@@ -24,7 +24,7 @@ static const GPTConfig gptCfg =
 void initTimer( void )
 {
     gptStart( &GPTD1, &gptCfg );
-    gptStartContinuous( &GPTD1, 5000 );
+    gptStartContinuous( &GPTD1, 50 );
 }
 
 static void gptCb(GPTDriver *gptp)

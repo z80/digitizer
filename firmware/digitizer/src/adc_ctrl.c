@@ -28,7 +28,7 @@ static int instantAdcData[4] = { -1, -1, -1, -1 };
 
 // Oscilloscope parameters.
 int signalMask = 15;
-int period     = 1;
+int period     = 25;
 int elapsed    = 0;
 
 
@@ -43,7 +43,7 @@ static const SPIConfig hs_spicfg =
     onSpiComplete,
     GPIOA,
     GPIOA_SPI1NSS,
-    SPI_CR1_BR_2 + SPI_CR1_BR_0 + SPI_CR1_CPOL
+    SPI_CR1_BR_1 + SPI_CR1_CPOL // SPI_CR1_BR_2 + SPI_CR1_BR_0 + SPI_CR1_CPOL
 };
 
 
@@ -70,6 +70,9 @@ void queryAdcI( void )
 {
 	spiSelectI( &SPID1 );
 	spiStartReceiveI( &SPID1, 3, adc_rx_buffer );
+
+	//adcIndex = (adcIndex + 1) % 4;
+	//selectAdcIndex( adcIndex );
 }
 
 void onSpiComplete( SPIDriver * spid )
