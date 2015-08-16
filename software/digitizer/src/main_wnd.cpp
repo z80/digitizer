@@ -14,6 +14,8 @@ MainWnd::MainWnd( QWidget * parent )
     ui.setupUi( this );
     //ui.osc->show();
 
+    temperature = -273.15;
+
     terminate = false;
     io        = new Bipot();
 
@@ -31,6 +33,11 @@ MainWnd::MainWnd( QWidget * parent )
 
     calibrationWnd = new CalibrationWnd( 0 );
     calibrationWnd->setIo( io );
+
+    tempTimer = new QTimer( this );
+    tempTimer->setInterval( 3000 );
+    connect( tempTimer, SIGNAL(timeout()), this, SLOT(slotTemp()));
+    tempTimer->start();
 
     connect( ui.action_Quit,       SIGNAL(triggered()), this, SLOT(slotQuit()) );
     connect( ui.action_About,      SIGNAL(triggered()), this, SLOT(slotAbout()) );
@@ -64,6 +71,8 @@ MainWnd::MainWnd( QWidget * parent )
 
 MainWnd::~MainWnd()
 {
+    tempTimer->deleteLater();
+
     mutex.lock();
         terminate = true;
     mutex.unlock();
@@ -357,10 +366,11 @@ void MainWnd::slotSweepProbe()
 
 void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
 {
-    QString stri= QString( "workV = %1, workI = %2, probeV = %3, probeI = %4" ).arg( wv, 8, 'f', 1, QChar( '0' ) ) 
-                                                                               .arg( wi, 8, 'f', 1, QChar( '0' ) )
-                                                                               .arg( pv, 8, 'f', 1, QChar( '0' ) )
-                                                                               .arg( pi, 8, 'f', 1, QChar( '0' ) );
+    QString stri= QString( "t: %1[C], workV = %2, workI = %3, probeV = %4, probeI = %5" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
+                                                                                         .arg( wv, 8, 'f', 1, QChar( '0' ) ) 
+                                                                                         .arg( wi, 8, 'f', 1, QChar( '0' ) )
+                                                                                         .arg( pv, 8, 'f', 1, QChar( '0' ) )
+                                                                                         .arg( pi, 8, 'f', 1, QChar( '0' ) );
 
     setTitle( stri );
 }
@@ -377,6 +387,19 @@ void MainWnd::slotReplot()
     // Replot oscilloscope windows.
     oscWork->slotReplot();
     oscProbe->slotReplot();
+}
+
+void MainWnd::slotTemp()
+{
+    bool res = io->isOpen();
+    if ( res )
+    {
+        qreal t;
+        res = io->temperature( t );
+        if ( res )
+            io->setTemperature( t );
+        temperature = t;
+    }
 }
 
 

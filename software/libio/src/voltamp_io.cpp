@@ -322,6 +322,27 @@ bool VoltampIo::oscData( QVector<int> & data )
     return true;
 }
 
+bool VoltampIo::temperature( qreal & temp )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    quint8 funcInd = 16;
+    bool res = execFunc( funcInd );
+    if ( !res )
+        return false;
+    bool eom;
+    QByteArray & arr = pd->buffer;
+    arr.resize( PD::IN_BUFFER_SZ );
+    int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
+    if ( !eom )
+        return false;
+
+    int rawt = (static_cast<int>(arr[0]) << 8) + static_cast<int>(arr[0]);
+    rawt = (rawt & 0x8000) ? rawt-65536 : rawt;
+    temp = static_cast<qreal>( rawt ) / 128.0;
+    return true;
+}
+
 
 
 

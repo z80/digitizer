@@ -47,6 +47,8 @@ public slots:
 
     void slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi );
     void slotReplot();
+
+    void slotTemp();
 protected:
     void closeEvent( QCloseEvent * e );
 private:
@@ -66,6 +68,8 @@ private:
     OscilloscopeWnd * oscWork;
     OscilloscopeWnd * oscProbe;
     CalibrationWnd  * calibrationWnd;
+    QTimer          * tempTimer;
+    qreal           temperature;
 
     QList<QAction *> devicesList;
 

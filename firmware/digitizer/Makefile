@@ -5,9 +5,9 @@
 
 # Compiler options here.
 ifeq ($(USE_OPT),)
-  USE_OPT = -O2 -ggdb -fomit-frame-pointer -falign-functions=16 
+  #USE_OPT = -O2 -ggdb -fomit-frame-pointer -falign-functions=16 
   #-DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER
-  #USE_OPT = -O0 -g -ggdb -fomit-frame-pointer -falign-functions=16 
+  USE_OPT = -O0 -g -ggdb -fomit-frame-pointer -falign-functions=16 
   #-DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER
 endif
 
@@ -91,10 +91,11 @@ CSRC = $(PORTSRC) \
        ./src/main.c \
        ./src/cpu_io.c \
        ./src/led_ctrl.c \
+       ./src/sweep_ctrl.c \
        ./src/adc_ctrl.c \
        ./src/dac_ctrl.c \
        ./src/timer_ctrl.c \
-       ./src/sweep_ctrl.c
+       ./src/temp_ctrl.c
        
        #./src/cpal_usercallback.c \
        #./cpal_i2c/cpal_hal.c \
@@ -109,7 +110,7 @@ CSRC = $(PORTSRC) \
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
-CPPSRC =
+CPPSRC = 
 
 # C sources to be compiled in ARM mode regardless of the global setting.
 # NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
@@ -120,6 +121,7 @@ ACSRC =
 # NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
 #       option that results in lower performance and larger code size.
 ACPPSRC =
+
 
 # C sources to be compiled in THUMB mode regardless of the global setting.
 # NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler

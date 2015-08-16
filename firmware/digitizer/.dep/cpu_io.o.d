@@ -50,6 +50,7 @@ build/obj/cpu_io.o: src/cpu_io.c src/cpu_io.h \
  ../chibios_2.4.x/os/hal/include/gpt.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h \
  ../chibios_2.4.x/os/hal/include/i2c.h \
+ ../chibios_2.4.x/os/hal/platforms/STM32/i2c_lld.h \
  ../chibios_2.4.x/os/hal/include/icu.h \
  ../chibios_2.4.x/os/hal/include/mac.h \
  ../chibios_2.4.x/os/hal/include/pwm.h \
@@ -63,7 +64,8 @@ build/obj/cpu_io.o: src/cpu_io.c src/cpu_io.h \
  ../chibios_2.4.x/os/hal/include/usb.h \
  ../chibios_2.4.x/os/hal/include/mmc_spi.h \
  ../chibios_2.4.x/os/hal/include/serial_usb.h src/led_ctrl.h \
- src/adc_ctrl.h src/dac_ctrl.h src/hdw_config.h ../../common/funcs.h \
+ src/adc_ctrl.h src/dac_ctrl.h src/temp_ctrl.h src/hdw_config.h \
+ ../../common/funcs.h \
  c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/string.h \
  c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/_ansi.h \
  c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/newlib.h \
@@ -189,6 +191,8 @@ mcuconf.h:
 
 ../chibios_2.4.x/os/hal/include/i2c.h:
 
+../chibios_2.4.x/os/hal/platforms/STM32/i2c_lld.h:
+
 ../chibios_2.4.x/os/hal/include/icu.h:
 
 ../chibios_2.4.x/os/hal/include/mac.h:
@@ -220,6 +224,8 @@ src/led_ctrl.h:
 src/adc_ctrl.h:
 
 src/dac_ctrl.h:
+
+src/temp_ctrl.h:
 
 src/hdw_config.h:
 

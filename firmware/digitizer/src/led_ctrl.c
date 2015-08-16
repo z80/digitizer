@@ -3,6 +3,7 @@
 #include "hal.h"
 
 #include "iwdg.h"
+#include "temp_ctrl.h"
 #include "hdw_config.h"
 
 static Mutex    mutex;
@@ -29,7 +30,9 @@ static msg_t ledsThread( void *arg )
             else
             	palClearPad( LED_1_PORT, LED_1_PIN );
         chMtxUnlock();
-        chThdSleepMilliseconds( 250 );
+        chThdSleepMilliseconds( 500 );
+
+        processTemp();
     }
 
     return 0;

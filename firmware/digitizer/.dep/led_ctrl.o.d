@@ -50,6 +50,7 @@ build/obj/led_ctrl.o: src/led_ctrl.c src/led_ctrl.h \
  ../chibios_2.4.x/os/hal/include/gpt.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h \
  ../chibios_2.4.x/os/hal/include/i2c.h \
+ ../chibios_2.4.x/os/hal/platforms/STM32/i2c_lld.h \
  ../chibios_2.4.x/os/hal/include/icu.h \
  ../chibios_2.4.x/os/hal/include/mac.h \
  ../chibios_2.4.x/os/hal/include/pwm.h \
@@ -63,7 +64,7 @@ build/obj/led_ctrl.o: src/led_ctrl.c src/led_ctrl.h \
  ../chibios_2.4.x/os/hal/include/usb.h \
  ../chibios_2.4.x/os/hal/include/mmc_spi.h \
  ../chibios_2.4.x/os/hal/include/serial_usb.h src/iwdg/iwdg.h \
- src/iwdg/iwdg_lld.h src/hdw_config.h
+ src/iwdg/iwdg_lld.h src/temp_ctrl.h src/hdw_config.h
 
 src/led_ctrl.h:
 
@@ -177,6 +178,8 @@ mcuconf.h:
 
 ../chibios_2.4.x/os/hal/include/i2c.h:
 
+../chibios_2.4.x/os/hal/platforms/STM32/i2c_lld.h:
+
 ../chibios_2.4.x/os/hal/include/icu.h:
 
 ../chibios_2.4.x/os/hal/include/mac.h:
@@ -206,5 +209,7 @@ mcuconf.h:
 src/iwdg/iwdg.h:
 
 src/iwdg/iwdg_lld.h:
+
+src/temp_ctrl.h:
 
 src/hdw_config.h:

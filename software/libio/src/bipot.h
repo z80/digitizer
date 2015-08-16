@@ -29,6 +29,7 @@ public:
     bool oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI );
     bool instantDataRaw( int & workV, int & probeV, int & workI, int & probeI );
     bool instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & probeI );
+    bool temperature( qreal & t );
 
     // Some active movements.
     bool sweepWork( qreal from, qreal to, qreal ms );
@@ -39,6 +40,7 @@ public:
     // Calibrations.
     void setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB );
     void setVoltScale( qreal scaleWork, qreal scaleProbe );
+    void setTemperature( qreal temp ); // Yes, thermal compensation. So what?
 
     void clearCalibrationWorkDac();
     bool loadCalibrationWorkDac( const QString & fileName = "./work_dac.dat" );

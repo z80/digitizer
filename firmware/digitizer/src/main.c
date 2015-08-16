@@ -7,6 +7,7 @@
 #include "dac_ctrl.h"
 #include "adc_ctrl.h"
 #include "timer_ctrl.h"
+#include "temp_ctrl.h"
 #include "cpu_io.h"
 
 int main(void)
@@ -14,11 +15,12 @@ int main(void)
     halInit();
     chSysInit();
 
-    initLed();
     initAdc();
     initDac();
     initTimer();
     initCpuIo();
+    initTemp();
+    initLed();
 
     while ( 1 )
     {

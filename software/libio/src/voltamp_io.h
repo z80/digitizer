@@ -27,6 +27,8 @@ public:
     bool setOscPeriod( int ptsCnt, qreal periodMs );
     bool oscData( QVector<int> & data );
 
+    bool temperature( qreal & temp );
+
     bool setArgs( quint8 * data, int dataSz );
     bool execFunc( quint16 funcId );
     int  readData( quint8 * data, int dataSz );

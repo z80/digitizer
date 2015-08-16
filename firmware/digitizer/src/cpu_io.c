@@ -7,6 +7,7 @@
 #include "led_ctrl.h"
 #include "adc_ctrl.h"
 #include "dac_ctrl.h"
+#include "temp_ctrl.h"
 
 #include "hdw_config.h"
 #include "funcs.h"
@@ -139,6 +140,7 @@ static void firmware_upgrade( uint8_t * args );
 static void set_trigger( uint8_t * args );
 static void set_trigger_sweep( uint8_t * args );
 static void get_trigger_data( uint8_t * args );
+static void get_temp( uint8_t * args );
 
 static TFunc funcs[] =
 {
@@ -157,7 +159,8 @@ static TFunc funcs[] =
 	firmware_upgrade,
 	set_trigger,
 	set_trigger_sweep,
-	get_trigger_data
+	get_trigger_data,
+	get_temp
 };
 
 static void exec_func( void )
@@ -310,6 +313,20 @@ static void set_trigger_sweep( uint8_t * args )
 static void get_trigger_data( uint8_t * args )
 {
 	(void)args;
+}
+
+static void get_temp( uint8_t * args )
+{
+	(void)args;
+	uint16_t t = lastTemp();
+
+	uint8_t v = (uint8_t)(t>>8);
+	writeResult( v );
+
+	v = (uint8_t)(t & 0xFF);
+	writeResult( v );
+
+	writeEom();
 }
 
 

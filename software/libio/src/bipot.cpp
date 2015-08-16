@@ -9,6 +9,9 @@ struct CalibrationDac
     int   dacB;
     int   dacC;
     int   dacD;
+
+    qreal temp;
+
     qreal volt;
 };
 
@@ -18,6 +21,8 @@ struct CalibrationAdc
     int adcB;
     int adcC;
     int adcD;
+
+    qreal temp;
 
     qreal voltA;
     qreal voltB;
@@ -29,6 +34,7 @@ struct CoefDac
 {
     qreal a1; 
     qreal a2;
+    qreal at;
     qreal b;
 };
 
@@ -57,6 +63,7 @@ public:
 
     CoefDac workDac;
     CoefDac probeDac;
+    qreal   temperature;
 };
 
 qreal Bipot::PD::adc2workV( int adc )
@@ -106,6 +113,8 @@ Bipot::Bipot()
     pd->probeDac.a1 = 0.3741271/8000.0;
     pd->probeDac.a2 = 0.3741271;
     pd->probeDac.b  = -11980.84;
+
+    pd->temperature = 23.0;
 
     pd->sigs[0] = pd->sigs[1] = pd->sigs[2] = pd->sigs[3] = true;
 }
@@ -316,6 +325,16 @@ bool Bipot::instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & p
     return true;
 }
 
+bool Bipot::temperature( qreal & t )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.temperature( t );
+    if ( !res )
+        return false;
+    return true;
+}
+
 bool Bipot::sweepWork( qreal from, qreal to, qreal ms )
 {
     return true;
@@ -350,6 +369,12 @@ void Bipot::setVoltScale( qreal scaleWork, qreal scaleProbe )
     QMutexLocker lock( &pd->mutex );
         pd->workGain  = scaleWork;
         pd->probeGain = scaleProbe;
+}
+
+void Bipot::setTemperature( qreal temp )
+{
+    QMutexLocker lock( &pd->mutex );
+        pd->temperature = temp;
 }
 
 void Bipot::clearCalibrationWorkDac()
@@ -425,6 +450,11 @@ void Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal
     d.dacC = dacC;
     d.dacD = dacD;
     d.volt = mV;
+
+    qreal t = 23.0;
+    bool res = temperature( t );
+    d.temp = t;
+
     pd->clbrDacWork.append( d );
 }
 
@@ -447,7 +477,7 @@ bool Bipot::loadCalibrationProbeDac( const QString & fileName )
         while ( !file.atEnd() )
         {
             stri = file.readLine();
-            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
@@ -460,12 +490,15 @@ bool Bipot::loadCalibrationProbeDac( const QString & fileName )
                 d.dacB = m.toInt();
 
                 m = ex.cap( 3 );
-                d.dacA = m.toInt();
+                d.dacC = m.toInt();
 
                 m = ex.cap( 4 );
-                d.dacB = m.toInt();
+                d.dacD = m.toInt();
 
                 m = ex.cap( 5 );
+                d.temp = m.toDouble();
+
+                m = ex.cap( 6 );
                 d.volt = m.toDouble();
 
                 pd->clbrDacProbe.append( d );
@@ -487,7 +520,7 @@ bool Bipot::saveCalibrationProbeDac( const QString & fileName )
         for ( QList<CalibrationDac>::const_iterator i=pd->clbrDacProbe.begin(); i!=pd->clbrDacProbe.end(); i++ )
         {
             const CalibrationDac d = *i;
-            QString stri = QString( "%1 %2 %3 %4 %5\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.dacC ).arg( d.dacD ).arg( d.volt );
+            QString stri = QString( "%1 %2 %3 %4 %5 %6\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.dacC ).arg( d.dacD ).arg( d.temp ).arg( d.volt );
             out << stri;
         }
         out.flush();
@@ -505,6 +538,11 @@ void Bipot::addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qrea
     d.dacC = dacC;
     d.dacD = dacD;
     d.volt = mV;
+
+    qreal t = 23.0;
+    bool res = temperature( t );
+    d.temp = t;
+
     pd->clbrDacProbe.append( d );
 }
 
@@ -523,7 +561,7 @@ bool Bipot::loadCalibrationAdc( const QString & fileName )
         while ( !file.atEnd() )
         {
             stri = file.readLine();
-            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
@@ -540,6 +578,9 @@ bool Bipot::loadCalibrationAdc( const QString & fileName )
 
                 m = ex.cap( 4 );
                 d.adcD = m.toInt();
+
+                m = ex.cap( 7 );
+                d.temp = m.toDouble();
 
                 m = ex.cap( 5 );
                 d.voltA = m.toDouble();
@@ -572,14 +613,15 @@ bool Bipot::saveCalibrationAdc( const QString & fileName )
         for ( QList<CalibrationAdc>::const_iterator i=pd->clbrAdc.begin(); i!=pd->clbrAdc.end(); i++ )
         {
             const CalibrationAdc d = *i;
-            QString stri = QString( "%1 %2 %3 %4 %5 %6 %7 %8\n" ).arg( d.adcA )
-                                                                 .arg( d.adcB )
-                                                                 .arg( d.adcC )
-                                                                 .arg( d.adcD )
-                                                                 .arg( d.voltA )
-                                                                 .arg( d.voltB )
-                                                                 .arg( d.voltC )
-                                                                 .arg( d.voltD );
+            QString stri = QString( "%1 %2 %3 %4 %5 %6 %7 %8 %9\n" ).arg( d.adcA )
+                                                                    .arg( d.adcB )
+                                                                    .arg( d.adcC )
+                                                                    .arg( d.adcD )
+                                                                    .arg( d.temp )
+                                                                    .arg( d.voltA )
+                                                                    .arg( d.voltB )
+                                                                    .arg( d.voltC )
+                                                                    .arg( d.voltD );
             out << stri;
         }
         out.flush();
@@ -607,6 +649,10 @@ bool Bipot::addCalibrationAdc( qreal mv0, qreal mv1, qreal mv2, qreal mv3 )
     d.voltB = mv1;
     d.voltC = mv2;
     d.voltD = mv3;
+
+    qreal t = 23.0;
+    res = temperature( t );
+    d.temp = t;
 
     pd->clbrAdc.append( d );
 
