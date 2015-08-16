@@ -10,10 +10,20 @@
 static Mutex mutex;
 static uint16_t temperature = 0;
 
-static const I2CConfig i2cfg1 = {
+/*
+static const I2CConfig i2cfg1 =
+{
     OPMODE_I2C,
     400000,
     FAST_DUTY_CYCLE_2,
+};
+*/
+
+static const I2CConfig i2cfg1 =
+{
+	OPMODE_I2C,
+	100000,
+	STD_DUTY_CYCLE,
 };
 
 
@@ -23,7 +33,7 @@ void initTemp( void )
 
     i2cInit();
 
-    i2cStart(&I2CD1, &i2cfg1);
+    i2cStart( &I2CD1, &i2cfg1 );
 
     /* tune ports for I2C1*/
     palSetPadMode(IOPORT2, 6, PAL_MODE_STM32_ALTERNATE_OPENDRAIN);

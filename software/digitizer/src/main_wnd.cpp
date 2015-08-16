@@ -35,7 +35,7 @@ MainWnd::MainWnd( QWidget * parent )
     calibrationWnd->setIo( io );
 
     tempTimer = new QTimer( this );
-    tempTimer->setInterval( 3000 );
+    tempTimer->setInterval( 1000 );
     connect( tempTimer, SIGNAL(timeout()), this, SLOT(slotTemp()));
     tempTimer->start();
 
