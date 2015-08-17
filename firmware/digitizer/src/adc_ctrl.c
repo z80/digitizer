@@ -7,19 +7,12 @@
 #include "led_ctrl.h"
 
 #define ADC_QUEUE_SZ   (320)
-#define SWEEP_QUEUE_SZ (320)
 
 #define ADC_MUX_0    0
 #define ADC_MUX_1    1
 
 InputQueue  adc_queue;
 uint8_t     adc_queue_buffer[ADC_QUEUE_SZ];
-
-InputQueue  sweep_queue;
-uint8_t     sweep_queue_buffer[SWEEP_QUEUE_SZ];
-
-OutputQueue sweepCmdQueue;
-uint8_t     sweepCmdBuffer[2];
 
 uint8_t     adc_rx_buffer[4];
 static int  adcIndex = 0;
@@ -50,8 +43,6 @@ static const SPIConfig hs_spicfg =
 void initAdc( void )
 {
 	chIQInit( &adc_queue,     adc_queue_buffer,   ADC_QUEUE_SZ,   0 );
-	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
-	chOQInit( &sweepCmdQueue, sweepCmdBuffer,     2,              0 );
 
     palSetPadMode( GPIOA, ADC_MUX_0, PAL_MODE_OUTPUT_PUSHPULL ); 		// MUX_0
     palSetPadMode( GPIOA, ADC_MUX_1, PAL_MODE_OUTPUT_PUSHPULL );        // MUX_1
@@ -109,57 +100,52 @@ void onSpiComplete( SPIDriver * spid )
 					// are shown as an example.
 					// Save ADC signal index first.
 					uint8_t v;
-					if ( signalMask & 1 )
-					{
-						value = instantAdcData[0];
-						v = (uint8_t)( value & 0xFF );
-						chIQPutI( &adc_queue, v );
 
-						v = (uint8_t)( (value >> 8) & 0xFF );
-						chIQPutI( &adc_queue, v );
+					value = instantAdcData[0];
+					v = (uint8_t)( value & 0xFF );
+					chIQPutI( &adc_queue, v );
 
-						v = (uint8_t)( (value >> 16) & 0xFF );
-						chIQPutI( &adc_queue, v );
-					}
+					v = (uint8_t)( (value >> 8) & 0xFF );
+					chIQPutI( &adc_queue, v );
 
-					if ( signalMask & 2 )
-					{
-						value = instantAdcData[1];
-						v = (uint8_t)( value & 0xFF );
-						chIQPutI( &adc_queue, v );
+					v = (uint8_t)( (value >> 16) & 0xFF );
+					chIQPutI( &adc_queue, v );
 
-						v = (uint8_t)( (value >> 8) & 0xFF );
-						chIQPutI( &adc_queue, v );
 
-						v = (uint8_t)( (value >> 16) & 0xFF );
-						chIQPutI( &adc_queue, v );
-					}
 
-					if ( signalMask & 4 )
-					{
-						value = instantAdcData[2];
-						v = (uint8_t)( value & 0xFF );
-						chIQPutI( &adc_queue, v );
+					value = instantAdcData[1];
+					v = (uint8_t)( value & 0xFF );
+					chIQPutI( &adc_queue, v );
 
-						v = (uint8_t)( (value >> 8) & 0xFF );
-						chIQPutI( &adc_queue, v );
+					v = (uint8_t)( (value >> 8) & 0xFF );
+					chIQPutI( &adc_queue, v );
 
-						v = (uint8_t)( (value >> 16) & 0xFF );
-						chIQPutI( &adc_queue, v );
-					}
+					v = (uint8_t)( (value >> 16) & 0xFF );
+					chIQPutI( &adc_queue, v );
 
-					if ( signalMask & 8 )
-					{
-						value = instantAdcData[3];
-						v = (uint8_t)( value & 0xFF );
-						chIQPutI( &adc_queue, v );
 
-						v = (uint8_t)( (value >> 8) & 0xFF );
-						chIQPutI( &adc_queue, v );
 
-						v = (uint8_t)( (value >> 16) & 0xFF );
-						chIQPutI( &adc_queue, v );
-					}
+					value = instantAdcData[2];
+					v = (uint8_t)( value & 0xFF );
+					chIQPutI( &adc_queue, v );
+
+					v = (uint8_t)( (value >> 8) & 0xFF );
+					chIQPutI( &adc_queue, v );
+
+					v = (uint8_t)( (value >> 16) & 0xFF );
+					chIQPutI( &adc_queue, v );
+
+
+
+					value = instantAdcData[3];
+					v = (uint8_t)( value & 0xFF );
+					chIQPutI( &adc_queue, v );
+
+					v = (uint8_t)( (value >> 8) & 0xFF );
+					chIQPutI( &adc_queue, v );
+
+					v = (uint8_t)( (value >> 16) & 0xFF );
+					chIQPutI( &adc_queue, v );
 				}
 			}
     	}
@@ -228,40 +214,6 @@ void setOscPeriod( uint32_t interval )
 	chSysUnlock();
 }
 
-InputQueue * sweepData( void )
-{
-	return &sweep_queue;
-}
-
-static uint8_t  sweepSigs      = 15;
-static uint32_t sweepOscPeriod = 8000;
-
-void setSweepOsc( uint8_t sigs, uint32_t period )
-{
-	sweepSigs   = sigs;
-	sweepOscPeriod = period;
-}
-
-static uint16_t sweepDacsFrom[4];
-static uint16_t sweepDacsTo[4];
-static uint32_t sweepPeriod = 8000000;
-
-void setSweep( uint16_t * from, uint16_t * to, uint32_t period )
-{
-	sweepDacsFrom[0] = from[0];
-	sweepDacsFrom[1] = from[1];
-	sweepDacsFrom[2] = from[2];
-	sweepDacsFrom[3] = from[3];
-
-	sweepDacsTo[0] = to[0];
-	sweepDacsTo[1] = to[1];
-	sweepDacsTo[2] = to[2];
-	sweepDacsTo[3] = to[3];
-
-	sweepPeriod = period;
-
-	chOQPut( &sweepCmdQueue, 1 );
-}
 
 
 
