@@ -10,7 +10,7 @@ void setSweepTime( int ptsCnt, int period );
 uint8_t processSweepI( void ); // It should be called in DAC handler.
 void setSweepEn( uint8_t en ); // Enables automatic sweep.
 uint8_t sweepEn( void );
-void setTrigSweepEn( uint8_t en ); // Sweep by external trigger. This sweep should only switch voltage without real sweeping.
+void setTrigEn( uint8_t en ); // Record ADC by external trigger. This should only read ADC.
 InputQueue * sweepQueue( void ); // Sweep data.
 
 #endif

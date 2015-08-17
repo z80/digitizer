@@ -1,5 +1,6 @@
 
 #include "dac_ctrl.h"
+#include "sweep_ctrl.h"
 #include "hal.h"
 
 
@@ -120,11 +121,12 @@ int  setDac2( int valueL, int valueH )
 
 void processDacI( void )
 {
-	// Get All data from output queue.
+	static uint8_t i = 0;
+
+	// Get next DAC data from output queue.
 	int queueSize = chOQGetFullI( &dac_queue );
 	if ( queueSize >= 3 )
 	{
-		int i;
 		msg_t res;
 		res = chOQGetI( &dac_queue );
 		i = (int)res;
@@ -137,41 +139,48 @@ void processDacI( void )
 
 		i = i % 4;
 
-
 		newValues[i] = val;
-
-		if ( newValues[i] != dacValues[i] )
-		{
-			switch ( i )
-			{
-			case 0:
-				hs_spicfg.sspad = DAC_CS_0;
-				//palClearPad( GPIOB, DAC_CS_0 );
-				break;
-			case 1:
-				hs_spicfg.sspad = DAC_CS_1;
-				//palClearPad( GPIOB, DAC_CS_1 );
-				break;
-			case 2:
-				hs_spicfg.sspad = DAC_CS_2;
-				//palClearPad( GPIOB, DAC_CS_2 );
-				break;
-			case 3:
-				hs_spicfg.sspad = DAC_CS_3;
-				//palClearPad( GPIOB, DAC_CS_3 );
-				break;
-			}
-			dacValues[i] = newValues[i];
-			dac_tx_buffer[0] = (uint8_t)((newValues[i] >> 8) & 0xFF);
-			dac_tx_buffer[1] = (uint8_t)(newValues[i] & 0xFF);
-
-			spiSelectI( &SPID2 );
-			//palClearPad( GPIOB, hs_spicfg.sspad );
-			spiStartSendI( &SPID2, 2, dac_tx_buffer );
-			// Only one DAC could be set at once due to they all are
-			// connected to one and the same SPI bus.
-		}
 	}
+
+
+	if ( newValues[i] != dacValues[i] )
+	{
+		switch ( i )
+		{
+		case 0:
+			hs_spicfg.sspad = DAC_CS_0;
+			//palClearPad( GPIOB, DAC_CS_0 );
+			break;
+		case 1:
+			hs_spicfg.sspad = DAC_CS_1;
+			//palClearPad( GPIOB, DAC_CS_1 );
+			break;
+		case 2:
+			hs_spicfg.sspad = DAC_CS_2;
+			//palClearPad( GPIOB, DAC_CS_2 );
+			break;
+		case 3:
+			hs_spicfg.sspad = DAC_CS_3;
+			//palClearPad( GPIOB, DAC_CS_3 );
+			break;
+		}
+		dacValues[i] = newValues[i];
+		dac_tx_buffer[0] = (uint8_t)((newValues[i] >> 8) & 0xFF);
+		dac_tx_buffer[1] = (uint8_t)(newValues[i] & 0xFF);
+
+		spiSelectI( &SPID2 );
+		//palClearPad( GPIOB, hs_spicfg.sspad );
+		spiStartSendI( &SPID2, 2, dac_tx_buffer );
+		// Only one DAC could be set at once due to they all are
+		// connected to one and the same SPI bus.
+	}
+
+	i += 1;
+
+	if ( i == 4 )
+		processSweepI();
+
+	i %= 4;
 
 }
 

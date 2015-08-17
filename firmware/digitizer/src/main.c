@@ -8,6 +8,7 @@
 #include "adc_ctrl.h"
 #include "timer_ctrl.h"
 #include "temp_ctrl.h"
+#include "sweep_ctrl.h"
 #include "cpu_io.h"
 
 int main(void)
@@ -17,6 +18,7 @@ int main(void)
 
     initAdc();
     initDac();
+    initSweep();
     initTimer();
     initCpuIo();
     initTemp();

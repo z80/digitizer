@@ -8,6 +8,7 @@
 #include "adc_ctrl.h"
 #include "dac_ctrl.h"
 #include "temp_ctrl.h"
+#include "sweep_ctrl.h"
 
 #include "hdw_config.h"
 #include "funcs.h"
@@ -133,14 +134,17 @@ static void get_adc( uint8_t * args );
 static void set_osc_signals( uint8_t * args );
 static void set_osc_period( uint8_t * args );
 static void get_osc_data( uint8_t * args );
-static void set_sweep( uint8_t * args );
-static void set_sweep_osc( uint8_t * args );
-static void get_sweep_data( uint8_t * args );
-static void firmware_upgrade( uint8_t * args );
-static void set_trigger( uint8_t * args );
-static void set_trigger_sweep( uint8_t * args );
-static void get_trigger_data( uint8_t * args );
+
 static void get_temp( uint8_t * args );
+
+static void set_trigger_en( uint8_t * args );
+
+static void set_sweep_range( uint8_t * args );
+static void set_sweep_time( uint8_t * args );
+static void set_sweep_en( uint8_t * args );
+static void get_sweep_data( uint8_t * args );
+
+static void firmware_upgrade( uint8_t * args );
 
 static TFunc funcs[] =
 {
@@ -153,14 +157,17 @@ static TFunc funcs[] =
 	set_osc_signals,
 	set_osc_period,
 	get_osc_data,
-	set_sweep,
-	set_sweep_osc,
+
+	get_temp,
+
+	set_trigger_en,
+
+	set_sweep_range,
+	set_sweep_time,
+	set_sweep_en,
 	get_sweep_data,
-	firmware_upgrade,
-	set_trigger,
-	set_trigger_sweep,
-	get_trigger_data,
-	get_temp
+
+	firmware_upgrade
 };
 
 static void exec_func( void )
@@ -279,42 +286,6 @@ static void get_osc_data( uint8_t * arg )
 	writeEom();
 }
 
-static void set_sweep( uint8_t * args )
-{
-	(void)args;
-
-}
-
-static void set_sweep_osc( uint8_t * args )
-{
-	(void)args;
-}
-
-static void get_sweep_data( uint8_t * args )
-{
-	(void)args;
-}
-
-static void firmware_upgrade( uint8_t * args )
-{
-	(void)args;
-}
-
-static void set_trigger( uint8_t * args )
-{
-	(void)args;
-}
-
-static void set_trigger_sweep( uint8_t * args )
-{
-	(void)args;
-}
-
-static void get_trigger_data( uint8_t * args )
-{
-	(void)args;
-}
-
 static void get_temp( uint8_t * args )
 {
 	(void)args;
@@ -328,6 +299,52 @@ static void get_temp( uint8_t * args )
 
 	writeEom();
 }
+
+static void set_trigger_en( uint8_t * args )
+{
+	setTrigEn( args[0] );
+}
+
+static void set_sweep_range( uint8_t * args )
+{
+	int dacs[4];
+	uint8_t i;
+	for ( i=0; i<4; i++ )
+	{
+		dacs[i] = ( (int)args[ 2*i ] << 8 ) + (int)args[2*i+1];
+	}
+	setSweepRange( dacs );
+}
+
+static void set_sweep_time( uint8_t * args )
+{
+
+}
+
+static void set_sweep_en( uint8_t * args )
+{
+
+}
+
+static void get_sweep_data( uint8_t * args )
+{
+
+}
+
+static void firmware_upgrade( uint8_t * args )
+{
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

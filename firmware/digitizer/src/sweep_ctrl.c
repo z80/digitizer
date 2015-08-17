@@ -87,7 +87,7 @@ void initSweep( void )
 	extStart(&EXTD1, &extcfg);
 }
 
-void setSweepRange0( int * dacTo0 )
+void setSweepRange( int * dacTo0 )
 {
 	swDacTo[0] = dacTo0[0];
 	swDacTo[1] = dacTo0[1];
@@ -149,23 +149,28 @@ void setSweepEn( uint8_t en )
 	swNextPtTime = 0;
 	currentDacs( swDacFrom );
 
-	chOQPut( &sweepCmdQueue, en ? 1 : 0 );
+	//chOQPut( &sweepCmdQueue, en ? 1 : 0 );
 	swEnabled = en;
 }
 
 uint8_t sweepEn( void )
 {
 	chSysLock();
-		uint8_t en = (swEnabled | swTrigEnabled) ? 1 : 0;
+		uint8_t en = (swEnabled) ? 1 : 0;
 	chSysUnlock();
 	return en;
 }
 
-void setTrigSweepEn( uint8_t en )
+void setTrigEn( uint8_t en )
 {
 	currentDacs( swDacFrom );
 
-	chOQPut( &sweepCmdQueue, en ? 2 : 0 );
+	//chOQPut( &sweepCmdQueue, en ? 2 : 0 );
+	swTrigEnabled = en;
+	if ( en )
+		extChannelEnable( &EXTD1, 1 );
+	else
+		extChannelDisable( &EXTD1, 1 );
 }
 
 InputQueue * sweepQueue( void )
@@ -277,6 +282,9 @@ static void extCb( EXTDriver * extp, expchannel_t channel )
   // Record ADC data.
   recordAdc();
 
+  // External trigger should cause data recording - not sweep.
+  // It's very unlikely that one will ever need sweep by external trigger.
+  /*
   // Change point index.
   swPtIndex += 1;
   swPtIndex %= swPtsCnt;
@@ -289,6 +297,7 @@ static void extCb( EXTDriver * extp, expchannel_t channel )
     int dac = (int)dac64;
     setDacI( i, dac );
   }
+  */
 }
 
 
