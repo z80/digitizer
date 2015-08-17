@@ -326,7 +326,7 @@ bool VoltampIo::temperature( qreal & temp )
 {
     QMutexLocker lock( &pd->mutex );
 
-    quint8 funcInd = 16;
+    quint8 funcInd = 9;
     bool res = execFunc( funcInd );
     if ( !res )
         return false;

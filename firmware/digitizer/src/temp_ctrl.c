@@ -43,10 +43,10 @@ void initTemp( void )
     chThdSleepMilliseconds(100);
 
     // Write to config continuous convertion and 16 bit mode.
-    msg_t res;
+    //msg_t res;
     uint8_t tx[2] = { REG_CONF, (1<<7) };
     systime_t tmo = MS2ST(100);
-    res = i2cMasterTransmitTimeout ( &I2CD1, ADDR, tx, 2, 0, 0, tmo );
+    /*res =*/ i2cMasterTransmitTimeout ( &I2CD1, ADDR, tx, 2, 0, 0, tmo );
 }
 
 

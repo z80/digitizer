@@ -1,21 +1,22 @@
 build/obj/shell.o: ../chibios_2.4.x/os/various/shell.c \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/string.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/_ansi.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/newlib.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/config.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/machine/ieeefp.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/reent.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/_ansi.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/_types.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/machine/_types.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/machine/_default_types.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/lock.h \
- c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/string.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/string.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/_ansi.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/newlib.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/config.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/machine/ieeefp.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/features.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/reent.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/_ansi.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/_types.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/machine/_types.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/machine/_default_types.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/lock.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stddef.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/string.h \
  ../chibios_2.4.x/os/kernel/include/ch.h chconf.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h \
- c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stdint.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stdint.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/stdint.h \
  ../chibios_2.4.x/os/kernel/include/chlists.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/chcore.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/STM32F1xx/cmparams.h \
@@ -59,6 +60,7 @@ build/obj/shell.o: ../chibios_2.4.x/os/various/shell.c \
  ../chibios_2.4.x/os/hal/include/adc.h \
  ../chibios_2.4.x/os/hal/include/can.h \
  ../chibios_2.4.x/os/hal/include/ext.h \
+ ../chibios_2.4.x/os/hal/platforms/STM32/ext_lld.h \
  ../chibios_2.4.x/os/hal/include/gpt.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h \
  ../chibios_2.4.x/os/hal/include/i2c.h \
@@ -79,31 +81,33 @@ build/obj/shell.o: ../chibios_2.4.x/os/various/shell.c \
  ../chibios_2.4.x/os/various/shell.h \
  ../chibios_2.4.x/os/various/chprintf.h
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/string.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/string.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/_ansi.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/_ansi.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/newlib.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/newlib.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/config.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/config.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/machine/ieeefp.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/machine/ieeefp.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/reent.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/features.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/_ansi.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/reent.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/_types.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/_ansi.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/machine/_types.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/_types.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/machine/_default_types.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/machine/_types.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/lock.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/machine/_default_types.h:
 
-c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/lock.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/sys/string.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stddef.h:
+
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/sys/string.h:
 
 ../chibios_2.4.x/os/kernel/include/ch.h:
 
@@ -111,9 +115,9 @@ chconf.h:
 
 ../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h:
 
-c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stdint.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stdint.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/stdint.h:
 
 ../chibios_2.4.x/os/kernel/include/chlists.h:
 
@@ -206,6 +210,8 @@ mcuconf.h:
 ../chibios_2.4.x/os/hal/include/can.h:
 
 ../chibios_2.4.x/os/hal/include/ext.h:
+
+../chibios_2.4.x/os/hal/platforms/STM32/ext_lld.h:
 
 ../chibios_2.4.x/os/hal/include/gpt.h:
 

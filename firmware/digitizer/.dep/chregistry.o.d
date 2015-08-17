@@ -1,9 +1,9 @@
 build/obj/chregistry.o: ../chibios_2.4.x/os/kernel/src/chregistry.c \
  ../chibios_2.4.x/os/kernel/include/ch.h chconf.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h \
- c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h \
- c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stdint.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stddef.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stdint.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/stdint.h \
  ../chibios_2.4.x/os/kernel/include/chlists.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/chcore.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/STM32F1xx/cmparams.h \
@@ -38,11 +38,11 @@ chconf.h:
 
 ../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h:
 
-c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stddef.h:
 
-c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stdint.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stdint.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/stdint.h:
 
 ../chibios_2.4.x/os/kernel/include/chlists.h:
 

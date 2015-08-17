@@ -2,6 +2,7 @@
 #include "timer_ctrl.h"
 #include "adc_ctrl.h"
 #include "dac_ctrl.h"
+#include "sweep_ctrl.h"
 #include "hal.h"
 
 static void gptCb( GPTDriver * gptp );
@@ -33,6 +34,7 @@ static void gptCb(GPTDriver *gptp)
 	chSysLockFromIsr();
 		queryAdcI();
 		processDacI();
+		processSweepI();
 	chSysUnlockFromIsr();
 }
 

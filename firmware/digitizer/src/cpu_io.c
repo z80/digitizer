@@ -142,6 +142,7 @@ static void set_trigger_en( uint8_t * args );
 static void set_sweep_range( uint8_t * args );
 static void set_sweep_time( uint8_t * args );
 static void set_sweep_en( uint8_t * args );
+static void get_sweep_en( uint8_t * args );
 static void get_sweep_data( uint8_t * args );
 
 static void firmware_upgrade( uint8_t * args );
@@ -165,6 +166,7 @@ static TFunc funcs[] =
 	set_sweep_range,
 	set_sweep_time,
 	set_sweep_en,
+	get_sweep_en,
 	get_sweep_data,
 
 	firmware_upgrade
@@ -325,17 +327,50 @@ static void set_sweep_time( uint8_t * args )
 
 static void set_sweep_en( uint8_t * args )
 {
+	setSweepEn( args[0] );
+}
 
+static void get_sweep_en( uint8_t * args )
+{
+	(void)args;
+	uint8_t v = sweepEn();
+	writeResult( v );
+	writeEom();
 }
 
 static void get_sweep_data( uint8_t * args )
 {
+	(void)args;
+	InputQueue * q = sweepQueue();
+	chSysLock();
+		size_t cnt;
+		cnt = (chQSpaceI( q ) / 12);
+	chSysUnlock();
+	size_t recInd;
+	for ( recInd=0; recInd<cnt; recInd++ )
+	{
+		size_t sigInd;
+		for ( sigInd=0; sigInd<4; sigInd++ )
+		{
+			size_t byteInd;
+			for ( byteInd = 0; byteInd<3; byteInd++ )
+			{
+				uint8_t v;
+				msg_t msg;
+
+				msg = chIQGet( q );
+				v = (uint8_t)msg;
+				writeResult( v );
+			}
+		}
+	}
+	writeEom();
 
 }
 
 static void firmware_upgrade( uint8_t * args )
 {
-
+	(void)args;
 }
 
 

@@ -29,6 +29,14 @@ public:
 
     bool temperature( qreal & temp );
 
+    bool setTriggerEn( bool en );
+
+    bool setSweepRange( int * dacTo );
+    bool setSweepTime( int ptsCnt, int period );
+    bool setSweepEn( bool en );
+    bool sweepEn( bool & en );
+    bool sweepData( QVector<int> & data );
+
     bool setArgs( quint8 * data, int dataSz );
     bool execFunc( quint16 funcId );
     int  readData( quint8 * data, int dataSz );

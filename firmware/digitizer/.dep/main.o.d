@@ -1,8 +1,8 @@
 build/obj/main.o: src/main.c ../chibios_2.4.x/os/kernel/include/ch.h \
  chconf.h ../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h \
- c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h \
- c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stdint.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stddef.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stdint.h \
+ c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/stdint.h \
  ../chibios_2.4.x/os/kernel/include/chlists.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/chcore.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/STM32F1xx/cmparams.h \
@@ -46,6 +46,7 @@ build/obj/main.o: src/main.c ../chibios_2.4.x/os/kernel/include/ch.h \
  ../chibios_2.4.x/os/hal/include/adc.h \
  ../chibios_2.4.x/os/hal/include/can.h \
  ../chibios_2.4.x/os/hal/include/ext.h \
+ ../chibios_2.4.x/os/hal/platforms/STM32/ext_lld.h \
  ../chibios_2.4.x/os/hal/include/gpt.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h \
  ../chibios_2.4.x/os/hal/include/i2c.h \
@@ -64,7 +65,7 @@ build/obj/main.o: src/main.c ../chibios_2.4.x/os/kernel/include/ch.h \
  ../chibios_2.4.x/os/hal/include/mmc_spi.h \
  ../chibios_2.4.x/os/hal/include/serial_usb.h src/iwdg/iwdg.h \
  src/iwdg/iwdg_lld.h src/led_ctrl.h src/dac_ctrl.h src/adc_ctrl.h \
- src/timer_ctrl.h src/temp_ctrl.h src/cpu_io.h
+ src/timer_ctrl.h src/temp_ctrl.h src/sweep_ctrl.h src/cpu_io.h
 
 ../chibios_2.4.x/os/kernel/include/ch.h:
 
@@ -72,11 +73,11 @@ chconf.h:
 
 ../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h:
 
-c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stddef.h:
 
-c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stdint.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/include/stdint.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h:
+c:\programs\codesourcery\2011.03-56\bin\../lib/gcc/arm-none-eabi/4.6.3/../../../../arm-none-eabi/include/stdint.h:
 
 ../chibios_2.4.x/os/kernel/include/chlists.h:
 
@@ -170,6 +171,8 @@ mcuconf.h:
 
 ../chibios_2.4.x/os/hal/include/ext.h:
 
+../chibios_2.4.x/os/hal/platforms/STM32/ext_lld.h:
+
 ../chibios_2.4.x/os/hal/include/gpt.h:
 
 ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h:
@@ -217,5 +220,7 @@ src/adc_ctrl.h:
 src/timer_ctrl.h:
 
 src/temp_ctrl.h:
+
+src/sweep_ctrl.h:
 
 src/cpu_io.h:
