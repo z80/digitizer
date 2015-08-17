@@ -49,6 +49,9 @@ public:
     qreal adc2workI( int adc );
     qreal adc2probeI( int adc );
 
+    void  workV2Dac( qreal workV, int & dac1, int & dac2 );
+    void  probeV2Dac( qreal workV, int & dac1, int & dac2 );
+
     VoltampIo  * io;
     QMutex       mutex;
     bool         sigs[4];
@@ -90,6 +93,40 @@ qreal Bipot::PD::adc2probeI( int adc )
     qreal res = static_cast< qreal >( adc );
     res = res * probeA + probeB;
     return res;
+}
+
+void  Bipot::PD::workV2Dac( qreal workV, int & dac1, int & dac2 )
+{
+    qreal aDacLow  = workDac.a1;
+    qreal aDacHigh = workDac.a2;
+    qreal bDac     = workDac.b;
+    qreal temp     = temperature; // Also should be included into consideration.
+
+    qreal fLow = 32767.0;
+    qreal fHigh = ceil( (workV - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
+    fLow = ceil( (workV - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
+    int dacLow  = static_cast<int>( fLow );
+    int dacHigh = static_cast<int>( fHigh );
+
+    dac1 = dacLow;
+    dac2 = dacHigh;
+}
+
+void  Bipot::PD::probeV2Dac( qreal probeV, int & dac1, int & dac2 )
+{
+    qreal aDacLow  = probeDac.a1;
+    qreal aDacHigh = probeDac.a2;
+    qreal bDac     = probeDac.b;
+    qreal temp     = temperature; // Also should be included into consideration.
+
+    qreal fLow = 32767.0;
+    qreal fHigh = ceil( (probeV - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
+    fLow = ceil( (probeV - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
+    int dacLow  = static_cast<int>( fLow );
+    int dacHigh = static_cast<int>( fHigh );
+
+    dac1 = dacLow;
+    dac2 = dacHigh;
 }
 
 
@@ -335,25 +372,116 @@ bool Bipot::temperature( qreal & t )
     return true;
 }
 
-bool Bipot::sweepWork( qreal from, qreal to, qreal ms )
+bool Bipot::setTriggerEn( bool en )
 {
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.setTriggerEn( en );
+    if ( !res )
+        return false;
     return true;
 }
 
-bool Bipot::sweepProbe( qreal from, qreal to, qreal ms )
+bool Bipot::setSweepRange( qreal workV, qreal probeV )
 {
+    VoltampIo & io = *(pd->io);
+
+    int dac[4];
+    pd->probeV2Dac( workV, dac[0], dac[1] );
+    pd->probeV2Dac( probeV, dac[2], dac[3] );
+
+    bool res = io.setSweepRange( dac );
+    if ( !res )
+        return false;
     return true;
 }
 
-bool Bipot::seeepBoth( qreal from1, qreal to1, qreal from2, qreal to2, qreal ms )
+bool Bipot::setSweepTime( int ptsCnt, qreal periodMs )
 {
+    VoltampIo & io = *(pd->io);
+
+    int period = static_cast<int>( periodMs * 5.0 );
+
+    bool res = io.setSweepTime( ptsCnt, period );
+    if ( !res )
+        return false;
     return true;
 }
 
-bool Bipot::triggerSweepWork( qreal from, qreal to, int ptsCnt )
+bool Bipot::setSweepEn( bool en )
 {
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.setSweepEn( en );
+    if ( !res )
+        return false;
     return true;
 }
+
+bool Bipot::sweepEn( bool & en )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.sweepEn( en );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI )
+{
+    VoltampIo & io = *(pd->io);
+    pd->mutex.lock();
+        bool en[4];
+        en[0] = pd->sigs[0];
+        en[1] = pd->sigs[1];
+        en[2] = pd->sigs[2];
+        en[3] = pd->sigs[3];
+    pd->mutex.unlock();
+    QVector<int> & dataRaw = pd->data;
+    QVector<qreal> * data[4];
+    workV.clear();
+    probeV.clear();
+    workI.clear();
+    probeI.clear();
+    data[0] = &workV;
+    data[1] = &probeV;
+    data[2] = &workI;
+    data[3] = &probeI;
+    bool res = io.sweepData( dataRaw );
+    if ( !res )
+        return false;
+    // Unit convertion is to be applied here.
+    int ind = 0;
+    
+    for ( QVector<int>::const_iterator i=dataRaw.begin(); i!= dataRaw.end(); i++ )
+    {
+        if ( en[ind] )
+        {
+            int adc = *i;
+            qreal v;
+            switch ( ind )
+            {
+            case 0:
+                v = pd->adc2workV( adc );
+                break;
+            case 1:
+                v = pd->adc2probeV( adc );
+                break;
+            case 2:
+                v = pd->adc2workI( adc );
+                break;
+            default:
+                v = pd->adc2probeI( adc );
+                break;
+            }
+            data[ind]->append( v );
+        }
+        ind = (ind + 1) % 4;
+    }
+    return true;
+}
+
 
 void Bipot::setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB )
 {

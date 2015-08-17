@@ -31,11 +31,15 @@ public:
     bool instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & probeI );
     bool temperature( qreal & t );
 
+    // Capture by trigger.
+    bool setTriggerEn( bool en );
+
     // Some active movements.
-    bool sweepWork( qreal from, qreal to, qreal ms );
-    bool sweepProbe( qreal from, qreal to, qreal ms );
-    bool seeepBoth( qreal from1, qreal to1, qreal from2, qreal to2, qreal ms );
-    bool triggerSweepWork( qreal from, qreal to, int ptsCnt );
+    bool setSweepRange( qreal workV, qreal probeV );
+    bool setSweepTime( int ptsCnt, qreal periodMs );
+    bool setSweepEn( bool en );
+    bool sweepEn( bool & en );
+    bool sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI );
 
     // Calibrations.
     void setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB );
