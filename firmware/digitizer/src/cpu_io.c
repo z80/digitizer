@@ -318,7 +318,9 @@ static void set_sweep_range( uint8_t * args )
 
 static void set_sweep_time( uint8_t * args )
 {
-
+	int ptsCnt = ( (int)args[0] << 24 ) + ( (int)args[1] << 16 ) + ( (int)args[2] << 8 ) + ( (int)args[3] );
+	int period = ( (int)args[4] << 24 ) + ( (int)args[5] << 16 ) + ( (int)args[6] << 8 ) + ( (int)args[7] );
+	setSweepTime( ptsCnt, period );
 }
 
 static void set_sweep_en( uint8_t * args )
