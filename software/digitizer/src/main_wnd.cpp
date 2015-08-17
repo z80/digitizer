@@ -312,18 +312,42 @@ void MainWnd::slotSweepWork()
 {
     if ( io->isOpen() )
     {
-        qreal from   = ui.workVolt->value();
-        qreal to     = ui.workSweepTo->value();
+        qreal workFrom   = ui.workVolt->value();
+        qreal workTo     = ui.workSweepTo->value();
+        qreal probeFrom  = ui.probeVolt->value();
+        qreal delta = workTo - workFrom;
         qreal timeMs = 1000.0;
 
-        if ( !ui.pullProbe->isChecked() )
-            io->sweepWork( from, to, timeMs );
-        else
+        bool pull = ui.pullProbe->isChecked();
+        qreal probeTo = ( pull ) ? (probeFrom + delta) : probeFrom;
+
+        bool res = io->setSweepRange( workTo, probeTo );
+        if ( !res )
         {
-            qreal from2 = ui.probeVolt->value();
-            qreal to2   = from2 + to - from;
-            //io->sweepBoth( from, to, from2, to2, timeMs );
+            QString stri = QString( "Failed to set sweep range!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
         }
+
+        res = io->setSweepTime( 1024, timeMs );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep time!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        res = io->setSweepEn( true );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to start sweep!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        // Open sweep window display.
+        // Run sweep data readout.
+        // While sweep runs continue adding points.
     }
 }
 
@@ -349,18 +373,42 @@ void MainWnd::slotSweepProbe()
 {
     if ( io->isOpen() )
     {
-        qreal from   = ui.probeVolt->value();
-        qreal to     = ui.probeSweepTo->value();
+        qreal workFrom   = ui.workVolt->value();
+        qreal probeFrom  = ui.probeVolt->value();
+        qreal probeTo    = ui.probeSweepTo->value();
+        qreal delta = probeTo - probeFrom;
         qreal timeMs = 1000.0;
 
-        if ( !ui.pullWork->isChecked() )
-            io->sweepProbe( from, to, timeMs );
-        else
+        bool pull = ui.pullWork->isChecked();
+        qreal workTo = ( pull ) ? (workFrom + delta) : workFrom;
+
+        bool res = io->setSweepRange( workTo, probeTo );
+        if ( !res )
         {
-            qreal from2 = ui.workVolt->value();
-            qreal to2   = from2 + to - from;
-            //io->sweepBoth( from2, to2, from, to, timeMs );
+            QString stri = QString( "Failed to set sweep range!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
         }
+
+        res = io->setSweepTime( 1024, timeMs );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep time!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        res = io->setSweepEn( true );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to start sweep!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        // Open sweep window display.
+        // Run sweep data readout.
+        // While sweep runs continue adding points.
     }
 }
 
