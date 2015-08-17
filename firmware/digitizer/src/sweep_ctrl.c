@@ -1,6 +1,8 @@
 
 #include "sweep_ctrl.h"
 #include "hal.h"
+#include "dac_ctrl.h"
+#include "adc_ctrl.h"
 
 #define SWEEP_QUEUE_SZ (320)
 
@@ -16,12 +18,61 @@ static int swDacTo[4];
 
 static int swPeriod;
 static int swElapsed;
+static int swNextPtTime;
 
 static int swPtsCnt;
 static int swPtIndex;
 
 static uint8_t swEnabled;
 static uint8_t swTrigEnabled;
+
+static void extCb( EXTDriver * extp, expchannel_t channel );
+
+static const EXTConfig extcfg = {
+  {
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_RISING_EDGE | EXT_CH_MODE_AUTOSTART, extCb },
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+   {EXT_CH_MODE_DISABLED, NULL},
+  },
+  EXT_MODE_EXTI(0,
+                EXT_MODE_GPIOB,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0)
+};
+
+
+
+
+
+
+
+
+
 
 void initSweep( void )
 {
@@ -33,6 +84,7 @@ void initSweep( void )
 
 
 	// Initialize external interrupt input here.
+	extStart(&EXTD1, &extcfg);
 }
 
 void setSweepRange0( int * dacTo0 )
@@ -49,17 +101,53 @@ void setSweepTime( int ptsCnt, int period )
 	swPtsCnt = ptsCnt;
 }
 
-void processSweepI( void )
-{
+static void recordAdc( void );
 
+uint8_t processSweepI( void )
+{
+	if ( swEnabled )
+	{
+		swElapsed += 1;
+		// Record data if it's time to do that.
+		if ( swElapsed >= swNextPtTime )
+		{
+			// Measure signals.
+			recordAdc();
+			// Calc next point time.
+
+			swPtIndex += 1;
+
+			uint64_t t;
+			t = (uint64_t)swPeriod * (uint64_t)swPtIndex / (uint64_t)( 2*swPtsCnt-1 );
+			swNextPtTime = (int)t;
+		}
+
+		// Move DACs.
+		if ( swPtIndex < 2*swPtsCnt )
+		{
+			// Calc current DAC values.
+			uint8_t i;
+			int time = (swElapsed < swPeriod) ? swElapsed : (2*swPeriod - swElapsed);
+			for ( i=0; i<4; i++ )
+			{
+				uint64_t dac64 = (uint64_t)swDacFrom[i] + (uint64_t)(swDacTo[i] - swDacFrom[i])*(uint64_t)time / (uint64_t)swPtsCnt;
+				int dac = (int)dac64;
+				setDacI( i, dac );
+			}
+		}
+		else
+		{
+			swEnabled = 0;
+			return 0;
+		}
+	}
+	return 1;
 }
 
 void setSweepEn( uint8_t en )
 {
-	swDacFrom[0] = 0;
-	swDacFrom[1] = 0;
-	swDacFrom[2] = 0;
-	swDacFrom[3] = 0;
+	swNextPtTime = 0;
+	currentDacs( swDacFrom );
 
 	chOQPut( &sweepCmdQueue, en ? 1 : 0 );
 	swEnabled = en;
@@ -68,19 +156,15 @@ void setSweepEn( uint8_t en )
 uint8_t sweepEn( void )
 {
 	chSysLock();
-		uint8_t en = swEnabled;
+		uint8_t en = (swEnabled | swTrigEnabled) ? 1 : 0;
 	chSysUnlock();
 	return en;
 }
 
 void setTrigSweepEn( uint8_t en )
 {
-	swDacFrom[0] = 0;
-	swDacFrom[1] = 0;
-	swDacFrom[2] = 0;
-	swDacFrom[3] = 0;
+	currentDacs( swDacFrom );
 
-	swTrigEnabled = en;
 	chOQPut( &sweepCmdQueue, en ? 2 : 0 );
 }
 
@@ -90,6 +174,122 @@ InputQueue * sweepQueue( void )
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static void recordAdc( void )
+{
+	if ( chIQGetEmptyI( &sweep_queue ) >= 12 )
+	{
+		int adc[4];
+		instantAdc( adc );
+
+
+		uint8_t v;
+		int value;
+
+		value = adc[0];
+		v = (uint8_t)( value & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+		v = (uint8_t)( (value >> 8) & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+		v = (uint8_t)( (value >> 16) & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+
+
+		value = adc[1];
+		v = (uint8_t)( value & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+		v = (uint8_t)( (value >> 8) & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+		v = (uint8_t)( (value >> 16) & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+
+
+		value = adc[2];
+		v = (uint8_t)( value & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+		v = (uint8_t)( (value >> 8) & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+		v = (uint8_t)( (value >> 16) & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+
+
+		value = adc[3];
+		v = (uint8_t)( value & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+		v = (uint8_t)( (value >> 8) & 0xFF );
+		chIQPutI( &sweep_queue, v );
+
+		v = (uint8_t)( (value >> 16) & 0xFF );
+		chIQPutI( &sweep_queue, v );
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static void extCb( EXTDriver * extp, expchannel_t channel )
+{
+  (void)extp;
+  (void)channel;
+
+  // Processing external triggered sweep.
+  if ( !swTrigEnabled )
+	  return;
+
+  // Record ADC data.
+  recordAdc();
+
+  // Change point index.
+  swPtIndex += 1;
+  swPtIndex %= swPtsCnt;
+
+  // Displace DACs.
+  uint8_t i;
+  for ( i=0; i<4; i++ )
+  {
+    uint64_t dac64 = (uint64_t)swDacFrom[i] + (uint64_t)(swDacTo[i] - swDacFrom[i]) * (uint64_t)swPtIndex / (uint64_t)(swPtsCnt-1);
+    int dac = (int)dac64;
+    setDacI( i, dac );
+  }
+}
 
 
 

@@ -10,6 +10,7 @@ int  setDac( int index, int value );
 int  setDac1( int valueL, int valueH );
 int  setDac2( int valueL, int valueH );
 void processDacI( void );
+void currentDacs( int * dacs );
 
 
 #endif
