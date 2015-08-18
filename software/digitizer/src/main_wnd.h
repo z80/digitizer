@@ -26,6 +26,9 @@ public:
 signals:
     void sigInstantValues( qreal wv, qreal pv, qreal wi, qreal pi );
     void sigReplot();
+
+    void sigSweepReplot();
+    void sigSweepFinished();
 public slots:
     void slotQuit();
     void slotAbout();
@@ -49,6 +52,9 @@ public slots:
     void slotReplot();
 
     void slotTemp();
+
+    void slotSweepReplot();
+    void slotSweepFinished();
 protected:
     void closeEvent( QCloseEvent * e );
 private:
@@ -56,14 +62,17 @@ private:
     void refreshDevicesList();
 
     void measure();
+    void measureSweep();
     void reopen();
 
     int devName;
 
     Ui_MainWnd ui;
     QFuture<void> future;
-    QMutex        mutex;
+    QMutex        mutex, 
+                  mutexSw; // Mutex for oscilloscope and for sweep.
     bool          terminate;
+    bool          swTerminate;
     Bipot         * io;
     OscilloscopeWnd * oscWork;
     OscilloscopeWnd * oscProbe;
@@ -77,6 +86,11 @@ private:
     QVector<qreal> t_workV, t_workI, t_probeV, t_probeI;
     // Data to be painted.
     QQueue<qreal> p_workV, p_workI, p_probeV, p_probeI;
+
+    // Sweep data to be read and to be painted.
+    QVector<qreal> t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI;
+    // Data to be painted.
+    QQueue<qreal> p_swWorkV, p_swWorkI, p_swProbeV, p_swProbeI;
 
     static const QString SETTINGS_INI;
 };

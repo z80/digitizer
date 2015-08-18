@@ -66,6 +66,9 @@ MainWnd::MainWnd( QWidget * parent )
     connect( this, SIGNAL(sigReplot()), 
              this, SLOT(slotReplot()), 
              Qt::QueuedConnection );
+
+    connect( this, SIGNAL(sigSweepReplot()),   this, SLOT(slotSweepReplot()) );
+    connect( this, SIGNAL(sigSweepFinished()), this, SLOT(slotSweepFinished()) );
     
 }
 
@@ -239,6 +242,91 @@ void MainWnd::measure()
             term = terminate;
         mutex.unlock();
     } while ( !term );
+}
+
+void MainWnd::measureSweep()
+{
+    bool sweep = false;
+    mutexSw.lock();
+        swTerminate = false;
+    mutexSw.unlock();
+    bool term = false;
+
+    bool res;
+    do {
+        Bipot * io;
+        mutex.lock();
+            io = this->io;
+        mutex.unlock();
+
+        if ( !io->isOpen() )
+        {
+            reopen();
+            mutexSw.lock();
+                term = swTerminate;
+            mutexSw.unlock();
+            if ( term )
+                break;
+            Msleep::msleep( 1000 );
+            continue;
+        }
+
+        // Measure data.
+        res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+        if ( !res )
+        {
+            io->close();
+            Msleep::msleep( 1000 );
+            continue;
+        }
+
+        // Check total data cnt in all arrays.
+        int szMeasured = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+        // Now move data to paint data.
+        mutex.lock();
+            for ( int i=0; i<t_swWorkV.size(); i++ )
+                p_swWorkV.enqueue( t_swWorkV.at( i ) );
+            for ( int i=0; i<t_swWorkI.size(); i++ )
+                p_swWorkI.enqueue( t_swWorkI.at( i ) );
+            for ( int i=0; i<t_swProbeV.size(); i++ )
+                p_swProbeV.enqueue( t_swProbeV.at( i ) );
+            for ( int i=0; i<t_swProbeI.size(); i++ )
+                p_swProbeI.enqueue( t_swProbeI.at( i ) );
+            int szCollected = p_swWorkV.size() + p_swWorkI.size() + p_swProbeV.size() + p_swProbeI.size();
+        mutex.unlock();
+        // Replot if necessary.
+        if ( szCollected > 12 )
+        {
+            emit sigSweepReplot();
+        }
+        else
+        {
+            res = io->sweepEn( sweep );
+            if ( !res )
+            {
+                io->close();
+                Msleep::msleep( 1000 );
+                continue;
+            }
+        }
+        if ( szMeasured < 24 )
+            Msleep::msleep( 10 );
+    } while ( ( sweep ) && (!term) );
+
+    if ( term )
+    {
+        // If terminated, sweep should be stopped.
+        io->setSweepEn( false );
+        // Read while something is read.
+        int cnt = 0;
+        do {
+            res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+            Msleep::msleep( 10 );
+            cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+        } while ( cnt > 0 );
+    }
+
+    emit sigSweepFinished();
 }
 
 void MainWnd::reopen()
@@ -449,6 +537,15 @@ void MainWnd::slotTemp()
         temperature = t;
     }
 }
+
+void MainWnd::slotSweepReplot()
+{
+}
+
+void MainWnd::slotSweepFinished()
+{
+}
+
 
 
 
