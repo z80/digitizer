@@ -1,6 +1,7 @@
 
 #include "main_wnd.h"
 #include <QFileDialog>
+#include "sweep_wnd.h"
 
 #include <boost/bind.hpp>
 #include <boost/bind/arg.hpp>
@@ -69,6 +70,11 @@ MainWnd::MainWnd( QWidget * parent )
 
     connect( this, SIGNAL(sigSweepReplot()),   this, SLOT(slotSweepReplot()) );
     connect( this, SIGNAL(sigSweepFinished()), this, SLOT(slotSweepFinished()) );
+    connect( ui.actionStop_sweep, SIGNAL(triggered()), this, SLOT(slotStopSweep()) );
+
+    connect( ui.actionPeriod1s,  SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
+    connect( ui.actionPeriod10s, SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
+    connect( ui.actionPeriod1m,  SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
     
 }
 
@@ -259,14 +265,15 @@ void MainWnd::measureSweep()
             io = this->io;
         mutex.unlock();
 
+        mutexSw.lock();
+            term = swTerminate;
+        mutexSw.unlock();
+        if ( term )
+            break;
+
         if ( !io->isOpen() )
         {
             reopen();
-            mutexSw.lock();
-                term = swTerminate;
-            mutexSw.unlock();
-            if ( term )
-                break;
             Msleep::msleep( 1000 );
             continue;
         }
@@ -433,9 +440,15 @@ void MainWnd::slotSweepWork()
             return;
         }
 
+        ui.dockWidget_2->setEnabled( false );
         // Open sweep window display.
+        sweepWnd = new SweepWnd( 0 );
+        sweepWnd->show();
         // Run sweep data readout.
+        sweepExec.run( boost::bind( &MainWnd::measureSweep, this ) );
         // While sweep runs continue adding points.
+        while ( sweepExec.isRunning() )
+            qApp->processEvents();
     }
 }
 
@@ -494,9 +507,15 @@ void MainWnd::slotSweepProbe()
             return;
         }
 
+        ui.dockWidget_2->setEnabled( false );
         // Open sweep window display.
+        sweepWnd = new SweepWnd( 0 );
+        sweepWnd->show();
         // Run sweep data readout.
+        sweepExec.run( boost::bind( &MainWnd::measureSweep, this ) );
         // While sweep runs continue adding points.
+        while ( sweepExec.isRunning() )
+            qApp->processEvents();
     }
 }
 
@@ -538,12 +557,49 @@ void MainWnd::slotTemp()
     }
 }
 
+void MainWnd::slotOscPeriod()
+{
+    QAction * a = qobject_cast<QAction *>( sender() );
+    qreal t = 10.0;
+    if ( a == ui.actionPeriod1s )
+    {
+        t = 1.0;
+    }
+    else if ( a == ui.actionPeriod10s )
+    {
+        t = 10.0;
+    }
+    else if ( a == ui.actionPeriod1m )
+    {
+        t = 60.0;
+    }
+    oscWork->setPeriod( t );
+    oscProbe->setPeriod( t );
+    bool res = io->setOscPeriod( 1024, t * 1000.0 );
+    if ( !res )
+    {
+        QString stri = QString( "Failed to set oscilloscope period!" );
+        QMessageBox::critical( this, "Error", stri );
+        return;
+    }
+}
+
 void MainWnd::slotSweepReplot()
 {
+    if ( sweepWnd )
+        sweepWnd->addData( mutexSw, p_swWorkV, p_swWorkI, p_swProbeV, p_swProbeI );
 }
 
 void MainWnd::slotSweepFinished()
 {
+    ui.dockWidget_2->setEnabled( true );
+}
+
+void MainWnd::slotStopSweep()
+{
+    mutexSw.lock();
+        swTerminate = true;
+    mutexSw.unlock();
 }
 
 

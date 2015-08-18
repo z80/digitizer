@@ -10,6 +10,8 @@
 #include "bipot.h"
 #include "oscilloscope_wnd.h"
 #include "calibration_wnd.h"
+#include "sweep_wnd.h"
+#include "exec.h"
 
 class MainWnd: public QMainWindow
 {
@@ -53,8 +55,11 @@ public slots:
 
     void slotTemp();
 
+    void slotOscPeriod();
+
     void slotSweepReplot();
     void slotSweepFinished();
+    void slotStopSweep();
 protected:
     void closeEvent( QCloseEvent * e );
 private:
@@ -79,6 +84,9 @@ private:
     CalibrationWnd  * calibrationWnd;
     QTimer          * tempTimer;
     qreal           temperature;
+
+    QPointer<SweepWnd> sweepWnd;
+    Exec               sweepExec;
 
     QList<QAction *> devicesList;
 

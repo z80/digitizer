@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>925</width>
-    <height>560</height>
+    <width>898</width>
+    <height>643</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>925</width>
+     <width>898</width>
      <height>21</height>
     </rect>
    </property>
@@ -78,13 +78,13 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
         <string>Work electrode</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1,0,0,1,1,1,1,1,5">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1,0,0,1,1,1,1,1">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -119,12 +119,12 @@
             </item>
             <item>
              <property name="text">
-              <string>x10</string>
+              <string>x0.1</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>x100</string>
+              <string>x0.01</string>
              </property>
             </item>
            </widget>
@@ -374,19 +374,6 @@
           </item>
          </layout>
         </item>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>36</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
        </layout>
       </widget>
      </item>
@@ -427,12 +414,12 @@
             </item>
             <item>
              <property name="text">
-              <string>x10</string>
+              <string>x0.1</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>x100</string>
+              <string>x0.01</string>
              </property>
             </item>
            </widget>
@@ -698,6 +685,98 @@
        </layout>
       </widget>
      </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="title">
+        <string>Sweep setup</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Points per volt</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="swPtsCnt">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>10</number>
+            </property>
+            <property name="maximum">
+             <number>10240</number>
+            </property>
+            <property name="singleStep">
+             <number>50</number>
+            </property>
+            <property name="value">
+             <number>1000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Sweep rate V/s</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <double>0.010000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>1.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -711,9 +790,9 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="period1s"/>
+   <addaction name="actionPeriod1s"/>
    <addaction name="actionPeriod10s"/>
-   <addaction name="actionPeriod_1m"/>
+   <addaction name="actionPeriod1m"/>
    <addaction name="separator"/>
    <addaction name="actionStop_sweep"/>
   </widget>
@@ -830,7 +909,7 @@
     <string>stopLua</string>
    </property>
   </action>
-  <action name="period1s">
+  <action name="actionPeriod1s">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -852,7 +931,7 @@
     <string>Oscilloscope period 10 seconds</string>
    </property>
   </action>
-  <action name="actionPeriod_1m">
+  <action name="actionPeriod1m">
    <property name="checkable">
     <bool>true</bool>
    </property>
