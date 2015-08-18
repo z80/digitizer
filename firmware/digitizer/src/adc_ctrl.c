@@ -189,14 +189,19 @@ void selectAdcIndex( int index )
 
 void instantAdc( int * vals )
 {
+	chSysLock();
+		instantAdcI( vals );
+	chSysUnlock();
+}
+
+void instantAdcI( int * vals )
+{
 	if ( vals )
 	{
-		chSysLock();
-			vals[0] = instantAdcData[0];
-			vals[1] = instantAdcData[1];
-			vals[2] = instantAdcData[2];
-			vals[3] = instantAdcData[3];
-		chSysUnlock();
+		vals[0] = instantAdcData[0];
+		vals[1] = instantAdcData[1];
+		vals[2] = instantAdcData[2];
+		vals[3] = instantAdcData[3];
 	}
 }
 

@@ -77,7 +77,7 @@ private:
     QMutex        mutex, 
                   mutexSw; // Mutex for oscilloscope and for sweep.
     bool          terminate;
-    bool          swTerminate;
+    bool          doMeasureSweep;
     Bipot         * io;
     OscilloscopeWnd * oscWork;
     OscilloscopeWnd * oscProbe;

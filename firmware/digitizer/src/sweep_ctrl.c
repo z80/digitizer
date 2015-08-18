@@ -118,7 +118,7 @@ uint8_t processSweepI( void )
 			swPtIndex += 1;
 
 			uint64_t t;
-			t = (uint64_t)swPeriod * (uint64_t)swPtIndex / (uint64_t)( 2*swPtsCnt-1 );
+			t = (uint64_t)(2*swPeriod) * (uint64_t)swPtIndex / (uint64_t)( 2*swPtsCnt-1 );
 			swNextPtTime = (int)t;
 		}
 
@@ -148,6 +148,7 @@ void setSweepEn( uint8_t en )
 {
 	swNextPtTime = 0;
 	swElapsed    = 0;
+	swPtIndex    = 0;
 	currentDacs( swDacFrom );
 
 	//chOQPut( &sweepCmdQueue, en ? 1 : 0 );
@@ -200,7 +201,7 @@ static void recordAdc( void )
 	if ( chIQGetEmptyI( &sweep_queue ) >= 12 )
 	{
 		int adc[4];
-		instantAdc( adc );
+		instantAdcI( adc );
 
 
 		uint8_t v;

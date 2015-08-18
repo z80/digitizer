@@ -266,6 +266,8 @@ bool VoltampIo::setOscSignals( bool * en )
 
 bool VoltampIo::setOscPeriod( int ptsCnt, qreal periodMs )
 {
+    QMutexLocker lock( &pd->mutex );
+
     // Adc timer frequency is 100kHz. So each signal is suppsed to 
     // be measured with frequency 25kHz.
     // One time tick is 20e3[us/s]/25e3[tick/s] = 40[us/tick] = 0.04[ms/tick].
@@ -434,6 +436,8 @@ bool VoltampIo::setSweepEn( bool en )
 
 bool VoltampIo::sweepEn( bool & en )
 {
+    QMutexLocker lock( &pd->mutex );
+
     quint8 funcInd = 14;
     bool res = execFunc( funcInd );
     if ( !res )

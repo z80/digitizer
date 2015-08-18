@@ -16,6 +16,7 @@ MainWnd::MainWnd( QWidget * parent )
     //ui.osc->show();
 
     temperature = -273.15;
+    doMeasureSweep = false;
 
     terminate = false;
     io        = new Bipot();
@@ -205,8 +206,8 @@ void MainWnd::measure()
             res = io->oscData( t_workV, t_workI, t_probeV, t_probeI );
             if ( !res )
             {
-                io->close();
                 Msleep::msleep( 1000 );
+                reopen();
                 continue;
             }
 
@@ -232,13 +233,17 @@ void MainWnd::measure()
                 res = io->instantData( workV, probeV, workI, probeI );
                 if ( !res )
                 {
-                    io->close();
                     Msleep::msleep( 1000 );
+                    reopen();
                     continue;
                 }
                 emit sigInstantValues( workV, probeV, workI, probeI );
                 emit sigReplot();
             }
+
+            // Sweep measure routine in the same thread.
+            measureSweep();
+
             if ( szMeasured < 24 )
                 Msleep::msleep( 10 );
         }
@@ -252,45 +257,35 @@ void MainWnd::measure()
 
 void MainWnd::measureSweep()
 {
-    bool sweep = false;
-    mutexSw.lock();
-        swTerminate = false;
-    mutexSw.unlock();
-    bool term = false;
+    mutex.lock();
+        bool measure = doMeasureSweep;
+    mutex.unlock();
 
-    bool res;
-    do {
+    if ( measure )
+    {
         Bipot * io;
         mutex.lock();
             io = this->io;
         mutex.unlock();
 
-        mutexSw.lock();
-            term = swTerminate;
-        mutexSw.unlock();
-        if ( term )
-            break;
-
         if ( !io->isOpen() )
         {
-            reopen();
-            Msleep::msleep( 1000 );
-            continue;
+            return;
         }
 
         // Measure data.
-        res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+        bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
         if ( !res )
         {
-            io->close();
             Msleep::msleep( 1000 );
-            continue;
+            reopen();
+            return;
         }
 
         // Check total data cnt in all arrays.
         int szMeasured = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
         // Now move data to paint data.
-        mutex.lock();
+        mutexSw.lock();
             for ( int i=0; i<t_swWorkV.size(); i++ )
                 p_swWorkV.enqueue( t_swWorkV.at( i ) );
             for ( int i=0; i<t_swWorkI.size(); i++ )
@@ -300,46 +295,42 @@ void MainWnd::measureSweep()
             for ( int i=0; i<t_swProbeI.size(); i++ )
                 p_swProbeI.enqueue( t_swProbeI.at( i ) );
             int szCollected = p_swWorkV.size() + p_swWorkI.size() + p_swProbeV.size() + p_swProbeI.size();
-        mutex.unlock();
+        mutexSw.unlock();
         // Replot if necessary.
         if ( szCollected > 12 )
         {
             emit sigSweepReplot();
         }
-        else
+
+        if ( szMeasured < 24 )
         {
+            bool sweep;
             res = io->sweepEn( sweep );
             if ( !res )
             {
-                io->close();
                 Msleep::msleep( 1000 );
-                continue;
+                reopen();
+                return;
             }
+            if ( !sweep )
+            {
+                mutex.lock();
+                    doMeasureSweep = false;
+                mutex.unlock();
+
+                emit sigSweepFinished();
+            }
+            else
+                Msleep::msleep( 10 );
         }
-        if ( szMeasured < 24 )
-            Msleep::msleep( 10 );
-    } while ( ( sweep ) && (!term) );
-
-    if ( term )
-    {
-        // If terminated, sweep should be stopped.
-        io->setSweepEn( false );
-        // Read while something is read.
-        int cnt = 0;
-        do {
-            res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
-            Msleep::msleep( 10 );
-            cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
-        } while ( cnt > 0 );
     }
-
-    emit sigSweepFinished();
 }
 
 void MainWnd::reopen()
 {
-    io->close();
-    io->open( devName );
+    QMutexLocker lock( &mutex );
+        io->close();
+        io->open( devName );
 }
 
 void MainWnd::refreshDevicesList()
@@ -442,15 +433,15 @@ void MainWnd::slotSweepWork()
             return;
         }
 
+        /*
         ui.dockWidget_2->setEnabled( false );
         // Open sweep window display.
         sweepWnd = new SweepWnd( 0 );
         sweepWnd->show();
         // Run sweep data readout.
-        sweepExec.run( boost::bind( &MainWnd::measureSweep, this ) );
-        // While sweep runs continue adding points.
-        while ( sweepExec.isRunning() )
-            qApp->processEvents();
+        QMutexLocker lock( &mutex );
+            doMeasureSweep = true;
+        */
     }
 }
 
@@ -511,15 +502,15 @@ void MainWnd::slotSweepProbe()
             return;
         }
 
+        /*
         ui.dockWidget_2->setEnabled( false );
         // Open sweep window display.
         sweepWnd = new SweepWnd( 0 );
         sweepWnd->show();
         // Run sweep data readout.
-        sweepExec.run( boost::bind( &MainWnd::measureSweep, this ) );
-        // While sweep runs continue adding points.
-        while ( sweepExec.isRunning() )
-            qApp->processEvents();
+        QMutexLocker lock( &mutex );
+            doMeasureSweep = true;
+        */
     }
 }
 
@@ -601,9 +592,17 @@ void MainWnd::slotSweepFinished()
 
 void MainWnd::slotStopSweep()
 {
-    mutexSw.lock();
-        swTerminate = true;
-    mutexSw.unlock();
+    QMutexLocker lock( &mutex );
+        doMeasureSweep = false;
+        // If terminated, sweep should be stopped.
+        io->setSweepEn( false );
+        // Read while something is read.
+        int cnt = 0;
+        do {
+            bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+            Msleep::msleep( 10 );
+            cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+        } while ( cnt > 0 );
 }
 
 
