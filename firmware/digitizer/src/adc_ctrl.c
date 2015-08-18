@@ -42,6 +42,8 @@ static const SPIConfig hs_spicfg =
 
 void initAdc( void )
 {
+	palSetPadMode( GPIOB, 8, PAL_MODE_OUTPUT_PUSHPULL );
+
 	chIQInit( &adc_queue,     adc_queue_buffer,   ADC_QUEUE_SZ,   0 );
 
     palSetPadMode( GPIOA, ADC_MUX_0, PAL_MODE_OUTPUT_PUSHPULL ); 		// MUX_0
@@ -69,6 +71,7 @@ void queryAdcI( void )
 void onSpiComplete( SPIDriver * spid )
 {
 	(void)spid;
+											palSetPad( GPIOB, 8 );
 	chSysLockFromIsr();
 		// The very first thing - switch another signal to ADC input.
 		int prevIndex = adcIndex;
@@ -150,6 +153,7 @@ void onSpiComplete( SPIDriver * spid )
 			}
     	}
 	chSysUnlockFromIsr();
+												palClearPad( GPIOB, 8 );
 }
 
 InputQueue * adcQueue( void )

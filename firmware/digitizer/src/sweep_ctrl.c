@@ -103,45 +103,43 @@ void setSweepTime( int ptsCnt, int period )
 
 static void recordAdc( void );
 
-uint8_t processSweepI( void )
+void processSweepI( uint8_t dacIndex )
 {
 	if ( swEnabled )
 	{
-		swElapsed += 1;
-		// Record data if it's time to do that.
-		if ( swElapsed >= swNextPtTime )
+		if ( dacIndex == 0 )
 		{
-			// Measure signals.
-			recordAdc();
-			// Calc next point time.
+			swElapsed += 1;
+			// Record data if it's time to do that.
+			if ( swElapsed >= swNextPtTime )
+			{
+				// Measure signals.
+				recordAdc();
+				// Calc next point time.
 
-			swPtIndex += 1;
+				swPtIndex += 1;
 
-			uint64_t t;
-			t = (uint64_t)(2*swPeriod) * (uint64_t)swPtIndex / (uint64_t)( 2*swPtsCnt-1 );
-			swNextPtTime = (int)t;
+				uint64_t t;
+				t = (uint64_t)(2*swPeriod) * (uint64_t)swPtIndex / (uint64_t)( 2*swPtsCnt-1 );
+				swNextPtTime = (int)t;
+			}
 		}
-
 		// Move DACs.
 		if ( swPtIndex < 2*swPtsCnt )
 		{
 			// Calc current DAC values.
-			uint8_t i;
 			int time = (swElapsed < swPeriod) ? swElapsed : (2*swPeriod - swElapsed);
-			for ( i=0; i<4; i++ )
-			{
-				uint64_t dac64 = (uint64_t)swDacFrom[i] + (uint64_t)(swDacTo[i] - swDacFrom[i])*(uint64_t)time / (uint64_t)swPtsCnt;
-				int dac = (int)dac64;
-				setDacI( i, dac );
-			}
+			uint64_t dac64 = (uint64_t)swDacFrom[dacIndex] + (uint64_t)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(uint64_t)time / (uint64_t)swPtsCnt;
+			int dac = (int)dac64;
+			setDacI( dacIndex, dac );
 		}
 		else
 		{
 			swEnabled = 0;
-			return 0;
+			//return 0;
 		}
 	}
-	return 1;
+	//return 1;
 }
 
 void setSweepEn( uint8_t en )
