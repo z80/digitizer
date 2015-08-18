@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>925</width>
-    <height>537</height>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -701,6 +701,22 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="period1s"/>
+   <addaction name="actionPeriod10s"/>
+   <addaction name="actionPeriod_1m"/>
+   <addaction name="separator"/>
+   <addaction name="actionStop_sweep"/>
+  </widget>
   <action name="action_Quit">
    <property name="text">
     <string>&amp;Quit</string>
@@ -812,6 +828,47 @@
    </property>
    <property name="text">
     <string>stopLua</string>
+   </property>
+  </action>
+  <action name="period1s">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1s</string>
+   </property>
+   <property name="toolTip">
+    <string>Oscilloscope period 1 second</string>
+   </property>
+  </action>
+  <action name="actionPeriod10s">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>period10s</string>
+   </property>
+   <property name="toolTip">
+    <string>Oscilloscope period 10 seconds</string>
+   </property>
+  </action>
+  <action name="actionPeriod_1m">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>period 1m</string>
+   </property>
+   <property name="toolTip">
+    <string>Oscilloscope period 1 minute</string>
+   </property>
+  </action>
+  <action name="actionStop_sweep">
+   <property name="text">
+    <string>stop sweep</string>
+   </property>
+   <property name="toolTip">
+    <string>Stop sweep</string>
    </property>
   </action>
  </widget>
