@@ -387,7 +387,7 @@ bool Bipot::setSweepRange( qreal workV, qreal probeV )
     VoltampIo & io = *(pd->io);
 
     int dac[4];
-    pd->probeV2Dac( workV, dac[0], dac[1] );
+    pd->workV2Dac( workV, dac[0], dac[1] );
     pd->probeV2Dac( probeV, dac[2], dac[3] );
 
     bool res = io.setSweepRange( dac );

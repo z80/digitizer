@@ -147,6 +147,7 @@ uint8_t processSweepI( void )
 void setSweepEn( uint8_t en )
 {
 	swNextPtTime = 0;
+	swElapsed    = 0;
 	currentDacs( swDacFrom );
 
 	//chOQPut( &sweepCmdQueue, en ? 1 : 0 );

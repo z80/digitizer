@@ -411,7 +411,9 @@ void MainWnd::slotSweepWork()
         qreal workTo     = ui.workSweepTo->value();
         qreal probeFrom  = ui.probeVolt->value();
         qreal delta = workTo - workFrom;
-        qreal timeMs = 1000.0;
+        qreal timeMs = delta / ui.sweepRate->value();
+        timeMs = (timeMs >= 0.0) ? timeMs : (-timeMs);
+        int   ptsCnt = ui.sweepPtsCnt->value();
 
         bool pull = ui.pullProbe->isChecked();
         qreal probeTo = ( pull ) ? (probeFrom + delta) : probeFrom;
@@ -424,7 +426,7 @@ void MainWnd::slotSweepWork()
             return;
         }
 
-        res = io->setSweepTime( 1024, timeMs );
+        res = io->setSweepTime( ptsCnt, timeMs );
         if ( !res )
         {
             QString stri = QString( "Failed to set sweep time!" );
@@ -478,7 +480,9 @@ void MainWnd::slotSweepProbe()
         qreal probeFrom  = ui.probeVolt->value();
         qreal probeTo    = ui.probeSweepTo->value();
         qreal delta = probeTo - probeFrom;
-        qreal timeMs = 1000.0;
+        qreal timeMs = delta / ui.sweepRate->value();
+        timeMs = (timeMs >= 0.0) ? timeMs : (-timeMs);
+        int   ptsCnt = ui.sweepPtsCnt->value();
 
         bool pull = ui.pullWork->isChecked();
         qreal workTo = ( pull ) ? (workFrom + delta) : workFrom;
@@ -491,7 +495,7 @@ void MainWnd::slotSweepProbe()
             return;
         }
 
-        res = io->setSweepTime( 1024, timeMs );
+        res = io->setSweepTime( ptsCnt, timeMs );
         if ( !res )
         {
             QString stri = QString( "Failed to set sweep time!" );
