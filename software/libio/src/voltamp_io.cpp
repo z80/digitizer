@@ -268,8 +268,8 @@ bool VoltampIo::setOscPeriod( int ptsCnt, qreal periodMs )
 {
     // Adc timer frequency is 100kHz. So each signal is suppsed to 
     // be measured with frequency 25kHz.
-    // One time tick is 1e6[us/s]/25e3[tick/s] = 40[us/tick] = 0.04[ms/tick].
-    qreal period = ( periodMs / 0.04 )/ static_cast<qreal>( ptsCnt );
+    // One time tick is 20e3[us/s]/25e3[tick/s] = 40[us/tick] = 0.04[ms/tick].
+    qreal period = ( periodMs * 5.0 )/ static_cast<qreal>( ptsCnt );
     quint32 periodI = static_cast<quint32>( period );
     quint8  v[4];
     v[0] = static_cast<quint8>( periodI & 0xFF );
