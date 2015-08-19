@@ -560,10 +560,10 @@ void MainWnd::slotReplot()
 {
     // Add data to oscilloscope windows.
     mutex.lock();
-        oscWork->addData( p_workV );
-        oscProbe->addData( p_probeV );
-        p_workI.clear();
-        p_probeI.clear();
+        oscWork->addData( p_workI );
+        oscProbe->addData( p_probeI );
+        p_workV.clear();
+        p_probeV.clear();
     mutex.unlock();
     // Replot oscilloscope windows.
     oscWork->slotReplot();
@@ -623,17 +623,20 @@ void MainWnd::slotSweepFinished()
 
 void MainWnd::slotStopSweep()
 {
-    QMutexLocker lock( &mutex );
-        doMeasureSweep = false;
-        // If terminated, sweep should be stopped.
-        io->setSweepEn( false );
-        // Read while something is read.
-        int cnt = 0;
-        do {
-            bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
-            Msleep::msleep( 10 );
-            cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
-        } while ( cnt > 0 );
+    {
+        QMutexLocker lock( &mutex );
+            doMeasureSweep = false;
+            // If terminated, sweep should be stopped.
+            io->setSweepEn( false );
+            // Read while something is read.
+            int cnt = 0;
+            do {
+                bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+                Msleep::msleep( 10 );
+                cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+            } while ( cnt > 0 );
+    }
+    ui.dockWidget_2->setEnabled( true );
 }
 
 void MainWnd::slotOpen()
