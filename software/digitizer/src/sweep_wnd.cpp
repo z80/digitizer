@@ -17,10 +17,12 @@ SweepWnd::SweepWnd( QWidget * parent )
     work  = new OscilloscopeWnd( 0 );
     work->setWindowTitle( "Work electrode I(V)" );
     work->setWindowIcon( QIcon( ":images/icon.png" ) );
+    work->installEventFilter( this );
 
     probe = new OscilloscopeWnd( 0 );
     probe->setWindowTitle( "Probe electrode I(V)" );
     probe->setWindowIcon( QIcon( ":images/icon.png" ) );
+    probe->installEventFilter( this );
 
     ui.mdiArea->addSubWindow( work );
     ui.mdiArea->addSubWindow( probe );
@@ -130,6 +132,17 @@ void SweepWnd::load(const QString & fileName )
 
     shouldBeSaved = false;
     setWindowTitle( fileName );
+}
+
+bool SweepWnd::eventFilter( QObject * obj, QEvent * e )
+{
+    if ( e->type() == QEvent::Close )
+    {
+        QMessageBox::information( this, "Information", QString( "Please, don\'t close subwindows. Close entire data window instead." ), QMessageBox::Ok );
+        e->setAccepted( false );
+        return true;
+    }
+    return false;
 }
 
 void SweepWnd::showEvent( QShowEvent * e )

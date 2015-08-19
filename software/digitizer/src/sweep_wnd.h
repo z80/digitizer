@@ -20,6 +20,8 @@ public:
     static SweepWnd * loadFile( QWidget * parent = 0 );
     void load( const QString & fileName );
 
+    bool eventFilter( QObject * obj, QEvent * e );
+
 protected:
     void showEvent( QShowEvent * e );
     void closeEvent( QCloseEvent * e );

@@ -125,7 +125,8 @@ void processSweepI( uint8_t dacIndex )
 			}
 		}
 		// Move DACs.
-		if ( swPtIndex < 2*swPtsCnt )
+		//if ( swPtIndex < 2*swPtsCnt )
+		if ( swElapsed < 2*swPeriod )
 		{
 			// Calc current DAC values.
 			int time = (swElapsed < swPeriod) ? swElapsed : (2*swPeriod - swElapsed);
