@@ -120,7 +120,7 @@ void processSweepI( uint8_t dacIndex )
 				swPtIndex += 1;
 
 				uint64_t t;
-				t = (uint64_t)(2*swPeriod) * (uint64_t)swPtIndex / (uint64_t)( 2*swPtsCnt-1 );
+				t = (int64_t)(2*swPeriod) * (int64_t)swPtIndex / (int64_t)( 2*swPtsCnt-1 );
 				swNextPtTime = (int)t;
 			}
 		}
@@ -129,13 +129,17 @@ void processSweepI( uint8_t dacIndex )
 		{
 			// Calc current DAC values.
 			int time = (swElapsed < swPeriod) ? swElapsed : (2*swPeriod - swElapsed);
-			uint64_t dac64 = (uint64_t)swDacFrom[dacIndex] + (uint64_t)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(uint64_t)time / (uint64_t)swPtsCnt;
+			int64_t dac64 = (int64_t)swDacFrom[dacIndex] + (int64_t)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(int64_t)time / (int64_t)swPeriod;
 			int dac = (int)dac64;
 			setDacI( dacIndex, dac );
 		}
 		else
 		{
 			swEnabled = 0;
+			setDacI( 0, swDacFrom[0] );
+			setDacI( 1, swDacFrom[1] );
+			setDacI( 2, swDacFrom[2] );
+			setDacI( 3, swDacFrom[3] );
 			//return 0;
 		}
 	}

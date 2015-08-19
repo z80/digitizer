@@ -28,7 +28,7 @@ void initTimer( void )
 
     gptStart( &GPTD1, &gptCfg );
     //gptStartContinuous( &GPTD1, 50 );
-    gptStartContinuous( &GPTD1, 1000 );
+    gptStartContinuous( &GPTD1, 100 );
 }
 
 static void gptCb(GPTDriver *gptp)
