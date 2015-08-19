@@ -25,7 +25,7 @@ public:
     bool setProbeRaw( int a, int b );
     bool setProbeMv( qreal mv );
     bool setOscPeriod( int ptsCnt, qreal msTotal );
-    bool setOscSigs( bool workV=true, bool probeV=false, bool workI=false, bool probeI=false );
+    //bool setOscSigs( bool workV=true, bool probeV=false, bool workI=false, bool probeI=false );
     bool oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI );
     bool instantDataRaw( int & workV, int & probeV, int & workI, int & probeI );
     bool instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & probeI );

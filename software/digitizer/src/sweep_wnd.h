@@ -15,6 +15,7 @@ public:
     ~SweepWnd();
 
     void addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI );
+    void load( const QString & fileName );
 
 protected:
     void showEvent( QShowEvent * e );

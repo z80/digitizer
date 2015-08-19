@@ -10,9 +10,12 @@ SweepWnd::SweepWnd( QWidget * parent )
     ui.setupUi( this );
 
     setAttribute( Qt::WA_DeleteOnClose );
+    setWindowTitle( "*Untitled" );
 
     work  = new OscilloscopeWnd( 0 );
+    work->setWindowTitle( "Work electrode I(V)" );
     probe = new OscilloscopeWnd( 0 );
+    probe->setWindowTitle( "Probe electrode I(V)" );
 
     ui.mdiArea->addSubWindow( work );
     ui.mdiArea->addSubWindow( probe );
@@ -32,6 +35,10 @@ void SweepWnd::addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI
         probe->addData( probeV, probeI );
         work->slotReplot();
         probe->slotReplot();
+}
+
+void SweepWnd::load( const QString & fileName )
+{
 }
 
 void SweepWnd::showEvent( QShowEvent * e )

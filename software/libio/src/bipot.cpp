@@ -262,6 +262,7 @@ bool Bipot::setOscPeriod( int ptsCnt, qreal msTotal )
     return res;
 }
 
+/*
 bool Bipot::setOscSigs( bool workV, bool probeV, bool workI, bool probeI )
 {
     VoltampIo & io = *(pd->io);
@@ -275,6 +276,7 @@ bool Bipot::setOscSigs( bool workV, bool probeV, bool workI, bool probeI )
     bool res = io.setOscSignals( en );
     return res;
 }
+*/
 
 bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI )
 {
@@ -294,8 +296,8 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
     probeI.clear();
     data[0] = &workV;
     data[1] = &probeV;
-    data[2] = &workI;
-    data[3] = &probeI;
+    data[2] = &probeI;
+    data[3] = &workI;
     bool res = io.oscData( dataRaw );
     if ( !res )
         return false;
@@ -317,10 +319,10 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
                 v = pd->adc2probeV( adc );
                 break;
             case 2:
-                v = pd->adc2workI( adc );
+                v = pd->adc2probeI( adc );
                 break;
             default:
-                v = pd->adc2probeI( adc );
+                v = pd->adc2workI( adc );
                 break;
             }
             data[ind]->append( v );
@@ -340,8 +342,8 @@ bool Bipot::instantDataRaw( int & workV, int & probeV, int & workI, int & probeI
 
     workV  = data[0];
     probeV = data[1];
-    workI  = data[2];
-    probeI = data[3];
+    workI  = data[3];
+    probeI = data[2];
 
     return true;
 }
@@ -356,8 +358,8 @@ bool Bipot::instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & p
 
     workV  = pd->adc2workV( data[0] );
     probeV = pd->adc2probeV( data[1] );
-    workI  = pd->adc2workI( data[2] );
-    probeI = pd->adc2probeI( data[3] );
+    workI  = pd->adc2workI( data[3] );
+    probeI = pd->adc2probeI( data[2] );
 
     return true;
 }
