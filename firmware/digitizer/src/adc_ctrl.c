@@ -28,6 +28,7 @@ int elapsed    = 0;
 // Possible indices 0, 1, 2, 3.
 static void selectAdcIndex( int index );
 static void onSpiComplete( SPIDriver * spid );
+static void filterAdc( uint8_t index, int value );
 /*
  * Maximum speed SPI configuration (18MHz, CPHA=0, CPOL=0, MSb first).
  */
@@ -84,7 +85,9 @@ void onSpiComplete( SPIDriver * spid )
 					((int)(adc_rx_buffer[1]) << 8) +
 					((int)(adc_rx_buffer[0]) << 16);
 		value = (value >> 1) & 0xFFFF;
-    	instantAdcData[prevIndex] = value;
+
+		filterAdc( prevIndex, value );
+    	//instantAdcData[prevIndex] = value;
 
 		// if (adcIndex == 0) this means it was 3 just
 		// in time of measure. So a full cycle was just completed.
@@ -221,6 +224,38 @@ void setOscPeriod( uint32_t interval )
 	chSysLock();
 		period = (int)interval;
 	chSysUnlock();
+}
+
+
+
+
+int adcRaw[4][5];
+int adcFiltered[4][5];
+uint8_t adcPointer[4] = { 0, 0, 0, 0 };
+static void filterAdc( uint8_t index, int value )
+{
+	int * raw = adcRaw[ index ];
+	uint8_t * ptr = &adcPointer[ index ];
+	raw[ *ptr ] = value;
+	*ptr = ( (*ptr) + 1 ) % 5;
+
+	int * filtered = adcFiltered[ index ];
+	uint8_t i, j;
+	for ( i=0; i<4; i++ )
+		filtered[i] = raw[i];
+	for ( i=0; i<4; i++ )
+	{
+		for ( j=i+1; j<5; j++ )
+		{
+			if ( filtered[i] < filtered[j] )
+			{
+				int a = filtered[i];
+				filtered[i] = filtered[j];
+				filtered[j] = a;
+			}
+		}
+	}
+	instantAdcData[index] = filtered[2];
 }
 
 
