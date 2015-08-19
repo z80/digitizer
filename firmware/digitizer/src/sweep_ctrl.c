@@ -163,8 +163,6 @@ uint8_t sweepEn( void )
 
 void setTrigEn( uint8_t en )
 {
-	currentDacs( swDacFrom );
-
 	//chOQPut( &sweepCmdQueue, en ? 2 : 0 );
 	swTrigEnabled = en;
 	if ( en )

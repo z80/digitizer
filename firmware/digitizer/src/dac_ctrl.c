@@ -33,7 +33,7 @@ static SPIConfig hs_spicfg =
 	onDacSpiComplete,
     GPIOB,
     DAC_CS_0,
-    0
+    SPI_CR1_BR_1
 };
 
 
@@ -177,7 +177,7 @@ void processDacI( void )
 		// connected to one and the same SPI bus.
 	}
 
-	//processSweepI( i );
+	processSweepI( i );
 
 	i += 1;
 	i %= 4;
@@ -199,10 +199,12 @@ static void onDacSpiComplete( SPIDriver * spid )
 
 void currentDacs( int * dacs )
 {
-	dacs[0] = dacValues[0];
-	dacs[1] = dacValues[1];
-	dacs[2] = dacValues[2];
-	dacs[3] = dacValues[3];
+	chSysLock();
+		dacs[0] = dacValues[0];
+		dacs[1] = dacValues[1];
+		dacs[2] = dacValues[2];
+		dacs[3] = dacValues[3];
+	chSysUnlock();
 }
 
 
