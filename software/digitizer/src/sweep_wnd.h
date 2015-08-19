@@ -15,6 +15,9 @@ public:
     ~SweepWnd();
 
     void addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI );
+
+protected:
+    void showEvent( QShowEvent * e );
     
 public slots:
     void slotSave();

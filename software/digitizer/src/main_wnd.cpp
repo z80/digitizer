@@ -433,7 +433,7 @@ void MainWnd::slotSweepWork()
             return;
         }
 
-        /*
+        
         ui.dockWidget_2->setEnabled( false );
         // Open sweep window display.
         sweepWnd = new SweepWnd( 0 );
@@ -441,7 +441,7 @@ void MainWnd::slotSweepWork()
         // Run sweep data readout.
         QMutexLocker lock( &mutex );
             doMeasureSweep = true;
-        */
+        
     }
 }
 
@@ -502,7 +502,6 @@ void MainWnd::slotSweepProbe()
             return;
         }
 
-        /*
         ui.dockWidget_2->setEnabled( false );
         // Open sweep window display.
         sweepWnd = new SweepWnd( 0 );
@@ -510,7 +509,6 @@ void MainWnd::slotSweepProbe()
         // Run sweep data readout.
         QMutexLocker lock( &mutex );
             doMeasureSweep = true;
-        */
     }
 }
 

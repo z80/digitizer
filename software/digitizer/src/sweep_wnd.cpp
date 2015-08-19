@@ -16,7 +16,6 @@ SweepWnd::SweepWnd( QWidget * parent )
 
     ui.mdiArea->addSubWindow( work );
     ui.mdiArea->addSubWindow( probe );
-    tileVertically();
 
     connect( ui.actionTile_vertically,   SIGNAL(triggered()), this, SLOT(tileVertically()) );
     connect( ui.actionTile_horizontally, SIGNAL(triggered()), this, SLOT(tileHorizontally()) );
@@ -33,6 +32,12 @@ void SweepWnd::addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI
         probe->addData( probeV, probeI );
         work->slotReplot();
         probe->slotReplot();
+}
+
+void SweepWnd::showEvent( QShowEvent * e )
+{
+    QMainWindow::showEvent( e );
+    tileVertically();
 }
 
 void SweepWnd::slotSave()
