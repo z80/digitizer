@@ -9,6 +9,7 @@
 #include "curve.h"
 
 class MainWnd;
+class QwtPlot;
 
 class OscilloscopeWnd: public QMainWindow
 {
@@ -21,6 +22,8 @@ public:
     void addData( QQueue<qreal> & y );
     void addData( QQueue<qreal> & x, QQueue<qreal> & y );
     void clear();
+
+    QwtPlot * plot();
 public slots:
     //void slotCurveType();
     //void slotPeriod();

@@ -118,6 +118,11 @@ void OscilloscopeWnd::clear()
         curves[j].cnt = 0;
 }
 
+QwtPlot * OscilloscopeWnd::plot()
+{
+    return ui.plot;
+}
+
 void OscilloscopeWnd::slotReplot()
 {
     // Plot curves.

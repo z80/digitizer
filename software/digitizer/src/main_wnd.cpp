@@ -3,6 +3,8 @@
 #include <QFileDialog>
 #include "sweep_wnd.h"
 
+#include "qwt_text_label.h"
+
 #include <boost/bind.hpp>
 #include <boost/bind/arg.hpp>
 #include <boost/bind/placeholders.hpp>
@@ -30,8 +32,37 @@ MainWnd::MainWnd( QWidget * parent )
     oscWork = new OscilloscopeWnd( this );
     bl->addWidget( oscWork );
 
+
+    labelWork = new QwtTextLabel( oscWork->plot()->canvas() );
+
+    textWork.setColor( Qt::darkMagenta );
+    QFont f = textWork.font();
+    f.setPointSizeF( 15 );
+    textWork.setFont( f );
+    textWork.setText( "Work I(t)" );
+
+    labelWork->setText( textWork );
+    labelWork->setIndent( 0 );
+    labelWork->setMargin( 10 );
+
     oscProbe = new OscilloscopeWnd( this );
     bl->addWidget( oscProbe );
+
+
+    labelProbe = new QwtTextLabel( oscProbe->plot()->canvas() );
+
+    textProbe.setColor( Qt::darkMagenta );
+    f = textProbe.font();
+    f.setPointSizeF( 15 );
+    textProbe.setFont( f );
+    textProbe.setText( "Probe I(t)" );
+
+    labelProbe->setText( textProbe );
+    labelProbe->setIndent( 0 );
+    labelProbe->setMargin( 10 );
+
+    statusLabel = new QLabel( 0 );
+    ui.statusBar->addPermanentWidget( statusLabel );
 
     calibrationWnd = new CalibrationWnd( 0 );
     calibrationWnd->setIo( io );
@@ -166,7 +197,7 @@ void MainWnd::closeEvent( QCloseEvent * e )
 
 void MainWnd::setTitle( const QString & stri )
 {
-    setWindowTitle( QString( "Potentiostat: %1" ).arg( stri ) );
+    statusLabel->setText( QString( "Potentiostat: %1" ).arg( stri ) );
 }
 
 class Msleep: public QThread
@@ -514,7 +545,7 @@ void MainWnd::slotSweepProbe()
 
 void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
 {
-    QString stri= QString( "t: %1[C], workV = %2, workI = %3, probeV = %4, probeI = %5" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
+    QString stri= QString( "T: %1[C], workV = %2, workI = %3, probeV = %4, probeI = %5" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
                                                                                          .arg( wv, 8, 'f', 1, QChar( '0' ) ) 
                                                                                          .arg( wi, 8, 'f', 1, QChar( '0' ) )
                                                                                          .arg( pv, 8, 'f', 1, QChar( '0' ) )

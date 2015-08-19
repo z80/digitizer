@@ -14,8 +14,11 @@ SweepWnd::SweepWnd( QWidget * parent )
 
     work  = new OscilloscopeWnd( 0 );
     work->setWindowTitle( "Work electrode I(V)" );
+    work->setWindowIcon( QIcon( ":images/icon.png" ) );
+
     probe = new OscilloscopeWnd( 0 );
     probe->setWindowTitle( "Probe electrode I(V)" );
+    probe->setWindowIcon( QIcon( ":images/icon.png" ) );
 
     ui.mdiArea->addSubWindow( work );
     ui.mdiArea->addSubWindow( probe );

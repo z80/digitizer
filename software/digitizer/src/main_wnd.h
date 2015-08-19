@@ -13,6 +13,8 @@
 #include "sweep_wnd.h"
 #include "exec.h"
 
+class QwtTextLabel;
+
 class MainWnd: public QMainWindow
 {
     Q_OBJECT
@@ -99,6 +101,13 @@ private:
     QVector<qreal> t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI;
     // Data to be painted.
     QQueue<qreal> p_swWorkV, p_swWorkI, p_swProbeV, p_swProbeI;
+
+    QwtTextLabel * labelWork;
+    QwtTextLabel * labelProbe;
+    QwtText        textWork;
+    QwtText        textProbe;
+
+    QLabel * statusLabel;
 
     static const QString SETTINGS_INI;
 };
