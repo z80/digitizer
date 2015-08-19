@@ -109,6 +109,7 @@ MainWnd::MainWnd( QWidget * parent )
     connect( ui.actionPeriod10s, SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
     connect( ui.actionPeriod1m,  SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
     
+    connect( ui.actionExternal_trigger, SIGNAL(triggered()), this, SLOT(slotExternalTrigger()) );
 }
 
 MainWnd::~MainWnd()
@@ -640,6 +641,16 @@ void MainWnd::slotOpen()
     sweepWnd = SweepWnd::loadFile();
     if ( sweepWnd )
         sweepWnd->show();
+}
+
+void MainWnd::slotExternalTrigger()
+{
+    bool en = ui.actionExternal_trigger->isChecked();
+    bool res = io->setTriggerEn( en );
+    if ( !res )
+    {
+        QMessageBox::critical( this, "Error", "Failed to change external triggering option!" );
+    }
 }
 
 
