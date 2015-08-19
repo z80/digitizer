@@ -68,6 +68,7 @@ OscilloscopeWnd::~OscilloscopeWnd()
 void OscilloscopeWnd::setPeriod( qreal sec )
 {
     period = sec;
+    curveSizeChanged();
 }
 
 void OscilloscopeWnd::addData( QQueue<qreal> & y )
@@ -116,6 +117,13 @@ void OscilloscopeWnd::clear()
 {
     for ( int j=0; j<0; j++ )
         curves[j].cnt = 0;
+}
+
+void OscilloscopeWnd::data( QVector<qreal> & x, QVector<qreal> & y )
+{
+    Curve & c = curves[0];
+    x = c.x;
+    y = c.y;
 }
 
 QwtPlot * OscilloscopeWnd::plot()

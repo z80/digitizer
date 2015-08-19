@@ -23,6 +23,8 @@ public:
     void addData( QQueue<qreal> & x, QQueue<qreal> & y );
     void clear();
 
+    void data( QVector<qreal> & x, QVector<qreal> & y );
+
     QwtPlot * plot();
 public slots:
     //void slotCurveType();

@@ -19,6 +19,7 @@ public:
 
 protected:
     void showEvent( QShowEvent * e );
+    void data( QVector<qreal> & workV, QVector<qreal> & workI, QVector<qreal> & probeV, QVector<qreal> & probeI );
     
 public slots:
     void slotSave();

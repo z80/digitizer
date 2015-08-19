@@ -402,7 +402,7 @@ bool Bipot::setSweepTime( int ptsCnt, qreal periodMs )
 {
     VoltampIo & io = *(pd->io);
 
-    int period = static_cast<int>( periodMs * 5.0 );
+    int period = static_cast<int>( periodMs * 4.0 );
 
     bool res = io.setSweepTime( ptsCnt, period );
     if ( !res )

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>898</width>
-    <height>643</height>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,7 +66,7 @@
   </widget>
   <widget class="QDockWidget" name="dockWidget_2">
    <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -790,9 +790,9 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionPeriod1s"/>
-   <addaction name="actionPeriod10s"/>
    <addaction name="actionPeriod1m"/>
+   <addaction name="actionPeriod10s"/>
+   <addaction name="actionPeriod1s"/>
    <addaction name="separator"/>
    <addaction name="actionStop_sweep"/>
   </widget>
@@ -911,19 +911,21 @@
    </property>
   </action>
   <action name="actionPeriod1s">
-   <property name="checkable">
-    <bool>true</bool>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/3arrows.png</normaloff>:/images/3arrows.png</iconset>
    </property>
    <property name="text">
     <string>1s</string>
    </property>
    <property name="toolTip">
-    <string>Oscilloscope period 1 second</string>
+    <string>Oscilloscope period 3 seconds</string>
    </property>
   </action>
   <action name="actionPeriod10s">
-   <property name="checkable">
-    <bool>true</bool>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/2arrows.png</normaloff>:/images/2arrows.png</iconset>
    </property>
    <property name="text">
     <string>period10s</string>
@@ -933,8 +935,9 @@
    </property>
   </action>
   <action name="actionPeriod1m">
-   <property name="checkable">
-    <bool>true</bool>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/1arrow.png</normaloff>:/images/1arrow.png</iconset>
    </property>
    <property name="text">
     <string>period 1m</string>
@@ -944,6 +947,10 @@
    </property>
   </action>
   <action name="actionStop_sweep">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
+   </property>
    <property name="text">
     <string>stop sweep</string>
    </property>

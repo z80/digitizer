@@ -587,7 +587,7 @@ void MainWnd::slotOscPeriod()
     qreal t = 10.0;
     if ( a == ui.actionPeriod1s )
     {
-        t = 1.0;
+        t = 3.0;
     }
     else if ( a == ui.actionPeriod10s )
     {

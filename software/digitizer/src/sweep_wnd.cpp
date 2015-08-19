@@ -2,6 +2,8 @@
 #include "sweep_wnd.h"
 #include <QMdiArea>
 #include <QMdiSubwindow>
+#include <QFileDialog>
+#include <QMessageBox>
 #include "oscilloscope_wnd.h"
 
 SweepWnd::SweepWnd( QWidget * parent )
@@ -50,8 +52,48 @@ void SweepWnd::showEvent( QShowEvent * e )
     tileVertically();
 }
 
+void SweepWnd::data( QVector<qreal> & workV, QVector<qreal> & workI, QVector<qreal> & probeV, QVector<qreal> & probeI )
+{
+    work->data( workV, workI );
+    probe->data( probeV, probeI );
+}
+
 void SweepWnd::slotSave()
 {
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Image"), "", tr("Text Files (*.txt)"));
+    if ( fileName.length() > 0 )
+    {
+        if ( !fileName.toLower().endsWith( ".txt" ) )
+            fileName.append( ".txt" );
+
+        QFile f( fileName );
+        if ( f.exists( fileName ) )
+        {
+            QMessageBox::StandardButton res = QMessageBox::warning( this, "Warning", QString( "Specified file \"%1\" exists! Overwrite?" ).arg( fileName ) );
+            if ( res != QMessageBox::Ok )
+                return;
+        }
+
+        if ( !f.open( QIODevice::WriteOnly ) )
+        {
+            return;
+        }
+
+        QTextStream out( &f );
+
+        out << "workV[mV]; workI[mV]; probeV[mV]; probeI[mV]\r\n"; // Yes, I in [mV] due to module measures [mV].
+        QVector<qreal> workV, workI, probeV, probeI;
+        data( workV, workI, probeV, probeI );
+        int sz = workV.size();
+        for ( int i=0; i<sz; i++ )
+        {
+            out << QString( "%1; %2; %3; %4\r\n" ).arg( workV.at( i ) )
+        }
+
+        out.flush();
+        f.close();
+    }
 }
 
 void SweepWnd::slotQuit()
