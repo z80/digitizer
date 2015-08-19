@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cccdK8xF.s 			page 1
 
 
    1              		.syntax unified
@@ -10,7 +10,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
    7              		.eabi_attribute 24, 1
    8              		.eabi_attribute 25, 1
    9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 30, 2
   11              		.eabi_attribute 34, 1
   12              		.eabi_attribute 18, 4
   13              		.thumb
@@ -18,7 +18,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
   15              		.text
   16              	.Ltext0:
   17              		.cfi_sections	.debug_frame
-  18              		.section	.text.main,"ax",%progbits
+  18              		.section	.text.startup.main,"ax",%progbits
   19              		.align	2
   20              		.p2align 4,,15
   21              		.global	main
@@ -56,22 +56,22 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
   53              		.loc 1 25 0
   54 0022 FFF7FEFF 		bl	initLed
   55              		.loc 1 26 0
-  56 0026 4FF00300 		mov	r0, #3
-  57 002a FFF7FEFF 		bl	setLeds
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 2
+  56 0026 0320     		movs	r0, #3
+  57 0028 FFF7FEFF 		bl	setLeds
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cccdK8xF.s 			page 2
 
 
   58              	.L2:
   59              		.loc 1 30 0 discriminator 1
-  60 002e FFF7FEFF 		bl	processCpuIo
-  61              		.loc 1 59 0 discriminator 1
-  62 0032 FCE7     		b	.L2
+  60 002c FFF7FEFF 		bl	processCpuIo
+  61 0030 FFF7FEFF 		bl	processCpuIo
+  62 0034 FAE7     		b	.L2
   63              		.cfi_endproc
   64              	.LFE62:
   65              		.size	main, .-main
-  66 0034 AFF30080 		.text
-  66      AFF30080 
-  66      AFF30080 
+  66 0036 00BFAFF3 		.text
+  66      0080AFF3 
+  66      0080
   67              	.Letext0:
   68              		.file 2 "c:\\programs\\codesourcery\\2011.03-56\\bin\\../lib/gcc/arm-none-eabi/4.6.3/../../../../a
   69              		.file 3 "../chibios_2.4.x/os/ports/common/ARMCMx/CMSIS/include/core_cm3.h"
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
  110 0054 DC000000 		.4byte	.LASF13
  111 0058 02       		.byte	0x2
  112 0059 4F       		.byte	0x4f
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 3
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cccdK8xF.s 			page 3
 
 
  113 005a 5E000000 		.4byte	0x5e
@@ -152,7 +152,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
  141 008e 01       		.byte	0x1
  142 008f 29000000 		.4byte	0x29
  143 0093 00000000 		.4byte	.LFB62
- 144 0097 34000000 		.4byte	.LFE62
+ 144 0097 36000000 		.4byte	.LFE62
  145 009b 00000000 		.4byte	.LLST0
  146 009f 07       		.uleb128 0x7
  147 00a0 B9000000 		.4byte	.LASF15
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
  167 000b 11       		.uleb128 0x11
  168 000c 01       		.uleb128 0x1
  169 000d 52       		.uleb128 0x52
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 4
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cccdK8xF.s 			page 4
 
 
  170 000e 01       		.uleb128 0x1
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
  224 0044 03       		.uleb128 0x3
  225 0045 0E       		.uleb128 0xe
  226 0046 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 5
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cccdK8xF.s 			page 5
 
 
  227 0047 0B       		.uleb128 0xb
@@ -283,7 +283,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
  266 000a 7D       		.byte	0x7d
  267 000b 00       		.sleb128 0
  268 000c 02000000 		.4byte	.LCFI0
- 269 0010 34000000 		.4byte	.LFE62
+ 269 0010 36000000 		.4byte	.LFE62
  270 0014 0200     		.2byte	0x2
  271 0016 7D       		.byte	0x7d
  272 0017 08       		.sleb128 8
@@ -298,21 +298,21 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
  281 000c 0000     		.2byte	0
  282 000e 0000     		.2byte	0
  283 0010 00000000 		.4byte	.LFB62
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 6
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cccdK8xF.s 			page 6
 
 
- 284 0014 34000000 		.4byte	.LFE62-.LFB62
+ 284 0014 36000000 		.4byte	.LFE62-.LFB62
  285 0018 00000000 		.4byte	0
  286 001c 00000000 		.4byte	0
  287              		.section	.debug_ranges,"",%progbits
  288              	.Ldebug_ranges0:
  289 0000 00000000 		.4byte	.LFB62
- 290 0004 34000000 		.4byte	.LFE62
+ 290 0004 36000000 		.4byte	.LFE62
  291 0008 00000000 		.4byte	0
  292 000c 00000000 		.4byte	0
  293              		.section	.debug_line,"",%progbits
  294              	.Ldebug_line0:
- 295 0000 07010000 		.section	.debug_str,"MS",%progbits,1
+ 295 0000 00010000 		.section	.debug_str,"MS",%progbits,1
  295      0200DC00 
  295      00000201 
  295      FB0E0D00 
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
  310              	.LASF14:
  311 0072 6D61696E 		.ascii	"main\000"
  311      00
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 7
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cccdK8xF.s 			page 7
 
 
  312              	.LASF5:
@@ -395,13 +395,13 @@ ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 1
  327 00e4 63686172 		.ascii	"char\000"
  327      00
  328              		.ident	"GCC: (Sourcery CodeBench Lite 2012.03-56) 4.6.3"
-ARM GAS  C:\Users\z80\AppData\Local\Temp\cccv4V1g.s 			page 8
+ARM GAS  C:\Users\z80\AppData\Local\Temp\cccdK8xF.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\z80\AppData\Local\Temp\cccv4V1g.s:19     .text.main:00000000 $t
-C:\Users\z80\AppData\Local\Temp\cccv4V1g.s:25     .text.main:00000000 main
+C:\Users\z80\AppData\Local\Temp\cccdK8xF.s:19     .text.startup.main:00000000 $t
+C:\Users\z80\AppData\Local\Temp\cccdK8xF.s:25     .text.startup.main:00000000 main
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS
