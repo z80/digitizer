@@ -27,6 +27,11 @@ SweepWnd::SweepWnd( QWidget * parent )
 
     connect( ui.actionTile_vertically,   SIGNAL(triggered()), this, SLOT(tileVertically()) );
     connect( ui.actionTile_horizontally, SIGNAL(triggered()), this, SLOT(tileHorizontally()) );
+
+    connect( ui.actionClose, SIGNAL(triggered()),   this, SLOT(quit()) );
+    connect( ui.actionSave_as, SIGNAL(triggered()), this, SLOT(slotSave()) );
+
+    shouldBeSaved = false;
 }
 
 SweepWnd::~SweepWnd()
@@ -36,20 +41,115 @@ SweepWnd::~SweepWnd()
 void SweepWnd::addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI )
 {
     QMutexLocker lock( &m );
-        work->addData(  workV,  workI );
-        probe->addData( probeV, probeI );
-        work->slotReplot();
-        probe->slotReplot();
+        addData( workV, workI, probeV, probeI );
 }
 
-void SweepWnd::load( const QString & fileName )
+void SweepWnd::addData( QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI )
 {
+    work->addData(  workV,  workI );
+    probe->addData( probeV, probeI );
+    work->slotReplot();
+    probe->slotReplot();
+    shouldBeSaved = true;
+}
+
+SweepWnd * SweepWnd::loadFile( QWidget * parent )
+{
+    QString fileName = QFileDialog::getOpenFileName( parent,
+        tr("Open Image"), "", tr("Text Files (*.txt)"));
+    if ( fileName.length() > 0 )
+    {
+        if ( !fileName.toLower().endsWith( ".txt" ) )
+            fileName = QString( "%1%2" ).arg( fileName ).arg( ".txt" );
+
+        QFile f( fileName );
+        if ( !f.exists( fileName ) )
+        {
+            QMessageBox::StandardButton res = QMessageBox::critical( parent, "Error", QString( "Specified file \"%1\" does not exist!" ).arg( fileName ), QMessageBox::Ok );
+            return 0;
+        }
+        SweepWnd * wnd = new SweepWnd( 0 );
+        wnd->load( fileName );
+
+        return wnd;
+    }
+    return 0;
+}
+
+void SweepWnd::load(const QString & fileName )
+{
+    if ( shouldBeSaved )
+    {
+        QMessageBox::StandardButton res = QMessageBox::warning( this, "Error", QString( "Current data is not saved! Load file anyway?" ), QMessageBox::Ok | QMessageBox::Cancel );
+        if ( res != QMessageBox::Ok )
+            return;
+    }
+
+
+    QFile f( fileName );
+    if ( !f.open( QIODevice::ReadOnly ) )
+    {
+        QMessageBox::StandardButton res = QMessageBox::critical( this, "Error", QString( "Failed to open \"%1\" for writing!" ).arg( fileName ), QMessageBox::Ok );
+        return;
+    }
+
+    QQueue<qreal> workV, workI, probeV, probeI;
+    QByteArray arr = f.readLine(); // Skip title.
+    while ( true )
+    {
+        arr = f.readLine();
+        QString stri = QString::fromUtf8( arr );
+        QRegExp ex( "(\\w+)[;\\s]+(\\w+)[;\\s]+(\\w+)[;\\s]+(\\w+)" );
+        int index = ex.indexIn( stri );
+        if ( index >= 0 )
+        {
+            QString m;
+            m = ex.cap( 1 );
+            qreal v = m.toDouble();
+            workV.enqueue( v );
+
+            m = ex.cap( 2 );
+            v = m.toDouble();
+            workI.enqueue( v );
+
+            m = ex.cap( 3 );
+            v = m.toDouble();
+            probeV.enqueue( v );
+
+            m = ex.cap( 4 );
+            v = m.toDouble();
+            probeI.enqueue( v );
+        }
+        else
+            break;
+    }
+
+    f.close();
+
+    addData( workV, workI, probeV, probeI );
+
+    shouldBeSaved = false;
+    setWindowTitle( fileName );
 }
 
 void SweepWnd::showEvent( QShowEvent * e )
 {
     QMainWindow::showEvent( e );
     tileVertically();
+}
+
+void SweepWnd::closeEvent( QCloseEvent * e )
+{
+    if ( shouldBeSaved )
+    {
+        QMessageBox::StandardButton res = QMessageBox::warning( this, "Error", QString( "Current data is not saved! Close anyway?" ), QMessageBox::Ok | QMessageBox::Cancel );
+        if ( res != QMessageBox::Ok )
+        {
+            e->setAccepted( false );
+            return;
+        }
+    }
+    QMainWindow::closeEvent( e );
 }
 
 void SweepWnd::data( QVector<qreal> & workV, QVector<qreal> & workI, QVector<qreal> & probeV, QVector<qreal> & probeI )
@@ -60,7 +160,7 @@ void SweepWnd::data( QVector<qreal> & workV, QVector<qreal> & workI, QVector<qre
 
 void SweepWnd::slotSave()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
+    QString fileName = QFileDialog::getSaveFileName(this,
         tr("Open Image"), "", tr("Text Files (*.txt)"));
     if ( fileName.length() > 0 )
     {
@@ -70,13 +170,14 @@ void SweepWnd::slotSave()
         QFile f( fileName );
         if ( f.exists( fileName ) )
         {
-            QMessageBox::StandardButton res = QMessageBox::warning( this, "Warning", QString( "Specified file \"%1\" exists! Overwrite?" ).arg( fileName ) );
+            QMessageBox::StandardButton res = QMessageBox::warning( this, "Warning", QString( "Specified file \"%1\" exists! Overwrite?" ).arg( fileName ), QMessageBox::Ok | QMessageBox::Cancel );
             if ( res != QMessageBox::Ok )
                 return;
         }
 
         if ( !f.open( QIODevice::WriteOnly ) )
         {
+            QMessageBox::StandardButton res = QMessageBox::critical( this, "Error", QString( "Failed to open \"%1\" for writing!" ).arg( fileName ), QMessageBox::Ok );
             return;
         }
 
@@ -87,17 +188,20 @@ void SweepWnd::slotSave()
         data( workV, workI, probeV, probeI );
         int sz = workV.size();
         for ( int i=0; i<sz; i++ )
-        {
-            out << QString( "%1; %2; %3; %4\r\n" ).arg( workV.at( i ) )
-        }
+            out << QString( "%1; %2; %3; %4\r\n" ).arg( workV.at( i ) ).arg( workI.at( i ) ).arg( probeV.at( i ) ).arg( probeI.at( i ) );
 
         out.flush();
         f.close();
+
+        shouldBeSaved = false;
+
+        setWindowTitle( fileName );
     }
 }
 
 void SweepWnd::slotQuit()
 {
+    close();
 }
 
 void SweepWnd::tileVertically()

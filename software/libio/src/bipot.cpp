@@ -522,7 +522,7 @@ bool Bipot::loadCalibrationWorkDac( const QString & fileName )
         while ( !file.atEnd() )
         {
             stri = file.readLine();
-            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
@@ -534,13 +534,16 @@ bool Bipot::loadCalibrationWorkDac( const QString & fileName )
                 m = ex.cap( 2 );
                 d.dacB = m.toInt();
 
-                m = ex.cap( 2 );
+                m = ex.cap( 3 );
                 d.dacC = m.toInt();
 
-                m = ex.cap( 2 );
+                m = ex.cap( 4 );
                 d.dacD = m.toInt();
 
-                m = ex.cap( 3 );
+                m = ex.cap( 5 );
+                d.temp = m.toDouble();
+
+                m = ex.cap( 6 );
                 d.volt = m.toDouble();
 
                 pd->clbrDacWork.append( d );
@@ -562,7 +565,7 @@ bool Bipot::saveCalibrationWorkDac( const QString & fileName )
         for ( QList<CalibrationDac>::const_iterator i=pd->clbrDacWork.begin(); i!=pd->clbrDacWork.end(); i++ )
         {
             const CalibrationDac d = *i;
-            QString stri = QString( "%1 %2 %3 %4 %5\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.dacC ).arg( d.dacD ).arg( d.volt );
+            QString stri = QString( "%1 %2 %3 %4 %5 %6\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.dacC ).arg( d.dacD ).arg( d.temp ).arg( d.volt );
             out << stri;
         }
         out.flush();
@@ -709,19 +712,19 @@ bool Bipot::loadCalibrationAdc( const QString & fileName )
                 m = ex.cap( 4 );
                 d.adcD = m.toInt();
 
-                m = ex.cap( 7 );
+                m = ex.cap( 5 );
                 d.temp = m.toDouble();
 
-                m = ex.cap( 5 );
+                m = ex.cap( 6 );
                 d.voltA = m.toDouble();
 
-                m = ex.cap( 6 );
+                m = ex.cap( 7 );
                 d.voltB = m.toDouble();
 
-                m = ex.cap( 7 );
+                m = ex.cap( 8 );
                 d.voltC = m.toDouble();
 
-                m = ex.cap( 8 );
+                m = ex.cap( 9 );
                 d.voltD = m.toDouble();
 
                 pd->clbrAdc.append( d );

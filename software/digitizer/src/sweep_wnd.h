@@ -15,10 +15,14 @@ public:
     ~SweepWnd();
 
     void addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI );
+    void addData( QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI );
+
+    static SweepWnd * loadFile( QWidget * parent = 0 );
     void load( const QString & fileName );
 
 protected:
     void showEvent( QShowEvent * e );
+    void closeEvent( QCloseEvent * e );
     void data( QVector<qreal> & workV, QVector<qreal> & workI, QVector<qreal> & probeV, QVector<qreal> & probeI );
     
 public slots:
@@ -30,6 +34,7 @@ private:
     Ui_sweep_wnd ui;
     OscilloscopeWnd * work;
     OscilloscopeWnd * probe;
+    bool shouldBeSaved;
 };
 
 

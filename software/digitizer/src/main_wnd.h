@@ -62,6 +62,8 @@ public slots:
     void slotSweepReplot();
     void slotSweepFinished();
     void slotStopSweep();
+
+    void slotOpen();
 protected:
     void closeEvent( QCloseEvent * e );
 private:

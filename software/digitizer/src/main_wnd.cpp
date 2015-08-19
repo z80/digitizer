@@ -73,6 +73,7 @@ MainWnd::MainWnd( QWidget * parent )
     tempTimer->start();
 
     connect( ui.action_Quit,       SIGNAL(triggered()), this, SLOT(slotQuit()) );
+    connect( ui.actionOpen_file,   SIGNAL(triggered()), this, SLOT(slotOpen()) );
     connect( ui.action_About,      SIGNAL(triggered()), this, SLOT(slotAbout()) );
     connect( ui.actionCalibration, SIGNAL(triggered()), this, SLOT(slotCalibration()) );
 
@@ -633,6 +634,17 @@ void MainWnd::slotStopSweep()
             cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
         } while ( cnt > 0 );
 }
+
+void MainWnd::slotOpen()
+{
+    sweepWnd = SweepWnd::loadFile();
+    if ( sweepWnd )
+        sweepWnd->show();
+}
+
+
+
+
 
 
 
