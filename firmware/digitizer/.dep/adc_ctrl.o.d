@@ -1,9 +1,9 @@
 build/obj/adc_ctrl.o: src/adc_ctrl.c src/adc_ctrl.h \
  ../chibios_2.4.x/os/kernel/include/ch.h chconf.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h \
- c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h \
- c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stdint.h \
- c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h \
+ /home/z80/programs/code-sourcery/2011.03-42/bin/../lib/gcc/arm-none-eabi/4.5.2/include/stddef.h \
+ /home/z80/programs/code-sourcery/2011.03-42/bin/../lib/gcc/arm-none-eabi/4.5.2/include/stdint.h \
+ /home/z80/programs/code-sourcery/2011.03-42/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/stdint.h \
  ../chibios_2.4.x/os/kernel/include/chlists.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/chcore.h \
  ../chibios_2.4.x/os/ports/GCC/ARMCMx/STM32F1xx/cmparams.h \
@@ -47,6 +47,7 @@ build/obj/adc_ctrl.o: src/adc_ctrl.c src/adc_ctrl.h \
  ../chibios_2.4.x/os/hal/include/adc.h \
  ../chibios_2.4.x/os/hal/include/can.h \
  ../chibios_2.4.x/os/hal/include/ext.h \
+ ../chibios_2.4.x/os/hal/platforms/STM32/ext_lld.h \
  ../chibios_2.4.x/os/hal/include/gpt.h \
  ../chibios_2.4.x/os/hal/platforms/STM32/gpt_lld.h \
  ../chibios_2.4.x/os/hal/include/i2c.h \
@@ -74,11 +75,11 @@ chconf.h:
 
 ../chibios_2.4.x/os/ports/GCC/ARMCMx/chtypes.h:
 
-c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stddef.h:
+/home/z80/programs/code-sourcery/2011.03-42/bin/../lib/gcc/arm-none-eabi/4.5.2/include/stddef.h:
 
-c:\programs\yagarto\bin\../lib/gcc/arm-none-eabi/4.5.0/include/stdint.h:
+/home/z80/programs/code-sourcery/2011.03-42/bin/../lib/gcc/arm-none-eabi/4.5.2/include/stdint.h:
 
-c:/programs/yagarto/lib/gcc/../../arm-none-eabi/sys-include/stdint.h:
+/home/z80/programs/code-sourcery/2011.03-42/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/stdint.h:
 
 ../chibios_2.4.x/os/kernel/include/chlists.h:
 
@@ -171,6 +172,8 @@ mcuconf.h:
 ../chibios_2.4.x/os/hal/include/can.h:
 
 ../chibios_2.4.x/os/hal/include/ext.h:
+
+../chibios_2.4.x/os/hal/platforms/STM32/ext_lld.h:
 
 ../chibios_2.4.x/os/hal/include/gpt.h:
 
