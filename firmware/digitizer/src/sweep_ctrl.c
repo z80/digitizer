@@ -31,7 +31,7 @@ static void extCb( EXTDriver * extp, expchannel_t channel );
 static const EXTConfig extcfg = {
   {
    {EXT_CH_MODE_DISABLED, NULL},
-   {EXT_CH_MODE_RISING_EDGE | EXT_CH_MODE_AUTOSTART, extCb },
+   {EXT_CH_MODE_RISING_EDGE /*| EXT_CH_MODE_AUTOSTART*/, extCb },
    {EXT_CH_MODE_DISABLED, NULL},
    {EXT_CH_MODE_DISABLED, NULL},
    {EXT_CH_MODE_DISABLED, NULL},
@@ -103,50 +103,55 @@ void setSweepTime( int ptsCnt, int period )
 
 static void recordAdc( void );
 
-uint8_t processSweepI( void )
+void processSweepI( uint8_t dacIndex )
 {
 	if ( swEnabled )
 	{
-		swElapsed += 1;
-		// Record data if it's time to do that.
-		if ( swElapsed >= swNextPtTime )
+		if ( dacIndex == 0 )
 		{
-			// Measure signals.
-			recordAdc();
-			// Calc next point time.
+			swElapsed += 1;
+			// Record data if it's time to do that.
+			if ( swElapsed >= swNextPtTime )
+			{
+				// Measure signals.
+				recordAdc();
+				// Calc next point time.
 
-			swPtIndex += 1;
+				swPtIndex += 1;
 
-			uint64_t t;
-			t = (uint64_t)swPeriod * (uint64_t)swPtIndex / (uint64_t)( 2*swPtsCnt-1 );
-			swNextPtTime = (int)t;
+				uint64_t t;
+				t = (int64_t)(2*swPeriod) * (int64_t)swPtIndex / (int64_t)( 2*swPtsCnt-1 );
+				swNextPtTime = (int)t;
+			}
 		}
-
 		// Move DACs.
-		if ( swPtIndex < 2*swPtsCnt )
+		//if ( swPtIndex < 2*swPtsCnt )
+		if ( swElapsed < 2*swPeriod )
 		{
 			// Calc current DAC values.
-			uint8_t i;
 			int time = (swElapsed < swPeriod) ? swElapsed : (2*swPeriod - swElapsed);
-			for ( i=0; i<4; i++ )
-			{
-				uint64_t dac64 = (uint64_t)swDacFrom[i] + (uint64_t)(swDacTo[i] - swDacFrom[i])*(uint64_t)time / (uint64_t)swPtsCnt;
-				int dac = (int)dac64;
-				setDacI( i, dac );
-			}
+			int64_t dac64 = (int64_t)swDacFrom[dacIndex] + (int64_t)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(int64_t)time / (int64_t)swPeriod;
+			int dac = (int)dac64;
+			setDacI( dacIndex, dac );
 		}
 		else
 		{
 			swEnabled = 0;
-			return 0;
+			setDacI( 0, swDacFrom[0] );
+			setDacI( 1, swDacFrom[1] );
+			setDacI( 2, swDacFrom[2] );
+			setDacI( 3, swDacFrom[3] );
+			//return 0;
 		}
 	}
-	return 1;
+	//return 1;
 }
 
 void setSweepEn( uint8_t en )
 {
 	swNextPtTime = 0;
+	swElapsed    = 0;
+	swPtIndex    = 0;
 	currentDacs( swDacFrom );
 
 	//chOQPut( &sweepCmdQueue, en ? 1 : 0 );
@@ -163,8 +168,6 @@ uint8_t sweepEn( void )
 
 void setTrigEn( uint8_t en )
 {
-	currentDacs( swDacFrom );
-
 	//chOQPut( &sweepCmdQueue, en ? 2 : 0 );
 	swTrigEnabled = en;
 	if ( en )
@@ -199,7 +202,7 @@ static void recordAdc( void )
 	if ( chIQGetEmptyI( &sweep_queue ) >= 12 )
 	{
 		int adc[4];
-		instantAdc( adc );
+		instantAdcI( adc );
 
 
 		uint8_t v;

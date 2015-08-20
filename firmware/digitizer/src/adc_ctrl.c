@@ -21,13 +21,14 @@ static int instantAdcData[4] = { -1, -1, -1, -1 };
 
 // Oscilloscope parameters.
 int signalMask = 15;
-int period     = 25;
+int period     = 5;
 int elapsed    = 0;
 
 
 // Possible indices 0, 1, 2, 3.
 static void selectAdcIndex( int index );
 static void onSpiComplete( SPIDriver * spid );
+static void filterAdc( uint8_t index, int value );
 /*
  * Maximum speed SPI configuration (18MHz, CPHA=0, CPOL=0, MSb first).
  */
@@ -42,6 +43,8 @@ static const SPIConfig hs_spicfg =
 
 void initAdc( void )
 {
+	palSetPadMode( GPIOB, 8, PAL_MODE_OUTPUT_PUSHPULL );
+
 	chIQInit( &adc_queue,     adc_queue_buffer,   ADC_QUEUE_SZ,   0 );
 
     palSetPadMode( GPIOA, ADC_MUX_0, PAL_MODE_OUTPUT_PUSHPULL ); 		// MUX_0
@@ -69,6 +72,7 @@ void queryAdcI( void )
 void onSpiComplete( SPIDriver * spid )
 {
 	(void)spid;
+											palSetPad( GPIOB, 8 );
 	chSysLockFromIsr();
 		// The very first thing - switch another signal to ADC input.
 		int prevIndex = adcIndex;
@@ -81,7 +85,9 @@ void onSpiComplete( SPIDriver * spid )
 					((int)(adc_rx_buffer[1]) << 8) +
 					((int)(adc_rx_buffer[0]) << 16);
 		value = (value >> 1) & 0xFFFF;
-    	instantAdcData[prevIndex] = value;
+
+		filterAdc( prevIndex, value );
+    	//instantAdcData[prevIndex] = value;
 
 		// if (adcIndex == 0) this means it was 3 just
 		// in time of measure. So a full cycle was just completed.
@@ -150,6 +156,7 @@ void onSpiComplete( SPIDriver * spid )
 			}
     	}
 	chSysUnlockFromIsr();
+												palClearPad( GPIOB, 8 );
 }
 
 InputQueue * adcQueue( void )
@@ -189,14 +196,19 @@ void selectAdcIndex( int index )
 
 void instantAdc( int * vals )
 {
+	chSysLock();
+		instantAdcI( vals );
+	chSysUnlock();
+}
+
+void instantAdcI( int * vals )
+{
 	if ( vals )
 	{
-		chSysLock();
-			vals[0] = instantAdcData[0];
-			vals[1] = instantAdcData[1];
-			vals[2] = instantAdcData[2];
-			vals[3] = instantAdcData[3];
-		chSysUnlock();
+		vals[0] = instantAdcData[0];
+		vals[1] = instantAdcData[1];
+		vals[2] = instantAdcData[2];
+		vals[3] = instantAdcData[3];
 	}
 }
 
@@ -212,6 +224,38 @@ void setOscPeriod( uint32_t interval )
 	chSysLock();
 		period = (int)interval;
 	chSysUnlock();
+}
+
+
+
+
+int adcRaw[4][5];
+int adcFiltered[4][5];
+uint8_t adcPointer[4] = { 0, 0, 0, 0 };
+static void filterAdc( uint8_t index, int value )
+{
+	int * raw = adcRaw[ index ];
+	uint8_t * ptr = &adcPointer[ index ];
+	raw[ *ptr ] = value;
+	*ptr = ( (*ptr) + 1 ) % 5;
+
+	int * filtered = adcFiltered[ index ];
+	uint8_t i, j;
+	for ( i=0; i<4; i++ )
+		filtered[i] = raw[i];
+	for ( i=0; i<4; i++ )
+	{
+		for ( j=i+1; j<5; j++ )
+		{
+			if ( filtered[i] < filtered[j] )
+			{
+				int a = filtered[i];
+				filtered[i] = filtered[j];
+				filtered[j] = a;
+			}
+		}
+	}
+	instantAdcData[index] = filtered[2];
 }
 
 

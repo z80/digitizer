@@ -1,6 +1,9 @@
 
 #include "main_wnd.h"
 #include <QFileDialog>
+#include "sweep_wnd.h"
+
+#include "qwt_text_label.h"
 
 #include <boost/bind.hpp>
 #include <boost/bind/arg.hpp>
@@ -15,6 +18,7 @@ MainWnd::MainWnd( QWidget * parent )
     //ui.osc->show();
 
     temperature = -273.15;
+    doMeasureSweep = false;
 
     terminate = false;
     io        = new Bipot();
@@ -28,8 +32,37 @@ MainWnd::MainWnd( QWidget * parent )
     oscWork = new OscilloscopeWnd( this );
     bl->addWidget( oscWork );
 
+
+    labelWork = new QwtTextLabel( oscWork->plot()->canvas() );
+
+    textWork.setColor( Qt::darkMagenta );
+    QFont f = textWork.font();
+    f.setPointSizeF( 15 );
+    textWork.setFont( f );
+    textWork.setText( "Work I(t)" );
+
+    labelWork->setText( textWork );
+    labelWork->setIndent( 0 );
+    labelWork->setMargin( 10 );
+
     oscProbe = new OscilloscopeWnd( this );
     bl->addWidget( oscProbe );
+
+
+    labelProbe = new QwtTextLabel( oscProbe->plot()->canvas() );
+
+    textProbe.setColor( Qt::darkMagenta );
+    f = textProbe.font();
+    f.setPointSizeF( 15 );
+    textProbe.setFont( f );
+    textProbe.setText( "Probe I(t)" );
+
+    labelProbe->setText( textProbe );
+    labelProbe->setIndent( 0 );
+    labelProbe->setMargin( 10 );
+
+    statusLabel = new QLabel( 0 );
+    ui.statusBar->addPermanentWidget( statusLabel );
 
     calibrationWnd = new CalibrationWnd( 0 );
     calibrationWnd->setIo( io );
@@ -40,6 +73,7 @@ MainWnd::MainWnd( QWidget * parent )
     tempTimer->start();
 
     connect( ui.action_Quit,       SIGNAL(triggered()), this, SLOT(slotQuit()) );
+    connect( ui.actionOpen_file,   SIGNAL(triggered()), this, SLOT(slotOpen()) );
     connect( ui.action_About,      SIGNAL(triggered()), this, SLOT(slotAbout()) );
     connect( ui.actionCalibration, SIGNAL(triggered()), this, SLOT(slotCalibration()) );
 
@@ -66,7 +100,16 @@ MainWnd::MainWnd( QWidget * parent )
     connect( this, SIGNAL(sigReplot()), 
              this, SLOT(slotReplot()), 
              Qt::QueuedConnection );
+
+    connect( this, SIGNAL(sigSweepReplot()),   this, SLOT(slotSweepReplot()) );
+    connect( this, SIGNAL(sigSweepFinished()), this, SLOT(slotSweepFinished()) );
+    connect( ui.actionStop_sweep, SIGNAL(triggered()), this, SLOT(slotStopSweep()) );
+
+    connect( ui.actionPeriod1s,  SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
+    connect( ui.actionPeriod10s, SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
+    connect( ui.actionPeriod1m,  SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
     
+    connect( ui.actionExternal_trigger, SIGNAL(triggered()), this, SLOT(slotExternalTrigger()) );
 }
 
 MainWnd::~MainWnd()
@@ -156,7 +199,7 @@ void MainWnd::closeEvent( QCloseEvent * e )
 
 void MainWnd::setTitle( const QString & stri )
 {
-    setWindowTitle( QString( "Potentiostat: %1" ).arg( stri ) );
+    statusLabel->setText( QString( "Potentiostat: %1" ).arg( stri ) );
 }
 
 class Msleep: public QThread
@@ -196,8 +239,8 @@ void MainWnd::measure()
             res = io->oscData( t_workV, t_workI, t_probeV, t_probeI );
             if ( !res )
             {
-                io->close();
                 Msleep::msleep( 1000 );
+                reopen();
                 continue;
             }
 
@@ -223,13 +266,17 @@ void MainWnd::measure()
                 res = io->instantData( workV, probeV, workI, probeI );
                 if ( !res )
                 {
-                    io->close();
                     Msleep::msleep( 1000 );
+                    reopen();
                     continue;
                 }
                 emit sigInstantValues( workV, probeV, workI, probeI );
                 emit sigReplot();
             }
+
+            // Sweep measure routine in the same thread.
+            measureSweep();
+
             if ( szMeasured < 24 )
                 Msleep::msleep( 10 );
         }
@@ -241,10 +288,82 @@ void MainWnd::measure()
     } while ( !term );
 }
 
+void MainWnd::measureSweep()
+{
+    mutex.lock();
+        bool measure = doMeasureSweep;
+    mutex.unlock();
+
+    if ( measure )
+    {
+        Bipot * io;
+        mutex.lock();
+            io = this->io;
+        mutex.unlock();
+
+        if ( !io->isOpen() )
+        {
+            return;
+        }
+
+        // Measure data.
+        bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+        if ( !res )
+        {
+            Msleep::msleep( 1000 );
+            reopen();
+            return;
+        }
+
+        // Check total data cnt in all arrays.
+        int szMeasured = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+        // Now move data to paint data.
+        mutexSw.lock();
+            for ( int i=0; i<t_swWorkV.size(); i++ )
+                p_swWorkV.enqueue( t_swWorkV.at( i ) );
+            for ( int i=0; i<t_swWorkI.size(); i++ )
+                p_swWorkI.enqueue( t_swWorkI.at( i ) );
+            for ( int i=0; i<t_swProbeV.size(); i++ )
+                p_swProbeV.enqueue( t_swProbeV.at( i ) );
+            for ( int i=0; i<t_swProbeI.size(); i++ )
+                p_swProbeI.enqueue( t_swProbeI.at( i ) );
+            int szCollected = p_swWorkV.size() + p_swWorkI.size() + p_swProbeV.size() + p_swProbeI.size();
+        mutexSw.unlock();
+        // Replot if necessary.
+        if ( szCollected > 12 )
+        {
+            emit sigSweepReplot();
+        }
+
+        if ( szMeasured < 24 )
+        {
+            bool sweep;
+            res = io->sweepEn( sweep );
+            if ( !res )
+            {
+                Msleep::msleep( 1000 );
+                reopen();
+                return;
+            }
+            if ( !sweep )
+            {
+                mutex.lock();
+                    doMeasureSweep = false;
+                mutex.unlock();
+
+                emit sigSweepFinished();
+            }
+            else
+                Msleep::msleep( 10 );
+        }
+    }
+}
+
 void MainWnd::reopen()
 {
-    io->close();
-    io->open( devName );
+    QMutexLocker lock( &mutex );
+        io->close();
+        io->open( devName );
 }
 
 void MainWnd::refreshDevicesList()
@@ -312,18 +431,50 @@ void MainWnd::slotSweepWork()
 {
     if ( io->isOpen() )
     {
-        qreal from   = ui.workVolt->value();
-        qreal to     = ui.workSweepTo->value();
-        qreal timeMs = 1000.0;
+        qreal workFrom   = ui.workVolt->value();
+        qreal workTo     = ui.workSweepTo->value();
+        qreal probeFrom  = ui.probeVolt->value();
+        qreal delta = workTo - workFrom;
+        qreal timeMs = delta / ui.sweepRate->value();
+        timeMs = (timeMs >= 0.0) ? timeMs : (-timeMs);
+        int   ptsCnt = ui.sweepPtsCnt->value();
 
-        if ( !ui.pullProbe->isChecked() )
-            io->sweepWork( from, to, timeMs );
-        else
+        bool pull = ui.pullProbe->isChecked();
+        qreal probeTo = ( pull ) ? (probeFrom + delta) : probeFrom;
+
+        bool res = io->setSweepRange( workTo, probeTo );
+        if ( !res )
         {
-            qreal from2 = ui.probeVolt->value();
-            qreal to2   = from2 + to - from;
-            //io->sweepBoth( from, to, from2, to2, timeMs );
+            QString stri = QString( "Failed to set sweep range!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
         }
+
+        res = io->setSweepTime( ptsCnt, timeMs );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep time!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        res = io->setSweepEn( true );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to start sweep!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        
+        ui.dockWidget_2->setEnabled( false );
+        // Open sweep window display.
+        sweepWnd = new SweepWnd( 0 );
+        sweepWnd->show();
+        // Run sweep data readout.
+        QMutexLocker lock( &mutex );
+            doMeasureSweep = true;
+        
     }
 }
 
@@ -349,24 +500,54 @@ void MainWnd::slotSweepProbe()
 {
     if ( io->isOpen() )
     {
-        qreal from   = ui.probeVolt->value();
-        qreal to     = ui.probeSweepTo->value();
-        qreal timeMs = 1000.0;
+        qreal workFrom   = ui.workVolt->value();
+        qreal probeFrom  = ui.probeVolt->value();
+        qreal probeTo    = ui.probeSweepTo->value();
+        qreal delta = probeTo - probeFrom;
+        qreal timeMs = delta / ui.sweepRate->value();
+        timeMs = (timeMs >= 0.0) ? timeMs : (-timeMs);
+        int   ptsCnt = ui.sweepPtsCnt->value();
 
-        if ( !ui.pullWork->isChecked() )
-            io->sweepProbe( from, to, timeMs );
-        else
+        bool pull = ui.pullWork->isChecked();
+        qreal workTo = ( pull ) ? (workFrom + delta) : workFrom;
+
+        bool res = io->setSweepRange( workTo, probeTo );
+        if ( !res )
         {
-            qreal from2 = ui.workVolt->value();
-            qreal to2   = from2 + to - from;
-            //io->sweepBoth( from2, to2, from, to, timeMs );
+            QString stri = QString( "Failed to set sweep range!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
         }
+
+        res = io->setSweepTime( ptsCnt, timeMs );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep time!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        res = io->setSweepEn( true );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to start sweep!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        ui.dockWidget_2->setEnabled( false );
+        // Open sweep window display.
+        sweepWnd = new SweepWnd( 0 );
+        sweepWnd->show();
+        // Run sweep data readout.
+        QMutexLocker lock( &mutex );
+            doMeasureSweep = true;
     }
 }
 
 void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
 {
-    QString stri= QString( "t: %1[C], workV = %2, workI = %3, probeV = %4, probeI = %5" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
+    QString stri= QString( "T: %1[C], workV = %2, workI = %3, probeV = %4, probeI = %5" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
                                                                                          .arg( wv, 8, 'f', 1, QChar( '0' ) ) 
                                                                                          .arg( wi, 8, 'f', 1, QChar( '0' ) )
                                                                                          .arg( pv, 8, 'f', 1, QChar( '0' ) )
@@ -379,10 +560,10 @@ void MainWnd::slotReplot()
 {
     // Add data to oscilloscope windows.
     mutex.lock();
-        oscWork->addData( p_workV );
-        oscProbe->addData( p_probeV );
-        p_workI.clear();
-        p_probeI.clear();
+        oscWork->addData( p_workI );
+        oscProbe->addData( p_probeI );
+        p_workV.clear();
+        p_probeV.clear();
     mutex.unlock();
     // Replot oscilloscope windows.
     oscWork->slotReplot();
@@ -401,6 +582,84 @@ void MainWnd::slotTemp()
         temperature = t;
     }
 }
+
+void MainWnd::slotOscPeriod()
+{
+    QAction * a = qobject_cast<QAction *>( sender() );
+    qreal t = 10.0;
+    if ( a == ui.actionPeriod1s )
+    {
+        t = 3.0;
+    }
+    else if ( a == ui.actionPeriod10s )
+    {
+        t = 10.0;
+    }
+    else if ( a == ui.actionPeriod1m )
+    {
+        t = 60.0;
+    }
+    oscWork->setPeriod( t );
+    oscProbe->setPeriod( t );
+    bool res = io->setOscPeriod( 1024, t * 1000.0 );
+    if ( !res )
+    {
+        QString stri = QString( "Failed to set oscilloscope period!" );
+        QMessageBox::critical( this, "Error", stri );
+        return;
+    }
+}
+
+void MainWnd::slotSweepReplot()
+{
+    if ( sweepWnd )
+        sweepWnd->addData( mutexSw, p_swWorkV, p_swWorkI, p_swProbeV, p_swProbeI );
+}
+
+void MainWnd::slotSweepFinished()
+{
+    ui.dockWidget_2->setEnabled( true );
+}
+
+void MainWnd::slotStopSweep()
+{
+    {
+        QMutexLocker lock( &mutex );
+            doMeasureSweep = false;
+            // If terminated, sweep should be stopped.
+            io->setSweepEn( false );
+            // Read while something is read.
+            int cnt = 0;
+            do {
+                bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+                Msleep::msleep( 10 );
+                cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+            } while ( cnt > 0 );
+    }
+    ui.dockWidget_2->setEnabled( true );
+}
+
+void MainWnd::slotOpen()
+{
+    sweepWnd = SweepWnd::loadFile();
+    if ( sweepWnd )
+        sweepWnd->show();
+}
+
+void MainWnd::slotExternalTrigger()
+{
+    bool en = ui.actionExternal_trigger->isChecked();
+    bool res = io->setTriggerEn( en );
+    if ( !res )
+    {
+        QMessageBox::critical( this, "Error", "Failed to change external triggering option!" );
+    }
+}
+
+
+
+
+
 
 
 

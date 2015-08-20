@@ -106,6 +106,9 @@ void Io::close()
 
 int Io::write( quint8 * data, int dataSz )
 {
+    if ( !pd->ftdi )
+        return false;
+
     int cnt = pd->ftdi->write( reinterpret_cast<char *>( data ), dataSz );
     return cnt;
 }
@@ -130,6 +133,9 @@ public:
 
 int Io::read( quint8 * data, int dataSz, bool tillTimeout )
 {
+    if ( !pd->ftdi )
+        return false;
+
     QTime t0 = QTime::currentTime();
     t0.start();
     int cnt;

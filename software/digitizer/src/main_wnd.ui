@@ -1,3 +1,5 @@
+
+
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWnd</class>
@@ -6,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>925</width>
-    <height>537</height>
+    <width>898</width>
+    <height>714</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +34,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>925</width>
+     <width>898</width>
      <height>21</height>
     </rect>
    </property>
@@ -40,6 +42,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionOpen_file"/>
     <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -66,7 +69,7 @@
   </widget>
   <widget class="QDockWidget" name="dockWidget_2">
    <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -78,13 +81,13 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
         <string>Work electrode</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1,0,0,1,1,1,1,1,5">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1,0,0,1,1,1,1,1">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -119,12 +122,12 @@
             </item>
             <item>
              <property name="text">
-              <string>x10</string>
+              <string>x0.1</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>x100</string>
+              <string>x0.01</string>
              </property>
             </item>
            </widget>
@@ -374,19 +377,6 @@
           </item>
          </layout>
         </item>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>36</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
        </layout>
       </widget>
      </item>
@@ -427,12 +417,12 @@
             </item>
             <item>
              <property name="text">
-              <string>x10</string>
+              <string>x0.1</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>x100</string>
+              <string>x0.01</string>
              </property>
             </item>
            </widget>
@@ -698,9 +688,123 @@
        </layout>
       </widget>
      </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="title">
+        <string>Sweep setup</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Points per volt</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="sweepPtsCnt">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>10</number>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
+            </property>
+            <property name="singleStep">
+             <number>50</number>
+            </property>
+            <property name="value">
+             <number>1000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Sweep rate V/s</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="sweepRate">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <double>0.010000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="value">
+             <double>3.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionPeriod1m"/>
+   <addaction name="actionPeriod10s"/>
+   <addaction name="actionPeriod1s"/>
+   <addaction name="separator"/>
+   <addaction name="actionStop_sweep"/>
+   <addaction name="separator"/>
+   <addaction name="actionExternal_trigger"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Quit">
    <property name="text">
     <string>&amp;Quit</string>
@@ -812,6 +916,74 @@
    </property>
    <property name="text">
     <string>stopLua</string>
+   </property>
+  </action>
+  <action name="actionPeriod1s">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/3arrows.png</normaloff>:/images/3arrows.png</iconset>
+   </property>
+   <property name="text">
+    <string>1s</string>
+   </property>
+   <property name="toolTip">
+    <string>Oscilloscope period 3 seconds</string>
+   </property>
+  </action>
+  <action name="actionPeriod10s">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/2arrows.png</normaloff>:/images/2arrows.png</iconset>
+   </property>
+   <property name="text">
+    <string>period10s</string>
+   </property>
+   <property name="toolTip">
+    <string>Oscilloscope period 10 seconds</string>
+   </property>
+  </action>
+  <action name="actionPeriod1m">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/1arrow.png</normaloff>:/images/1arrow.png</iconset>
+   </property>
+   <property name="text">
+    <string>period 1m</string>
+   </property>
+   <property name="toolTip">
+    <string>Oscilloscope period 1 minute</string>
+   </property>
+  </action>
+  <action name="actionStop_sweep">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>stop sweep</string>
+   </property>
+   <property name="toolTip">
+    <string>Stop sweep</string>
+   </property>
+  </action>
+  <action name="actionOpen_file">
+   <property name="text">
+    <string>Open file</string>
+   </property>
+  </action>
+  <action name="actionExternal_trigger">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/trig.png</normaloff>:/images/trig.png</iconset>
+   </property>
+   <property name="text">
+    <string>External trigger</string>
+   </property>
+   <property name="toolTip">
+    <string>Record data on external trigger rising edge.</string>
    </property>
   </action>
  </widget>

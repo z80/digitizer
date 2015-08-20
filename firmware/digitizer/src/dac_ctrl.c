@@ -33,7 +33,7 @@ static SPIConfig hs_spicfg =
 	onDacSpiComplete,
     GPIOB,
     DAC_CS_0,
-    0
+    SPI_CR1_BR_1
 };
 
 
@@ -57,6 +57,8 @@ static SPIConfig hs_spicfg =
 
 void initDac( void )
 {
+	palSetPadMode( GPIOB, 5, PAL_MODE_OUTPUT_PUSHPULL );
+
 	chOQInit( &dac_queue, dac_queue_buffer, DAC_QUEUE_SZ, 0 );
 
 	palSetPadMode( GPIOB, 13, PAL_MODE_STM32_ALTERNATE_PUSHPULL );     // SCK.
@@ -175,18 +177,16 @@ void processDacI( void )
 		// connected to one and the same SPI bus.
 	}
 
+	processSweepI( i );
+
 	i += 1;
-
-	if ( i == 4 )
-		processSweepI();
-
 	i %= 4;
-
 }
 
 static void onDacSpiComplete( SPIDriver * spid )
 {
 	(void)spid;
+									palSetPad( GPIOB, 5 );
 	chSysLockFromIsr();
 		spiUnselectI( &SPID2 );
 		//palSetPad( GPIOB, DAC_CS_0 );
@@ -194,14 +194,17 @@ static void onDacSpiComplete( SPIDriver * spid )
 		//palSetPad( GPIOB, DAC_CS_2 );
 		//palSetPad( GPIOB, DAC_CS_3 );
 	chSysUnlockFromIsr();
+									palClearPad( GPIOB, 5 );
 }
 
 void currentDacs( int * dacs )
 {
-	dacs[0] = dacValues[0];
-	dacs[1] = dacValues[1];
-	dacs[2] = dacValues[2];
-	dacs[3] = dacValues[3];
+	chSysLock();
+		dacs[0] = dacValues[0];
+		dacs[1] = dacValues[1];
+		dacs[2] = dacValues[2];
+		dacs[3] = dacValues[3];
+	chSysUnlock();
 }
 
 

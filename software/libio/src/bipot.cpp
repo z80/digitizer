@@ -1,7 +1,7 @@
 
 #include "bipot.h"
 #include "voltamp_io.h"
-
+#include <QMessageBox>
 
 struct CalibrationDac
 {
@@ -17,10 +17,10 @@ struct CalibrationDac
 
 struct CalibrationAdc
 {
-    int adcA;
-    int adcB;
-    int adcC;
-    int adcD;
+    qreal adcA;
+    qreal adcB;
+    qreal adcC;
+    qreal adcD;
 
     qreal temp;
 
@@ -49,6 +49,9 @@ public:
     qreal adc2workI( int adc );
     qreal adc2probeI( int adc );
 
+    void  workV2Dac( qreal workV, int & dac1, int & dac2 );
+    void  probeV2Dac( qreal workV, int & dac1, int & dac2 );
+
     VoltampIo  * io;
     QMutex       mutex;
     bool         sigs[4];
@@ -64,7 +67,11 @@ public:
     CoefDac workDac;
     CoefDac probeDac;
     qreal   temperature;
+
+    static const int MEASURES_CNT;
 };
+
+const int Bipot::PD::MEASURES_CNT = 128;
 
 qreal Bipot::PD::adc2workV( int adc )
 {
@@ -90,6 +97,40 @@ qreal Bipot::PD::adc2probeI( int adc )
     qreal res = static_cast< qreal >( adc );
     res = res * probeA + probeB;
     return res;
+}
+
+void  Bipot::PD::workV2Dac( qreal workV, int & dac1, int & dac2 )
+{
+    qreal aDacLow  = workDac.a1;
+    qreal aDacHigh = workDac.a2;
+    qreal bDac     = workDac.b;
+    qreal temp     = temperature; // Also should be included into consideration.
+
+    qreal fLow = 32767.0;
+    qreal fHigh = ceil( (workV - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
+    fLow = ceil( (workV - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
+    int dacLow  = static_cast<int>( fLow );
+    int dacHigh = static_cast<int>( fHigh );
+
+    dac1 = dacLow;
+    dac2 = dacHigh;
+}
+
+void  Bipot::PD::probeV2Dac( qreal probeV, int & dac1, int & dac2 )
+{
+    qreal aDacLow  = probeDac.a1;
+    qreal aDacHigh = probeDac.a2;
+    qreal bDac     = probeDac.b;
+    qreal temp     = temperature; // Also should be included into consideration.
+
+    qreal fLow = 32767.0;
+    qreal fHigh = ceil( (probeV - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
+    fLow = ceil( (probeV - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
+    int dacLow  = static_cast<int>( fLow );
+    int dacHigh = static_cast<int>( fHigh );
+
+    dac1 = dacLow;
+    dac2 = dacHigh;
 }
 
 
@@ -225,6 +266,7 @@ bool Bipot::setOscPeriod( int ptsCnt, qreal msTotal )
     return res;
 }
 
+/*
 bool Bipot::setOscSigs( bool workV, bool probeV, bool workI, bool probeI )
 {
     VoltampIo & io = *(pd->io);
@@ -238,6 +280,7 @@ bool Bipot::setOscSigs( bool workV, bool probeV, bool workI, bool probeI )
     bool res = io.setOscSignals( en );
     return res;
 }
+*/
 
 bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI )
 {
@@ -257,9 +300,161 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
     probeI.clear();
     data[0] = &workV;
     data[1] = &probeV;
+    data[2] = &probeI;
+    data[3] = &workI;
+    bool res = io.oscData( dataRaw );
+    if ( !res )
+        return false;
+    // Unit convertion is to be applied here.
+    int ind = 0;
+    
+    for ( QVector<int>::const_iterator i=dataRaw.begin(); i!= dataRaw.end(); i++ )
+    {
+        if ( en[ind] )
+        {
+            int adc = *i;
+            qreal v;
+            switch ( ind )
+            {
+            case 0:
+                v = pd->adc2workV( adc );
+                break;
+            case 1:
+                v = pd->adc2probeV( adc );
+                break;
+            case 2:
+                v = pd->adc2probeI( adc );
+                break;
+            default:
+                v = pd->adc2workI( adc );
+                break;
+            }
+            data[ind]->append( v );
+        }
+        ind = (ind + 1) % 4;
+    }
+    return true;
+}
+
+bool Bipot::instantDataRaw( int & workV, int & probeV, int & workI, int & probeI )
+{
+    VoltampIo & io = *(pd->io);
+    int data[4];
+    bool res = io.instantAdc( data );
+    if ( !res )
+        return false;
+
+    workV  = data[0];
+    probeV = data[1];
+    workI  = data[3];
+    probeI = data[2];
+
+    return true;
+}
+
+bool Bipot::instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & probeI )
+{
+    VoltampIo & io = *(pd->io);
+    int data[4];
+    bool res = io.instantAdc( data );
+    if ( !res )
+        return false;
+
+    workV  = pd->adc2workV( data[0] );
+    probeV = pd->adc2probeV( data[1] );
+    workI  = pd->adc2workI( data[3] );
+    probeI = pd->adc2probeI( data[2] );
+
+    return true;
+}
+
+bool Bipot::temperature( qreal & t )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.temperature( t );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::setTriggerEn( bool en )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.setTriggerEn( en );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::setSweepRange( qreal workV, qreal probeV )
+{
+    VoltampIo & io = *(pd->io);
+
+    int dac[4];
+    pd->workV2Dac( workV, dac[0], dac[1] );
+    pd->probeV2Dac( probeV, dac[2], dac[3] );
+
+    bool res = io.setSweepRange( dac );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::setSweepTime( int ptsCnt, qreal periodMs )
+{
+    VoltampIo & io = *(pd->io);
+
+    int period = static_cast<int>( periodMs * 4.0 );
+
+    bool res = io.setSweepTime( ptsCnt, period );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::setSweepEn( bool en )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.setSweepEn( en );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::sweepEn( bool & en )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.sweepEn( en );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI )
+{
+    VoltampIo & io = *(pd->io);
+    pd->mutex.lock();
+        bool en[4];
+        en[0] = pd->sigs[0];
+        en[1] = pd->sigs[1];
+        en[2] = pd->sigs[2];
+        en[3] = pd->sigs[3];
+    pd->mutex.unlock();
+    QVector<int> & dataRaw = pd->data;
+    QVector<qreal> * data[4];
+    workV.clear();
+    probeV.clear();
+    workI.clear();
+    probeI.clear();
+    data[0] = &workV;
+    data[1] = &probeV;
     data[2] = &workI;
     data[3] = &probeI;
-    bool res = io.oscData( dataRaw );
+    bool res = io.sweepData( dataRaw );
     if ( !res )
         return false;
     // Unit convertion is to be applied here.
@@ -293,67 +488,6 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
     return true;
 }
 
-bool Bipot::instantDataRaw( int & workV, int & probeV, int & workI, int & probeI )
-{
-    VoltampIo & io = *(pd->io);
-    int data[4];
-    bool res = io.instantAdc( data );
-    if ( !res )
-        return false;
-
-    workV  = data[0];
-    probeV = data[1];
-    workI  = data[2];
-    probeI = data[3];
-
-    return true;
-}
-
-bool Bipot::instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & probeI )
-{
-    VoltampIo & io = *(pd->io);
-    int data[4];
-    bool res = io.instantAdc( data );
-    if ( !res )
-        return false;
-
-    workV  = pd->adc2workV( data[0] );
-    probeV = pd->adc2probeV( data[1] );
-    workI  = pd->adc2workI( data[2] );
-    probeI = pd->adc2probeI( data[3] );
-
-    return true;
-}
-
-bool Bipot::temperature( qreal & t )
-{
-    VoltampIo & io = *(pd->io);
-
-    bool res = io.temperature( t );
-    if ( !res )
-        return false;
-    return true;
-}
-
-bool Bipot::sweepWork( qreal from, qreal to, qreal ms )
-{
-    return true;
-}
-
-bool Bipot::sweepProbe( qreal from, qreal to, qreal ms )
-{
-    return true;
-}
-
-bool Bipot::seeepBoth( qreal from1, qreal to1, qreal from2, qreal to2, qreal ms )
-{
-    return true;
-}
-
-bool Bipot::triggerSweepWork( qreal from, qreal to, int ptsCnt )
-{
-    return true;
-}
 
 void Bipot::setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB )
 {
@@ -392,7 +526,7 @@ bool Bipot::loadCalibrationWorkDac( const QString & fileName )
         while ( !file.atEnd() )
         {
             stri = file.readLine();
-            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
@@ -404,13 +538,16 @@ bool Bipot::loadCalibrationWorkDac( const QString & fileName )
                 m = ex.cap( 2 );
                 d.dacB = m.toInt();
 
-                m = ex.cap( 2 );
+                m = ex.cap( 3 );
                 d.dacC = m.toInt();
 
-                m = ex.cap( 2 );
+                m = ex.cap( 4 );
                 d.dacD = m.toInt();
 
-                m = ex.cap( 3 );
+                m = ex.cap( 5 );
+                d.temp = m.toDouble();
+
+                m = ex.cap( 6 );
                 d.volt = m.toDouble();
 
                 pd->clbrDacWork.append( d );
@@ -432,7 +569,7 @@ bool Bipot::saveCalibrationWorkDac( const QString & fileName )
         for ( QList<CalibrationDac>::const_iterator i=pd->clbrDacWork.begin(); i!=pd->clbrDacWork.end(); i++ )
         {
             const CalibrationDac d = *i;
-            QString stri = QString( "%1 %2 %3 %4 %5\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.dacC ).arg( d.dacD ).arg( d.volt );
+            QString stri = QString( "%1 %2 %3 %4 %5 %6\n" ).arg( d.dacA ).arg( d.dacB ).arg( d.dacC ).arg( d.dacD ).arg( d.temp ).arg( d.volt );
             out << stri;
         }
         out.flush();
@@ -442,7 +579,7 @@ bool Bipot::saveCalibrationWorkDac( const QString & fileName )
     return false;
 }
 
-void Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
+bool Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
 {
     CalibrationDac d;
     d.dacA = dacA;
@@ -451,11 +588,21 @@ void Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal
     d.dacD = dacD;
     d.volt = mV;
 
-    qreal t = 23.0;
-    bool res = temperature( t );
-    d.temp = t;
+    qreal tt = 0.0;
+    for ( int i=0; i<PD::MEASURES_CNT; i++ )
+    {
+        qreal t;
+        bool res = temperature( t );
+        if ( !res )
+            return false;
+        tt += t;
+    }
+    tt /= static_cast<qreal>( PD::MEASURES_CNT );
+    d.temp = tt;
 
     pd->clbrDacWork.append( d );
+
+    return true;
 }
 
 void Bipot::setCalibrationWorkDac( qreal a1, qreal a2, qreal b )
@@ -530,7 +677,7 @@ bool Bipot::saveCalibrationProbeDac( const QString & fileName )
     return false;
 }
 
-void Bipot::addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
+bool Bipot::addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
 {
     CalibrationDac d;
     d.dacA = dacA;
@@ -539,11 +686,20 @@ void Bipot::addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qrea
     d.dacD = dacD;
     d.volt = mV;
 
-    qreal t = 23.0;
-    bool res = temperature( t );
-    d.temp = t;
+    qreal tt = 0.0;
+    for ( int i=0; i<PD::MEASURES_CNT; i++ )
+    {
+        qreal t;
+        bool res = temperature( t );
+        if ( !res )
+            return false;
+        tt += t;
+    }
+    tt /= static_cast<qreal>( PD::MEASURES_CNT );
+    d.temp = tt;
 
     pd->clbrDacProbe.append( d );
+    return true;
 }
 
 void Bipot::clearCalibrationAdc()
@@ -568,30 +724,30 @@ bool Bipot::loadCalibrationAdc( const QString & fileName )
                 CalibrationAdc d;
                 QString m;
                 m = ex.cap( 1 );
-                d.adcA = m.toInt();
+                d.adcA = m.toDouble();
 
                 m = ex.cap( 2 );
-                d.adcB = m.toInt();
+                d.adcB = m.toDouble();
 
                 m = ex.cap( 3 );
-                d.adcC = m.toInt();
+                d.adcC = m.toDouble();
 
                 m = ex.cap( 4 );
-                d.adcD = m.toInt();
-
-                m = ex.cap( 7 );
-                d.temp = m.toDouble();
+                d.adcD = m.toDouble();
 
                 m = ex.cap( 5 );
-                d.voltA = m.toDouble();
+                d.temp = m.toDouble();
 
                 m = ex.cap( 6 );
-                d.voltB = m.toDouble();
+                d.voltA = m.toDouble();
 
                 m = ex.cap( 7 );
-                d.voltC = m.toDouble();
+                d.voltB = m.toDouble();
 
                 m = ex.cap( 8 );
+                d.voltC = m.toDouble();
+
+                m = ex.cap( 9 );
                 d.voltD = m.toDouble();
 
                 pd->clbrAdc.append( d );
@@ -635,24 +791,48 @@ bool Bipot::addCalibrationAdc( qreal mv0, qreal mv1, qreal mv2, qreal mv3 )
 {
     CalibrationAdc d;
 
-    int i0, i1, i2, i3;
-    bool res = instantDataRaw( i0, i1, i2, i3 );
-    if ( !res )
-        return false;
+    qreal f0 = 0.0;
+    qreal f1 = 0.0;
+    qreal f2 = 0.0;
+    qreal f3 = 0.0;
+    for ( int i=0; i<PD::MEASURES_CNT; i++ )
+    {
+        int i0, i1, i2, i3;
+        bool res = instantDataRaw( i0, i1, i2, i3 );
+        if ( !res )
+            return false;
+        f0 += static_cast<qreal>( i0 );
+        f1 += static_cast<qreal>( i1 );
+        f2 += static_cast<qreal>( i2 );
+        f3 += static_cast<qreal>( i3 );
+    }
+
+    f0 /= static_cast<qreal>( PD::MEASURES_CNT );
+    f1 /= static_cast<qreal>( PD::MEASURES_CNT );
+    f2 /= static_cast<qreal>( PD::MEASURES_CNT );
+    f3 /= static_cast<qreal>( PD::MEASURES_CNT );
     
-    d.adcA = i0;
-    d.adcB = i1;
-    d.adcC = i2;
-    d.adcD = i3;
+    d.adcA = f0;
+    d.adcB = f1;
+    d.adcC = f2;
+    d.adcD = f3;
 
     d.voltA = mv0;
     d.voltB = mv1;
     d.voltC = mv2;
     d.voltD = mv3;
 
-    qreal t = 23.0;
-    res = temperature( t );
-    d.temp = t;
+    qreal tt = 0.0;
+    for ( int i=0; i<PD::MEASURES_CNT; i++ )
+    {
+        qreal t;
+        bool res = temperature( t );
+        if ( !res )
+            return false;
+        tt += t;
+    }
+    tt /= static_cast<qreal>( PD::MEASURES_CNT );
+    d.temp = tt;
 
     pd->clbrAdc.append( d );
 

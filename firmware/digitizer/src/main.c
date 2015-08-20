@@ -23,6 +23,7 @@ int main(void)
     initCpuIo();
     initTemp();
     initLed();
+    setLeds( 3 );
 
     while ( 1 )
     {

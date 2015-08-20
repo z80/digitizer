@@ -9,6 +9,7 @@ void queryAdcI( void );
 InputQueue * adcQueue( void );
 // Returns 4 values. So pointer should reference at least 4 integers array.
 void instantAdc( int * vals );
+void instantAdcI( int * vals );
 
 void setOscSignals( int mask );
 void setOscPeriod( uint32_t interval );

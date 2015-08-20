@@ -25,17 +25,21 @@ public:
     bool setProbeRaw( int a, int b );
     bool setProbeMv( qreal mv );
     bool setOscPeriod( int ptsCnt, qreal msTotal );
-    bool setOscSigs( bool workV=true, bool probeV=false, bool workI=false, bool probeI=false );
+    //bool setOscSigs( bool workV=true, bool probeV=false, bool workI=false, bool probeI=false );
     bool oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI );
     bool instantDataRaw( int & workV, int & probeV, int & workI, int & probeI );
     bool instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & probeI );
     bool temperature( qreal & t );
 
+    // Capture by trigger.
+    bool setTriggerEn( bool en );
+
     // Some active movements.
-    bool sweepWork( qreal from, qreal to, qreal ms );
-    bool sweepProbe( qreal from, qreal to, qreal ms );
-    bool seeepBoth( qreal from1, qreal to1, qreal from2, qreal to2, qreal ms );
-    bool triggerSweepWork( qreal from, qreal to, int ptsCnt );
+    bool setSweepRange( qreal workV, qreal probeV );
+    bool setSweepTime( int ptsCnt, qreal periodMs );
+    bool setSweepEn( bool en );
+    bool sweepEn( bool & en );
+    bool sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI );
 
     // Calibrations.
     void setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB );
@@ -45,13 +49,13 @@ public:
     void clearCalibrationWorkDac();
     bool loadCalibrationWorkDac( const QString & fileName = "./work_dac.dat" );
     bool saveCalibrationWorkDac( const QString & fileName = "./work_dac.dat" );
-    void addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal mV );
+    bool addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal mV );
     void setCalibrationWorkDac( qreal a1, qreal a2, qreal b );
 
     void clearCalibrationProbeDac();
     bool loadCalibrationProbeDac( const QString & fileName = "./probe_dac.dat" );
     bool saveCalibrationProbeDac( const QString & fileName = "./probe_dac.dat" );
-    void addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qreal mV );
+    bool addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qreal mV );
     void setCalibrationProbeDac( qreal a1, qreal a2, qreal b );
 
     void clearCalibrationAdc();

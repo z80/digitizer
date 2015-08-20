@@ -68,6 +68,7 @@ OscilloscopeWnd::~OscilloscopeWnd()
 void OscilloscopeWnd::setPeriod( qreal sec )
 {
     period = sec;
+    curveSizeChanged();
 }
 
 void OscilloscopeWnd::addData( QQueue<qreal> & y )
@@ -118,6 +119,18 @@ void OscilloscopeWnd::clear()
         curves[j].cnt = 0;
 }
 
+void OscilloscopeWnd::data( QVector<qreal> & x, QVector<qreal> & y )
+{
+    Curve & c = curves[0];
+    x = c.x;
+    y = c.y;
+}
+
+QwtPlot * OscilloscopeWnd::plot()
+{
+    return ui.plot;
+}
+
 void OscilloscopeWnd::slotReplot()
 {
     // Plot curves.
@@ -144,8 +157,8 @@ void OscilloscopeWnd::curveSizeChanged()
 
 void OscilloscopeWnd::curvesCntChanged()
 {
-    const QColor front( Qt::darkGreen );
-    QColor back( 230, 230, 250 );
+    const QColor front( Qt::darkRed );
+    QColor back( 20, 0, 0 );
     int r1 = front.red();
     int g1 = front.green();
     int b1 = front.blue();
@@ -176,13 +189,13 @@ void OscilloscopeWnd::curvesCntChanged()
         pen.setColor( color );
         if ( i == 0 )
         {
-            pen.setWidth( 3 );
+            pen.setWidth( cnt );
             pen.setStyle( Qt::SolidLine );
             curves[i].curve->setZ( 100.0 );
         }
         else
         {
-            pen.setWidth( 1 );
+            pen.setWidth( cnt - i );
             pen.setStyle( Qt::DotLine );
             curves[i].curve->setZ( 90.0 );
         }
