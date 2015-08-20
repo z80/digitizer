@@ -1,7 +1,7 @@
 
 #include "sweep_wnd.h"
 #include <QMdiArea>
-#include <QMdiSubwindow>
+#include <QMdiSubWindow>
 #include <QFileDialog>
 #include <QMessageBox>
 #include "oscilloscope_wnd.h"
