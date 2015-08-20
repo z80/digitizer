@@ -85,7 +85,13 @@ void CalibrationWnd::slotAddWorkVolt()
         return;
 
     qreal v = ui.voltDacWork->value();
-    io->addCalibrationWorkDac( this->dacA, this->dacB, this->dacC, this->dacD, v );
+    bool res = io->addCalibrationWorkDac( this->dacA, this->dacB, this->dacC, this->dacD, v );
+    if ( !res )
+    {
+        QMessageBox::critical( this, "Error", "Failed to obtain temperature!" );
+        return;
+    }
+
     setRandomVolt();
 }
 
@@ -95,7 +101,13 @@ void CalibrationWnd::slotAddProbeVolt()
         return;
 
     qreal v = ui.voltDacProbe->value();
-    io->addCalibrationProbeDac( this->dacA, this->dacB, this->dacC, this->dacD, v );
+    bool res = io->addCalibrationProbeDac( this->dacA, this->dacB, this->dacC, this->dacD, v );
+    if ( !res )
+    {
+        QMessageBox::critical( this, "Error", "Failed to retrieve temperature!" );
+        return;
+    }
+
     setRandomVolt();
 }
 
@@ -110,7 +122,7 @@ void CalibrationWnd::slotAddAdc()
     qreal vD = ui.currAdcProbe->value();
     bool res = io->addCalibrationAdc( vA, vB, vC, vD );
     if ( !res )
-       QMessageBox::critical( this, "Error", "Failed to retieve adc from the hardware!" ); 
+       QMessageBox::critical( this, "Error", "Failed to retrieve ADC (or temperature)!" ); 
     // Don't set voltage here.
     // Voltage is set by rotating knobs.
     //setRandomVolt();

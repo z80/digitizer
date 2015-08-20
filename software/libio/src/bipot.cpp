@@ -1,7 +1,7 @@
 
 #include "bipot.h"
 #include "voltamp_io.h"
-
+#include <QMessageBox>
 
 struct CalibrationDac
 {
@@ -17,10 +17,10 @@ struct CalibrationDac
 
 struct CalibrationAdc
 {
-    int adcA;
-    int adcB;
-    int adcC;
-    int adcD;
+    qreal adcA;
+    qreal adcB;
+    qreal adcC;
+    qreal adcD;
 
     qreal temp;
 
@@ -67,7 +67,11 @@ public:
     CoefDac workDac;
     CoefDac probeDac;
     qreal   temperature;
+
+    static const int MEASURES_CNT;
 };
+
+const int Bipot::PD::MEASURES_CNT = 128;
 
 qreal Bipot::PD::adc2workV( int adc )
 {
@@ -575,7 +579,7 @@ bool Bipot::saveCalibrationWorkDac( const QString & fileName )
     return false;
 }
 
-void Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
+bool Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
 {
     CalibrationDac d;
     d.dacA = dacA;
@@ -584,11 +588,21 @@ void Bipot::addCalibrationWorkDac( int dacA, int dacB, int dacC, int dacD, qreal
     d.dacD = dacD;
     d.volt = mV;
 
-    qreal t = 23.0;
-    bool res = temperature( t );
-    d.temp = t;
+    qreal tt = 0.0;
+    for ( int i=0; i<PD::MEASURES_CNT; i++ )
+    {
+        qreal t;
+        bool res = temperature( t );
+        if ( !res )
+            return false;
+        tt += t;
+    }
+    tt /= static_cast<qreal>( PD::MEASURES_CNT );
+    d.temp = tt;
 
     pd->clbrDacWork.append( d );
+
+    return true;
 }
 
 void Bipot::setCalibrationWorkDac( qreal a1, qreal a2, qreal b )
@@ -663,7 +677,7 @@ bool Bipot::saveCalibrationProbeDac( const QString & fileName )
     return false;
 }
 
-void Bipot::addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
+bool Bipot::addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qreal mV )
 {
     CalibrationDac d;
     d.dacA = dacA;
@@ -672,11 +686,20 @@ void Bipot::addCalibrationProbeDac( int dacA, int dacB, int dacC, int dacD, qrea
     d.dacD = dacD;
     d.volt = mV;
 
-    qreal t = 23.0;
-    bool res = temperature( t );
-    d.temp = t;
+    qreal tt = 0.0;
+    for ( int i=0; i<PD::MEASURES_CNT; i++ )
+    {
+        qreal t;
+        bool res = temperature( t );
+        if ( !res )
+            return false;
+        tt += t;
+    }
+    tt /= static_cast<qreal>( PD::MEASURES_CNT );
+    d.temp = tt;
 
     pd->clbrDacProbe.append( d );
+    return true;
 }
 
 void Bipot::clearCalibrationAdc()
@@ -701,16 +724,16 @@ bool Bipot::loadCalibrationAdc( const QString & fileName )
                 CalibrationAdc d;
                 QString m;
                 m = ex.cap( 1 );
-                d.adcA = m.toInt();
+                d.adcA = m.toDouble();
 
                 m = ex.cap( 2 );
-                d.adcB = m.toInt();
+                d.adcB = m.toDouble();
 
                 m = ex.cap( 3 );
-                d.adcC = m.toInt();
+                d.adcC = m.toDouble();
 
                 m = ex.cap( 4 );
-                d.adcD = m.toInt();
+                d.adcD = m.toDouble();
 
                 m = ex.cap( 5 );
                 d.temp = m.toDouble();
@@ -768,24 +791,48 @@ bool Bipot::addCalibrationAdc( qreal mv0, qreal mv1, qreal mv2, qreal mv3 )
 {
     CalibrationAdc d;
 
-    int i0, i1, i2, i3;
-    bool res = instantDataRaw( i0, i1, i2, i3 );
-    if ( !res )
-        return false;
+    qreal f0 = 0.0;
+    qreal f1 = 0.0;
+    qreal f2 = 0.0;
+    qreal f3 = 0.0;
+    for ( int i=0; i<PD::MEASURES_CNT; i++ )
+    {
+        int i0, i1, i2, i3;
+        bool res = instantDataRaw( i0, i1, i2, i3 );
+        if ( !res )
+            return false;
+        f0 += static_cast<qreal>( i0 );
+        f1 += static_cast<qreal>( i1 );
+        f2 += static_cast<qreal>( i2 );
+        f3 += static_cast<qreal>( i3 );
+    }
+
+    f0 /= static_cast<qreal>( PD::MEASURES_CNT );
+    f1 /= static_cast<qreal>( PD::MEASURES_CNT );
+    f2 /= static_cast<qreal>( PD::MEASURES_CNT );
+    f3 /= static_cast<qreal>( PD::MEASURES_CNT );
     
-    d.adcA = i0;
-    d.adcB = i1;
-    d.adcC = i2;
-    d.adcD = i3;
+    d.adcA = f0;
+    d.adcB = f1;
+    d.adcC = f2;
+    d.adcD = f3;
 
     d.voltA = mv0;
     d.voltB = mv1;
     d.voltC = mv2;
     d.voltD = mv3;
 
-    qreal t = 23.0;
-    res = temperature( t );
-    d.temp = t;
+    qreal tt = 0.0;
+    for ( int i=0; i<PD::MEASURES_CNT; i++ )
+    {
+        qreal t;
+        bool res = temperature( t );
+        if ( !res )
+            return false;
+        tt += t;
+    }
+    tt /= static_cast<qreal>( PD::MEASURES_CNT );
+    d.temp = tt;
 
     pd->clbrAdc.append( d );
 
