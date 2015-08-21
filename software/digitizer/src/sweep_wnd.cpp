@@ -30,7 +30,7 @@ SweepWnd::SweepWnd( QWidget * parent )
     connect( ui.actionTile_vertically,   SIGNAL(triggered()), this, SLOT(tileVertically()) );
     connect( ui.actionTile_horizontally, SIGNAL(triggered()), this, SLOT(tileHorizontally()) );
 
-    connect( ui.actionClose, SIGNAL(triggered()),   this, SLOT(quit()) );
+    connect( ui.actionClose, SIGNAL(triggered()),   this, SLOT(slotQuit()) );
     connect( ui.actionSave_as, SIGNAL(triggered()), this, SLOT(slotSave()) );
 
     shouldBeSaved = false;
