@@ -487,6 +487,37 @@ bool VoltampIo::sweepData( QVector<int> & data )
     return true;
 }
 
+bool VoltampIo::setOutput( int o )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    quint8 v = static_cast<quint8>( o );
+    bool res;
+    res = setArgs( reinterpret_cast<quint8 *>( &v ), 1 );
+    if ( !res )
+        return false;
+
+    quint8 funcInd = 16;
+    res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    return true;
+
+}
+
+bool VoltampIo::firmwareUpgrade( const QString & fileName )
+{
+    // Should execute function. The function is supposed
+    // to send back acknowledge data and jump to
+    // upgrade firmware.
+    quint8 funcInd = 16;
+    res = execFunc( funcInd );
+    if ( !res )
+        return false;
+    return false;
+}
+
 
 
 

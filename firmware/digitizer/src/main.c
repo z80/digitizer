@@ -9,6 +9,7 @@
 #include "timer_ctrl.h"
 #include "temp_ctrl.h"
 #include "sweep_ctrl.h"
+#include "output_ctrl.h"
 #include "cpu_io.h"
 
 int main(void)
@@ -23,6 +24,7 @@ int main(void)
     initCpuIo();
     initTemp();
     initLed();
+    initOutput();
     setLeds( 3 );
 
     while ( 1 )

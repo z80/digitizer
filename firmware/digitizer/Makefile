@@ -95,7 +95,9 @@ CSRC = $(PORTSRC) \
        ./src/adc_ctrl.c \
        ./src/dac_ctrl.c \
        ./src/timer_ctrl.c \
-       ./src/temp_ctrl.c
+       ./src/temp_ctrl.c \
+       ./src/output_ctrl.c \
+       ./src/dfu_ctrl.c
        
        #./src/cpal_usercallback.c \
        #./cpal_i2c/cpal_hal.c \

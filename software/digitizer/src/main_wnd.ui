@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>898</width>
-    <height>714</height>
+    <height>840</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
      <x>0</x>
      <y>0</y>
      <width>898</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -801,6 +801,9 @@
    <addaction name="actionStop_sweep"/>
    <addaction name="separator"/>
    <addaction name="actionExternal_trigger"/>
+   <addaction name="actionAFM_output_None"/>
+   <addaction name="actionAFM_output_work"/>
+   <addaction name="actionAFM_output_Probe"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Quit">
@@ -982,6 +985,39 @@
    </property>
    <property name="toolTip">
     <string>Record data on external trigger rising edge.</string>
+   </property>
+  </action>
+  <action name="actionAFM_output_None">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>AFM output None</string>
+   </property>
+   <property name="toolTip">
+    <string>No output to AFM</string>
+   </property>
+  </action>
+  <action name="actionAFM_output_work">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>AFM output work</string>
+   </property>
+   <property name="toolTip">
+    <string>AFM output from Work Electrode</string>
+   </property>
+  </action>
+  <action name="actionAFM_output_Probe">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>AFM output Probe</string>
+   </property>
+   <property name="toolTip">
+    <string>AFM output from Probe Electrode</string>
    </property>
   </action>
  </widget>

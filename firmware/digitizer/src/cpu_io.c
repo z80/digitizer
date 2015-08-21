@@ -9,6 +9,8 @@
 #include "dac_ctrl.h"
 #include "temp_ctrl.h"
 #include "sweep_ctrl.h"
+#include "output_ctrl.h"
+#include "dfu_ctrl.h"
 
 #include "hdw_config.h"
 #include "funcs.h"
@@ -145,6 +147,8 @@ static void set_sweep_en( uint8_t * args );
 static void get_sweep_en( uint8_t * args );
 static void get_sweep_data( uint8_t * args );
 
+static void set_output( uint8_t * args );
+
 static void firmware_upgrade( uint8_t * args );
 
 static TFunc funcs[] =
@@ -168,6 +172,8 @@ static TFunc funcs[] =
 	set_sweep_en,
 	get_sweep_en,
 	get_sweep_data,
+
+	set_output,
 
 	firmware_upgrade
 };
@@ -368,9 +374,23 @@ static void get_sweep_data( uint8_t * args )
 
 }
 
+static void set_output( uint8_t * args )
+{
+	setOutput( args[0] );
+}
+
 static void firmware_upgrade( uint8_t * args )
 {
 	(void)args;
+
+	// Just report to let application know that function was executed successfully.
+	uint8_t res[] = "ok";
+	writeResult( res[0] );
+	writeResult( res[1] );
+	writeEom();
+
+	// Jumt to the beginning of FLASH space to invoke bootloader.
+	firmwareUpgrade();
 }
 
 

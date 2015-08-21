@@ -37,6 +37,10 @@ public:
     bool sweepEn( bool & en );
     bool sweepData( QVector<int> & data );
 
+    bool setOutput( int o );
+
+    bool firmwareUpgrade( const QString & fileName );
+
     bool setArgs( quint8 * data, int dataSz );
     bool execFunc( quint16 funcId );
     int  readData( quint8 * data, int dataSz );

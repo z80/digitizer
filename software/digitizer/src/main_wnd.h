@@ -66,6 +66,7 @@ public slots:
     void slotOpen();
 
     void slotExternalTrigger();
+    void slotAfmOutput();
 protected:
     void closeEvent( QCloseEvent * e );
 private:

@@ -110,6 +110,10 @@ MainWnd::MainWnd( QWidget * parent )
     connect( ui.actionPeriod1m,  SIGNAL(triggered()), this, SLOT(slotOscPeriod()) );
     
     connect( ui.actionExternal_trigger, SIGNAL(triggered()), this, SLOT(slotExternalTrigger()) );
+
+    connect( ui.actionAFM_output_None,  SIGNAL(triggered()), this, SLOT(slotAfmOutput()) );
+    connect( ui.actionAFM_output_work,  SIGNAL(triggered()), this, SLOT(slotAfmOutput()) );
+    connect( ui.actionAFM_output_Probe, SIGNAL(triggered()), this, SLOT(slotAfmOutput()) );
 }
 
 MainWnd::~MainWnd()
@@ -654,6 +658,28 @@ void MainWnd::slotExternalTrigger()
     {
         QMessageBox::critical( this, "Error", "Failed to change external triggering option!" );
     }
+}
+
+void MainWnd::slotAfmOutput()
+{
+    QAction * a = qobject_cast<QAction *>( sender() );
+    ui.actionAFM_output_None->setChecked( false );
+    ui.actionAFM_output_work->setChecked( false );
+    ui.actionAFM_output_Probe->setChecked( false );
+
+
+    if ( a == ui.actionAFM_output_None )
+    {
+    }
+    else if ( a == ui.actionAFM_output_work )
+    {
+    }
+    else
+    {
+
+    }
+
+    a->setChecked( true );
 }
 
 
