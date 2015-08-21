@@ -84,20 +84,14 @@ CSRC = $(PORTSRC) \
        $(BOARDSRC) \
        $(CHIBIOS)/os/various/evtimer.c \
        $(CHIBIOS)/os/various/syscalls.c \
-       $(CHIBIOS)/os/various/shell.c \
-       $(CHIBIOS)/os/various/chprintf.c \
        ./src/iwdg/iwdg.c \
        ./src/iwdg/iwdg_lld.c \
        ./src/main.c \
        ./src/cpu_io.c \
        ./src/led_ctrl.c \
-       ./src/sweep_ctrl.c \
-       ./src/adc_ctrl.c \
-       ./src/dac_ctrl.c \
-       ./src/timer_ctrl.c \
-       ./src/temp_ctrl.c \
-       ./src/output_ctrl.c \
-       ./src/dfu_ctrl.c
+       ./src/dfu_ctrl.c \
+       ./src/misc.c \
+       ./src/stm32f10x_flash.c
        
        #./src/cpal_usercallback.c \
        #./cpal_i2c/cpal_hal.c \
