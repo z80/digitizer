@@ -242,7 +242,7 @@ void MainWnd::measure()
             bool res;
 
             // Read oscilloscope data.
-            res = io->oscData( t_workV, t_workI, t_probeV, t_probeI );
+            res = io->oscData( t_workV, t_probeV, t_workI, t_probeI );
             if ( !res )
             {
                 Msleep::msleep( 1000 );
