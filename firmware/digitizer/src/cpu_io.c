@@ -389,7 +389,7 @@ static void firmware_upgrade( uint8_t * args )
 	writeResult( res[1] );
 	writeEom();
 
-	// Jumt to the beginning of FLASH space to invoke bootloader.
+	// Jump to the beginning of FLASH space to invoke bootloader.
 	firmwareUpgrade();
 }
 
