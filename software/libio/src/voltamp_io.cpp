@@ -514,7 +514,7 @@ bool VoltampIo::firmwareUpgrade( const QString & fileName, bool invokeUpgrade )
         // to send back acknowledge data and jump to
         // upgrade firmware.
         quint8 funcInd = 16;
-        res = execFunc( funcInd );
+        bool res = execFunc( funcInd );
         if ( !res )
             return false;
 

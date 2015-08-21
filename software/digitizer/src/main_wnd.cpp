@@ -653,7 +653,13 @@ void MainWnd::slotOpen()
 void MainWnd::slotExternalTrigger()
 {
     bool en = ui.actionExternal_trigger->isChecked();
-    bool res = io->setTriggerEn( en );
+    bool res;
+    {
+        QMutexLocker lock( &mutex );
+            res = io->isOpen();
+            if ( res )
+                res = io->setTriggerEn( en );
+    }
     if ( !res )
     {
         QMessageBox::critical( this, "Error", "Failed to change external triggering option!" );
@@ -667,16 +673,34 @@ void MainWnd::slotAfmOutput()
     ui.actionAFM_output_work->setChecked( false );
     ui.actionAFM_output_Probe->setChecked( false );
 
+    bool res;
+    {
+        QMutexLocker lock( &mutex );
+            res = io->isOpen();
+    }
+    if ( !res )
+    {
+        QMessageBox::critical( this, "Error", "No hardware available!" );
+        return;
+    }
 
     if ( a == ui.actionAFM_output_None )
     {
+        res = io->setOutput( 0 );
     }
     else if ( a == ui.actionAFM_output_work )
     {
+        res = io->setOutput( 1 );
     }
     else
     {
+        res = io->setOutput( 2 );
+    }
 
+    if ( !res )
+    {
+        QMessageBox::critical( this, "Error", "Failed to change AFM input signal!" );
+        return;
     }
 
     a->setChecked( true );
