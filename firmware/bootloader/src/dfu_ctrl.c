@@ -12,17 +12,27 @@ typedef  void (*pFunction)(void);
 
 static void startFirmwareI( void * arg );
 
-static VirtualTimer vt;
-
 static uint8_t sector[ CONF_PAGE_SIZE ];
 static int     byteIndex = 0;
+static int     timeLeft = 3000;
+static bool_t  dontStartFirmware = 0;
 
-void initDfu( int secs )
+
+void initDfu( int msecs )
 {
+	dontStartFirmware = 0;
 	byteIndex = 0;
-	chSysLock();
-	    //chVTSetI( &vt, S2ST( secs ), startFirmwareI, NULL );
-	chSysUnlock();
+	timeLeft = msecs;
+}
+
+void processDfu( int msecsElapsed )
+{
+	timeLeft -= msecsElapsed;
+	if ( timeLeft <= 0 )
+	{
+		if ( !dontStartFirmware )
+			dfuStartFirmware();
+	}
 }
 
 void dfuPushBytes( uint8_t cnt, uint8_t * bytes )
@@ -117,9 +127,7 @@ static void startFirmwareI( void * arg )
 
 void turnCountdownOff( void )
 {
-	chSysLock();
-		//chVTSetI( &vt, S2ST( 3 ), NULL, NULL );
-	chSysUnlock();
+	dontStartFirmware = 1;
 }
 
 

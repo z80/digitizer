@@ -367,7 +367,7 @@ void MainWnd::measureSweep()
 
 void MainWnd::reopen()
 {
-    QMutexLocker lock( &mutex );
+    QMutexLocker lock( &mutexReopen );
         io->close();
         io->open( devName );
 }
@@ -711,7 +711,7 @@ void MainWnd::slotAfmOutput()
 void MainWnd::slotFirmwareUpgrade()
 {
     QMutexLocker lock( &mutex );
-        if ( io->isOpen() )
+        if ( !io->isOpen() )
         {
             reopen();
             if ( !io->isOpen() )

@@ -513,7 +513,7 @@ bool VoltampIo::runBootloader()
     // Should execute function. The function is supposed
     // to send back acknowledge data and jump to
     // upgrade firmware.
-    quint8 funcInd = 16;
+    quint8 funcInd = 17;
     bool res = execFunc( funcInd );
     if ( !res )
         return false;
