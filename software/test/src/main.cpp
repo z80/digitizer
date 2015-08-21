@@ -37,10 +37,12 @@ int main( int argc, char * argv[] )
 
     QVector<quint16> data;
     QString stri;
-    res = io.hardware_version( stri );
+    res = io.bootloaderFirmwareVersion( stri );
     qDebug() << stri;
-    res = io.firmware_version( stri );
+    res = io.bootloaderHardwareVersion( stri );
     qDebug() << stri;
+    res = io.firmwareUpgrade( "./digitizer.bin" );
+    qDebug() << res;
 
     res = io.setDac1( 0, 0 );
     res = io.setDac2( 65535, 65535 );

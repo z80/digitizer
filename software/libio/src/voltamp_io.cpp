@@ -578,7 +578,14 @@ bool VoltampIo::bootloaderFirmwareVersion( QString & stri )
 bool VoltampIo::bootloaderPush( int cnt, quint8 * data )
 {
     bool res;
-    res = setArgs( reinterpret_cast<quint8 *>( &data ), cnt );
+
+    const int SZ = 32;
+    quint8 args[ SZ ];
+    args[0] = static_cast<quint8>( cnt );
+    for ( int i=0; i<cnt; i++ )
+        args[i+1] = data[i];
+
+    res = setArgs( reinterpret_cast<quint8 *>( args ), cnt+1 );
     if ( !res )
         return false;
 
@@ -593,8 +600,17 @@ bool VoltampIo::bootloaderPush( int cnt, quint8 * data )
 
 bool VoltampIo::bootloaderWriteSector( int index )
 {
+    quint8 args[2];
+    args[0] = static_cast<quint8>( (index >> 8) & 0xFF );
+    args[1] = static_cast<quint8>( index & 0xFF );
+
+    bool res = setArgs( reinterpret_cast<quint8 *>( args ), 2 );
+    if ( !res )
+        return false;
+
+
     quint8 funcInd = 4 + 128;
-    bool res = execFunc( funcInd );
+    res = execFunc( funcInd );
     if ( !res )
         return false;
     bool eom;
@@ -613,7 +629,7 @@ bool VoltampIo::bootloaderWriteSector( int index )
 
 bool VoltampIo::bootloaderStartFirmware()
 {
-    quint8 funcInd = 4 + 128;
+    quint8 funcInd = 5 + 128;
     bool res = execFunc( funcInd );
     if ( !res )
         return false;

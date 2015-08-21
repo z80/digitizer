@@ -20,14 +20,19 @@ static int     byteIndex = 0;
 void initDfu( int secs )
 {
 	byteIndex = 0;
-	chVTSetI( &vt, S2ST( secs ), startFirmwareI, NULL );
+	chSysLock();
+	    //chVTSetI( &vt, S2ST( secs ), startFirmwareI, NULL );
+	chSysUnlock();
 }
 
 void dfuPushBytes( uint8_t cnt, uint8_t * bytes )
 {
 	uint8_t i;
 	for ( i=0; i<cnt; i++ )
+	{
 		sector[ byteIndex++ ] = bytes[i];
+		byteIndex %= CONF_PAGE_SIZE;
+	}
 }
 
 uint8_t dfuWriteSector( int index )
@@ -112,7 +117,9 @@ static void startFirmwareI( void * arg )
 
 void turnCountdownOff( void )
 {
-	chVTSetI( &vt, S2ST( 3 ), NULL, NULL );
+	chSysLock();
+		//chVTSetI( &vt, S2ST( 3 ), NULL, NULL );
+	chSysUnlock();
 }
 
 
