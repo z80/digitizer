@@ -146,7 +146,8 @@ static void exec_func( void )
 	int func_index = (int)buffer[1];// + ((int)buffer[2]) * 256;
 	// Just to avoid troubles.
 	int funcs_sz = (int)(sizeof(funcs)/sizeof(TFunc));
-    func_index = (func_index < funcs_sz) ? func_index : 0;
+    if (func_index >= funcs_sz)
+    	return; // Don't even try to execute wrong functions.
 	funcs[func_index]( args );
 }
 
@@ -184,7 +185,8 @@ static void dfu_push( uint8_t * args )
 
 static void dfu_write_sector( uint8_t * args )
 {
-
+	int index = ( ((int)args[0]) << 8 ) + ( (int)args[1] );
+	dfuWriteSector( index );
 }
 
 static void dfu_run_firmware( uint8_t * args )
