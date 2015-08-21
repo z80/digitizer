@@ -58,7 +58,7 @@ void SweepWnd::addData( QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qre
 SweepWnd * SweepWnd::loadFile( QWidget * parent )
 {
     QString fileName = QFileDialog::getOpenFileName( parent,
-        tr("Open Image"), "", tr("Text Files (*.txt)"));
+        tr("Open file"), "", tr("Text Files (*.txt)"));
     if ( fileName.length() > 0 )
     {
         if ( !fileName.toLower().endsWith( ".txt" ) )
@@ -174,7 +174,7 @@ void SweepWnd::data( QVector<qreal> & workV, QVector<qreal> & workI, QVector<qre
 void SweepWnd::slotSave()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-        tr("Open Image"), "", tr("Text Files (*.txt)"));
+        tr("Save file"), "", tr("Text Files (*.txt)"));
     if ( fileName.length() > 0 )
     {
         if ( !fileName.toLower().endsWith( ".txt" ) )

@@ -114,6 +114,8 @@ MainWnd::MainWnd( QWidget * parent )
     connect( ui.actionAFM_output_None,  SIGNAL(triggered()), this, SLOT(slotAfmOutput()) );
     connect( ui.actionAFM_output_work,  SIGNAL(triggered()), this, SLOT(slotAfmOutput()) );
     connect( ui.actionAFM_output_Probe, SIGNAL(triggered()), this, SLOT(slotAfmOutput()) );
+
+    connect( ui.actionFirmware_upgrade, SIGNAL(triggered()), this, SLOT(slotFirmwareUpgrade()) );
 }
 
 MainWnd::~MainWnd()
@@ -704,6 +706,55 @@ void MainWnd::slotAfmOutput()
     }
 
     a->setChecked( true );
+}
+
+void MainWnd::slotFirmwareUpgrade()
+{
+    QMutexLocker lock( &mutex );
+        if ( io->isOpen() )
+        {
+            reopen();
+            if ( !io->isOpen() )
+            {
+                QMessageBox::critical( this, "Error", "Falied to get access to hardware! It might be it isn't even connected." );
+                return;
+            }
+        }
+        bool res = io->runBootloader();
+        if ( !res )
+        {
+            QMessageBox::critical( this, "Error", "Falied to run bootloader!" );
+            return;
+        }
+
+        QString stri;
+        res = io->bootloaderFirmwareVersion( stri );
+        stri = QString( "Bipotentiostat bootloader found: %1. You are supposed to have new firmware file on you computer in order to upgrade firmware. Press \'Ok\' button and choose appropriate file." ).arg( stri );
+        QMessageBox::about( this, "Directions", stri );
+
+        QString fileName = QFileDialog::getOpenFileName( this,
+                        tr("Open firmware file"), "", tr("Text Files (*.txt)") );
+        if ( fileName.length() > 0 )
+        {
+            res = io->firmwareUpgrade( fileName );
+            if ( !res )
+            {
+                QMessageBox::critical( this, "Error", "Firmware upgrade has failed! But don't worry, hardware is not bricked after that. Bootloader fires up each time hardware is powered on and waits for instructions for a few seconds. In order to complete firmware upgrade one should fire up firmware upgrade just after powering haddware up." );
+                return;
+            }
+            QString stri = io->firmwareVersion();
+            if ( stri.length() < 1 )
+            {
+                QMessageBox::warning( this, "Warning", "Firmware upgrade most probably succeded. But can\'t retrieve new firmware version." );
+                return;
+            }
+            stri = QString( "Firmware was successfully upgraded. New firmware version is: %1. Please, take into account that due to upgrade all values are reset to their defaults. So user interface might not reflect hardware state. In order to make things match each other set all potenntials again." ).arg( stri );
+            QMessageBox::about( this, "Success", stri );
+        }
+        else
+        {
+            QMessageBox::about( this, "Directions", "File wasn\'t chosen. Firmware will start shortly. But please take into account that hardware settings such as voltage levels are reset to default values and might differ from values in user intarface." );
+        }
 }
 
 
