@@ -116,7 +116,7 @@ static void startFirmwareI( void * arg )
 	{
 	    uint32_t JumpAddress;
 	    pFunction Jump_To_Application;
-	    
+
 	    JumpAddress = *(__IO uint32_t*) (addr + 4);
 	    Jump_To_Application = (pFunction) JumpAddress;
 	    // Initialize user application's Stack Pointer

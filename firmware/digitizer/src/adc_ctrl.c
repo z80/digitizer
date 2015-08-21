@@ -21,7 +21,7 @@ static int instantAdcData[4] = { -1, -1, -1, -1 };
 
 // Oscilloscope parameters.
 int signalMask = 15;
-int period     = 5;
+int period     = 40;
 int elapsed    = 0;
 
 
