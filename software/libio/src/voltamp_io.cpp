@@ -506,16 +506,33 @@ bool VoltampIo::setOutput( int o )
 
 }
 
-bool VoltampIo::firmwareUpgrade( const QString & fileName )
+bool VoltampIo::firmwareUpgrade( const QString & fileName, bool invokeUpgrade )
 {
-    // Should execute function. The function is supposed
-    // to send back acknowledge data and jump to
-    // upgrade firmware.
-    quint8 funcInd = 16;
-    res = execFunc( funcInd );
-    if ( !res )
-        return false;
-    return false;
+    if ( invokeUpgrade )
+    {
+        // Should execute function. The function is supposed
+        // to send back acknowledge data and jump to
+        // upgrade firmware.
+        quint8 funcInd = 16;
+        res = execFunc( funcInd );
+        if ( !res )
+            return false;
+
+        bool eom;
+        QByteArray & arr = pd->buffer;
+        arr.resize( PD::IN_BUFFER_SZ );
+        int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
+        if ( !eom )
+            return false;
+
+        // Check for "ok" response.
+        if ( !( ( arr[0] == 'o' ) && ( arr[1] == 'k' ) ) )
+            return false;
+    }
+
+    // Start writing to the device.
+
+    return true;
 }
 
 

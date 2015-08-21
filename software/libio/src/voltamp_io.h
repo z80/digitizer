@@ -39,7 +39,7 @@ public:
 
     bool setOutput( int o );
 
-    bool firmwareUpgrade( const QString & fileName );
+    bool firmwareUpgrade( const QString & fileName, bool invokeUpgrade = true );
 
     bool setArgs( quint8 * data, int dataSz );
     bool execFunc( quint16 funcId );

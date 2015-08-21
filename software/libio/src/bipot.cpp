@@ -488,6 +488,26 @@ bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<
     return true;
 }
 
+bool Bipot::setOutput( int o )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.setOutput( o );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::firmwareUpgrade( const QString & fileName )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.firmwareUpgrade( fileName );
+    if ( !res )
+        return false;
+    return true;
+}
+
 
 void Bipot::setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB )
 {

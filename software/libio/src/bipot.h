@@ -41,6 +41,10 @@ public:
     bool sweepEn( bool & en );
     bool sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI );
 
+    bool setOutput( int o );
+
+    bool firmwareUpgrade( const QString & fileName );
+
     // Calibrations.
     void setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB );
     void setVoltScale( qreal scaleWork, qreal scaleProbe );
