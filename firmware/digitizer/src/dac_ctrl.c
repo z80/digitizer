@@ -57,7 +57,7 @@ static SPIConfig hs_spicfg =
 
 void initDac( void )
 {
-	palSetPadMode( GPIOB, 5, PAL_MODE_OUTPUT_PUSHPULL );
+	//palSetPadMode( GPIOB, 5, PAL_MODE_OUTPUT_PUSHPULL );
 
 	chOQInit( &dac_queue, dac_queue_buffer, DAC_QUEUE_SZ, 0 );
 
@@ -186,7 +186,7 @@ void processDacI( void )
 static void onDacSpiComplete( SPIDriver * spid )
 {
 	(void)spid;
-									palSetPad( GPIOB, 5 );
+									//palSetPad( GPIOB, 5 );
 	chSysLockFromIsr();
 		spiUnselectI( &SPID2 );
 		//palSetPad( GPIOB, DAC_CS_0 );
@@ -194,7 +194,7 @@ static void onDacSpiComplete( SPIDriver * spid )
 		//palSetPad( GPIOB, DAC_CS_2 );
 		//palSetPad( GPIOB, DAC_CS_3 );
 	chSysUnlockFromIsr();
-									palClearPad( GPIOB, 5 );
+									//palClearPad( GPIOB, 5 );
 }
 
 void currentDacs( int * dacs )

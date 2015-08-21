@@ -23,7 +23,7 @@ static const GPTConfig gptCfg =
 
 void initTimer( void )
 {
-	palSetPadMode( GPIOC, 15, PAL_MODE_OUTPUT_PUSHPULL );
+	//palSetPadMode( GPIOC, 15, PAL_MODE_OUTPUT_PUSHPULL );
 
 
     gptStart( &GPTD1, &gptCfg );
@@ -34,12 +34,12 @@ void initTimer( void )
 static void gptCb(GPTDriver *gptp)
 {
 	(void)gptp;
-								palSetPad( GPIOC, 15 );
+								//palSetPad( GPIOC, 15 );
 	chSysLockFromIsr();
 		queryAdcI();
 		processDacI();
 	chSysUnlockFromIsr();
-								palClearPad( GPIOC, 15 );
+								//palClearPad( GPIOC, 15 );
 }
 
 
