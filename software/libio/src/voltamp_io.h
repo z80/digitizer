@@ -39,7 +39,15 @@ public:
 
     bool setOutput( int o );
 
-    bool firmwareUpgrade( const QString & fileName, bool invokeUpgrade = true );
+    bool runBootloader();
+    bool bootloaderHardwareVersion( QString & stri );
+    bool bootloaderFirmwareVersion( QString & stri );
+private:
+    bool bootloaderPush( int cnt, quint8 * data );
+    bool bootloaderWriteSector( int index );
+    bool bootloaderStartFirmware();
+public:
+    bool firmwareUpgrade( const QString & fileName );
 
     bool setArgs( quint8 * data, int dataSz );
     bool execFunc( quint16 funcId );

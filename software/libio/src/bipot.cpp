@@ -498,6 +498,36 @@ bool Bipot::setOutput( int o )
     return true;
 }
 
+bool Bipot::runBootloader()
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.runBootloader();
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::bootloaderHardwareVersion( QString & stri )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.bootloaderHardwareVersion( stri );
+    if ( !res )
+        return false;
+    return true;
+}
+
+bool Bipot::bootloaderFirmwareVersion( QString & stri )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.bootloaderFirmwareVersion( stri );
+    if ( !res )
+        return false;
+    return true;
+}
+
 bool Bipot::firmwareUpgrade( const QString & fileName )
 {
     VoltampIo & io = *(pd->io);

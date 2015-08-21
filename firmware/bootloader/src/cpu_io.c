@@ -143,7 +143,7 @@ static TFunc funcs[] =
 
 static void exec_func( void )
 {
-	int func_index = (int)buffer[1];// + ((int)buffer[2]) * 256;
+	int func_index = (int)buffer[1] - 128; // 128 shift to prevent overlap with main firmware (!!!)
 	// Just to avoid troubles.
 	int funcs_sz = (int)(sizeof(funcs)/sizeof(TFunc));
     if (func_index >= funcs_sz)
@@ -154,6 +154,9 @@ static void exec_func( void )
 static void hardware_version( uint8_t * args )
 {
 	(void)args;
+
+	turnCountdownOff();
+
 	const uint8_t stri[] = HARDWARE_VERSION;
 	int l = strlen( (char *)stri );
 	int i;
@@ -165,6 +168,9 @@ static void hardware_version( uint8_t * args )
 static void firmware_version( uint8_t * args )
 {
 	(void)args;
+
+	turnCountdownOff();
+
 	const uint8_t stri[] = FIRMWARE_VERSION;
 	int l = strlen( (char *)stri );
 	int i;
@@ -175,11 +181,15 @@ static void firmware_version( uint8_t * args )
 
 static void set_led( uint8_t * args )
 {
+	turnCountdownOff();
+
 	setLeds( args[0] );
 }
 
 static void dfu_push( uint8_t * args )
 {
+	turnCountdownOff();
+
 	dfuPushBytes( args[0], &(args[1]) );
 }
 

@@ -9,6 +9,8 @@ void dfuPushBytes( uint8_t cnt, uint8_t * bytes );
 uint8_t dfuWriteSector( int index );
 void dfuStartFirmware( void );
 
+void turnCountdownOff( void );
+
 
 #endif
 

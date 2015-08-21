@@ -43,7 +43,11 @@ public:
 
     bool setOutput( int o );
 
+    bool runBootloader();
+    bool bootloaderHardwareVersion( QString & stri );
+    bool bootloaderFirmwareVersion( QString & stri );
     bool firmwareUpgrade( const QString & fileName );
+
 
     // Calibrations.
     void setmV2mA( qreal workA, qreal workB, qreal probeA, qreal probeB );

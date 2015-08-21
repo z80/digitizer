@@ -506,31 +506,172 @@ bool VoltampIo::setOutput( int o )
 
 }
 
-bool VoltampIo::firmwareUpgrade( const QString & fileName, bool invokeUpgrade )
+bool VoltampIo::runBootloader()
 {
-    if ( invokeUpgrade )
+    QMutexLocker lock( &pd->mutex );
+
+    // Should execute function. The function is supposed
+    // to send back acknowledge data and jump to
+    // upgrade firmware.
+    quint8 funcInd = 16;
+    bool res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    bool eom;
+    QByteArray & arr = pd->buffer;
+    arr.resize( PD::IN_BUFFER_SZ );
+    int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
+    if ( !eom )
+        return false;
+
+    // Check for "ok" response.
+    if ( !( ( arr[0] == 'o' ) && ( arr[1] == 'k' ) ) )
+        return false;
+
+    return true;
+}
+
+bool VoltampIo::bootloaderHardwareVersion( QString & stri )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    quint8 funcInd = 0 + 128;
+    bool res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    QByteArray & arr = pd->buffer;
+    arr.resize( PD::IN_BUFFER_SZ );
+    bool eom;
+    int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
+    if ( !eom )
+        return false;
+    stri.clear();
+    for ( int i=0; i<cnt; i++ )
+        stri.append( QChar( arr.at( i ) ) );
+    return true;
+}
+
+
+bool VoltampIo::bootloaderFirmwareVersion( QString & stri )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    quint8 funcInd = 1 + 128;
+    bool res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    QByteArray & arr = pd->buffer;
+    arr.resize( PD::IN_BUFFER_SZ );
+    bool eom;
+    int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
+    if ( !eom )
+        return false;
+    stri.clear();
+    for ( int i=0; i<cnt; i++ )
+        stri.append( QChar( arr.at( i ) ) );
+    return true;
+}
+
+bool VoltampIo::bootloaderPush( int cnt, quint8 * data )
+{
+    bool res;
+    res = setArgs( reinterpret_cast<quint8 *>( &data ), cnt );
+    if ( !res )
+        return false;
+
+    quint8 funcInd = 3 + 128;
+    res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    return true;
+
+}
+
+bool VoltampIo::bootloaderWriteSector( int index )
+{
+    quint8 funcInd = 4 + 128;
+    bool res = execFunc( funcInd );
+    if ( !res )
+        return false;
+    bool eom;
+    QByteArray & arr = pd->buffer;
+    arr.resize( PD::IN_BUFFER_SZ );
+    int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
+    if ( !eom )
+        return false;
+
+    quint8 errCode = arr.at( 0 );
+    if ( errCode != 0 )
+        return false;
+
+    return true;
+}
+
+bool VoltampIo::bootloaderStartFirmware()
+{
+    quint8 funcInd = 4 + 128;
+    bool res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    return true;
+}
+
+
+bool VoltampIo::firmwareUpgrade( const QString & fileName )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    const int SECTOR_SZ = 1024;
+    const int PACKET_SZ = 8;
+
+    quint8 packet[ PACKET_SZ ];
+
+    QFile f( fileName );
+    if ( !f.open( QIODevice::ReadOnly ) )
+        return false;
+
+    bool res;
+    int totalCnt = 0;
+    int sectorIndex  = 0;
+    while ( !f.atEnd() )
     {
-        // Should execute function. The function is supposed
-        // to send back acknowledge data and jump to
-        // upgrade firmware.
-        quint8 funcInd = 16;
-        bool res = execFunc( funcInd );
+        int cnt = f.read( reinterpret_cast<char *>( packet ), PACKET_SZ );
+        if ( cnt >= 1 )
+        {
+            res = bootloaderPush( cnt, packet );
+            if ( !res )
+                return false;
+
+            totalCnt += cnt;
+
+            if ( totalCnt >= SECTOR_SZ )
+            {
+                res = bootloaderWriteSector( sectorIndex );
+                if ( !res )
+                    return false;
+                sectorIndex += 1;
+                totalCnt -= SECTOR_SZ;
+            }
+        }
+    }
+
+    f.close();
+
+    if ( totalCnt > 0 )
+    {
+        res = bootloaderWriteSector( sectorIndex );
         if ( !res )
-            return false;
-
-        bool eom;
-        QByteArray & arr = pd->buffer;
-        arr.resize( PD::IN_BUFFER_SZ );
-        int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
-        if ( !eom )
-            return false;
-
-        // Check for "ok" response.
-        if ( !( ( arr[0] == 'o' ) && ( arr[1] == 'k' ) ) )
             return false;
     }
 
-    // Start writing to the device.
+    res = bootloaderStartFirmware();
+    if ( !res )
+        return false;
 
     return true;
 }

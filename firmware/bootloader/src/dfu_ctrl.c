@@ -11,7 +11,6 @@
 typedef  void (*pFunction)(void);
 
 static void startFirmwareI( void * arg );
-static void turnCountdownOff( void );
 
 static VirtualTimer vt;
 
@@ -20,13 +19,12 @@ static int     byteIndex = 0;
 
 void initDfu( int secs )
 {
+	byteIndex = 0;
 	chVTSetI( &vt, S2ST( secs ), startFirmwareI, NULL );
 }
 
 void dfuPushBytes( uint8_t cnt, uint8_t * bytes )
 {
-	turnCountdownOff();
-
 	uint8_t i;
 	for ( i=0; i<cnt; i++ )
 		sector[ byteIndex++ ] = bytes[i];
@@ -34,7 +32,8 @@ void dfuPushBytes( uint8_t cnt, uint8_t * bytes )
 
 uint8_t dfuWriteSector( int index )
 {
-	turnCountdownOff();
+	// Zero bytes counter. It is necessary for the next sector.
+	byteIndex = 0;
 
     uint32_t * flash = ( uint32_t * )( CONF_FLASH_START + (CONF_START_PAGE + index) * CONF_PAGE_SIZE );
 
@@ -79,8 +78,6 @@ uint8_t dfuWriteSector( int index )
 
 void dfuStartFirmware( void )
 {
-	turnCountdownOff();
-
 	startFirmwareI( 0 );
 }
 
@@ -113,7 +110,7 @@ static void startFirmwareI( void * arg )
 	}
 }
 
-static void turnCountdownOff( void )
+void turnCountdownOff( void )
 {
 	chVTSetI( &vt, S2ST( 3 ), NULL, NULL );
 }
