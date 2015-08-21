@@ -710,7 +710,11 @@ void MainWnd::slotAfmOutput()
 
 void MainWnd::slotFirmwareUpgrade()
 {
+    disconnect( this, SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
+    qApp->processEvents();
+
     QMutexLocker lock( &mutex );
+    do {
         if ( !io->isOpen() )
         {
             reopen();
@@ -730,27 +734,28 @@ void MainWnd::slotFirmwareUpgrade()
             stri = QString( "Press \'Ok\' button to upgrade firmware." );
             QMessageBox::StandardButton choise =QMessageBox::warning( this, "Directions", stri, QMessageBox::Ok | QMessageBox::Cancel );
             if ( choise != QMessageBox::Ok )
-                return;
+                break;
 
             bool res = io->runBootloader();
             if ( !res )
             {
                 QMessageBox::critical( this, "Error", "Falied to run bootloader!" );
-                return;
+                break;
             }
+
             QString version;
             res = io->bootloaderFirmwareVersion( version );
             if ( !res )
             {
                 QMessageBox::critical( this, "Error", "Falied to retrive bootloader version!" );
-                return;
+                break;
             }
 
             res = io->firmwareUpgrade( fileName );
             if ( !res )
             {
                 QMessageBox::critical( this, "Error", "Firmware upgrade has failed! But don't worry, hardware is not bricked after that. Bootloader fires up each time hardware is powered on and waits for instructions for a few seconds. In order to complete firmware upgrade one should fire up firmware upgrade just after powering haddware up." );
-                return;
+                break;
             }
 
             QString stri = io->firmwareVersion();
@@ -758,11 +763,14 @@ void MainWnd::slotFirmwareUpgrade()
             {
                 stri = QString( "Bootloader version: %1. Firmware upgrade most probably succeded. But can\'t retrieve new firmware version." ).arg( version );
                 QMessageBox::warning( this, "Warning", stri );
-                return;
+                break;
             }
-            stri = QString( "Bootloader version: %1. Firmware was successfully upgraded. New firmware version is: %2. Please, take into account that due to upgrade all values are reset to their defaults. So user interface might not reflect hardware state. In order to make things match each other set all potenntials again." ).arg( version ).arg( stri );
-            QMessageBox::about( this, "Success", stri );
+            stri = QString( "Bootloader version: %1. Firmware was successfully upgraded. New firmware version is: %2. Please, take into account that due to upgrade all values are reset to their defaults. So user interface might not reflect hardware state properly. In order to make things match reality please manually set all potentials again." ).arg( version ).arg( stri );
+            QMessageBox::information( this, "Success", stri );
         }
+    } while ( false );
+
+    connect( this, SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
 }
 
 

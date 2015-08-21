@@ -2,6 +2,26 @@
 #include "voltamp_io.h"
 #include "io.h"
 
+class Sleep: public QThread
+{
+public:
+    Sleep()
+        : QThread()
+    {
+    }
+
+    ~Sleep()
+    {
+    }
+
+    static void msleep( int ms )
+    {
+        QThread::msleep( ms );
+    }
+};
+
+
+
 class VoltampIo::PD
 {
 public:
@@ -31,7 +51,7 @@ public:
 const int VoltampIo::PD::CMD_SET_ARGS  = 1;
 const int VoltampIo::PD::CMD_EXEC_FUNC = 2;
 
-const int VoltampIo::PD::TIMEOUT = 3000;
+const int VoltampIo::PD::TIMEOUT = 6000;
 const int VoltampIo::PD::IN_BUFFER_SZ = (4 * 2048);
 
 void VoltampIo::PD::encodeData( quint8 * data, int sz )
@@ -529,6 +549,7 @@ bool VoltampIo::runBootloader()
     if ( !( ( arr[0] == 'o' ) && ( arr[1] == 'k' ) ) )
         return false;
 
+    Sleep::msleep( 500 );
     return true;
 }
 
@@ -550,6 +571,9 @@ bool VoltampIo::bootloaderHardwareVersion( QString & stri )
     stri.clear();
     for ( int i=0; i<cnt; i++ )
         stri.append( QChar( arr.at( i ) ) );
+
+    Sleep::msleep( 500 );
+
     return true;
 }
 
@@ -572,6 +596,9 @@ bool VoltampIo::bootloaderFirmwareVersion( QString & stri )
     stri.clear();
     for ( int i=0; i<cnt; i++ )
         stri.append( QChar( arr.at( i ) ) );
+
+    Sleep::msleep( 500 );
+
     return true;
 }
 
@@ -689,6 +716,8 @@ bool VoltampIo::firmwareUpgrade( const QString & fileName )
     if ( !res )
         return false;
 
+    Sleep::msleep( 500 );
+
     return true;
 }
 
@@ -751,24 +780,6 @@ int VoltampIo::write( quint8 * data, int dataSz )
     int cnt = pd->io->write( data, dataSz );
     return cnt;
 }
-
-class Sleep: public QThread
-{
-public:
-    Sleep()
-        : QThread()
-    {
-    }
-
-    ~Sleep()
-    {
-    }
-
-    static void msleep( int ms )
-    {
-        QThread::msleep( ms );
-    }
-};
 
 int VoltampIo::read( quint8 * data, int dataSz, bool & eom )
 {

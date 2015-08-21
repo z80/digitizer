@@ -37,6 +37,8 @@ int main( int argc, char * argv[] )
 
     QVector<quint16> data;
     QString stri;
+    res = io.runBootloader();
+    qDebug() << stri;
     res = io.bootloaderFirmwareVersion( stri );
     qDebug() << stri;
     res = io.bootloaderHardwareVersion( stri );
