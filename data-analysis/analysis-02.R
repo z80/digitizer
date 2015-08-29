@@ -13,10 +13,8 @@ ds$logd0t <- log( ds$d0t )
 ds$logd1t <- log( ds$d1t )
 ds$d0pow2   <- ds$d0*ds$d0
 ds$d0pow3   <- ds$d0*ds$d0*ds$d0
-ds$d0pow4   <- ds$d0*ds$d0*ds$d0*ds$d0
 ds$d1pow2   <- ds$d1*ds$d1
 ds$d1pow3   <- ds$d1*ds$d1*ds$d1
-ds$d1pow3   <- ds$d1*ds$d1*ds$d1*ds$d1
 
 ds$workV <- workOrigData$v
 
@@ -89,6 +87,8 @@ bestFormula <- function( ds, foldsN, repeatsN )
     w <- 2^w-1
 
     jobDone <- 0
+    t0 <- round( as.numeric( Sys.time() ) )
+    lastT <- t0
 
     bestMask <- 1
     res     <- maskSd( ds, bestMask, foldsN, repeatsN )
@@ -118,6 +118,17 @@ bestFormula <- function( ds, foldsN, repeatsN )
             jobDone <- newDone
             print( paste( "Job done ", newDone, "%", sep="" ) )
             print( paste( "Current best sd=", bestSd, ", fla=", bestFla, sep="" ) )
+        }
+        t1 <- round( as.numeric( Sys.time() ) )
+        if ( t1 - lastT >= 10 )
+        {
+            lastT <- t1
+            elapsed <- as.character( (t1-t0)/60.0 )
+            #print( elapsed )
+            print( paste( "Elapsed ", elapsed, " min", sep="" ) )
+            left <- as.character( (t1-t0)*(w-mask)/mask/60.0 )
+            #print( left )
+            print( paste( "Left ", left, " min", sep="" ) )
         }
     }
 
