@@ -289,8 +289,8 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
         bool en[4];
         en[0] = pd->sigs[0];
         en[1] = pd->sigs[1];
-        en[2] = pd->sigs[2];
-        en[3] = pd->sigs[3];
+        en[2] = pd->sigs[3];
+        en[3] = pd->sigs[2];
     pd->mutex.unlock();
     QVector<int> & dataRaw = pd->data;
     QVector<qreal> * data[4];
@@ -300,8 +300,8 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
     probeI.clear();
     data[0] = &workV;
     data[1] = &probeV;
-    data[2] = &probeI;
     data[3] = &workI;
+    data[2] = &probeI;
     bool res = io.oscData( dataRaw );
     if ( !res )
         return false;

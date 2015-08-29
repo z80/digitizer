@@ -2,6 +2,26 @@
 #include "voltamp_io.h"
 #include "io.h"
 
+class Sleep: public QThread
+{
+public:
+    Sleep()
+        : QThread()
+    {
+    }
+
+    ~Sleep()
+    {
+    }
+
+    static void msleep( int ms )
+    {
+        QThread::msleep( ms );
+    }
+};
+
+
+
 class VoltampIo::PD
 {
 public:
@@ -31,7 +51,7 @@ public:
 const int VoltampIo::PD::CMD_SET_ARGS  = 1;
 const int VoltampIo::PD::CMD_EXEC_FUNC = 2;
 
-const int VoltampIo::PD::TIMEOUT = 3000;
+const int VoltampIo::PD::TIMEOUT = 6000;
 const int VoltampIo::PD::IN_BUFFER_SZ = (4 * 2048);
 
 void VoltampIo::PD::encodeData( quint8 * data, int sz )
@@ -513,7 +533,7 @@ bool VoltampIo::runBootloader()
     // Should execute function. The function is supposed
     // to send back acknowledge data and jump to
     // upgrade firmware.
-    quint8 funcInd = 16;
+    quint8 funcInd = 17;
     bool res = execFunc( funcInd );
     if ( !res )
         return false;
@@ -529,6 +549,7 @@ bool VoltampIo::runBootloader()
     if ( !( ( arr[0] == 'o' ) && ( arr[1] == 'k' ) ) )
         return false;
 
+    Sleep::msleep( 500 );
     return true;
 }
 
@@ -550,6 +571,9 @@ bool VoltampIo::bootloaderHardwareVersion( QString & stri )
     stri.clear();
     for ( int i=0; i<cnt; i++ )
         stri.append( QChar( arr.at( i ) ) );
+
+    Sleep::msleep( 500 );
+
     return true;
 }
 
@@ -572,13 +596,23 @@ bool VoltampIo::bootloaderFirmwareVersion( QString & stri )
     stri.clear();
     for ( int i=0; i<cnt; i++ )
         stri.append( QChar( arr.at( i ) ) );
+
+    Sleep::msleep( 500 );
+
     return true;
 }
 
 bool VoltampIo::bootloaderPush( int cnt, quint8 * data )
 {
     bool res;
-    res = setArgs( reinterpret_cast<quint8 *>( &data ), cnt );
+
+    const int SZ = 32;
+    quint8 args[ SZ ];
+    args[0] = static_cast<quint8>( cnt );
+    for ( int i=0; i<cnt; i++ )
+        args[i+1] = data[i];
+
+    res = setArgs( reinterpret_cast<quint8 *>( args ), cnt+1 );
     if ( !res )
         return false;
 
@@ -593,8 +627,17 @@ bool VoltampIo::bootloaderPush( int cnt, quint8 * data )
 
 bool VoltampIo::bootloaderWriteSector( int index )
 {
+    quint8 args[2];
+    args[0] = static_cast<quint8>( (index >> 8) & 0xFF );
+    args[1] = static_cast<quint8>( index & 0xFF );
+
+    bool res = setArgs( reinterpret_cast<quint8 *>( args ), 2 );
+    if ( !res )
+        return false;
+
+
     quint8 funcInd = 4 + 128;
-    bool res = execFunc( funcInd );
+    res = execFunc( funcInd );
     if ( !res )
         return false;
     bool eom;
@@ -613,7 +656,7 @@ bool VoltampIo::bootloaderWriteSector( int index )
 
 bool VoltampIo::bootloaderStartFirmware()
 {
-    quint8 funcInd = 4 + 128;
+    quint8 funcInd = 5 + 128;
     bool res = execFunc( funcInd );
     if ( !res )
         return false;
@@ -672,6 +715,8 @@ bool VoltampIo::firmwareUpgrade( const QString & fileName )
     res = bootloaderStartFirmware();
     if ( !res )
         return false;
+
+    Sleep::msleep( 500 );
 
     return true;
 }
@@ -735,24 +780,6 @@ int VoltampIo::write( quint8 * data, int dataSz )
     int cnt = pd->io->write( data, dataSz );
     return cnt;
 }
-
-class Sleep: public QThread
-{
-public:
-    Sleep()
-        : QThread()
-    {
-    }
-
-    ~Sleep()
-    {
-    }
-
-    static void msleep( int ms )
-    {
-        QThread::msleep( ms );
-    }
-};
 
 int VoltampIo::read( quint8 * data, int dataSz, bool & eom )
 {

@@ -1,5 +1,6 @@
 
 #include "led_ctrl.h"
+#include "dfu_ctrl.h"
 #include "hal.h"
 
 #include "iwdg.h"
@@ -7,6 +8,8 @@
 
 static Mutex    mutex;
 static uint32_t value = 0;
+
+static const int DURATION_MS = 200;
 
 
 static WORKING_AREA( waLeds, 256 );
@@ -29,7 +32,8 @@ static msg_t ledsThread( void *arg )
             else
             	palClearPad( LED_1_PORT, LED_1_PIN );
         chMtxUnlock();
-        chThdSleepMilliseconds( 200 );
+        chThdSleepMilliseconds( DURATION_MS );
+    	processDfu( DURATION_MS );
     }
 
     return 0;

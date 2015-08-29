@@ -84,7 +84,8 @@ private:
     Ui_MainWnd ui;
     QFuture<void> future;
     QMutex        mutex, 
-                  mutexSw; // Mutex for oscilloscope and for sweep.
+                  mutexSw, 
+                  mutexReopen; // Mutex for oscilloscope and for sweep.
     bool          terminate;
     bool          doMeasureSweep;
     Bipot         * io;

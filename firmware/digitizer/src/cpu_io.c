@@ -389,6 +389,9 @@ static void firmware_upgrade( uint8_t * args )
 	writeResult( res[1] );
 	writeEom();
 
+	// To give some time to retrieve the result.
+	chThdSleepMilliseconds( 500 );
+
 	// Jump to the beginning of FLASH space to invoke bootloader.
 	firmwareUpgrade();
 }

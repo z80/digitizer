@@ -146,7 +146,7 @@ static void exec_func( void )
 	int func_index = (int)buffer[1] - 128; // 128 shift to prevent overlap with main firmware (!!!)
 	// Just to avoid troubles.
 	int funcs_sz = (int)(sizeof(funcs)/sizeof(TFunc));
-    if (func_index >= funcs_sz)
+    if ( (func_index >= funcs_sz) || ( func_index < 0 ) )
     	return; // Don't even try to execute wrong functions.
 	funcs[func_index]( args );
 }
@@ -196,13 +196,17 @@ static void dfu_push( uint8_t * args )
 static void dfu_write_sector( uint8_t * args )
 {
 	int index = ( ((int)args[0]) << 8 ) + ( (int)args[1] );
-	dfuWriteSector( index );
+	uint8_t res = dfuWriteSector( index );
+
+	writeResult( res );
+	writeEom();
 }
 
 static void dfu_run_firmware( uint8_t * args )
 {
 	(void)args;
 	dfuStartFirmware();
+
 }
 
 

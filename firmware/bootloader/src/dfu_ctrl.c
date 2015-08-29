@@ -12,22 +12,37 @@ typedef  void (*pFunction)(void);
 
 static void startFirmwareI( void * arg );
 
-static VirtualTimer vt;
-
 static uint8_t sector[ CONF_PAGE_SIZE ];
 static int     byteIndex = 0;
+static int     timeLeft = 3000;
+static bool_t  dontStartFirmware = 0;
 
-void initDfu( int secs )
+
+void initDfu( int msecs )
 {
+	dontStartFirmware = 0;
 	byteIndex = 0;
-	chVTSetI( &vt, S2ST( secs ), startFirmwareI, NULL );
+	timeLeft = msecs;
+}
+
+void processDfu( int msecsElapsed )
+{
+	timeLeft -= msecsElapsed;
+	if ( timeLeft <= 0 )
+	{
+		if ( !dontStartFirmware )
+			dfuStartFirmware();
+	}
 }
 
 void dfuPushBytes( uint8_t cnt, uint8_t * bytes )
 {
 	uint8_t i;
 	for ( i=0; i<cnt; i++ )
+	{
 		sector[ byteIndex++ ] = bytes[i];
+		byteIndex %= CONF_PAGE_SIZE;
+	}
 }
 
 uint8_t dfuWriteSector( int index )
@@ -101,7 +116,7 @@ static void startFirmwareI( void * arg )
 	{
 	    uint32_t JumpAddress;
 	    pFunction Jump_To_Application;
-	    
+
 	    JumpAddress = *(__IO uint32_t*) (addr + 4);
 	    Jump_To_Application = (pFunction) JumpAddress;
 	    // Initialize user application's Stack Pointer
@@ -112,7 +127,7 @@ static void startFirmwareI( void * arg )
 
 void turnCountdownOff( void )
 {
-	chVTSetI( &vt, S2ST( 3 ), NULL, NULL );
+	dontStartFirmware = 1;
 }
 
 
