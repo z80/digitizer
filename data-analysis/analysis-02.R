@@ -115,9 +115,8 @@ wobj <- lm( probeFla, d )
 x <- predict( wobj, newdata=d, type="response" )
 x <- x * 10000
 y <- d$probeV * 10000
-y <- y
-n <- 51
-plot( x[1:n], y[1:n] )
+y <- y - x
+plot( x, y )
 probeSd <- sd( y )
 print( paste( "probe SD is ", as.symbol( probeSd ), sep="" ) )
 
