@@ -109,6 +109,8 @@ probeRes <- res
 probeDataAltered <- ds
 
 probeFla <- as.formula( "d$probeV ~ d$d1 + d$d3 + d$t + d$tpow2 + d$d2t + d$d3t + d$expt + d$expd2t + d$d2pow2 + d$d2pow3 + d$d3pow3" )
+probeFla <- as.formula( "d$probeV ~ d$d0 + d$d2 + d$d3 + d$tpow2 + d$tpow3 + d$d2t + d$d3t + d$expt + d$expd3t + d$d2pow2 + d$d3pow3" )
+
 
 d <- probeDataAltered
 wobj <- lm( probeFla, d )
