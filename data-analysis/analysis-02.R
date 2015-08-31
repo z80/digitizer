@@ -1,4 +1,4 @@
-setwd( "~/projects/digitizer.git/data-analysis" )
+setwd( "c:/projects/digitizer.git/data-analysis" )
 
 workOrigData <- read.table( './work_dac.dat' )
 names( workOrigData ) <- c( 'd0', 'd1', 'd2', 'd3', 't', 'v' )
