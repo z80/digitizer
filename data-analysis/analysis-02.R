@@ -36,9 +36,9 @@ corrplot( M, method = "circle" )
 REPEATS <- 4
 FOLDS <- 4
 
-res <- bestFormula( ds, FOLDS, REPEATS )
-workRes <- res
-workDataAltered <- ds
+#res <- bestFormula( ds, FOLDS, REPEATS )
+#workRes <- res
+#workDataAltered <- ds
 
 workFla    <- workRes$fla
 workRegObj <- workRes$regObj
@@ -60,7 +60,7 @@ box()
 workSd <- sd( y )
 print( paste( "work SD is ", as.symbol( workSd ), sep="" ) )
 
-
+wobj$coefficients
 
 
 
@@ -105,9 +105,9 @@ REPEATS <- 4
 FOLDS <- 4
 
 
-res <- bestFormula( ds, FOLDS, REPEATS )
-probeRes <- res
-probeDataAltered <- ds
+#res <- bestFormula( ds, FOLDS, REPEATS )
+#probeRes <- res
+#probeDataAltered <- ds
 
 probeFla <- as.formula( "d$probeV ~ d$d1 + d$d3 + d$t + d$tpow2 + d$d2t + d$d3t + d$expt + d$expd2t + d$d2pow2 + d$d2pow3 + d$d3pow3" )
 probeFla <- as.formula( "d$probeV ~ d$d0 + d$d2 + d$d3 + d$tpow2 + d$tpow3 + d$d2t + d$d3t + d$expt + d$expd3t + d$d2pow2 + d$d3pow3" )
@@ -115,7 +115,7 @@ probeFla <- as.formula( "d$probeV ~ d$d0 + d$d2 + d$d3 + d$tpow2 + d$tpow3 + d$d
 #with new data
 probeFla <- as.formula( "d$probeV ~ d$d0 + d$d3 + d$t + d$tpow3 + d$d3t + d$expt + d$expd2t + d$d2pow2 + d$d2pow3 + d$d3pow3" )
 # Remove absurd data parts.
-probeFla <- as.formula( "d$probeV ~ d$d2 + d$d3 + d$t + d$tpow3 + d$d3t + d$d2t" )
+probeFla <- as.formula( "d$probeV ~ d$d2 + d$d3 + d$d2t + d$d3t + d$t + d$tpow3" )
 # d2, d3, d2*t, d3*t, t, t^3.
 
 
@@ -126,8 +126,8 @@ x <- predict( wobj, newdata=d, type="response" )
 x <- x * 10000
 y <- d$probeV * 10000
 y <- y - x
-plot( d$t, y )
+plot( x, y )
 probeSd <- sd( y )
 print( paste( "probe SD is ", as.symbol( probeSd ), sep="" ) )
 
-
+wobj$coefficients

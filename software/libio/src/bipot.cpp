@@ -112,13 +112,13 @@ void  Bipot::PD::workV2Dac( qreal workV, int & dac1, int & dac2 )
     qreal a2t = workDac.a2t;
     qreal at  = workDac.at;
     qreal at3 = workDac.at3;
-    qreal temp     = temperature; // Also should be included into consideration.
+    qreal temp     = temperature / 50.0; // Also should be included into consideration.
 
     qreal fLow = 0.0;
     qreal fHigh = (workV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / a2;
-    fLow = (workV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3)/aDacLow;
-    int dacLow  = static_cast<int>( (fLow*32768.0 + 32767.0 );
-    int dacHigh = static_cast<int>( (fHigh*32768.0 + 32767.0 );
+    fLow = (workV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3) / a1;
+    int dacLow  = static_cast<int>( fLow*32768.0 + 32767.0 );
+    int dacHigh = static_cast<int>( fHigh*32768.0 + 32767.0 );
 
     dac1 = dacLow;
     dac2 = dacHigh;
@@ -133,13 +133,13 @@ void  Bipot::PD::probeV2Dac( qreal probeV, int & dac1, int & dac2 )
     qreal a2t = probeDac.a2t;
     qreal at  = probeDac.at;
     qreal at3 = probeDac.at3;
-    qreal temp     = temperature; // Also should be included into consideration.
+    qreal temp     = temperature / 50.0; // Also should be included into consideration.
 
     qreal fLow = 0.0;
-    qreal fHigh = (workV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / a2;
-    fLow = (workV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3)/aDacLow;
-    int dacLow  = static_cast<int>( (fLow*32768.0 + 32767.0 );
-    int dacHigh = static_cast<int>( (fHigh*32768.0 + 32767.0 );
+    qreal fHigh = (probeV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / a2;
+    fLow = (probeV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3) / a1;
+    int dacLow  = static_cast<int>( fLow*32768.0 + 32767.0 );
+    int dacHigh = static_cast<int>( fHigh*32768.0 + 32767.0 );
 
     dac1 = dacLow;
     dac2 = dacHigh;
@@ -241,7 +241,7 @@ bool Bipot::setWorkRaw( int a, int b )
 
 bool Bipot::setWorkMv( qreal mv )
 {
-    int dacLow, dacHigh
+    int dacLow, dacHigh;
     pd->workV2Dac( mv, dacLow, dacHigh );
 
     bool res = setWorkRaw( dacLow, dacHigh );
@@ -257,7 +257,7 @@ bool Bipot::setProbeRaw( int a, int b )
 
 bool Bipot::setProbeMv( qreal mv )
 {
-    int dacLow, dacHigh
+    int dacLow, dacHigh;
     pd->probeV2Dac( mv, dacLow, dacHigh );
 
     bool res = setProbeRaw( dacLow, dacHigh );
@@ -901,15 +901,6 @@ bool Bipot::calibrationCalc()
 
 bool Bipot::calibrationLoad( const QString & fileName )
 {
-    qreal a1  = workDac.a1;
-    qreal a2  = workDac.a2;
-    qreal b   = workDac.b;
-    qreal a1t = workDac.a1t;
-    qreal a2t = workDac.a2t;
-    qreal at  = workDac.at;
-    qreal at3 = workDac.at3;
-
-
     QFile file( fileName );
     bool open = file.open( QIODevice::ReadOnly );
     if ( open )
@@ -918,32 +909,32 @@ bool Bipot::calibrationLoad( const QString & fileName )
         if ( !file.atEnd() )
         {
             stri = file.readLine();
-            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+" );
+            qDebug() << stri;
+            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
-                CalibrationAdc d;
                 QString m;
                 m = ex.cap( 1 );
-                workDac.a1 = m.toDouble();
+                pd->workDac.b = m.toDouble();
 
                 m = ex.cap( 2 );
-                workDac.a2 = m.toDouble();
+                pd->workDac.a1 = m.toDouble();
 
                 m = ex.cap( 3 );
-                workDac.b = m.toDouble();
+                pd->workDac.a2 = m.toDouble();
 
                 m = ex.cap( 4 );
-                workDac.a1t = m.toDouble();
+                pd->workDac.a1t = m.toDouble();
 
                 m = ex.cap( 5 );
-                workDac.a2t = m.toDouble();
+                pd->workDac.a2t = m.toDouble();
 
                 m = ex.cap( 6 );
-                workDac.at = m.toDouble();
+                pd->workDac.at = m.toDouble();
 
                 m = ex.cap( 7 );
-                workDac.at3 = m.toDouble();
+                pd->workDac.at3 = m.toDouble();
             }
         }
         else
@@ -952,32 +943,32 @@ bool Bipot::calibrationLoad( const QString & fileName )
         if ( !file.atEnd() )
         {
             stri = file.readLine();
-            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+" );
+            qDebug() << stri;
+            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+[\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
-                CalibrationAdc d;
                 QString m;
                 m = ex.cap( 1 );
-                probeDac.a1 = m.toDouble();
+                pd->probeDac.b = m.toDouble();
 
                 m = ex.cap( 2 );
-                probeDac.a2 = m.toDouble();
+                pd->probeDac.a1 = m.toDouble();
 
                 m = ex.cap( 3 );
-                probeDac.b = m.toDouble();
+                pd->probeDac.a2 = m.toDouble();
 
                 m = ex.cap( 4 );
-                probeDac.a1t = m.toDouble();
+                pd->probeDac.a1t = m.toDouble();
 
                 m = ex.cap( 5 );
-                probeDac.a2t = m.toDouble();
+                pd->probeDac.a2t = m.toDouble();
 
                 m = ex.cap( 6 );
-                probeDac.at = m.toDouble();
+                pd->probeDac.at = m.toDouble();
 
                 m = ex.cap( 7 );
-                probeDac.at3 = m.toDouble();
+                pd->probeDac.at3 = m.toDouble();
             }
 
 
