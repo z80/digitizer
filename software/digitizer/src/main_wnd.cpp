@@ -22,6 +22,7 @@ MainWnd::MainWnd( QWidget * parent )
 
     terminate = false;
     io        = new Bipot();
+    io->calibrationLoad( "./calibration.dat" );
 
     loadSettings();
     refreshDevicesList();
@@ -584,7 +585,20 @@ void MainWnd::slotTemp()
         qreal t;
         res = io->temperature( t );
         if ( res )
+        {
             io->setTemperature( t );
+            mutex.lock();
+                bool measure = doMeasureSweep;
+            mutex.unlock();
+            // If it isn't sweeping at the moment adjust steady voltages.
+            if ( ( !measure ) && ( !calibrationWnd->isVisible() ) )
+            {
+                qreal val = ui.workVolt->value();
+                io->setWorkMv( val );
+                val = ui.probeVolt->value();
+                io->setProbeMv( val );
+            }
+        }
         temperature = t;
     }
 }

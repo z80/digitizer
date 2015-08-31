@@ -32,9 +32,13 @@ struct CalibrationAdc
 
 struct CoefDac
 {
+    // d2, d3, d2*t, d3*t, t, t^3
     qreal a1; 
     qreal a2;
     qreal at;
+    qreal a1t;
+    qreal a2t;
+    qreal at3;
     qreal b;
 };
 
@@ -101,16 +105,20 @@ qreal Bipot::PD::adc2probeI( int adc )
 
 void  Bipot::PD::workV2Dac( qreal workV, int & dac1, int & dac2 )
 {
-    qreal aDacLow  = workDac.a1;
-    qreal aDacHigh = workDac.a2;
-    qreal bDac     = workDac.b;
+    qreal a1  = workDac.a1;
+    qreal a2  = workDac.a2;
+    qreal b   = workDac.b;
+    qreal a1t = workDac.a1t;
+    qreal a2t = workDac.a2t;
+    qreal at  = workDac.at;
+    qreal at3 = workDac.at3;
     qreal temp     = temperature; // Also should be included into consideration.
 
-    qreal fLow = 32767.0;
-    qreal fHigh = ceil( (workV - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
-    fLow = ceil( (workV - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
-    int dacLow  = static_cast<int>( fLow );
-    int dacHigh = static_cast<int>( fHigh );
+    qreal fLow = 0.0;
+    qreal fHigh = (workV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / a2;
+    fLow = (workV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3)/aDacLow;
+    int dacLow  = static_cast<int>( (fLow*32768.0 + 32767.0 );
+    int dacHigh = static_cast<int>( (fHigh*32768.0 + 32767.0 );
 
     dac1 = dacLow;
     dac2 = dacHigh;
@@ -118,16 +126,20 @@ void  Bipot::PD::workV2Dac( qreal workV, int & dac1, int & dac2 )
 
 void  Bipot::PD::probeV2Dac( qreal probeV, int & dac1, int & dac2 )
 {
-    qreal aDacLow  = probeDac.a1;
-    qreal aDacHigh = probeDac.a2;
-    qreal bDac     = probeDac.b;
+    qreal a1  = probeDac.a1;
+    qreal a2  = probeDac.a2;
+    qreal b   = probeDac.b;
+    qreal a1t = probeDac.a1t;
+    qreal a2t = probeDac.a2t;
+    qreal at  = probeDac.at;
+    qreal at3 = probeDac.at3;
     qreal temp     = temperature; // Also should be included into consideration.
 
-    qreal fLow = 32767.0;
-    qreal fHigh = ceil( (probeV - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
-    fLow = ceil( (probeV - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
-    int dacLow  = static_cast<int>( fLow );
-    int dacHigh = static_cast<int>( fHigh );
+    qreal fLow = 0.0;
+    qreal fHigh = (workV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / a2;
+    fLow = (workV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3)/aDacLow;
+    int dacLow  = static_cast<int>( (fLow*32768.0 + 32767.0 );
+    int dacHigh = static_cast<int>( (fHigh*32768.0 + 32767.0 );
 
     dac1 = dacLow;
     dac2 = dacHigh;
@@ -150,10 +162,17 @@ Bipot::Bipot()
     pd->workDac.a1 = 0.3741271/8000.0;
     pd->workDac.a2 = 0.3741271;
     pd->workDac.b  = -11980.84;
+    pd->workDac.a1t = 0.0;
+    pd->workDac.a2t = 0.0;
+    pd->workDac.at3 = 0.0;
+
 
     pd->probeDac.a1 = 0.3741271/8000.0;
     pd->probeDac.a2 = 0.3741271;
     pd->probeDac.b  = -11980.84;
+    pd->probeDac.a1t = 0.0;
+    pd->probeDac.a2t = 0.0;
+    pd->probeDac.at3 = 0.0;
 
     pd->temperature = 23.0;
 
@@ -222,15 +241,8 @@ bool Bipot::setWorkRaw( int a, int b )
 
 bool Bipot::setWorkMv( qreal mv )
 {
-    qreal aDacLow  = pd->workDac.a1;
-    qreal aDacHigh = pd->workDac.a2;
-    qreal bDac     = pd->workDac.b;
-
-    qreal fLow = 32767.0;
-    qreal fHigh = ceil( (mv - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
-    fLow = ceil( (mv - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
-    int dacLow  = static_cast<int>( fLow );
-    int dacHigh = static_cast<int>( fHigh );
+    int dacLow, dacHigh
+    pd->workV2Dac( mv, dacLow, dacHigh );
 
     bool res = setWorkRaw( dacLow, dacHigh );
     return res;
@@ -245,15 +257,8 @@ bool Bipot::setProbeRaw( int a, int b )
 
 bool Bipot::setProbeMv( qreal mv )
 {
-    qreal aDacLow  = pd->probeDac.a1;
-    qreal aDacHigh = pd->probeDac.a2;
-    qreal bDac     = pd->probeDac.b;
-
-    qreal fLow = 32767.0;
-    qreal fHigh = ceil( (mv - bDac - fLow * aDacLow ) / aDacHigh - 0.5 );
-    fLow = ceil( (mv - bDac - fHigh*aDacHigh)/aDacLow - 0.5 );
-    int dacLow  = static_cast<int>( fLow );
-    int dacHigh = static_cast<int>( fHigh );
+    int dacLow, dacHigh
+    pd->probeV2Dac( mv, dacLow, dacHigh );
 
     bool res = setProbeRaw( dacLow, dacHigh );
     return res;
@@ -896,7 +901,95 @@ bool Bipot::calibrationCalc()
 
 bool Bipot::calibrationLoad( const QString & fileName )
 {
-    return true;
+    qreal a1  = workDac.a1;
+    qreal a2  = workDac.a2;
+    qreal b   = workDac.b;
+    qreal a1t = workDac.a1t;
+    qreal a2t = workDac.a2t;
+    qreal at  = workDac.at;
+    qreal at3 = workDac.at3;
+
+
+    QFile file( fileName );
+    bool open = file.open( QIODevice::ReadOnly );
+    if ( open )
+    {
+        QString stri; 
+        if ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                CalibrationAdc d;
+                QString m;
+                m = ex.cap( 1 );
+                workDac.a1 = m.toDouble();
+
+                m = ex.cap( 2 );
+                workDac.a2 = m.toDouble();
+
+                m = ex.cap( 3 );
+                workDac.b = m.toDouble();
+
+                m = ex.cap( 4 );
+                workDac.a1t = m.toDouble();
+
+                m = ex.cap( 5 );
+                workDac.a2t = m.toDouble();
+
+                m = ex.cap( 6 );
+                workDac.at = m.toDouble();
+
+                m = ex.cap( 7 );
+                workDac.at3 = m.toDouble();
+            }
+        }
+        else
+            return false;
+
+        if ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            QRegExp ex( "(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+(\\w+)\\s+" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                CalibrationAdc d;
+                QString m;
+                m = ex.cap( 1 );
+                probeDac.a1 = m.toDouble();
+
+                m = ex.cap( 2 );
+                probeDac.a2 = m.toDouble();
+
+                m = ex.cap( 3 );
+                probeDac.b = m.toDouble();
+
+                m = ex.cap( 4 );
+                probeDac.a1t = m.toDouble();
+
+                m = ex.cap( 5 );
+                probeDac.a2t = m.toDouble();
+
+                m = ex.cap( 6 );
+                probeDac.at = m.toDouble();
+
+                m = ex.cap( 7 );
+                probeDac.at3 = m.toDouble();
+            }
+
+
+        }
+        else
+            return false;
+
+        file.close();
+        return true;
+    }
+
+    return false;
 }
 
 bool Bipot::calibrationSave( const QString & fileName )
