@@ -55,9 +55,7 @@ x <- predict( wobj, newdata=d, type="response" )
 x <- x * 10000
 y <- d$workV * 10000
 y <- y - x
-plot( d$d3, y, main = "axis() examples", xaxt = "n", frame = TRUE, col = "red" )
-axis(1, d$d3 )
-axis(2, y)
+plot( x, y, main = "Data", xaxt = "n", frame = TRUE, col = "red" )
 box()
 workSd <- sd( y )
 print( paste( "work SD is ", as.symbol( workSd ), sep="" ) )
