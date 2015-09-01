@@ -119,6 +119,8 @@ MainWnd::MainWnd( QWidget * parent )
     connect( ui.actionAFM_output_Probe, SIGNAL(triggered()), this, SLOT(slotAfmOutput()) );
 
     connect( ui.actionFirmware_upgrade, SIGNAL(triggered()), this, SLOT(slotFirmwareUpgrade()) );
+
+    slotGain();
 }
 
 MainWnd::~MainWnd()
