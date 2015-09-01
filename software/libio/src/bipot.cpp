@@ -42,6 +42,16 @@ struct CoefDac
     qreal b;
 };
 
+struct CoefAdc
+{
+    qreal b;
+    qreal ka;
+    qreal kat;
+    qreal kt;
+    qreal kt2;
+    qreal kt3;
+};
+
 class Bipot::PD
 {
 public:
@@ -70,6 +80,12 @@ public:
 
     CoefDac workDac;
     CoefDac probeDac;
+
+    CoefAdc workAdcV;
+    CoefAdc probeAdcV;
+    CoefAdc workAdcI;
+    CoefAdc probeAdcI;
+
     qreal   temperature;
 
     static const int MEASURES_CNT;
@@ -79,27 +95,46 @@ const int Bipot::PD::MEASURES_CNT = 128;
 
 qreal Bipot::PD::adc2workV( int adc )
 {
-    qreal res = static_cast< qreal >( adc );
+    CoefAdc & a = workAdcV;
+    mutex.lock();
+        qreal t = temperature / 50.0;
+    mutex.unlock();
+    qreal res = 10000.0 * ( a.b + a.ka*( (static_cast<qreal>( adc ) - 32767.0) / 32768.0 ) + a.kt*t + a.kt2*t*t + a.kt3*t*t*t );
+    res = res * workGain;
     return res;
 }
 
 qreal Bipot::PD::adc2probeV( int adc )
 {
-    qreal res = static_cast< qreal >( adc );
+    CoefAdc & a = probeAdcV;
+    mutex.lock();
+        qreal t = temperature / 50.0;
+    mutex.unlock();
+    qreal res = 10000.0 * ( a.b + a.ka*( (static_cast<qreal>( adc ) - 32767.0) / 32768.0 ) + a.kt*t + a.kt2*t*t + a.kt3*t*t*t );
+    res = res * probeGain;
     return res;
 }
 
 qreal Bipot::PD::adc2workI( int adc )
 {
-    qreal res = static_cast< qreal >( adc );
-    res = res * workA + workB;
+    CoefAdc & a = workAdcI;
+    mutex.lock();
+        qreal t = temperature / 50.0;
+    mutex.unlock();
+    qreal res = 10000.0 * ( a.b + a.ka*( (static_cast<qreal>( adc ) - 32767.0) / 32768.0 ) + a.kt*t + a.kt2*t*t + a.kt3*t*t*t );
+    res = workA + res*workB;
+
     return res;
 }
 
 qreal Bipot::PD::adc2probeI( int adc )
 {
-    qreal res = static_cast< qreal >( adc );
-    res = res * probeA + probeB;
+    CoefAdc & a = probeAdcV;
+    mutex.lock();
+        qreal t = temperature / 50.0;
+    mutex.unlock();
+    qreal res = 10000.0 * ( a.b + a.ka*( (static_cast<qreal>( adc ) - 32767.0) / 32768.0 ) + a.kt*t + a.kt2*t*t + a.kt3*t*t*t );
+    res = probeA + res*probeB;
     return res;
 }
 
@@ -115,8 +150,8 @@ void  Bipot::PD::workV2Dac( qreal workV, int & dac1, int & dac2 )
     qreal temp     = temperature / 50.0; // Also should be included into consideration.
 
     qreal fLow = 0.0;
-    qreal fHigh = (workV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / a2;
-    fLow = (workV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3) / a1;
+    qreal fHigh = (workV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / (a2 + a2t*temp);
+    fLow = (workV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3) / (a1 + a1t*temp);
     int dacLow  = static_cast<int>( fLow*32768.0 + 32767.0 );
     int dacHigh = static_cast<int>( fHigh*32768.0 + 32767.0 );
 
@@ -136,8 +171,8 @@ void  Bipot::PD::probeV2Dac( qreal probeV, int & dac1, int & dac2 )
     qreal temp     = temperature / 50.0; // Also should be included into consideration.
 
     qreal fLow = 0.0;
-    qreal fHigh = (probeV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / a2;
-    fLow = (probeV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3) / a1;
+    qreal fHigh = (probeV*0.0001 - b - fLow*a1 - fLow*temp*a1t - temp*at - temp*temp*temp*at3 ) / (a2 + a2t*temp);
+    fLow = (probeV*0.0001 - b - fHigh*a2 - fLow*temp*a1t - temp*at - temp*temp*temp*at3) / (a1 + a1t*temp);
     int dacLow  = static_cast<int>( fLow*32768.0 + 32767.0 );
     int dacHigh = static_cast<int>( fHigh*32768.0 + 32767.0 );
 
@@ -152,12 +187,9 @@ Bipot::Bipot()
     VoltampIo * io = new VoltampIo();
     pd->io = io;
 
-    pd->workA  = 1.0;
-    pd->workB  = 0.0;
-    pd->probeA = 1.0;
-    pd->probeB = 0.0;
-    pd->workGain  = 1.0;
-    pd->probeGain = 1.0;
+    pd->workGain = pd->probeGain = 1.0;
+    pd->workA = pd->probeA = 0.0;
+    pd->workB = pd->probeB = 1.0;
 
     pd->workDac.a1 = 0.3741271/8000.0;
     pd->workDac.a2 = 0.3741271;
@@ -166,13 +198,41 @@ Bipot::Bipot()
     pd->workDac.a2t = 0.0;
     pd->workDac.at3 = 0.0;
 
-
     pd->probeDac.a1 = 0.3741271/8000.0;
     pd->probeDac.a2 = 0.3741271;
     pd->probeDac.b  = -11980.84;
     pd->probeDac.a1t = 0.0;
     pd->probeDac.a2t = 0.0;
     pd->probeDac.at3 = 0.0;
+
+    pd->workAdcV.b   = 0.0;
+    pd->workAdcV.ka  = 1.0;
+    pd->workAdcV.kat = 0.0;
+    pd->workAdcV.kt  = 0.0;
+    pd->workAdcV.kt2 = 0.0;
+    pd->workAdcV.kt3 = 0.0;
+
+    pd->probeAdcV.b   = 0.0;
+    pd->probeAdcV.ka  = 1.0;
+    pd->probeAdcV.kat = 0.0;
+    pd->probeAdcV.kt  = 0.0;
+    pd->probeAdcV.kt2 = 0.0;
+    pd->probeAdcV.kt3 = 0.0;
+
+    pd->workAdcI.b   = 0.0;
+    pd->workAdcI.ka  = 1.0;
+    pd->workAdcI.kat = 0.0;
+    pd->workAdcI.kt  = 0.0;
+    pd->workAdcI.kt2 = 0.0;
+    pd->workAdcI.kt3 = 0.0;
+
+    pd->probeAdcI.b   = 0.0;
+    pd->probeAdcI.ka  = 1.0;
+    pd->probeAdcI.kat = 0.0;
+    pd->probeAdcI.kt  = 0.0;
+    pd->probeAdcI.kt2 = 0.0;
+    pd->probeAdcI.kt3 = 0.0;
+
 
     pd->temperature = 23.0;
 
@@ -910,7 +970,7 @@ bool Bipot::calibrationLoad( const QString & fileName )
         {
             stri = file.readLine();
             qDebug() << stri;
-            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)" );
+            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
@@ -944,7 +1004,7 @@ bool Bipot::calibrationLoad( const QString & fileName )
         {
             stri = file.readLine();
             qDebug() << stri;
-            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+[\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
+            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
             {
@@ -970,8 +1030,134 @@ bool Bipot::calibrationLoad( const QString & fileName )
                 m = ex.cap( 7 );
                 pd->probeDac.at3 = m.toDouble();
             }
+        }
+        else
+            return false;
+
+        if ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            qDebug() << stri;
+            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                QString m;
+                m = ex.cap( 1 );
+                pd->workAdcV.b = m.toDouble();
+
+                m = ex.cap( 2 );
+                pd->workAdcV.ka = m.toDouble();
+
+                m = ex.cap( 3 );
+                pd->workAdcV.kat = m.toDouble();
+
+                m = ex.cap( 4 );
+                pd->workAdcV.kt = m.toDouble();
+
+                m = ex.cap( 5 );
+                pd->workAdcV.kt2 = m.toDouble();
+
+                m = ex.cap( 6 );
+                pd->workAdcV.kt3 = m.toDouble();
+            }
+        }
+        else
+            return false;
+
+        if ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            qDebug() << stri;
+            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                QString m;
+                m = ex.cap( 1 );
+                pd->probeAdcV.b = m.toDouble();
+
+                m = ex.cap( 2 );
+                pd->probeAdcV.ka = m.toDouble();
+
+                m = ex.cap( 3 );
+                pd->probeAdcV.kat = m.toDouble();
+
+                m = ex.cap( 4 );
+                pd->probeAdcV.kt = m.toDouble();
+
+                m = ex.cap( 5 );
+                pd->probeAdcV.kt2 = m.toDouble();
+
+                m = ex.cap( 6 );
+                pd->probeAdcV.kt3 = m.toDouble();
+            }
 
 
+        }
+        else
+            return false;
+
+
+        if ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            qDebug() << stri;
+            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                QString m;
+                m = ex.cap( 1 );
+                pd->workAdcI.b = m.toDouble();
+
+                m = ex.cap( 2 );
+                pd->workAdcI.ka = m.toDouble();
+
+                m = ex.cap( 3 );
+                pd->workAdcI.kat = m.toDouble();
+
+                m = ex.cap( 4 );
+                pd->workAdcI.kt = m.toDouble();
+
+                m = ex.cap( 5 );
+                pd->workAdcI.kt2 = m.toDouble();
+
+                m = ex.cap( 6 );
+                pd->workAdcI.kt3 = m.toDouble();
+            }
+        }
+        else
+            return false;
+
+
+        if ( !file.atEnd() )
+        {
+            stri = file.readLine();
+            qDebug() << stri;
+            QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
+            int index = ex.indexIn( stri );
+            if ( index >= 0 )
+            {
+                QString m;
+                m = ex.cap( 1 );
+                pd->probeAdcI.b = m.toDouble();
+
+                m = ex.cap( 2 );
+                pd->probeAdcI.ka = m.toDouble();
+
+                m = ex.cap( 3 );
+                pd->probeAdcI.kat = m.toDouble();
+
+                m = ex.cap( 4 );
+                pd->probeAdcI.kt = m.toDouble();
+
+                m = ex.cap( 5 );
+                pd->probeAdcI.kt2 = m.toDouble();
+
+                m = ex.cap( 6 );
+                pd->probeAdcI.kt3 = m.toDouble();
+            }
         }
         else
             return false;

@@ -23,6 +23,8 @@ MainWnd::MainWnd( QWidget * parent )
     terminate = false;
     io        = new Bipot();
     io->calibrationLoad( "./calibration.dat" );
+    setWorkV = 0.0;
+    setProbeV = 0.0;
 
     loadSettings();
     refreshDevicesList();
@@ -398,22 +400,24 @@ void MainWnd::refreshDevicesList()
 void MainWnd::slotGain()
 {
     int indV  = ui.workVoltGain->currentIndex();
-    qreal gainV = pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainWorkV = pow( 10.0, static_cast<qreal>( indV ) );
     int indIA = ui.workCurrGainA->currentIndex();
-    qreal gainIA = pow( 10.0, static_cast<qreal>( indIA ) );
+    qreal gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     int indIB = ui.workCurrGainB->currentIndex();
     qreal gainIB = pow( 10.0, static_cast<qreal>( indIB + 1 ) );
-    qreal gainI1 = gainIA * gainIB;
+    qreal gainI1 = 1.0/(gainIA * gainIB);
 
-    indV  = ui.workVoltGain->currentIndex();
-    gainV = pow( 10.0, static_cast<qreal>( indV ) );
-    indIA = ui.workCurrGainA->currentIndex();
-    gainIA = pow( 10.0, static_cast<qreal>( indIA ) );
-    indIB = ui.workCurrGainB->currentIndex();
+    indV  = ui.probeVoltGain->currentIndex();
+    qreal gainProbeV = pow( 10.0, static_cast<qreal>( indV ) );
+    indIA = ui.probeCurrGainA->currentIndex();
+    gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
+    indIB = ui.probeCurrGainB->currentIndex();
     gainIB = pow( 10.0, static_cast<qreal>( indIB + 1 ) );
-    qreal gainI2 = gainIA * gainIB;
+    qreal gainI2 = 1.0/(gainIA * gainIB);
 
-    io->setmV2mA( gainI1, 0.0, gainI2, 0.0 ); 
+    io->setmV2mA( 0.0, gainI1, 0.0, gainI2 ); 
+    //io->setVoltScale( gainWorkV, gainProbeV );
+    io->setVoltScale( 1.0, 1.0 ); // Voltage is measured as is without amplification.
 }
 
 void MainWnd::slotWorkVoltChange()
@@ -428,6 +432,8 @@ void MainWnd::slotWorkVolt()
     {
         qreal val = ui.workVolt->value();
         io->setWorkMv( val );
+
+        setWorkV = val;
 
         QString ss = "background-color: rgb(100, 135, 100);\nborder-color: rgb(100, 135, 100);";
         ui.workVolt->setStyleSheet( ss );
@@ -497,6 +503,8 @@ void MainWnd::slotProbeVolt()
     {
         qreal val = ui.probeVolt->value();
         io->setProbeMv( val );
+
+        setProbeV = val;
 
         QString ss = "background-color: rgb(100, 135, 100);\nborder-color: rgb(100, 135, 100);";
         ui.probeVolt->setStyleSheet( ss );
@@ -593,10 +601,8 @@ void MainWnd::slotTemp()
             // If it isn't sweeping at the moment adjust steady voltages.
             if ( ( !measure ) && ( !calibrationWnd->isVisible() ) )
             {
-                qreal val = ui.workVolt->value();
-                io->setWorkMv( val );
-                val = ui.probeVolt->value();
-                io->setProbeMv( val );
+                io->setWorkMv( setWorkV );
+                io->setProbeMv( setProbeV );
             }
         }
         temperature = t;

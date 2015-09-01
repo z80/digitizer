@@ -115,6 +115,9 @@ private:
     QwtText        textWork;
     QwtText        textProbe;
 
+    qreal setWorkV, 
+          setProbeV;
+
     QLabel * statusLabel;
 
     static const QString SETTINGS_INI;

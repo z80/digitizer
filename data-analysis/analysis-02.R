@@ -131,3 +131,151 @@ probeSd <- sd( y )
 print( paste( "probe SD is ", as.symbol( probeSd ), sep="" ) )
 
 wobj$coefficients
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+REPEATS <- 4
+FOLDS <- 4
+
+
+adcData <- read.table( './adc.dat' )
+names( adcData ) <- c( 'a0', 'a1', 'a2', 'a3', 't', 'v0', 'v1', 'v2', 'v3' )
+ds <- adcData[ , 1:5 ]
+
+ds$a0 <- (ds$a0 - 32767)/32768
+ds$a1 <- (ds$a1 - 32767)/32768
+ds$a2 <- (ds$a2 - 32767)/32768
+ds$a3 <- (ds$a3 - 32767)/32768
+ds$t  <- ds$t/50.0
+
+ds$tpow2  <- ds$t*ds$t
+ds$tpow3  <- ds$t*ds$t*ds$t
+ds$a0t    <- ds$a0*ds$t
+ds$a1t    <- ds$a1*ds$t
+ds$a2t    <- ds$a2*ds$t
+ds$a3t    <- ds$a3*ds$t
+
+
+
+
+
+ds$v <- adcData$v0/10000
+
+res <- bestFormula( ds, FOLDS, REPEATS )
+
+fla <- as.formula( "d$v ~ d$a0 + d$a0t + d$t + d$tpow2 + d$tpow3" )
+d <- ds
+wobj <- lm( fla, d )
+x <- predict( wobj, newdata=d, type="response" )
+x <- x * 10000
+y <- d$v * 10000
+y <- y - x
+plot( x, y )
+probeSd <- sd( y )
+print( paste( "probe SD is ", as.symbol( probeSd ), sep="" ) )
+
+wobj$coefficients
+
+
+
+
+
+
+
+
+ds$v <- adcData$v1/10000
+
+res <- bestFormula( ds, FOLDS, REPEATS )
+
+fla <- as.formula( "d$v ~ d$a1 + d$a1t + d$t + d$tpow2 + d$tpow3" )
+d <- ds
+wobj <- lm( fla, d )
+x <- predict( wobj, newdata=d, type="response" )
+x <- x * 10000
+y <- d$v * 10000
+y <- y - x
+plot( x, y )
+probeSd <- sd( y )
+print( paste( "probe SD is ", as.symbol( probeSd ), sep="" ) )
+
+wobj$coefficients
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ds$v <- adcData$v2/10000
+
+res <- bestFormula( ds, FOLDS, REPEATS )
+
+fla <- as.formula( "d$v ~ d$a2 + d$a2t + d$t + d$tpow2 + d$tpow3" )
+d <- ds
+wobj <- lm( fla, d )
+x <- predict( wobj, newdata=d, type="response" )
+x <- x * 10000
+y <- d$v * 10000
+y <- y - x
+plot( x, y )
+probeSd <- sd( y )
+print( paste( "probe SD is ", as.symbol( probeSd ), sep="" ) )
+
+wobj$coefficients
+
+
+
+
+
+
+ds$v <- adcData$v3/10000
+
+res <- bestFormula( ds, FOLDS, REPEATS )
+
+fla <- as.formula( "d$v ~ d$a3 + d$a3t + d$t + d$tpow2 + d$tpow3" )
+d <- ds
+wobj <- lm( fla, d )
+x <- predict( wobj, newdata=d, type="response" )
+x <- x * 10000
+y <- d$v * 10000
+y <- y - x
+plot( x, y )
+probeSd <- sd( y )
+print( paste( "probe SD is ", as.symbol( probeSd ), sep="" ) )
+
+wobj$coefficients
+
+
+
+
+
+
