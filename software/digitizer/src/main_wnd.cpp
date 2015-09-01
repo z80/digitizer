@@ -318,7 +318,7 @@ void MainWnd::measureSweep()
         }
 
         // Measure data.
-        bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+        bool res = io->sweepData( t_swWorkV, t_swProbeV, t_swWorkI, t_swProbeI );
         if ( !res )
         {
             Msleep::msleep( 1000 );
