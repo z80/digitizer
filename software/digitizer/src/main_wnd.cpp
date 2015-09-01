@@ -734,7 +734,8 @@ void MainWnd::slotAfmOutput()
 
 void MainWnd::slotFirmwareUpgrade()
 {
-    disconnect( this, SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
+    disconnect( this,      SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
+    disconnect( tempTimer, SIGNAL(timeout()),   this, SLOT(slotTemp()) );
     qApp->processEvents();
 
     QMutexLocker lock( &mutex );
@@ -794,7 +795,8 @@ void MainWnd::slotFirmwareUpgrade()
         }
     } while ( false );
 
-    connect( this, SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
+    connect( this,      SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
+    connect( tempTimer, SIGNAL(timeout()),   this, SLOT(slotTemp()) );
 }
 
 

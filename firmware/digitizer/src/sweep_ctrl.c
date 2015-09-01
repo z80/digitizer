@@ -24,7 +24,6 @@ static int swPtsCnt;
 static int swPtIndex;
 
 static uint8_t swEnabled;
-static uint8_t swTrigEnabled;
 
 static void extCb( EXTDriver * extp, expchannel_t channel );
 
@@ -77,7 +76,6 @@ static const EXTConfig extcfg = {
 void initSweep( void )
 {
 	swEnabled     = 0;
-	swTrigEnabled = 0;
 
 	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
 	chOQInit( &sweepCmdQueue, sweepCmdBuffer,     2,              0 );
@@ -168,8 +166,6 @@ uint8_t sweepEn( void )
 
 void setTrigEn( uint8_t en )
 {
-	//chOQPut( &sweepCmdQueue, en ? 2 : 0 );
-	swTrigEnabled = en;
 	if ( en )
 		extChannelEnable( &EXTD1, 1 );
 	else
@@ -277,30 +273,10 @@ static void extCb( EXTDriver * extp, expchannel_t channel )
 {
   (void)extp;
   (void)channel;
-
-  // Processing external triggered sweep.
-  if ( !swTrigEnabled )
-	  return;
-
-  // Record ADC data.
-  recordAdc();
-
-  // External trigger should cause data recording - not sweep.
-  // It's very unlikely that one will ever need sweep by external trigger.
-  /*
-  // Change point index.
-  swPtIndex += 1;
-  swPtIndex %= swPtsCnt;
-
-  // Displace DACs.
-  uint8_t i;
-  for ( i=0; i<4; i++ )
-  {
-    uint64_t dac64 = (uint64_t)swDacFrom[i] + (uint64_t)(swDacTo[i] - swDacFrom[i]) * (uint64_t)swPtIndex / (uint64_t)(swPtsCnt-1);
-    int dac = (int)dac64;
-    setDacI( i, dac );
-  }
-  */
+  chSysLockFromIsr();
+    // Record ADC data.
+    recordAdc();
+  chSysUnlockFromIsr();
 }
 
 

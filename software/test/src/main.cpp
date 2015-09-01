@@ -39,6 +39,11 @@ int main( int argc, char * argv[] )
 
     QVector<int> data;
     res = io.setTriggerEn( true );
+    res = io.setDac1( 32767, 32767 );
+    res = io.setDac1( 32767, 41000 );
+    res = io.setDac1( 32767, 32767 );
+    res = io.setDac1( 32767, 41000 );
+    res = io.setDac1( 32767, 32767 );
     res = io.setDac1( 32767, 41000 );
     res = io.sweepData( data );
 
