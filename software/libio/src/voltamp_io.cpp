@@ -359,7 +359,8 @@ bool VoltampIo::temperature( qreal & temp )
     if ( !eom )
         return false;
 
-    int rawt = (static_cast<int>(arr[0]) << 8) + static_cast<int>(arr[1]);
+    const quint8 * data = reinterpret_cast<const quint8 *>( arr.data() );
+    int rawt = (static_cast<int>(data[0]) << 8) + static_cast<int>(data[1]);
     rawt = (rawt & 0x8000) ? (rawt-65536) : rawt;
     temp = static_cast<qreal>( rawt ) / 128.0;
     return true;

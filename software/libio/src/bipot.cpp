@@ -440,6 +440,10 @@ bool Bipot::temperature( qreal & t )
     bool res = io.temperature( t );
     if ( !res )
         return false;
+
+    QMutexLocker lock( &pd->mutex );
+        pd->temperature = t;
+
     return true;
 }
 
