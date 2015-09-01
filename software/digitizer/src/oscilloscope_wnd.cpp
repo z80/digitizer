@@ -107,8 +107,8 @@ void OscilloscopeWnd::addData( QQueue<qreal> & x, QQueue<qreal> & y )
     {
         qreal vx = x.dequeue();
         qreal vy = y.dequeue();
-        c.y[c.cnt] = vx;
-        c.x[c.cnt] = vy;
+        c.y[c.cnt] = vy;
+        c.x[c.cnt] = vx;
         c.cnt++;
     }
 }

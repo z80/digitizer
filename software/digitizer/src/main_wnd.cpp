@@ -286,9 +286,9 @@ void MainWnd::measure()
             }
 
             // Sweep measure routine in the same thread.
-            measureSweep();
+            bool measured = measureSweep();
 
-            if ( szMeasured < 24 )
+            if ( ( szMeasured < 24 ) && ( !measured ) )
                 Msleep::msleep( 10 );
         }
         else
@@ -299,7 +299,7 @@ void MainWnd::measure()
     } while ( !term );
 }
 
-void MainWnd::measureSweep()
+bool MainWnd::measureSweep()
 {
     mutex.lock();
         bool measure = doMeasureSweep;
@@ -314,16 +314,27 @@ void MainWnd::measureSweep()
 
         if ( !io->isOpen() )
         {
-            return;
+            return false;
         }
 
-        // Measure data.
-        bool res = io->sweepData( t_swWorkV, t_swProbeV, t_swWorkI, t_swProbeI );
+        bool res;
+        bool sweep;
+        res = io->sweepEn( sweep );
         if ( !res )
         {
             Msleep::msleep( 1000 );
             reopen();
-            return;
+            return false;
+        }
+
+
+        // Measure data.
+        res = io->sweepData( t_swWorkV, t_swProbeV, t_swWorkI, t_swProbeI );
+        if ( !res )
+        {
+            Msleep::msleep( 1000 );
+            reopen();
+            return false;
         }
 
         // Check total data cnt in all arrays.
@@ -346,28 +357,19 @@ void MainWnd::measureSweep()
             emit sigSweepReplot();
         }
 
-        if ( szMeasured < 24 )
+        if ( !sweep )
         {
-            bool sweep;
-            res = io->sweepEn( sweep );
-            if ( !res )
-            {
-                Msleep::msleep( 1000 );
-                reopen();
-                return;
-            }
-            if ( !sweep )
-            {
-                mutex.lock();
-                    doMeasureSweep = false;
-                mutex.unlock();
-
-                emit sigSweepFinished();
-            }
-            else
-                Msleep::msleep( 10 );
+            mutex.lock();
+                doMeasureSweep = false;
+            mutex.unlock();
+            emit sigSweepFinished();
         }
+        else
+            Msleep::msleep( 10 );
+
+        return true;
     }
+    return false;
 }
 
 void MainWnd::reopen()

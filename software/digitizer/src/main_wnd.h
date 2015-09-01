@@ -76,7 +76,7 @@ private:
     void refreshDevicesList();
 
     void measure();
-    void measureSweep();
+    bool measureSweep();
     void reopen();
 
     int devName;
