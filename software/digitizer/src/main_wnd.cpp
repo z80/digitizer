@@ -409,7 +409,7 @@ void MainWnd::slotGain()
     qreal gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     int indIB = ui.workCurrGainB->currentIndex();
     qreal gainIB = pow( 10.0, static_cast<qreal>( indIB + 1 ) );
-    qreal gainI1 = 1.0/(gainIA * gainIB);
+    qreal gainI1 = (gainIA * gainIB);
 
     indV  = ui.probeVoltGain->currentIndex();
     qreal gainProbeV = pow( 10.0, static_cast<qreal>( indV ) );
@@ -417,11 +417,11 @@ void MainWnd::slotGain()
     gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     indIB = ui.probeCurrGainB->currentIndex();
     gainIB = pow( 10.0, static_cast<qreal>( indIB + 1 ) );
-    qreal gainI2 = 1.0/(gainIA * gainIB);
+    qreal gainI2 = (gainIA * gainIB);
 
     io->setmV2mA( 0.0, gainI1, 0.0, gainI2 ); 
-    //io->setVoltScale( gainWorkV, gainProbeV );
-    io->setVoltScale( 1.0, 1.0 ); // Voltage is measured as is without amplification.
+    io->setVoltScale( gainWorkV, gainProbeV );
+    //io->setVoltScale( 1.0, 1.0 ); // Voltage is measured as is without amplification.
 }
 
 void MainWnd::slotWorkVoltChange()
