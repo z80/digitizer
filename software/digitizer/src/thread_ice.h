@@ -23,6 +23,7 @@ public:
     bool listen();
 
     void run( MainWnd * mw );
+    void run();
 protected:
     Ice::ObjectAdapterPtr adapter();
 
@@ -36,6 +37,8 @@ protected:
     
     std::string                 m_listen;
     IceUtil::Handle<FactoryIce> m_factory;
+
+    MainWnd * m_mainWnd;
 
     friend class FactoryIce;
 };

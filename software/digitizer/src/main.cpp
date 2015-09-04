@@ -1,13 +1,14 @@
 
 #include <QtGui>
-#include "main_wnd.h"
+#include <QApplication>
+#include "host_tray.h"
 
 int main( int argc, char * argv[])
 {
     QApplication app( argc, argv );
 
-    MainWnd * mw = new MainWnd( 0 );
-    mw->show();
+    HostTray * ht = new HostTray( 0 );
+    ht->show();
 
     int res = app.exec();
     return res;

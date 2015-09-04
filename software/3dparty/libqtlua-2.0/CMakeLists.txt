@@ -31,7 +31,7 @@ SET(INSTALL_INC include CACHE PATH "Where to install headers to.")
 	#INCLUDE_DIRECTORIES (${LUA_INCLUDE_DIR})
                 set( LUA_LIBRARIES   liblua-5.1.5 )
                 set( LUA_INCLUDE_DIR ${ROOT}/3dparty/lua-5.1.5/src )
-				set( CMAKE_INSTALL_PREFIX ./app )
+				#set( CMAKE_INSTALL_PREFIX ./app )
 				include_directories( ${LUA_INCLUDE_DIR} )
 				add_definitions( -DHAVE_LUA_PACKAGELIB
 												-DHAVE_LUA_OSLIB

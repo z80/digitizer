@@ -13,13 +13,16 @@
 #include "sweep_wnd.h"
 #include "exec.h"
 
+#include "thread_ice.h"
+
 class QwtTextLabel;
+class HostTray;
 
 class MainWnd: public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWnd( QWidget * parent = 0 );
+    MainWnd( HostTray * parent = 0 );
     ~MainWnd();
 
     void loadSettings();
@@ -37,6 +40,7 @@ public slots:
     void slotQuit();
     void slotAbout();
     void slotCalibration();
+    void slotRemoteSetup();
     void slotDevice();
     void slotReopen();
 
@@ -121,6 +125,41 @@ private:
     QLabel * statusLabel;
 
     static const QString SETTINGS_INI;
+
+
+    // ******************************************
+    // External IO part.
+    // ******************************************
+public:
+    bool iceInstantValues( qreal & workV, qreal & workI, qreal & probeV, qreal & probeI );
+    bool iceSetTrigEn( bool en );
+    bool iceValues( std::vector<qreal> & workV, std::vector<qreal> & workI, std::vector<qreal> & probeV, std::vector<qreal> & probeI );
+signals:
+    void sigInstantValues();
+    void sigSetTrigEn();
+    void sigValues();
+private slots:
+    void slotInstantValues();
+    void slotSetTrigEn();
+    void slotValues();
+private:
+
+    void listen();
+    void setTrayToolTip( const QString & stri );
+
+    HostTray * m_hostTray;
+
+    ::IceUtil::Handle<ThreadIce> m_thread;
+
+    QSemaphore sem;
+    qreal workV, workI, probeV, probeI;
+    std::vector<qreal> vWorkV, vWorkI, vProbeV, vProbeI;
+    bool trigEn, result;
+    bool sweepRemote;
+
+    QString m_host;
+    int     m_port;
+    bool    m_doListen;
 };
 
 #endif

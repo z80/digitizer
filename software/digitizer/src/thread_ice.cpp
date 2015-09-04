@@ -57,6 +57,12 @@ bool ThreadIce::listen()
 
 void ThreadIce::run( MainWnd * mw )
 {
+    m_mainWnd = mw;
+    run();
+}
+
+void ThreadIce::run()
+{
     try
     {
         Ice::PropertiesPtr   props = Ice::createProperties();
@@ -66,7 +72,7 @@ void ThreadIce::run( MainWnd * mw )
         m_comm = Ice::initialize( initData );
 
         m_adapter = m_comm->createObjectAdapterWithEndpoints( "adapter", m_listen );
-        m_factory = new FactoryIce( this, mw );
+        m_factory = new FactoryIce( this, m_mainWnd );
         m_adapter->add( m_factory, m_comm->stringToIdentity( "factory" ) );
         m_adapter->activate();
 

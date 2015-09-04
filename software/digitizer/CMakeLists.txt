@@ -7,6 +7,7 @@
     SET(CMAKE_INCLUDE_CURRENT_DIR ON)
     FIND_PACKAGE(Qt5Widgets)
     FIND_PACKAGE(Qt5Core)
+    FIND_PACKAGE(Qt5Network)
     #FIND_PACKAGE(Qt5Xml)
     #FIND_PACKAGE(Qt5Svg)
     SET(CMAKE_AUTOMOC ON)
@@ -73,13 +74,13 @@ set( libs debug ${iced}
     )
 
 add_executable( digitizer ${BLD_TYPE} ${src} )
-qt5_use_modules( digitizer Widgets Core )
+qt5_use_modules( digitizer Widgets Core Network )
 set( libs ${libs} libio qwt-6.1.2 ${QT_LIBRARIES} )
 if ( WIN32 )
     set( libs ${libs} Qt5::WinMain )
 endif ( WIN32 )
 target_link_libraries( digitizer ${libs} )
-set_property( TARGET digitizer PROPERTY COMPILE_DEFINITIONS ICEE_STATIC_LIBS )
+#set_property( TARGET digitizer PROPERTY COMPILE_DEFINITIONS ICEE_STATIC_LIBS )
 install( TARGETS   digitizer DESTINATION ./ )
 
 

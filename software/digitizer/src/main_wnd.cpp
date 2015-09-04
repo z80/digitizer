@@ -2,6 +2,8 @@
 #include "main_wnd.h"
 #include <QFileDialog>
 #include "sweep_wnd.h"
+#include "setup_dlg.h"
+#include "host_tray.h"
 
 #include "qwt_text_label.h"
 
@@ -11,9 +13,12 @@
 
 const QString MainWnd::SETTINGS_INI = "./settings.ini";
 
-MainWnd::MainWnd( QWidget * parent )
-    : QMainWindow( parent )
+MainWnd::MainWnd( HostTray * parent )
+    : QMainWindow( 0 ), 
+      sem( 1 )
 {
+    m_hostTray = parent;
+
     ui.setupUi( this );
     //ui.osc->show();
 
@@ -75,10 +80,11 @@ MainWnd::MainWnd( QWidget * parent )
     connect( tempTimer, SIGNAL(timeout()), this, SLOT(slotTemp()));
     tempTimer->start();
 
-    connect( ui.action_Quit,       SIGNAL(triggered()), this, SLOT(slotQuit()) );
+    connect( ui.action_Quit,       SIGNAL(triggered()), m_hostTray, SLOT(slotQuit()) );
     connect( ui.actionOpen_file,   SIGNAL(triggered()), this, SLOT(slotOpen()) );
     connect( ui.action_About,      SIGNAL(triggered()), this, SLOT(slotAbout()) );
     connect( ui.actionCalibration, SIGNAL(triggered()), this, SLOT(slotCalibration()) );
+    connect( ui.actionRemote_control, SIGNAL(triggered()), this, SLOT(slotRemoteSetup()) );
 
     connect( ui.workVoltGain,   SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
     connect( ui.workCurrGainA,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
@@ -121,6 +127,15 @@ MainWnd::MainWnd( QWidget * parent )
     connect( ui.actionFirmware_upgrade, SIGNAL(triggered()), this, SLOT(slotFirmwareUpgrade()) );
 
     slotGain();
+
+    // **********************************************
+    // Remote functions.
+    // **********************************************
+    connect( this, SIGNAL(sigInstantValues()), this, SLOT(slotInstantValues()), Qt::QueuedConnection );
+    connect( this, SIGNAL(sigSetTrigEn()),     this, SLOT(slotSetTrigEn()), Qt::QueuedConnection );
+    connect( this, SIGNAL(sigValues()),        this, SLOT(slotValues()), Qt::QueuedConnection );
+
+    listen();
 }
 
 MainWnd::~MainWnd()
@@ -140,6 +155,9 @@ void MainWnd::loadSettings()
     QSettings s( SETTINGS_INI, QSettings::IniFormat );
 
     devName  = s.value( "devName",  "0" ).toInt();
+    m_host   = s.value( "host", "" ).toString();
+    m_port   = s.value( "port", 21345 ).toInt();
+    m_doListen = s.value( "listen", false ).toBool();
 
     this->restoreState( s.value( "state", QByteArray() ).toByteArray() );
 }
@@ -148,7 +166,10 @@ void MainWnd::saveSettings()
 {
     QSettings s( SETTINGS_INI, QSettings::IniFormat );
 
-    s.setValue( "devName", devName );
+    s.setValue( "devName",   devName );
+    s.setValue( "host",      m_host );
+    s.setValue( "port",      m_port );
+    s.setValue( "listen",    m_doListen );
 
     s.setValue( "state", this->saveState() );
 }
@@ -161,8 +182,13 @@ int MainWnd::deviceName() const
 void MainWnd::slotQuit()
 {
     saveSettings();
-    this->deleteLater();
-    qApp->quit();
+    m_doListen = false;
+    listen();
+
+    mutex.lock();
+        terminate = true;
+    mutex.unlock();
+    future.waitForFinished();
 }
 
 void MainWnd::slotReopen()
@@ -191,6 +217,28 @@ void MainWnd::slotCalibration()
     calibrationWnd->show();
 }
 
+void MainWnd::slotRemoteSetup()
+{
+    SetupDlg sd;
+    sd.setPort( m_port );
+    sd.setListen( m_doListen );
+    if ( sd.exec() )
+    {
+        m_host = sd.host();
+        if ( m_host == "All interfaces" )
+            m_host = "";
+        m_port = sd.port();
+        m_doListen = sd.listen();
+        
+        if ( m_doListen )
+            this->listen();
+        else
+        {
+            if ( m_thread )
+                m_thread->shutdown();
+        }
+    }    
+}
 
 void MainWnd::slotDevice()
 {
@@ -205,7 +253,8 @@ void MainWnd::slotDevice()
 
 void MainWnd::closeEvent( QCloseEvent * e )
 {
-    slotQuit();
+    hide();
+    e->ignore();
 }
 
 void MainWnd::setTitle( const QString & stri )
@@ -409,7 +458,7 @@ void MainWnd::slotGain()
     qreal gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     int indIB = ui.workCurrGainB->currentIndex();
     qreal gainIB = pow( 10.0, static_cast<qreal>( indIB + 1 ) );
-    qreal gainI1 = (gainIA * gainIB);
+    qreal gainI1 = 1000000000.0 / (gainIA * gainIB);
 
     indV  = ui.probeVoltGain->currentIndex();
     qreal gainProbeV = pow( 10.0, static_cast<qreal>( indV ) );
@@ -417,7 +466,7 @@ void MainWnd::slotGain()
     gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     indIB = ui.probeCurrGainB->currentIndex();
     gainIB = pow( 10.0, static_cast<qreal>( indIB + 1 ) );
-    qreal gainI2 = (gainIA * gainIB);
+    qreal gainI2 = 1000000000.0 / (gainIA * gainIB);
 
     io->setmV2mA( 0.0, gainI1, 0.0, gainI2 ); 
     io->setVoltScale( gainWorkV, gainProbeV );
@@ -690,6 +739,9 @@ void MainWnd::slotExternalTrigger()
     {
         QMessageBox::critical( this, "Error", "Failed to change external triggering option!" );
     }
+
+    // If trigger is enabled turn all user controlls off.
+    ui.dockWidget_2->setEnabled( !en );
 }
 
 void MainWnd::slotAfmOutput()
@@ -802,6 +854,173 @@ void MainWnd::slotFirmwareUpgrade()
 
 
 
+
+
+
+
+
+bool MainWnd::iceInstantValues( qreal & workV, qreal & workI, qreal & probeV, qreal & probeI )
+{
+    sem.acquire();
+    emit sigInstantValues();
+    sem.acquire();
+    sem.release();
+
+    workV  = this->workV;
+    workI  = this->workI;
+    probeV = this->probeV;
+    probeI = this->probeI;
+
+    return this->result;
+}
+
+bool MainWnd::iceSetTrigEn( bool en )
+{
+    sem.acquire();
+    this->trigEn = en;
+    emit sigSetTrigEn();
+    sem.acquire();
+    sem.release();
+
+    return this->result;
+}
+
+bool MainWnd::iceValues( std::vector<qreal> & workV, std::vector<qreal> & workI, std::vector<qreal> & probeV, std::vector<qreal> & probeI )
+{
+    sem.acquire();
+    emit sigValues();
+    sem.acquire();
+    sem.release();
+
+    workV  = this->vWorkV;
+    workI  = this->vWorkI;
+    probeV = this->vProbeV;
+    probeI = this->vProbeI;
+
+    return this->result;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void MainWnd::listen()
+{
+    if ( m_thread )
+    {
+        bool started = m_thread->isAlive();
+        if ( started )
+            m_thread->shutdown();
+    }
+    if ( m_doListen )
+    {
+        std::ostringstream os;
+        if ( m_host.length() > 0 )
+            os << "tcp -h " << m_host.toStdString() << " -p " << m_port;
+        else
+            os << "tcp" << " -p " << m_port;
+        m_thread = new ThreadIce( os.str() );
+        if ( !m_thread->listen() )
+            setTrayToolTip( "Not in service" );
+        else
+        {
+            QString stri;
+            if ( m_host.length() > 0 )
+                stri = QString( "Listening interface %1, port %2" ).arg( m_host ).arg( m_port );
+            else
+                stri = QString( "Listening port %1" ).arg( m_port );
+            setTrayToolTip( stri );
+        }
+    }
+}
+
+void MainWnd::setTrayToolTip( const QString & stri )
+{
+    m_hostTray->setToolTip( stri );
+}
+
+void MainWnd::slotInstantValues()
+{
+    if ( io->isOpen() )
+    {
+        bool res = io->instantData( workV, probeV, workI, probeI );
+        result = res;
+    }
+    else
+        result = false;
+
+    sem.release();
+}
+
+void MainWnd::slotSetTrigEn()
+{
+    sweepRemote    = this->trigEn;
+    doMeasureSweep = this->trigEn;
+    ui.actionExternal_trigger->setChecked( this->trigEn );
+    slotExternalTrigger();
+
+    sem.release();
+}
+
+void MainWnd::slotValues()
+{
+    QMutexLocker lock( &mutexSw );
+        int sz = p_swWorkV.size();
+        int szN = p_swWorkI.size();
+        if ( szN < sz )
+            sz = szN;
+        szN = p_swProbeV.size();
+        if ( szN < sz )
+            sz = szN;
+        szN = p_swProbeI.size();
+        if ( szN < sz )
+            sz = szN;
+        
+        vWorkV.clear();
+        vWorkI.clear();
+        vProbeV.clear();
+        vProbeI.clear();
+
+        vWorkV.resize( sz );
+        vWorkI.resize( sz );
+        vProbeV.resize( sz );
+        vProbeI.resize( sz );
+
+        for ( int i=0; i<sz; i++ )
+        {
+            qreal v = p_swWorkV.dequeue();
+            vWorkV[i] = v;
+
+            v = p_swWorkI.dequeue();
+            vWorkI[i] = v;
+
+            v = p_swProbeV.dequeue();
+            vProbeV[i] = v;
+
+            v = p_swProbeI.dequeue();
+            vProbeI[i] = v;
+        }
+
+    sem.release();
+}
 
 
 
