@@ -45,20 +45,16 @@ std::string ThreadIce::status() const
     return res;
 }
 
-bool ThreadIce::listen()
+bool ThreadIce::listen( MainWnd * mw )
 {
+    m_mainWnd = mw;
+
     m_semaphore.lock();
     start();
     m_semaphore.wait();
     m_semaphore.unlock();
     bool res = ( status() == "connected" );
     return res;
-}
-
-void ThreadIce::run( MainWnd * mw )
-{
-    m_mainWnd = mw;
-    run();
 }
 
 void ThreadIce::run()

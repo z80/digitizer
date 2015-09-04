@@ -453,7 +453,7 @@ void MainWnd::refreshDevicesList()
 void MainWnd::slotGain()
 {
     int indV  = ui.workVoltGain->currentIndex();
-    qreal gainWorkV = pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainWorkV = 1000.0 * pow( 10.0, static_cast<qreal>( indV ) );
     int indIA = ui.workCurrGainA->currentIndex();
     qreal gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     int indIB = ui.workCurrGainB->currentIndex();
@@ -461,7 +461,7 @@ void MainWnd::slotGain()
     qreal gainI1 = 1000000000.0 / (gainIA * gainIB);
 
     indV  = ui.probeVoltGain->currentIndex();
-    qreal gainProbeV = pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainProbeV = 1000.0 * pow( 10.0, static_cast<qreal>( indV ) );
     indIA = ui.probeCurrGainA->currentIndex();
     gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     indIB = ui.probeCurrGainB->currentIndex();
@@ -938,7 +938,7 @@ void MainWnd::listen()
         else
             os << "tcp" << " -p " << m_port;
         m_thread = new ThreadIce( os.str() );
-        if ( !m_thread->listen() )
+        if ( !m_thread->listen( this ) )
             setTrayToolTip( "Not in service" );
         else
         {

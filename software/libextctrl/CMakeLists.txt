@@ -1,79 +1,74 @@
 
-find_package( Qt4 )
-set( QT_USE_QTCORE    True )
-set( QT_USE_QTGUI     True )
-set( QT_USE_QTNETWORK True )
-if ( WIN32 )
-    set( QT_USE_QTMAIN True )
-endif ( WIN32 )
-include( ${QT_USE_FILE} )
+#find_package( Qt4 REQUIRED )
+#set( QT_USE_QTGUI true )
+#set( QT_USE_QTSVG true )
+#include( ${QT_USE_FILE} )
+
+    SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+    FIND_PACKAGE(Qt5Widgets)
+    FIND_PACKAGE(Qt5Core)
+    FIND_PACKAGE(Qt5Network)
+    #FIND_PACKAGE(Qt5Xml)
+    #FIND_PACKAGE(Qt5Svg)
+    SET(CMAKE_AUTOMOC ON)
+
 
 include_directories( "./src"
-                     "./src/devices"
-                     "../src"
-                     ${ICE_PATH}/cppe/include 
-                     ${BOOST_PATH}
-                     "../factory_ice" 
-                     "${ROOT_PATH}/humidity/libhumidity/src" 
-                     "${ROOT_PATH}/magnet/libmagnet/src" 
-                     "${ROOT_PATH}/spectrum/libandor/src" 
-                     ${CMAKE_CURRENT_BINARY_DIR} )
-                     
-aux_source_directory( "./src" src )
-# Запуск slice2cpp для построения файлов, необходимых для компиляции проекта.
-ADD_CUSTOM_COMMAND( 
-    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/../factory_ice/factory.cpp 
-    COMMAND ${ICE_PATH}/cpp/bin/slice2cppe -I${ICE_PATH}/slice factory.ice 
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../factory_ice )
-list( APPEND src ${CMAKE_CURRENT_SOURCE_DIR}/../factory_ice/factory.cpp )
-
-set( libs "" )
-set( defs ICEE_STATIC_LIBS )
-foreach( device ${FACTORY_DEVICES} )
-    string( TOLOWER ${device} filePattern )
-    set( libs ${libs} lib${filePattern} )
-    ADD_CUSTOM_COMMAND( 
-        OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/../factory_ice/${filePattern}.cpp
-        COMMAND ${ICE_PATH}/cpp/bin/slice2cppe -I${ICE_PATH}/slice ${filePattern}.ice 
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../factory_ice )
-    list( APPEND src ${CMAKE_CURRENT_SOURCE_DIR}/../factory_ice/${filePattern}.cpp )
-    list( APPEND src ${CMAKE_CURRENT_SOURCE_DIR}/src/devices/${filePattern}_ice.cpp )
-    string( TOUPPER ${device} definitionPattern )
-    set( defs ${defs} ${definitionPattern} )
-endforeach( device )
-
-QT4_WRAP_CPP( moc_src "./src/setup_dlg.h" "./src/host_tray.h" )
-list( APPEND src ${moc_src} )
-
-QT4_WRAP_UI( ui_src "./src/setup_dlg.ui" )
-list( APPEND src ${ui_src} )
-
-QT4_ADD_RESOURCES( qrc_src "./src/images.qrc" )
-list( APPEND src ${qrc_src} )
-
+                     ${CMAKE_CURRENT_BINARY_DIR}
+                     ${ICE_PATH}/include )
 if ( WIN32 )
-    set( BLD_TYPE WIN32 )
-    list( APPEND src "./src/icon.rc" )
-elseif ( UNIX )
-    set( BLD_TYPE "" )
-endif (WIN32)
-
-add_executable( factory_host ${BLD_TYPE} ${src} )
-
-find_library( icee      NAMES icee_static.lib   PATHS "${ICE_PATH}/cppe/lib" )
-find_library( iceec     NAMES iceec_static.lib  PATHS "${ICE_PATH}/cppe/lib" )
-find_library( iceed     NAMES icee_staticd.lib  PATHS "${ICE_PATH}/cppe/lib" )
-find_library( iceecd    NAMES iceec_staticd.lib PATHS "${ICE_PATH}/cppe/lib" )
-
-set_property( TARGET factory_host PROPERTY COMPILE_DEFINITIONS ${defs} )
-set( libs ${libs} debug ${iceed} optimized ${icee} ${QT_LIBRARIES} )
-if ( WIN32 )
-    find_library( rpcrt4    NAMES rpcrt4.lib   PATHS  "${PL_SDK}/lib" )
-    find_library( ws2_32    NAMES ws2_32.lib   PATHS  "${PL_SDK}/lib" )
-    list( APPEND libs ${rpcrt4} ${ws2_32} ) 
+    include_directories( ${BOOST_PATH} )
 endif ( WIN32 )
-target_link_libraries( factory_host ${libs} )
 
-install( TARGETS factory_host DESTINATION "factory" )
+file( GLOB src     "./src/*.cpp" )
+file( GLOB headers "./src/*.h" )
+file( GLOB ui      "./src/*.ui" )
+file( GLOB qrc     "./src/*.qrc" )
+message( STATUS "SRC = ${src}" )
+message( STATUS "HEADERS = ${headers}" )
+message( STATUS "ui = ${ui}" )
+
+#qt5_wrap_cpp( moc_src ${headers} )
+#set( src ${src} ${moc_src} )
+
+qt5_wrap_ui( moc_src ${ui} )
+set( src ${src} ${moc_src} )
+
+qt5_add_resources( qrc_src ${qrc} )
+set( src ${src} ${qrc_src} )
+
+
+
+ADD_CUSTOM_COMMAND( 
+    OUTPUT ${ROOT}/digitizer/src/icee/factory.cpp 
+    COMMAND ${ICE_PATH}/bin/slice2cpp -I${ICE_PATH}/slice factory.ice 
+    WORKING_DIRECTORY ${ROOT}/digitizer/src/icee )
+list( APPEND src ${ROOT}/digitizer/src/icee/factory.cpp )
+
+ADD_CUSTOM_COMMAND( 
+    OUTPUT ${ROOT}/digitizer/src/icee/digitizer.cpp
+    COMMAND ${ICE_PATH}/bin/slice2cpp -I${ICE_PATH}/slice digitizer.ice 
+    WORKING_DIRECTORY ${ROOT}/digitizer/src/icee )
+list( APPEND src ${ROOT}/digitizer/src/icee/digitizer.cpp )
+
+include_directories( ${ROOT}/digitizer/src/icee )
+
+find_library( ice      NAMES ice.lib      PATHS "${ICE_LIB_PATH}" )
+find_library( iceutil  NAMES iceutil.lib  PATHS "${ICE_LIB_PATH}" )
+find_library( iced     NAMES iced.lib     PATHS "${ICE_LIB_PATH}" )
+find_library( iceutild NAMES iceutild.lib PATHS "${ICE_LIB_PATH}" )
+set( libs debug ${iced} 
+          optimized ${ice} 
+          debug ${iceutild} 
+          optimized ${iceutil} 
+    )
+
+add_library( libdigitremote STATIC ${src} )
+qt5_use_modules( libdigitremote Widgets Core Network )
+set( libs ${libs} ${QT_LIBRARIES} )
+target_link_libraries( libdigitremote ${libs} )
+#set_property( TARGET libdigitremote PROPERTY COMPILE_DEFINITIONS ICEE_STATIC_LIBS )
+install( TARGETS libdigitremote DESTINATION ./ )
+
 
 

@@ -22,22 +22,22 @@ void DigitizerIce::release(const ::Ice::Current& c )
 {
 }
 
-bool DigitizerIce::instantValues(::Ice::Double&, ::Ice::Double&, ::Ice::Double&, ::Ice::Double&, const ::Ice::Current& )
+bool DigitizerIce::instantValues(::Ice::Double & workV, ::Ice::Double & workI, ::Ice::Double & probeV, ::Ice::Double & probeI, const ::Ice::Current& )
 {
-
-    return true;
+    bool res = m_mainWnd->iceInstantValues( workV, workI, probeV, probeI );
+    return res;
 }
 
-bool DigitizerIce::setTrigEn(bool, const ::Ice::Current& )
+bool DigitizerIce::setTrigEn( bool en, const ::Ice::Current& )
 {
-    
-    return true;
+    bool res = m_mainWnd->iceSetTrigEn( en );
+    return res;
 }
 
-bool DigitizerIce::values(::Factory::TDoubleArray&, ::Factory::TDoubleArray&, ::Factory::TDoubleArray&, ::Factory::TDoubleArray&, const ::Ice::Current& )
+bool DigitizerIce::values(::Factory::TDoubleArray & workV, ::Factory::TDoubleArray & workI, ::Factory::TDoubleArray & probeV, ::Factory::TDoubleArray & probeI, const ::Ice::Current& )
 {
-    
-    return true;
+    bool res = m_mainWnd->iceValues( workV, workI, probeV, probeI );
+    return res;
 }
 
 

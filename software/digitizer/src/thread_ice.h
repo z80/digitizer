@@ -20,9 +20,8 @@ public:
     std::string lastError();
     std::string status() const;
 
-    bool listen();
+    bool listen( MainWnd * mw );
 
-    void run( MainWnd * mw );
     void run();
 protected:
     Ice::ObjectAdapterPtr adapter();
