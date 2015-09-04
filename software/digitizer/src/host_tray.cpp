@@ -38,7 +38,12 @@ HostTray::~HostTray()
 void HostTray::slotActivted( QSystemTrayIcon::ActivationReason reason )
 {
     if ( ( reason == QSystemTrayIcon::DoubleClick ) || ( reason == QSystemTrayIcon::Trigger ) || ( reason == QSystemTrayIcon::MiddleClick ) )
-        m_mainWnd->show();
+    {
+        if ( m_mainWnd->isVisible() )
+            m_mainWnd->hide();
+        else
+            m_mainWnd->show();
+    }
 }
 
 void HostTray::slotShowMainWnd()

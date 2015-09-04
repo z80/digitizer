@@ -47,7 +47,7 @@ MainWnd::MainWnd( HostTray * parent )
     QFont f = textWork.font();
     f.setPointSizeF( 15 );
     textWork.setFont( f );
-    textWork.setText( "Work I(t)" );
+    textWork.setText( "Work I(t) [nA(s)]" );
 
     labelWork->setText( textWork );
     labelWork->setIndent( 0 );
@@ -63,7 +63,7 @@ MainWnd::MainWnd( HostTray * parent )
     f = textProbe.font();
     f.setPointSizeF( 15 );
     textProbe.setFont( f );
-    textProbe.setText( "Probe I(t)" );
+    textProbe.setText( "Probe I(t) [nA(s)]" );
 
     labelProbe->setText( textProbe );
     labelProbe->setIndent( 0 );
