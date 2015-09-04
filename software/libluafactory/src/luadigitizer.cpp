@@ -54,7 +54,41 @@ static int values( lua_State * L )
     bool res = de->d->values( de->workV, de->workI, de->probeV, de->probeI );
     if ( res )
     {
+        int sz = static_cast<int>( de->workV.size() );
+        lua_createtable( L, sz, 0 );
+        for ( int i=0; i<sz; i++ )
+        {
+            lua_pushinteger( L, i+1 );
+            lua_pushnumber( L, de->workV[i] );
+            lua_settable( L, -3 );
+        }
 
+        sz = static_cast<int>( de->workI.size() );
+        lua_createtable( L, sz, 0 );
+        for ( int i=0; i<sz; i++ )
+        {
+            lua_pushinteger( L, i+1 );
+            lua_pushnumber( L, de->workI[i] );
+            lua_settable( L, -3 );
+        }
+
+        sz = static_cast<int>( de->probeV.size() );
+        lua_createtable( L, sz, 0 );
+        for ( int i=0; i<sz; i++ )
+        {
+            lua_pushinteger( L, i+1 );
+            lua_pushnumber( L, de->probeV[i] );
+            lua_settable( L, -3 );
+        }
+
+        sz = static_cast<int>( de->probeI.size() );
+        lua_createtable( L, sz, 0 );
+        for ( int i=0; i<sz; i++ )
+        {
+            lua_pushinteger( L, i+1 );
+            lua_pushnumber( L, de->probeI[i] );
+            lua_settable( L, -3 );
+        }
         return 4;
     }
     else

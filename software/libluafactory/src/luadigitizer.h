@@ -1,6 +1,6 @@
 
-#ifndef __LUA_HUMIDITY_H_
-#define __LUA_HUMIDITY_H_
+#ifndef __LUA_DIGITIZER_H_
+#define __LUA_DIGITIZER_H_
 
 #include <vector>
 #include <QtCore>
@@ -12,7 +12,7 @@ extern "C"
     #include "lauxlib.h"
 }
 
-class DigitizerPrx;
+#include "digitizer_prx.h"
 
 class DigiEnvelope
 {
