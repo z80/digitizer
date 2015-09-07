@@ -378,7 +378,7 @@ bool MainWnd::measureSweep()
 
 
         // Measure data.
-        res = io->sweepData( t_swWorkV, t_swProbeV, t_swWorkI, t_swProbeI );
+        res = io->sweepData( t_swWorkV, t_swProbeV, t_swWorkI, t_swProbeI, sweepDacMode );
         if ( !res )
         {
             Msleep::msleep( 1000 );
@@ -453,7 +453,7 @@ void MainWnd::refreshDevicesList()
 void MainWnd::slotGain()
 {
     int indV  = ui.workVoltGain->currentIndex();
-    qreal gainWorkV = 1000.0 * pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainWorkV = pow( 10.0, static_cast<qreal>( indV ) );
     int indIA = ui.workCurrGainA->currentIndex();
     qreal gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     int indIB = ui.workCurrGainB->currentIndex();
@@ -461,7 +461,7 @@ void MainWnd::slotGain()
     qreal gainI1 = 1000000000.0 / (gainIA * gainIB);
 
     indV  = ui.probeVoltGain->currentIndex();
-    qreal gainProbeV = 1000.0 * pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainProbeV = pow( 10.0, static_cast<qreal>( indV ) );
     indIA = ui.probeCurrGainA->currentIndex();
     gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     indIB = ui.probeCurrGainB->currentIndex();
@@ -520,6 +520,15 @@ void MainWnd::slotSweepWork()
         if ( !res )
         {
             QString stri = QString( "Failed to set sweep time!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        sweepDacMode = ui.sweepDacMode->isChecked();
+        res = io->setSweepDacMode( sweepDacMode );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep options!" );
             QMessageBox::critical( this, "Error", stri );
             return;
         }
@@ -594,6 +603,16 @@ void MainWnd::slotSweepProbe()
             QMessageBox::critical( this, "Error", stri );
             return;
         }
+
+        sweepDacMode = ui.sweepDacMode->isChecked();
+        res = io->setSweepDacMode( sweepDacMode );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep options!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
 
         res = io->setSweepEn( true );
         if ( !res )
@@ -728,16 +747,21 @@ void MainWnd::slotOpen()
 void MainWnd::slotExternalTrigger()
 {
     bool en = ui.actionExternal_trigger->isChecked();
+    bool dacMode = ui.sweepDacMode->isChecked();
     bool res;
     {
         QMutexLocker lock( &mutex );
             res = io->isOpen();
             if ( res )
-                res = io->setTriggerEn( en );
+            {
+                res = io->setSweepDacMode( dacMode );
+                if ( res )
+                    res = io->setTriggerEn( en );
+            }
     }
     if ( !res )
     {
-        QMessageBox::critical( this, "Error", "Failed to change external triggering option!" );
+        QMessageBox::critical( this, "Error", "Failed to setup external triggering!" );
     }
 
     // If trigger is enabled turn all user controlls off.

@@ -13,6 +13,9 @@ uint8_t sweepEn( void );
 void setTrigEn( uint8_t en ); // Record ADC by external trigger. This should only read ADC.
 InputQueue * sweepQueue( void ); // Sweep data.
 
+void setSweepDacMode( uint8_t en );
+uint8_t sweepDacMode( void );
+
 #endif
 
 

@@ -92,6 +92,7 @@ private:
                   mutexReopen; // Mutex for oscilloscope and for sweep.
     bool          terminate;
     bool          doMeasureSweep;
+    bool          sweepDacMode;
     Bipot         * io;
     OscilloscopeWnd * oscWork;
     OscilloscopeWnd * oscProbe;

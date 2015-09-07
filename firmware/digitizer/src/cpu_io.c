@@ -151,6 +151,10 @@ static void set_output( uint8_t * args );
 
 static void firmware_upgrade( uint8_t * args );
 
+// Mode when MCU returns voltage as DACs - not as ADCs.
+static void set_sweep_dac( uint8_t * args );
+static void get_sweep_dac( uint8_t * args );
+
 static TFunc funcs[] =
 {
 	hardware_version,
@@ -175,7 +179,11 @@ static TFunc funcs[] =
 
 	set_output,
 
-	firmware_upgrade
+	firmware_upgrade,
+
+	set_sweep_dac,
+	get_sweep_dac
+
 };
 
 static void exec_func( void )
@@ -394,6 +402,20 @@ static void firmware_upgrade( uint8_t * args )
 
 	// Jump to the beginning of FLASH space to invoke bootloader.
 	firmwareUpgrade();
+}
+
+static void set_sweep_dac( uint8_t * args )
+{
+	setSweepDacMode( args[0] );
+}
+
+static void get_sweep_dac( uint8_t * args )
+{
+	(void)args;
+	uint8_t v;
+	v = sweepDacMode();
+	writeResult( v );
+	writeEom();
 }
 
 

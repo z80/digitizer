@@ -42,6 +42,9 @@ public:
     bool runBootloader();
     bool bootloaderHardwareVersion( QString & stri );
     bool bootloaderFirmwareVersion( QString & stri );
+
+    bool setSweepDacMode( bool en );
+    bool sweepDacMode( bool & en );
 private:
     bool bootloaderPush( int cnt, quint8 * data );
     bool bootloaderWriteSector( int index );

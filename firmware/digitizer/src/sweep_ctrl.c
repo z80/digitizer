@@ -25,6 +25,8 @@ static int swPtIndex;
 
 static uint8_t swEnabled;
 
+static uint8_t swDacMode;
+
 static void extCb( EXTDriver * extp, expchannel_t channel );
 
 static const EXTConfig extcfg = {
@@ -76,6 +78,7 @@ static const EXTConfig extcfg = {
 void initSweep( void )
 {
 	swEnabled     = 0;
+	swDacMode     = 0;
 
 	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
 	chOQInit( &sweepCmdQueue, sweepCmdBuffer,     2,              0 );
@@ -99,7 +102,7 @@ void setSweepTime( int ptsCnt, int period )
 	swPtsCnt = ptsCnt;
 }
 
-static void recordAdc( void );
+static void recordAdcI( void );
 
 void processSweepI( uint8_t dacIndex )
 {
@@ -112,7 +115,7 @@ void processSweepI( uint8_t dacIndex )
 			if ( swElapsed >= swNextPtTime )
 			{
 				// Measure signals.
-				recordAdc();
+				recordAdcI();
 				// Calc next point time.
 
 				swPtIndex += 1;
@@ -177,6 +180,20 @@ InputQueue * sweepQueue( void )
 	return &sweep_queue;
 }
 
+void setSweepDacMode( uint8_t en )
+{
+	chSysLock();
+		swDacMode = en;
+	chSysUnlock();
+}
+
+uint8_t sweepDacMode( void )
+{
+	chSysLock();
+		uint8_t res = swDacMode;
+	chSysUnlock();
+	return res;
+}
 
 
 
@@ -193,16 +210,26 @@ InputQueue * sweepQueue( void )
 
 
 
-static void recordAdc( void )
+
+static void recordAdcI( void )
 {
 	if ( chIQGetEmptyI( &sweep_queue ) >= 12 )
 	{
 		int adc[4];
 		instantAdcI( adc );
 
+		if ( swDacMode )
+		{
+			int dacs[4];
+			currentDacsI( dacs );
+			// Replace obtained ADC values with rough DAC values.
+			adc[0] = dacs[1];
+			adc[1] = dacs[3];
+		}
 
 		uint8_t v;
 		int value;
+
 
 		value = adc[0];
 		v = (uint8_t)( value & 0xFF );
@@ -275,7 +302,7 @@ static void extCb( EXTDriver * extp, expchannel_t channel )
   (void)channel;
   chSysLockFromIsr();
     // Record ADC data.
-    recordAdc();
+    recordAdcI();
   chSysUnlockFromIsr();
 }
 

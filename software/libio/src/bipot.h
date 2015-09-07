@@ -39,7 +39,10 @@ public:
     bool setSweepTime( int ptsCnt, qreal periodMs );
     bool setSweepEn( bool en );
     bool sweepEn( bool & en );
-    bool sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI );
+    bool sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI, bool dacMode = false );
+
+    bool setSweepDacMode( bool en );
+    bool sweepDacMode( bool & en );
 
     bool setOutput( int o );
 

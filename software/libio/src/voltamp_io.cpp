@@ -722,6 +722,60 @@ bool VoltampIo::firmwareUpgrade( const QString & fileName )
     return true;
 }
 
+bool VoltampIo::setSweepDacMode( bool en )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    quint8 v = static_cast<quint8>( en ? 1 : 0 );
+    bool res;
+    res = setArgs( reinterpret_cast<quint8 *>( &v ), 1 );
+    if ( !res )
+        return false;
+
+    quint8 funcInd = 18;
+    res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    return true;
+
+}
+
+bool VoltampIo::sweepDacMode( bool & en )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    quint8 funcInd = 19;
+    bool res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    QByteArray & arr = pd->buffer;
+    arr.resize( PD::IN_BUFFER_SZ );
+    bool eom;
+    int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
+    if ( !eom )
+        return false;
+
+    en = (arr.data()[0] != 0);
+
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -820,4 +874,8 @@ int VoltampIo::read( quint8 * data, int dataSz, bool & eom )
     eom = false;
     return ind;
 }
+
+
+
+
 

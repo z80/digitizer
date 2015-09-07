@@ -11,6 +11,7 @@ int  setDac1( int valueL, int valueH );
 int  setDac2( int valueL, int valueH );
 void processDacI( void );
 void currentDacs( int * dacs );
+void currentDacsI( int * dacs );
 
 
 #endif

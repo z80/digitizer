@@ -207,6 +207,14 @@ void currentDacs( int * dacs )
 	chSysUnlock();
 }
 
+void currentDacsI( int * dacs )
+{
+	dacs[0] = dacValues[0];
+	dacs[1] = dacValues[1];
+	dacs[2] = dacValues[2];
+	dacs[3] = dacValues[3];
+}
+
 
 
 

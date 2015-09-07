@@ -66,6 +66,9 @@ public:
     void  workV2Dac( qreal workV, int & dac1, int & dac2 );
     void  probeV2Dac( qreal workV, int & dac1, int & dac2 );
 
+    qreal dac2workV( int dacA, int dacB );
+    qreal dac2probeV( int dacA, int dacB );
+
     VoltampIo  * io;
     QMutex       mutex;
     bool         sigs[4];
@@ -180,6 +183,55 @@ void  Bipot::PD::probeV2Dac( qreal probeV, int & dac1, int & dac2 )
     dac2 = dacHigh;
 }
 
+qreal Bipot::PD::dac2probeV( int dacA, int dacB )
+{
+    qreal a1  = probeDac.a1;
+    qreal a2  = probeDac.a2;
+    qreal b   = probeDac.b;
+    qreal a1t = probeDac.a1t;
+    qreal a2t = probeDac.a2t;
+    qreal at  = probeDac.at;
+    qreal at3 = probeDac.at3;
+    qreal temp     = temperature / 50.0; // Also should be included into consideration.
+
+    qreal dac1 = static_cast<qreal>( dacA - 32767 ) / 32768.0;
+    qreal dac2 = static_cast<qreal>( dacB - 32767 ) / 32768.0;
+
+    qreal res = b + 
+                a1 * dac1 + 
+                a2 * dac2 + 
+                a1t * dac1 * temp + 
+                a2t * dac2 * temp + 
+                at * temp + 
+                at3 * temp * temp * temp;
+    res *= 10000.0;
+    return res;
+}
+
+qreal Bipot::PD::dac2workV( int dacA, int dacB )
+{
+    qreal a1  = workDac.a1;
+    qreal a2  = workDac.a2;
+    qreal b   = workDac.b;
+    qreal a1t = workDac.a1t;
+    qreal a2t = workDac.a2t;
+    qreal at  = workDac.at;
+    qreal at3 = workDac.at3;
+    qreal temp     = temperature / 50.0; // Also should be included into consideration.
+
+    qreal dac1 = static_cast<qreal>( dacA - 32767 ) / 32768.0;
+    qreal dac2 = static_cast<qreal>( dacB - 32767 ) / 32768.0;
+
+    qreal res = b + 
+                a1 * dac1 + 
+                a2 * dac2 + 
+                a1t * dac1 * temp + 
+                a2t * dac2 * temp + 
+                at * temp + 
+                at3 * temp * temp * temp;
+    res *= 10000.0;
+    return res;    
+}
 
 Bipot::Bipot()
 {
@@ -503,7 +555,7 @@ bool Bipot::sweepEn( bool & en )
     return true;
 }
 
-bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI )
+bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qreal> & workI, QVector<qreal> & probeI, bool dacMode )
 {
     VoltampIo & io = *(pd->io);
     pd->mutex.lock();
@@ -531,17 +583,24 @@ bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<
     
     for ( QVector<int>::const_iterator i=dataRaw.begin(); i!= dataRaw.end(); i++ )
     {
-        if ( en[ind] )
+        if ( true ) //( en[ind] )
         {
             int adc = *i;
             qreal v;
             switch ( ind )
             {
             case 0:
-                v = pd->adc2workV( adc );
+                qDebug() << adc;
+                if ( dacMode )
+                    v = pd->dac2workV( 32767, adc );
+                else
+                    v = pd->adc2workV( adc );
                 break;
             case 1:
-                v = pd->adc2probeV( adc );
+                if ( dacMode )
+                    v = pd->dac2probeV( 32767, adc );
+                else
+                    v = pd->adc2probeV( adc );
                 break;
             case 2:
                 v = pd->adc2probeI( adc );
@@ -555,6 +614,24 @@ bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<
         ind = (ind + 1) % 4;
     }
     return true;
+}
+
+bool Bipot::setSweepDacMode( bool en )
+{
+    VoltampIo & io = *(pd->io);
+    
+    bool res = io.setSweepDacMode( en );
+
+    return res;
+}
+
+bool Bipot::sweepDacMode( bool & en )
+{
+    VoltampIo & io = *(pd->io);
+    
+    bool res = io.sweepDacMode( en );
+
+    return res;
 }
 
 bool Bipot::setOutput( int o )
