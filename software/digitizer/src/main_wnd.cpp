@@ -159,6 +159,24 @@ void MainWnd::loadSettings()
     m_port   = s.value( "port", 21345 ).toInt();
     m_doListen = s.value( "listen", false ).toBool();
 
+    ui.workCurrGainA->setCurrentIndex( s.value( "workCurrGainA", 0 ).toInt() );
+    ui.workCurrGainB->setCurrentIndex( s.value( "workCurrGainB", 0 ).toInt() );
+    ui.workVoltGain->setCurrentIndex( s.value( "workVoltGain", 0 ).toInt() );
+    ui.workVolt->setValue( s.value( "workVolt", 0.0 ).toDouble() );
+    ui.workSweepTo->setValue( s.value( "workSweepTo", 0.0 ).toDouble() );
+    ui.pullProbe->setChecked( s.value( "pullProbe", false ).toBool() );
+
+    ui.probeCurrGainA->setCurrentIndex( s.value( "probeCurrGainA", 0 ).toInt() );
+    ui.probeCurrGainB->setCurrentIndex( s.value( "probeCurrGainB", 0 ).toInt() );
+    ui.probeVoltGain->setCurrentIndex( s.value( "probeVoltGain", 0 ).toInt() );
+    ui.probeVolt->setValue( s.value( "probeVolt", 0.0 ).toDouble() );
+    ui.probeSweepTo->setValue( s.value( "probeSweepTo", 0.0 ).toDouble() );
+    ui.pullWork->setChecked( s.value( "pullWork", false ).toBool() );
+
+    ui.sweepPtsCnt->setValue( s.value( "sweepPtsCnt", 100 ).toInt() );
+    ui.sweepRate->setValue( s.value( "sweepRate", 0.1 ).toDouble() );
+    ui.sweepDacMode->setChecked( s.value( "dacMode", false ).toBool() );
+
     this->restoreState( s.value( "state", QByteArray() ).toByteArray() );
 }
 
@@ -170,6 +188,24 @@ void MainWnd::saveSettings()
     s.setValue( "host",      m_host );
     s.setValue( "port",      m_port );
     s.setValue( "listen",    m_doListen );
+
+    s.setValue( "workCurrGainA", ui.workCurrGainA->currentIndex() );
+    s.setValue( "workCurrGainB", ui.workCurrGainB->currentIndex() );
+    s.setValue( "workVoltGain", ui.workVoltGain->currentIndex() );
+    s.setValue( "workVolt", ui.workVolt->value() );
+    s.setValue( "workSweepTo", ui.workSweepTo->value() );
+    s.setValue( "pullProbe", ui.pullProbe->isChecked() );
+
+    s.setValue( "probeCurrGainA", ui.probeCurrGainA->currentIndex() );
+    s.setValue( "probeCurrGainB", ui.probeCurrGainB->currentIndex() );
+    s.setValue( "probeVoltGain", ui.probeVoltGain->currentIndex() );
+    s.setValue( "probeVolt", ui.probeVolt->value() );
+    s.setValue( "probeSweepTo", ui.probeSweepTo->value() );
+    s.setValue( "pullWork", ui.pullWork->isChecked() );
+
+    s.setValue( "sweepPtsCnt", ui.sweepPtsCnt->value() );
+    s.setValue( "sweepRate", ui.sweepRate->value() );
+    s.setValue( "dacMode", ui.sweepDacMode->isChecked() );
 
     s.setValue( "state", this->saveState() );
 }
