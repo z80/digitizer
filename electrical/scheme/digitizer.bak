@@ -5132,4 +5132,14 @@ Wire Notes Line
 	24050 1950 24250 1950
 Text Notes 23350 1450 0    60   ~ 0
 Add 1k resistors here. Without resistors \nMUX switch spike is handled by filter as \ndelta function feedback. And it causes \nmutual interference of signals. And this \nintergerence is pure nonlinear and can't be \ncompensated by math.
+Text Notes 14400 21400 0    60   ~ 0
+It's most probably that feedback \nshould be read directly after the \nSchottky but not after filter.
+Wire Notes Line
+	13700 21000 14750 20850
+Wire Notes Line
+	14750 20850 14800 19100
+Wire Notes Line
+	14750 20850 19150 20400
+Wire Notes Line
+	19150 20400 19050 19100
 $EndSCHEMATC
