@@ -47,7 +47,7 @@ MainWnd::MainWnd( HostTray * parent )
     QFont f = textWork.font();
     f.setPointSizeF( 15 );
     textWork.setFont( f );
-    textWork.setText( "Work I(t) [nA(s)]" );
+    textWork.setText( "Work I(t) [A(s)]" );
 
     labelWork->setText( textWork );
     labelWork->setIndent( 0 );
@@ -63,7 +63,7 @@ MainWnd::MainWnd( HostTray * parent )
     f = textProbe.font();
     f.setPointSizeF( 15 );
     textProbe.setFont( f );
-    textProbe.setText( "Probe I(t) [nA(s)]" );
+    textProbe.setText( "Probe I(t) [A(s)]" );
 
     labelProbe->setText( textProbe );
     labelProbe->setIndent( 0 );
@@ -87,11 +87,9 @@ MainWnd::MainWnd( HostTray * parent )
     connect( ui.actionRemote_control, SIGNAL(triggered()), this, SLOT(slotRemoteSetup()) );
 
     connect( ui.workVoltGain,   SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
-    connect( ui.workCurrGainA,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
-    connect( ui.workCurrGainB,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
+    connect( ui.workCurrGain,   SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
     connect( ui.probeVoltGain,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
-    connect( ui.probeCurrGainA, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
-    connect( ui.probeCurrGainB, SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
+    connect( ui.probeCurrGain,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
 
     connect( ui.workVolt, SIGNAL(valueChanged(double)), this, SLOT(slotWorkVoltChange()) );
     connect( ui.workVolt, SIGNAL(editingFinished()),    this, SLOT(slotWorkVolt()) );
@@ -159,15 +157,13 @@ void MainWnd::loadSettings()
     m_port   = s.value( "port", 21345 ).toInt();
     m_doListen = s.value( "listen", false ).toBool();
 
-    ui.workCurrGainA->setCurrentIndex( s.value( "workCurrGainA", 0 ).toInt() );
-    ui.workCurrGainB->setCurrentIndex( s.value( "workCurrGainB", 0 ).toInt() );
+    ui.workCurrGain->setCurrentIndex( s.value( "workCurrGain", 0 ).toInt() );
     ui.workVoltGain->setCurrentIndex( s.value( "workVoltGain", 0 ).toInt() );
     ui.workVolt->setValue( s.value( "workVolt", 0.0 ).toDouble() );
     ui.workSweepTo->setValue( s.value( "workSweepTo", 0.0 ).toDouble() );
     ui.pullProbe->setChecked( s.value( "pullProbe", false ).toBool() );
 
-    ui.probeCurrGainA->setCurrentIndex( s.value( "probeCurrGainA", 0 ).toInt() );
-    ui.probeCurrGainB->setCurrentIndex( s.value( "probeCurrGainB", 0 ).toInt() );
+    ui.probeCurrGain->setCurrentIndex( s.value( "probeCurrGain", 0 ).toInt() );
     ui.probeVoltGain->setCurrentIndex( s.value( "probeVoltGain", 0 ).toInt() );
     ui.probeVolt->setValue( s.value( "probeVolt", 0.0 ).toDouble() );
     ui.probeSweepTo->setValue( s.value( "probeSweepTo", 0.0 ).toDouble() );
@@ -189,15 +185,13 @@ void MainWnd::saveSettings()
     s.setValue( "port",      m_port );
     s.setValue( "listen",    m_doListen );
 
-    s.setValue( "workCurrGainA", ui.workCurrGainA->currentIndex() );
-    s.setValue( "workCurrGainB", ui.workCurrGainB->currentIndex() );
+    s.setValue( "workCurrGain", ui.workCurrGain->currentIndex() );
     s.setValue( "workVoltGain", ui.workVoltGain->currentIndex() );
     s.setValue( "workVolt", ui.workVolt->value() );
     s.setValue( "workSweepTo", ui.workSweepTo->value() );
     s.setValue( "pullProbe", ui.pullProbe->isChecked() );
 
-    s.setValue( "probeCurrGainA", ui.probeCurrGainA->currentIndex() );
-    s.setValue( "probeCurrGainB", ui.probeCurrGainB->currentIndex() );
+    s.setValue( "probeCurrGain", ui.probeCurrGain->currentIndex() );
     s.setValue( "probeVoltGain", ui.probeVoltGain->currentIndex() );
     s.setValue( "probeVolt", ui.probeVolt->value() );
     s.setValue( "probeSweepTo", ui.probeSweepTo->value() );
@@ -490,23 +484,18 @@ void MainWnd::slotGain()
 {
     int indV  = ui.workVoltGain->currentIndex();
     qreal gainWorkV = pow( 10.0, static_cast<qreal>( indV ) );
-    int indIA = ui.workCurrGainA->currentIndex();
-    qreal gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
-    int indIB = ui.workCurrGainB->currentIndex();
-    qreal gainIB = pow( 10.0, static_cast<qreal>( indIB + 1 ) );
-    qreal gainI1 = 1000000000.0 / (gainIA * gainIB);
+    int indIA = ui.workCurrGain->currentIndex();
+    qreal gainI = pow( 10.0, static_cast<qreal>( indIA + 4 ) );
+    qreal gainI1 = 1.0 / gainI;
 
     indV  = ui.probeVoltGain->currentIndex();
     qreal gainProbeV = pow( 10.0, static_cast<qreal>( indV ) );
-    indIA = ui.probeCurrGainA->currentIndex();
-    gainIA = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
-    indIB = ui.probeCurrGainB->currentIndex();
-    gainIB = pow( 10.0, static_cast<qreal>( indIB + 1 ) );
-    qreal gainI2 = 1000000000.0 / (gainIA * gainIB);
+    indIA = ui.probeCurrGain->currentIndex();
+    gainI = pow( 10.0, static_cast<qreal>( indIA + 4 ) );
+    qreal gainI2 = 1.0 / gainI;
 
     io->setmV2mA( 0.0, gainI1, 0.0, gainI2 ); 
     io->setVoltScale( gainWorkV, gainProbeV );
-    //io->setVoltScale( 1.0, 1.0 ); // Voltage is measured as is without amplification.
 }
 
 void MainWnd::slotWorkVoltChange()
