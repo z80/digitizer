@@ -438,6 +438,27 @@ bool MainWnd::measureSweep()
 
         if ( !sweep )
         {
+            int szCollected = 0;
+            int cnt = 0;
+            do {
+                bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+                Msleep::msleep( 10 );
+                cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+                mutexSw.lock();
+                    for ( int i=0; i<t_swWorkV.size(); i++ )
+                        p_swWorkV.enqueue( t_swWorkV.at( i ) );
+                    for ( int i=0; i<t_swWorkI.size(); i++ )
+                        p_swWorkI.enqueue( t_swWorkI.at( i ) );
+                    for ( int i=0; i<t_swProbeV.size(); i++ )
+                        p_swProbeV.enqueue( t_swProbeV.at( i ) );
+                    for ( int i=0; i<t_swProbeI.size(); i++ )
+                        p_swProbeI.enqueue( t_swProbeI.at( i ) );
+                    szCollected = p_swWorkV.size() + p_swWorkI.size() + p_swProbeV.size() + p_swProbeI.size();
+                mutexSw.unlock();
+            } while ( cnt > 0 );
+            if ( szCollected > 0 )
+                emit sigSweepReplot();
+
             mutex.lock();
                 doMeasureSweep = false;
             mutex.unlock();
