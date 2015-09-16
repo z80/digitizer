@@ -97,11 +97,13 @@ void SweepWnd::load(const QString & fileName )
 
     QQueue<qreal> workV, workI, probeV, probeI;
     QByteArray arr = f.readLine(); // Skip title.
+//qDebug() << arr;
     while ( true )
     {
         arr = f.readLine();
         QString stri = QString::fromUtf8( arr );
-        QRegExp ex( "(\\w+)[;\\s]+(\\w+)[;\\s]+(\\w+)[;\\s]+(\\w+)" );
+//qDebug() << stri;
+        QRegExp ex( "([\\w.\\-]+)[;\\s]+([\\w.\\-]+)[;\\s]+([\\w.\\-]+)[;\\s]+([\\w.\\-]+)" );
         int index = ex.indexIn( stri );
         if ( index >= 0 )
         {
