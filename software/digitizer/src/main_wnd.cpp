@@ -483,16 +483,16 @@ void MainWnd::refreshDevicesList()
 void MainWnd::slotGain()
 {
     int indV  = ui.workVoltGain->currentIndex();
-    qreal gainWorkV = pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainWorkV = -pow( 10.0, static_cast<qreal>( indV ) );
     int indIA = ui.workCurrGain->currentIndex();
     qreal gainI = pow( 10.0, static_cast<qreal>( indIA + 4 ) );
-    qreal gainI1 = 1.0 / gainI;
+    qreal gainI1 = 0.001 / gainI;
 
     indV  = ui.probeVoltGain->currentIndex();
-    qreal gainProbeV = pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainProbeV = -pow( 10.0, static_cast<qreal>( indV ) );
     indIA = ui.probeCurrGain->currentIndex();
     gainI = pow( 10.0, static_cast<qreal>( indIA + 4 ) );
-    qreal gainI2 = 1.0 / gainI;
+    qreal gainI2 = 0.001 / gainI;
 
     io->setmV2mA( 0.0, gainI1, 0.0, gainI2 ); 
     io->setVoltScale( gainWorkV, gainProbeV );
@@ -526,7 +526,7 @@ void MainWnd::slotSweepWork()
         qreal workTo     = ui.workSweepTo->value();
         qreal probeFrom  = ui.probeVolt->value();
         qreal delta = workTo - workFrom;
-        qreal timeMs = delta / ui.sweepRate->value();
+        qreal timeMs = delta / (ui.sweepRate->value() * 0.001);
         timeMs = (timeMs >= 0.0) ? timeMs : (-timeMs);
         int   ptsCnt = ui.sweepPtsCnt->value();
 
@@ -606,7 +606,7 @@ void MainWnd::slotSweepProbe()
         qreal probeFrom  = ui.probeVolt->value();
         qreal probeTo    = ui.probeSweepTo->value();
         qreal delta = probeTo - probeFrom;
-        qreal timeMs = delta / ui.sweepRate->value();
+        qreal timeMs = delta /(ui.sweepRate->value() * 0.001);
         timeMs = (timeMs >= 0.0) ? timeMs : (-timeMs);
         int   ptsCnt = ui.sweepPtsCnt->value();
 
