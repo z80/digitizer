@@ -54,7 +54,7 @@ OscilloscopeWnd::OscilloscopeWnd( QWidget * parent )
     pal.setBrush( QPalette::Window, QBrush( gr ) );
     ui.plot->canvas()->setPalette( pal );
 
-    connect( this,  SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
+    //connect( this,  SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
 
     curvesCntChanged();
     curveSizeChanged();

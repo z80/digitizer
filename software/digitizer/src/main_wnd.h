@@ -73,6 +73,8 @@ public slots:
     void slotAfmOutput();
 
     void slotFirmwareUpgrade();
+
+    void slotVertexEnChanged();
 protected:
     void closeEvent( QCloseEvent * e );
 private:
@@ -82,6 +84,13 @@ private:
     void measure();
     bool measureSweep();
     void reopen();
+
+    void clearSweepConfig();
+    void pushSweepConfig( qreal workV, qreal probeV );
+    bool runSweep();
+
+    QQueue<int> ptsCntQueue;
+    QQueue<qreal> periodQueue, workVQueue, probeVQueue;
 
     int devName;
 

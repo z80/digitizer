@@ -124,7 +124,13 @@ MainWnd::MainWnd( HostTray * parent )
 
     connect( ui.actionFirmware_upgrade, SIGNAL(triggered()), this, SLOT(slotFirmwareUpgrade()) );
 
+    connect( ui.workVertex1En,  SIGNAL(clicked(bool)), this, SLOT(slotVertexEnChanged()) );
+    connect( ui.workVertex2En,  SIGNAL(clicked(bool)), this, SLOT(slotVertexEnChanged()) );
+    connect( ui.probeVertex1En, SIGNAL(clicked(bool)), this, SLOT(slotVertexEnChanged()) );
+    connect( ui.probeVertex2En, SIGNAL(clicked(bool)), this, SLOT(slotVertexEnChanged()) );
+
     slotGain();
+    slotVertexEnChanged();
 
     // **********************************************
     // Remote functions.
@@ -160,12 +166,20 @@ void MainWnd::loadSettings()
     ui.workCurrGain->setCurrentIndex( s.value( "workCurrGain", 0 ).toInt() );
     ui.workVoltGain->setCurrentIndex( s.value( "workVoltGain", 0 ).toInt() );
     ui.workVolt->setValue( s.value( "workVolt", 0.0 ).toDouble() );
+    ui.workVertex1->setValue( s.value( "workVertex1", 0.0 ).toDouble() );
+    ui.workVertex1En->setChecked( s.value( "workVertex1En", false ).toBool() );
+    ui.workVertex2->setValue( s.value( "workVertex2", 0.0 ).toDouble() );
+    ui.workVertex2En->setChecked( s.value( "workVertex2En", false ).toBool() );
     ui.workSweepTo->setValue( s.value( "workSweepTo", 0.0 ).toDouble() );
     ui.pullProbe->setChecked( s.value( "pullProbe", false ).toBool() );
 
     ui.probeCurrGain->setCurrentIndex( s.value( "probeCurrGain", 0 ).toInt() );
     ui.probeVoltGain->setCurrentIndex( s.value( "probeVoltGain", 0 ).toInt() );
     ui.probeVolt->setValue( s.value( "probeVolt", 0.0 ).toDouble() );
+    ui.probeVertex1->setValue( s.value( "probeVertex1", 0.0 ).toDouble() );
+    ui.probeVertex1En->setChecked( s.value( "probeVertex1En", false ).toBool() );
+    ui.probeVertex2->setValue( s.value( "probeVertex2", 0.0 ).toDouble() );
+    ui.probeVertex2En->setChecked( s.value( "probeVertex2En", false ).toBool() );
     ui.probeSweepTo->setValue( s.value( "probeSweepTo", 0.0 ).toDouble() );
     ui.pullWork->setChecked( s.value( "pullWork", false ).toBool() );
 
@@ -188,12 +202,20 @@ void MainWnd::saveSettings()
     s.setValue( "workCurrGain", ui.workCurrGain->currentIndex() );
     s.setValue( "workVoltGain", ui.workVoltGain->currentIndex() );
     s.setValue( "workVolt", ui.workVolt->value() );
+    s.setValue( "workVertex1", ui.workVertex1->value() );
+    s.setValue( "workVertex1En", ui.workVertex1En->isChecked() );
+    s.setValue( "workVertex2", ui.workVertex2->value() );
+    s.setValue( "workVertex2En", ui.workVertex2En->isChecked() );
     s.setValue( "workSweepTo", ui.workSweepTo->value() );
     s.setValue( "pullProbe", ui.pullProbe->isChecked() );
 
     s.setValue( "probeCurrGain", ui.probeCurrGain->currentIndex() );
     s.setValue( "probeVoltGain", ui.probeVoltGain->currentIndex() );
     s.setValue( "probeVolt", ui.probeVolt->value() );
+    s.setValue( "probeVertex1", ui.probeVertex1->value() );
+    s.setValue( "probeVertex1En", ui.probeVertex1En->isChecked() );
+    s.setValue( "probeVertex2", ui.probeVertex2->value() );
+    s.setValue( "probeVertex2En", ui.probeVertex2En->isChecked() );
     s.setValue( "probeSweepTo", ui.probeSweepTo->value() );
     s.setValue( "pullWork", ui.pullWork->isChecked() );
 
@@ -479,6 +501,90 @@ void MainWnd::reopen()
         io->open( devName );
 }
 
+void MainWnd::clearSweepConfig()
+{
+    ptsCntQueue.clear();
+    periodQueue.clear();
+    workVQueue.clear();
+    probeVQueue.clear();
+}
+
+void MainWnd::pushSweepConfig( qreal workTo, qreal probeTo )
+{
+    int ptsPerVolt = ui.sweepPtsCnt->value();
+    qreal rate = ui.sweepRate->value();
+
+    qreal workFrom  = (workVQueue.size() > 0)  ? workVQueue.last()  : ui.workVolt->value();
+    qreal probeFrom = (probeVQueue.size() > 0) ? probeVQueue.last() : ui.probeVolt->value();
+    qreal workDiff  = (workTo - workFrom);
+    qreal probeDiff = (probeTo - probeFrom);
+    workDiff = (workDiff >= 0.0) ? workDiff : (-workDiff);
+    probeDiff = (probeDiff >= 0.0) ? probeDiff : (-probeDiff);
+    qreal diff = ( workDiff > probeDiff ) ? workDiff : probeDiff;
+    qreal timeMs = diff / rate * 1000.0;
+    int ptsCnt = static_cast<int>( diff * static_cast<qreal>( ptsPerVolt ) / 1000.0 );
+    if ( ptsCnt < 2 )
+        return;
+
+    ptsCntQueue.enqueue( ptsCnt );
+    periodQueue.enqueue( timeMs );
+    workVQueue.enqueue( workTo );
+    probeVQueue.enqueue( probeTo );
+}
+
+bool MainWnd::runSweep()
+{
+    p_swWorkV.clear();
+    p_swWorkI.clear();
+    p_swProbeV.clear();
+    p_swProbeI.clear();
+
+    sweepDacMode = ui.sweepDacMode->isChecked();
+    bool res = io->setSweepDacMode( sweepDacMode );
+    if ( !res )
+    {
+        QString stri = QString( "Failed to set potential transition options!" );
+        QMessageBox::critical( this, "Error", stri );
+        return false;
+    }
+
+    while ( ptsCntQueue.size() > 0 )
+    {
+        int ptsCnt = ptsCntQueue.dequeue();
+        qreal timeMs = periodQueue.dequeue();
+        qreal workTo = workVQueue.dequeue();
+        qreal probeTo = probeVQueue.dequeue();
+        res = io->sweepPush( ptsCnt, timeMs, workTo, probeTo );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set potential transition!" );
+            QMessageBox::critical( this, "Error", stri );
+            return false;
+        }
+    }
+
+    res = io->setSweepEn( true );
+    if ( !res )
+    {
+        QString stri = QString( "Failed to start potential transition!" );
+        QMessageBox::critical( this, "Error", stri );
+        return false;
+    }
+
+    clearSweepConfig();
+
+    ui.dockWidget_2->setEnabled( false );
+    // Open sweep window display.
+    sweepWnd = new SweepWnd( 0 );
+    sweepWnd->show();
+    // Run sweep data readout.
+    QMutexLocker lock( &mutex );
+        doMeasureSweep = true;
+
+
+    return true;
+}
+
 void MainWnd::refreshDevicesList()
 {
     foreach( QAction * a, devicesList )
@@ -543,83 +649,46 @@ void MainWnd::slotSweepWork()
 {
     if ( io->isOpen() )
     {
-        p_swWorkV.clear();
-        p_swWorkI.clear();
-        p_swProbeV.clear();
-        p_swProbeI.clear();
-
-        qreal workFrom   = ui.workVolt->value();
-        qreal workTo     = ui.workSweepTo->value();
-        qreal probeFrom  = ui.probeVolt->value();
-        qreal delta = workTo - workFrom;
-        qreal timeMs = delta / (ui.sweepRate->value() * 0.001);
-        timeMs = (timeMs >= 0.0) ? timeMs : (-timeMs);
-        int   ptsCnt = ui.sweepPtsCnt->value();
+        clearSweepConfig();
 
         bool pull = ui.pullProbe->isChecked();
-        qreal probeTo = ( pull ) ? (probeFrom + delta) : probeFrom;
 
-        /*
-        bool res = io->setSweepRange( workTo, probeTo );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to set sweep range!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }
-
-        res = io->setSweepTime( ptsCnt, timeMs );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to set sweep time!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }*/
-
-        sweepDacMode = ui.sweepDacMode->isChecked();
-        bool res = io->setSweepDacMode( sweepDacMode );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to set sweep options!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }
-
-        res = io->sweepPush( ptsCnt, timeMs, workTo, probeTo );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to set sweep range!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }
-
-        qreal workAt = ui.workVolt->value();
+        qreal workAt  = ui.workVolt->value();
         qreal probeAt = ui.probeVolt->value();
-        res = io->sweepPush( ptsCnt, timeMs, workAt, probeAt );
-        if ( !res )
+        if ( ui.workVertex1En->isChecked() )
         {
-            QString stri = QString( "Failed to set sweep range!" );
-            QMessageBox::critical( this, "Error", stri );
+            qreal wv = ui.workVertex1->value();
+            qreal pv = ( pull ) ? (probeAt+wv-workAt) : probeAt;
+            pushSweepConfig( wv, pv );
+        }
+        if ( ui.workVertex2En->isChecked() )
+        {
+            qreal wv = ui.workVertex2->value();
+            qreal pv = ( pull ) ? (probeAt+wv-workAt) : probeAt;
+            pushSweepConfig( wv, pv );
+        }
+        qreal wv = ui.workSweepTo->value();
+        qreal pv = ( pull ) ? (probeAt+wv-workAt) : probeAt;
+        pushSweepConfig( wv, pv );
+
+        bool res = runSweep();
+        if ( !res )
             return;
+
+        // Flip transition boundaries.
+        ui.workVolt->setValue( wv );
+        ui.workSweepTo->setValue( workAt );
+        setWorkV  = wv;
+        if ( pull )
+        {
+            ui.probeVolt->setValue( pv );
+            ui.probeSweepTo->setValue( probeAt );
+            setProbeV = pv;
         }
 
-        res = io->setSweepEn( true );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to start sweep!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }
-
-        
-        ui.dockWidget_2->setEnabled( false );
-        // Open sweep window display.
-        sweepWnd = new SweepWnd( 0 );
-        sweepWnd->show();
-        // Run sweep data readout.
-        QMutexLocker lock( &mutex );
-            doMeasureSweep = true;
-        
+        QString ss = "background-color: rgb(100, 135, 100);\nborder-color: rgb(100, 135, 100);";
+        ui.workVolt->setStyleSheet( ss );
+        ui.probeVolt->setStyleSheet( ss );
     }
 }
 
@@ -647,80 +716,46 @@ void MainWnd::slotSweepProbe()
 {
     if ( io->isOpen() )
     {
-        qreal workFrom   = ui.workVolt->value();
-        qreal probeFrom  = ui.probeVolt->value();
-        qreal probeTo    = ui.probeSweepTo->value();
-        qreal delta = probeTo - probeFrom;
-        qreal timeMs = delta /(ui.sweepRate->value() * 0.001);
-        timeMs = (timeMs >= 0.0) ? timeMs : (-timeMs);
-        int   ptsCnt = ui.sweepPtsCnt->value();
+        clearSweepConfig();
 
         bool pull = ui.pullWork->isChecked();
-        qreal workTo = ( pull ) ? (workFrom + delta) : workFrom;
 
-        /*
-        bool res = io->setSweepRange( workTo, probeTo );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to set sweep range!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }
-
-        res = io->setSweepTime( ptsCnt, timeMs );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to set sweep time!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }
-        */
-
-        sweepDacMode = ui.sweepDacMode->isChecked();
-        bool res = io->setSweepDacMode( sweepDacMode );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to set sweep options!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }
-
-
-        res = io->sweepPush( ptsCnt, timeMs, workTo, probeTo );
-        if ( !res )
-        {
-            QString stri = QString( "Failed to set sweep range!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
-        }
-
-        qreal workAt = ui.workVolt->value();
+        qreal workAt  = ui.workVolt->value();
         qreal probeAt = ui.probeVolt->value();
-        res = io->sweepPush( ptsCnt, timeMs, workAt, probeAt );
-        if ( !res )
+        if ( ui.probeVertex1En->isChecked() )
         {
-            QString stri = QString( "Failed to set sweep range!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
+            qreal pv = ui.probeVertex1->value();
+            qreal wv = ( pull ) ? (workAt+pv-probeAt) : workAt;
+            pushSweepConfig( wv, pv );
         }
-
-
-
-        res = io->setSweepEn( true );
-        if ( !res )
+        if ( ui.probeVertex2En->isChecked() )
         {
-            QString stri = QString( "Failed to start sweep!" );
-            QMessageBox::critical( this, "Error", stri );
-            return;
+            qreal pv = ui.probeVertex2->value();
+            qreal wv = ( pull ) ? (workAt+pv-probeAt) : workAt;
+            pushSweepConfig( wv, pv );
         }
+        qreal pv = ui.probeSweepTo->value();
+        qreal wv = ( pull ) ? (workAt+pv-probeAt) : workAt;
+        pushSweepConfig( wv, pv );
 
-        ui.dockWidget_2->setEnabled( false );
-        // Open sweep window display.
-        sweepWnd = new SweepWnd( 0 );
-        sweepWnd->show();
-        // Run sweep data readout.
-        QMutexLocker lock( &mutex );
-            doMeasureSweep = true;
+        bool res = runSweep();
+        if ( !res )
+            return;
+
+        // Flip transition boundaries.
+        if ( pull )
+        {
+            ui.workVolt->setValue( wv );
+            ui.workSweepTo->setValue( workAt );
+            setWorkV = wv;
+        }
+        ui.probeVolt->setValue( pv );
+        ui.probeSweepTo->setValue( probeAt );
+        setProbeV = pv;
+
+        QString ss = "background-color: rgb(100, 135, 100);\nborder-color: rgb(100, 135, 100);";
+        ui.workVolt->setStyleSheet( ss );
+        ui.probeVolt->setStyleSheet( ss );
     }
 }
 
@@ -965,6 +1000,14 @@ void MainWnd::slotFirmwareUpgrade()
 
     connect( this,      SIGNAL(sigReplot()), this, SLOT(slotReplot()) );
     connect( tempTimer, SIGNAL(timeout()),   this, SLOT(slotTemp()) );
+}
+
+void MainWnd::slotVertexEnChanged()
+{
+    ui.workVertex1->setEnabled( ui.workVertex1En->isChecked() );
+    ui.workVertex2->setEnabled( ui.workVertex2En->isChecked() );
+    ui.probeVertex1->setEnabled( ui.probeVertex1En->isChecked() );
+    ui.probeVertex2->setEnabled( ui.probeVertex2En->isChecked() );
 }
 
 
