@@ -554,6 +554,7 @@ void MainWnd::slotSweepWork()
         bool pull = ui.pullProbe->isChecked();
         qreal probeTo = ( pull ) ? (probeFrom + delta) : probeFrom;
 
+        /*
         bool res = io->setSweepRange( workTo, probeTo );
         if ( !res )
         {
@@ -568,13 +569,31 @@ void MainWnd::slotSweepWork()
             QString stri = QString( "Failed to set sweep time!" );
             QMessageBox::critical( this, "Error", stri );
             return;
-        }
+        }*/
 
         sweepDacMode = ui.sweepDacMode->isChecked();
-        res = io->setSweepDacMode( sweepDacMode );
+        bool res = io->setSweepDacMode( sweepDacMode );
         if ( !res )
         {
             QString stri = QString( "Failed to set sweep options!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        res = io->sweepPush( ptsCnt, timeMs, workTo, probeTo );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep range!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        qreal workAt = ui.workVolt->value();
+        qreal probeAt = ui.probeVolt->value();
+        res = io->sweepPush( ptsCnt, timeMs, workAt, probeAt );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep range!" );
             QMessageBox::critical( this, "Error", stri );
             return;
         }
@@ -634,6 +653,7 @@ void MainWnd::slotSweepProbe()
         bool pull = ui.pullWork->isChecked();
         qreal workTo = ( pull ) ? (workFrom + delta) : workFrom;
 
+        /*
         bool res = io->setSweepRange( workTo, probeTo );
         if ( !res )
         {
@@ -649,15 +669,36 @@ void MainWnd::slotSweepProbe()
             QMessageBox::critical( this, "Error", stri );
             return;
         }
+        */
 
         sweepDacMode = ui.sweepDacMode->isChecked();
-        res = io->setSweepDacMode( sweepDacMode );
+        bool res = io->setSweepDacMode( sweepDacMode );
         if ( !res )
         {
             QString stri = QString( "Failed to set sweep options!" );
             QMessageBox::critical( this, "Error", stri );
             return;
         }
+
+
+        res = io->sweepPush( ptsCnt, timeMs, workTo, probeTo );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep range!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
+        qreal workAt = ui.workVolt->value();
+        qreal probeAt = ui.probeVolt->value();
+        res = io->sweepPush( ptsCnt, timeMs, workAt, probeAt );
+        if ( !res )
+        {
+            QString stri = QString( "Failed to set sweep range!" );
+            QMessageBox::critical( this, "Error", stri );
+            return;
+        }
+
 
 
         res = io->setSweepEn( true );

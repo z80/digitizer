@@ -634,6 +634,22 @@ bool Bipot::sweepDacMode( bool & en )
     return res;
 }
 
+bool Bipot::sweepPush( int ptsCnt, qreal periodMs, qreal workV, qreal probeV )
+{
+    VoltampIo & io = *(pd->io);
+
+    int dacs[4];
+    // Convert voltages to DACs.
+    pd->workV2Dac( workV,  dacs[0], dacs[1] );
+    pd->workV2Dac( probeV, dacs[2], dacs[3] );
+
+    int period = static_cast<int>( periodMs * 4.0 );
+
+    bool res = io.sweepPush( ptsCnt, period, dacs );
+
+    return res;
+}
+
 bool Bipot::setOutput( int o )
 {
     VoltampIo & io = *(pd->io);

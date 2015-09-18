@@ -508,6 +508,41 @@ bool VoltampIo::sweepData( QVector<int> & data )
     return true;
 }
 
+bool VoltampIo::sweepPush( int ptsCnt, int period, int * dacsTo )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    quint8 dacs[16];
+
+    dacs[0] = static_cast<quint8>((ptsCnt >> 24) & 0xFF);
+    dacs[1] = static_cast<quint8>((ptsCnt >> 16) & 0xFF);
+    dacs[2] = static_cast<quint8>((ptsCnt >> 8) & 0xFF);
+    dacs[3] = static_cast<quint8>(ptsCnt & 0xFF);
+
+    dacs[4] = static_cast<quint8>((period >> 24) & 0xFF);
+    dacs[5] = static_cast<quint8>((period >> 16) & 0xFF);
+    dacs[6] = static_cast<quint8>((period >> 8) & 0xFF);
+    dacs[7] = static_cast<quint8>(period & 0xFF);
+
+    for ( int i=0; i<4; i++ )
+    {
+        dacs[8+2*i]   = static_cast<quint8>( (dacsTo[i] >> 8) & 0xFF );
+        dacs[8+2*i+1] = static_cast<quint8>(dacsTo[i] &0xFF);
+    }
+
+    bool res;
+    res = setArgs( reinterpret_cast<quint8 *>( dacs ), 16 );
+    if ( !res )
+        return false;
+
+    quint8 funcInd = 20;
+    res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    return true;
+}
+
 bool VoltampIo::setOutput( int o )
 {
     QMutexLocker lock( &pd->mutex );

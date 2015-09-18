@@ -155,6 +155,8 @@ static void firmware_upgrade( uint8_t * args );
 static void set_sweep_dac( uint8_t * args );
 static void get_sweep_dac( uint8_t * args );
 
+static void sweep_push( uint8_t * args );
+
 static TFunc funcs[] =
 {
 	hardware_version,
@@ -182,8 +184,9 @@ static TFunc funcs[] =
 	firmware_upgrade,
 
 	set_sweep_dac,
-	get_sweep_dac
+	get_sweep_dac,
 
+	sweep_push
 };
 
 static void exec_func( void )
@@ -416,6 +419,18 @@ static void get_sweep_dac( uint8_t * args )
 	v = sweepDacMode();
 	writeResult( v );
 	writeEom();
+}
+
+static void sweep_push( uint8_t * args )
+{
+	int ptsCnt = ( (int)args[0] << 24 ) + ( (int)args[1] << 16 ) + ( (int)args[2] << 8 ) + ( (int)args[3] );
+	int period = ( (int)args[4] << 24 ) + ( (int)args[5] << 16 ) + ( (int)args[6] << 8 ) + ( (int)args[7] );
+	int dacs[4];
+	dacs[0] = ( (int)args[8] << 8 ) + ( (int)args[9] );
+	dacs[1] = ( (int)args[10] << 8 ) + ( (int)args[11] );
+	dacs[2] = ( (int)args[12] << 8 ) + ( (int)args[13] );
+	dacs[3] = ( (int)args[14] << 8 ) + ( (int)args[15] );
+	sweepPush( ptsCnt, period, dacs );
 }
 
 

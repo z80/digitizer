@@ -37,6 +37,8 @@ public:
     bool sweepEn( bool & en );
     bool sweepData( QVector<int> & data );
 
+    bool sweepPush( int ptsCnt, int period, int * dacsTo );
+
     bool setOutput( int o );
 
     bool runBootloader();
