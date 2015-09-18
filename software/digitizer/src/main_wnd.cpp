@@ -761,11 +761,11 @@ void MainWnd::slotSweepProbe()
 
 void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
 {
-    QString stri= QString( "T: %1[C], workV = %2, workI = %3, probeV = %4, probeI = %5" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
+    QString stri= QString( "T: %1[C], workV = %2[mV], workI = %3[uA], probeV = %4[mV], probeI = %5[uA]" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
                                                                                          .arg( wv, 8, 'f', 1, QChar( '0' ) ) 
-                                                                                         .arg( wi, 8, 'f', 1, QChar( '0' ) )
+                                                                                         .arg( wi * 1000000.0, 8, 'f', 7, QChar( '0' ) )
                                                                                          .arg( pv, 8, 'f', 1, QChar( '0' ) )
-                                                                                         .arg( pi, 8, 'f', 1, QChar( '0' ) );
+                                                                                         .arg( pi * 1000000.0, 8, 'f', 7, QChar( '0' ) );
 
     setTitle( stri );
 }
