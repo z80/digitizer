@@ -11,7 +11,7 @@ Program Header:
     LOAD off    0x00000000 vaddr 0x08000000 paddr 0x08000000 align 2**15
          filesz 0x0000af24 memsz 0x0000af28 flags rwx
     LOAD off    0x00010800 vaddr 0x20000800 paddr 0x0800af28 align 2**15
-         filesz 0x00000044 memsz 0x0000154c flags rw-
+         filesz 0x00000044 memsz 0x000016d0 flags rw-
     LOAD off    0x00018000 vaddr 0x20000000 paddr 0x20000000 align 2**15
          filesz 0x00000000 memsz 0x00000800 flags rw-
 private flags = 5000002: [Version5 EABI] [has entry point]
@@ -30,27 +30,27 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   5 .data         00000044  20000800  0800af28  00010800  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          00001504  20000848  0800af70  00010844  2**3
+  6 .bss          00001688  20000848  0800af70  00010844  2**3
                   ALLOC
-  7 .debug_info   00011bbc  00000000  00000000  00010844  2**0
+  7 .debug_info   00011c77  00000000  00000000  00010844  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000439e  00000000  00000000  00022400  2**0
+  8 .debug_abbrev 000043b8  00000000  00000000  000224bb  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_loc    00007028  00000000  00000000  0002679e  2**0
+  9 .debug_loc    00007266  00000000  00000000  00026873  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_aranges 00000ca8  00000000  00000000  0002d7c6  2**0
+ 10 .debug_aranges 00000cb0  00000000  00000000  0002dad9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00001590  00000000  00000000  0002e46e  2**0
+ 11 .debug_ranges 000015b0  00000000  00000000  0002e789  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_line   00006a28  00000000  00000000  0002f9fe  2**0
+ 12 .debug_line   00006a65  00000000  00000000  0002fd39  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_str    000029d3  00000000  00000000  00036426  2**0
+ 13 .debug_str    000029e9  00000000  00000000  0003679e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .comment      00000030  00000000  00000000  00038df9  2**0
+ 14 .comment      00000030  00000000  00000000  00039187  2**0
                   CONTENTS, READONLY
- 15 .ARM.attributes 00000033  00000000  00000000  00038e29  2**0
+ 15 .ARM.attributes 00000033  00000000  00000000  000391b7  2**0
                   CONTENTS, READONLY
- 16 .debug_frame  000021f8  00000000  00000000  00038e5c  2**2
+ 16 .debug_frame  00002220  00000000  00000000  000391ec  2**2
                   CONTENTS, READONLY, DEBUGGING
 SYMBOL TABLE:
 08005000 l    d  startup	00000000 startup
@@ -159,44 +159,44 @@ SYMBOL TABLE:
 08009470 l     F .text	00000018 set_dac2
 08009490 l     F .text	00000018 set_dac1
 080094b0 l     F .text	00000006 set_led
-2000171e l     O .bss	00000001 slash.6497
 0800add0 l     O .text	00000050 funcs
-20001720 l     O .bss	00000004 out_index.6498
-20001724 l     O .bss	00000020 buffer
-20001744 l     O .bss	00000020 args
+20001720 l     O .bss	00000004 out_index.6502
+20001724 l     O .bss	00000001 slash.6501
+20001728 l     O .bss	00000020 buffer
+20001748 l     O .bss	00000020 args
 00000000 l    df *ABS*	00000000 led_ctrl.c
 08009630 l     F .text	00000068 ledsThread
-20001764 l     O .bss	00000010 mutex
-20001774 l     O .bss	00000004 value
-20001778 l     O .bss	000001b0 waLeds
+20001768 l     O .bss	00000010 mutex
+20001778 l     O .bss	00000004 value
+20001780 l     O .bss	000001b0 waLeds
 00000000 l    df *ABS*	00000000 sweep_ctrl.c
 08009730 l     F .text	0000010a recordAdcI
 08009840 l     F .text	0000001c extCb
-20001a68 l     O .bss	00000010 swDacFrom
-20001a98 l     O .bss	00000004 swPeriod
-20001a9c l     O .bss	00000004 swPtsCnt
-20001aa0 l     O .bss	00000010 swDacTo
-20001ab0 l     O .bss	00000001 swDacMode
-20001ab8 l     O .bss	00000004 swPtIndex
+20001a70 l     O .bss	00000010 swDacFrom
+20001aa0 l     O .bss	00000004 swPeriod
+20001aa4 l     O .bss	00000004 swPtsCnt
+20001aa8 l     O .bss	00000010 swDacTo
+20001ab8 l     O .bss	00000001 swDacMode
+20001c3c l     O .bss	00000004 swPtIndex
 0800ae50 l     O .text	000000a0 extcfg
-20001adc l     O .bss	00000001 swEnabled
-20001ae0 l     O .bss	00000004 swElapsed
-20001ae4 l     O .bss	00000004 swNextPtTime
+20001c60 l     O .bss	00000001 swEnabled
+20001c64 l     O .bss	00000004 swElapsed
+20001c68 l     O .bss	00000004 swNextPtTime
 00000000 l    df *ABS*	00000000 adc_ctrl.c
 08009b30 l     F .text	00000234 onSpiComplete
 20000800 l     O .data	00000010 instantAdcData
 0800aef0 l     O .text	0000000c hs_spicfg
-20001bb0 l     O .bss	00000004 adcIndex
+20001d34 l     O .bss	00000004 adcIndex
 00000000 l    df *ABS*	00000000 dac_ctrl.c
 08009f00 l     F .text	00000024 onDacSpiComplete
-20001cf8 l     O .bss	00000001 i.6129
+20001e7c l     O .bss	00000001 i.6133
 20000838 l     O .data	0000000c hs_spicfg
 00000000 l    df *ABS*	00000000 timer_ctrl.c
 0800a210 l     F .text	00000020 gptCb
 0800af00 l     O .text	00000008 gptCfg
 00000000 l    df *ABS*	00000000 temp_ctrl.c
-20001d38 l     O .bss	00000002 temperature
-20001d3c l     O .bss	00000010 mutex
+20001ebc l     O .bss	00000002 temperature
+20001ec0 l     O .bss	00000010 mutex
 0800af10 l     O .text	0000000c i2cfg1
 00000000 l    df *ABS*	00000000 output_ctrl.c
 00000000 l    df *ABS*	00000000 dfu_ctrl.c
@@ -229,7 +229,7 @@ SYMBOL TABLE:
 08006fc0 g     F .text	0000000a gptObjectInit
 080075e0 g     F .text	0000007c dmaInit
 08007dc0 g     F .text	0000007a gpt_lld_start
-20001aec g     O .bss	00000050 adcFiltered
+20001c70 g     O .bss	00000050 adcFiltered
 08005d10  w    F .text	00000002 Vector8C
 08005d10  w    F .text	00000002 VectorDC
 08009aa0 g     F .text	0000001e setTrigEn
@@ -239,7 +239,7 @@ SYMBOL TABLE:
 08006490 g     F .text	00000052 chSchGoSleepS
 20000dd8 g     O .bss	00000008 EXTD1
 20000df0 g     O .bss	00000048 I2CD1
-20001d4c g       *ABS*	00000000 __heap_base__
+20001ed0 g       *ABS*	00000000 __heap_base__
 0800af28 g       *ABS*	00000000 _etext
 08006660 g     F .text	000000b2 chThdCreateI
 08006010 g     F .text	00000032 dbg_check_enable
@@ -287,24 +287,24 @@ SYMBOL TABLE:
 080067e0 g     F .text	00000052 chThdExitS
 08006e80 g     F .text	0000000a extObjectInit
 0800a380 g     F .text	00000032 initOutput
-20001d00 g     O .bss	00000020 dac_queue
+20001e84 g     O .bss	00000020 dac_queue
 08005550 g     F .text	0000033c __udivdi3
-20001b5c g     O .bss	00000050 adcRaw
+20001ce0 g     O .bss	00000050 adcRaw
 20000954 g     O .bss	00000408 dbg_trace_buffer
 08005d10  w    F .text	00000002 PendSVVector
 08006320 g     F .text	0000006a chVTSetI
 08007910 g     F .text	00000030 Vector64
-20001d4c g       .bss	00000000 _bss_end
+20001ed0 g       .bss	00000000 _bss_end
 20000d60 g     O .bss	00000004 dbg_panic_msg
 08005b20  w    F .text	00000002 _default_exit
 08008db0 g     F .text	00000150 _pal_lld_setgroupmode
-20001928 g     O .bss	00000140 sweep_queue_buffer
+20001930 g     O .bss	00000140 sweep_queue_buffer
 08005d10  w    F .text	00000002 VectorCC
 08008940 g     F .text	0000004c sd_lld_init
 08005d10  w    F .text	00000002 Vector54
 08005d10  w    F .text	00000002 Vector98
 08009e10 g     F .text	00000028 queryAdcI
-20001a78 g     O .bss	00000020 sweepCmdQueue
+20001a80 g     O .bss	00000020 sweepCmdQueue
 08009e80 g     F .text	0000001e instantAdcI
 08008920 g     F .text	0000001e VectorD8
 08005d10  w    F .text	00000002 Vector24
@@ -312,14 +312,14 @@ SYMBOL TABLE:
 080069a0 g     F .text	00000020 chMtxLock
 08008b30 g     F .text	00000142 spi_lld_start
 080065c0 g     F .text	0000004e chSchDoReschedule
-20001b3c g     O .bss	00000020 adc_queue
+20001cc0 g     O .bss	00000020 adc_queue
 08005f30 g     F .text	00000078 chSysInit
 080067b0 g     F .text	00000030 chThdSleep
 08006b20 g     F .text	0000001a chIQInit
 0800ab60 g     O .text	00000054 _stm32_dma_streams
 080075a0 g     F .text	00000034 Vector84
 08006e70 g     F .text	00000004 extInit
-20001ab4 g     O .bss	00000002 sweepCmdBuffer
+20001abc g     O .bss	00000180 sweepCmdBuffer
 08009f30 g     F .text	0000001c setDacI
 08005e20 g     F .text	0000002a SysTickVector
 080073c0 g     F .text	0000000a spiObjectInit
@@ -334,7 +334,7 @@ SYMBOL TABLE:
 08009e50 g     F .text	0000002a instantAdc
 08007300 g     F .text	0000004e sdStart
 20000818 g     O .data	00000010 dacValues
-20001bb8 g     O .bss	00000140 adc_queue_buffer
+20001d3c g     O .bss	00000140 adc_queue_buffer
 08007b30 g     F .text	0000000c ext_lld_init
 08005d10  w    F .text	00000002 VectorE4
 08008160 g     F .text	00000182 VectorC0
@@ -347,7 +347,7 @@ SYMBOL TABLE:
 08006fb0 g     F .text	00000004 gptInit
 080062f0 g     F .text	0000000e chDbgPanic
 20000d64 g     O .bss	00000010 vtlist
-20001d20 g     O .bss	00000018 dac_queue_buffer
+20001ea4 g     O .bss	00000018 dac_queue_buffer
 08005d10  w    F .text	00000002 HardFaultVector
 08005da0 g     F .text	0000007e _port_irq_epilogue
 08009f50 g     F .text	00000056 setDac
@@ -358,12 +358,12 @@ SYMBOL TABLE:
 08007da0 g     F .text	00000018 gpt_lld_init
 080051d0  w    F .text	00000002 __aeabi_ldiv0
 080098f0 g     F .text	00000016 setSweepTime
-20001ae8 g     O .bss	00000004 adcPointer
+20001c6c g     O .bss	00000004 adcPointer
 080061b0 g     F .text	00000046 dbg_check_leave_isr
 0800af28 g       *ABS*	00000000 _textdata
 08007a00 g     F .text	000000a4 VectorE0
 00000000 g       *ABS*	00000000 _text
-20001bac g     O .bss	00000004 adc_rx_buffer
+20001d30 g     O .bss	00000004 adc_rx_buffer
 08005d10  w    F .text	00000002 MemManageVector
 080050ec g       startup	00000000 __fini_array_start
 0800a230 g     F .text	00000024 initTimer
@@ -391,7 +391,7 @@ SYMBOL TABLE:
 08007d30 g     F .text	0000002c ext_lld_channel_disable
 20000000 g       *ABS*	00000000 __ram_start__
 08005e60 g     F .text	00000016 _port_thread_start
-08009860 g     F .text	00000062 initSweep
+08009860 g     F .text	00000064 initSweep
 080078e0 g     F .text	00000030 Vector60
 08005d10  w    F .text	00000002 Vector1C
 08007130 g     F .text	000000b6 i2cMasterTransmitTimeout
@@ -408,7 +408,7 @@ SYMBOL TABLE:
 0800a1f0 g     F .text	0000001a currentDacsI
 08008ca0 g     F .text	0000003a spi_lld_send
 20000890 g     O .bss	000000c0 _idle_thread_wa
-20001cfc g     O .bss	00000002 dac_tx_buffer
+20001e80 g     O .bss	00000002 dac_tx_buffer
 08006c80 g     F .text	00000018 chOQInit
 08006b90 g     F .text	0000005a chIQGetTimeout
 20000800 g       .data	00000000 _data
@@ -428,7 +428,7 @@ SYMBOL TABLE:
 08009910 g     F .text	0000011c processSweepI
 20005000 g       *ABS*	00000000 __ram_end__
 20000844 g       .data	00000000 _edata
-20001d4c g       *ABS*	00000000 _end
+20001ed0 g       *ABS*	00000000 _end
 08008320 g     F .text	0000030c i2c_lld_start
 08006390 g     F .text	0000004e chVTResetI
 08005d10 g     F .text	00000002 _unhandled_exception
@@ -456,7 +456,7 @@ SYMBOL TABLE:
 08005d10  w    F .text	00000002 VectorB8
 08008990 g     F .text	000000aa sd_lld_start
 00000400 g       *ABS*	00000000 __main_stack_size__
-20001abc g     O .bss	00000020 sweep_queue
+20001c40 g     O .bss	00000020 sweep_queue
 08006110 g     F .text	00000042 dbg_check_unlock_from_isr
 20000800 g       .stacks	00000000 __process_stack_end__
 08005d10  w    F .text	00000002 Vector34
@@ -468,6 +468,6 @@ SYMBOL TABLE:
 08009b00 g     F .text	00000024 sweepDacMode
 08005d10  w    F .text	00000002 Vector20
 080094c0 g     F .text	0000004c initCpuIo
-20001bb4 g     O .bss	00000004 elapsed
+20001d38 g     O .bss	00000004 elapsed
 
 

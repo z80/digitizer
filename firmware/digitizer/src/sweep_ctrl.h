@@ -16,6 +16,8 @@ InputQueue * sweepQueue( void ); // Sweep data.
 void setSweepDacMode( uint8_t en );
 uint8_t sweepDacMode( void );
 
+uint8_t sweepPush( int ptsCnt, int period, int * dacTo );
+
 #endif
 
 

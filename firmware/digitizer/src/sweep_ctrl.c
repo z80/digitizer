@@ -9,8 +9,9 @@
 InputQueue  sweep_queue;
 uint8_t     sweep_queue_buffer[SWEEP_QUEUE_SZ];
 
+# define SWEEP_CMD_SZ (sizeof( int ) * 6 * 16)
 OutputQueue sweepCmdQueue;
-uint8_t     sweepCmdBuffer[2];
+uint8_t     sweepCmdBuffer[ SWEEP_CMD_SZ ];
 
 
 static int swDacFrom[4];
@@ -81,7 +82,7 @@ void initSweep( void )
 	swDacMode     = 0;
 
 	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
-	chOQInit( &sweepCmdQueue, sweepCmdBuffer,     2,              0 );
+	chOQInit( &sweepCmdQueue, sweepCmdBuffer,     SWEEP_CMD_SZ,   0 );
 
 
 	// Initialize external interrupt input here.
@@ -145,6 +146,18 @@ void processSweepI( uint8_t dacIndex )
 			//return 0;
 		}
 	}
+	else
+	{
+		int space = chOQGetFullI( &sweepCmdQueue );
+		if ( space >= 24 )
+		{
+			swEnabled = 1;
+
+			// Current DAC values.
+			currentDacsI( swDacFrom );
+		}
+
+	}
 	//return 1;
 }
 
@@ -193,6 +206,63 @@ uint8_t sweepDacMode( void )
 		uint8_t res = swDacMode;
 	chSysUnlock();
 	return res;
+}
+
+uint8_t sweepPush( int ptsCnt, int period, int * dacTo )
+{
+	uint8_t v;
+	chSysLock();
+		int space = chOQGetEmptyI( &sweepCmdQueue );
+	chSysUnlock();
+	if ( space >= 24 )
+	{
+		// ptsCnt
+		v = (uint8_t)(( ptsCnt >> 24 ) & 0xFF);
+		chOQPut( &sweepCmdQueue, v );
+
+		v = (uint8_t)(( ptsCnt >> 16 ) & 0xFF);
+		chOQPut( &sweepCmdQueue, v );
+
+		v = (uint8_t)(( ptsCnt >> 8 ) & 0xFF);
+		chOQPut( &sweepCmdQueue, v );
+
+		v = (uint8_t)(( ptsCnt ) & 0xFF);
+		chOQPut( &sweepCmdQueue, v );
+
+		// period
+		v = (uint8_t)(( period >> 24 ) & 0xFF);
+		chOQPut( &sweepCmdQueue, v );
+
+		v = (uint8_t)(( period >> 16 ) & 0xFF);
+		chOQPut( &sweepCmdQueue, v );
+
+		v = (uint8_t)(( period >> 8 ) & 0xFF);
+		chOQPut( &sweepCmdQueue, v );
+
+		v = (uint8_t)(( period ) & 0xFF);
+		chOQPut( &sweepCmdQueue, v );
+
+
+		// dacTo
+		uint8_t i;
+		for ( i=0; i<4; i++ )
+		{
+			v = (uint8_t)(( dacTo[i] >> 24 ) & 0xFF);
+			chOQPut( &sweepCmdQueue, v );
+
+			v = (uint8_t)(( dacTo[i] >> 16 ) & 0xFF);
+			chOQPut( &sweepCmdQueue, v );
+
+			v = (uint8_t)(( dacTo[i] >> 8 ) & 0xFF);
+			chOQPut( &sweepCmdQueue, v );
+
+			v = (uint8_t)(( dacTo[i] ) & 0xFF);
+			chOQPut( &sweepCmdQueue, v );
+		}
+	}
+	else
+		return 1;
+	return 0;
 }
 
 
