@@ -509,6 +509,7 @@ bool Bipot::setTriggerEn( bool en )
     return true;
 }
 
+/*
 bool Bipot::setSweepRange( qreal workV, qreal probeV )
 {
     VoltampIo & io = *(pd->io);
@@ -534,6 +535,7 @@ bool Bipot::setSweepTime( int ptsCnt, qreal periodMs )
         return false;
     return true;
 }
+*/
 
 bool Bipot::setSweepEn( bool en )
 {
