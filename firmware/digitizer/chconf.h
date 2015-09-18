@@ -40,7 +40,7 @@
 #define _CHCONF_H_
 
 
-#define CORTEX_VTOR_INIT 0x5000
+//#define CORTEX_VTOR_INIT 0x5000
 
 /*===========================================================================*/
 /**

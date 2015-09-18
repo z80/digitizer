@@ -543,6 +543,11 @@ void MainWnd::slotSweepWork()
 {
     if ( io->isOpen() )
     {
+        p_swWorkV.clear();
+        p_swWorkI.clear();
+        p_swProbeV.clear();
+        p_swProbeI.clear();
+
         qreal workFrom   = ui.workVolt->value();
         qreal workTo     = ui.workSweepTo->value();
         qreal probeFrom  = ui.probeVolt->value();

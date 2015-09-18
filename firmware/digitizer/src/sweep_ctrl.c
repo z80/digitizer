@@ -25,6 +25,7 @@ static int swPtsCnt;
 static int swPtIndex;
 
 static uint8_t swEnabled;
+static uint8_t swEnabledNew;
 
 static uint8_t swDacMode;
 
@@ -79,6 +80,7 @@ static const EXTConfig extcfg = {
 void initSweep( void )
 {
 	swEnabled     = 0;
+	swEnabledNew  = 0;
 	swDacMode     = 0;
 	swPeriod      = 8000000;
 
@@ -105,6 +107,7 @@ void setSweepTime( int ptsCnt, int period )
 }
 
 static void recordAdcI( void );
+static uint8_t checkForNewTransitionI( void );
 
 void processSweepI( uint8_t dacIndex )
 {
@@ -126,6 +129,19 @@ void processSweepI( uint8_t dacIndex )
 				t = (int64_t)(swPeriod) * (int64_t)swPtIndex / (int64_t)( swPtsCnt-1 );
 				swNextPtTime = (int)t;
 			}
+
+			// Turning sweep off if it's on.
+			if ( !swEnabledNew )
+			{
+				// Clear output queue.
+				// If it was turned off just clear command queue.
+				int space = chOQGetFullI( &sweepCmdQueue );
+				int i;
+				for ( i=0; i<space; i++ )
+					chOQGetI( &sweepCmdQueue );
+				// Turn sweep off.
+				swEnabled = 0;
+			}
 		}
 		// Move DACs.
 		if ( swElapsed < swPeriod )
@@ -143,86 +159,80 @@ void processSweepI( uint8_t dacIndex )
 			setDacI( 2, swDacTo[2] );
 			setDacI( 3, swDacTo[3] );
 
-			// Check if there is next transition.
-			int space = chOQGetFullI( &sweepCmdQueue );
-			if ( space >= 24 )
-			{
-				swNextPtTime = 0;
-				swElapsed    = 0;
-				swPtIndex    = 0;
-
-				// Current DAC values.
-				currentDacsI( swDacFrom );
-
-				uint8_t v;
-				v = chOQGetI( &sweepCmdQueue );
-				swPtsCnt = ((int)(v) << 24);
-
-				v = chOQGetI( &sweepCmdQueue );
-				swPtsCnt += ((int)(v) << 16);
-
-				v = chOQGetI( &sweepCmdQueue );
-				swPtsCnt += ((int)(v) << 8);
-
-				v = chOQGetI( &sweepCmdQueue );
-				swPtsCnt += (int)(v);
-
-
-				v = chOQGetI( &sweepCmdQueue );
-				swPeriod = ((int)(v) << 24);
-
-				v = chOQGetI( &sweepCmdQueue );
-				swPeriod += ((int)(v) << 16);
-
-				v = chOQGetI( &sweepCmdQueue );
-				swPeriod += ((int)(v) << 8);
-
-				v = chOQGetI( &sweepCmdQueue );
-				swPeriod += (int)(v);
-
-				uint8_t i;
-				for ( i=0; i<4; i++ )
-				{
-					v = chOQGetI( &sweepCmdQueue );
-					swDacTo[i] = ((int)(v) << 24);
-
-					v = chOQGetI( &sweepCmdQueue );
-					swDacTo[i] += ((int)(v) << 16);
-
-					v = chOQGetI( &sweepCmdQueue );
-					swDacTo[i] += ((int)(v) << 8);
-
-					v = chOQGetI( &sweepCmdQueue );
-					swDacTo[i] += (int)(v);
-				}
-			}
-			else
-				swEnabled = 0;
+			swEnabled = checkForNewTransitionI();
 		}
 	}
 	else
 	{
-		// If it was turned off just clear command queue.
-		int space = chOQGetFullI( &sweepCmdQueue );
-		int i;
-		for ( i=0; i<space; i++ )
-			chOQGetI( &sweepCmdQueue );
+		if ( swEnabledNew )
+		{
+			// Check if there is next transition.
+			swEnabled = checkForNewTransitionI();
+		}
 	}
+}
+
+static uint8_t checkForNewTransitionI( void )
+{
+	int space = chOQGetFullI( &sweepCmdQueue );
+	if ( space >= 16 )
+	{
+		// Current DAC values.
+		currentDacsI( swDacFrom );
+
+		uint8_t v;
+		v = chOQGetI( &sweepCmdQueue );
+		swPtsCnt = ((int)(v) << 24);
+
+		v = chOQGetI( &sweepCmdQueue );
+		swPtsCnt += ((int)(v) << 16);
+
+		v = chOQGetI( &sweepCmdQueue );
+		swPtsCnt += ((int)(v) << 8);
+
+		v = chOQGetI( &sweepCmdQueue );
+		swPtsCnt += (int)(v);
+
+
+		v = chOQGetI( &sweepCmdQueue );
+		swPeriod = ((int)(v) << 24);
+
+		v = chOQGetI( &sweepCmdQueue );
+		swPeriod += ((int)(v) << 16);
+
+		v = chOQGetI( &sweepCmdQueue );
+		swPeriod += ((int)(v) << 8);
+
+		v = chOQGetI( &sweepCmdQueue );
+		swPeriod += (int)(v);
+
+		uint8_t i;
+		for ( i=0; i<4; i++ )
+		{
+			v = chOQGetI( &sweepCmdQueue );
+			swDacTo[i] = ((int)(v) << 8);
+
+			v = chOQGetI( &sweepCmdQueue );
+			swDacTo[i] += (int)(v);
+		}
+
+		// Initial counter values.
+		swElapsed    = 0;
+		swPtIndex    = 0;
+		swNextPtTime = 0;
+
+		return 1;
+	}
+
+	swEnabledNew = 0;
+	return 0;
 }
 
 void setSweepEn( uint8_t en )
 {
-	if ( en > 0 )
-	{
-		// This is for new sweep design.
-		currentDacs( swDacTo ); // This is for
-
-		// To prevent system from recording a dummy point.
-		swElapsed = 0xEFFFFFF0;
-		swNextPtTime = 0xEFFFFFFE;
-	}
-
-	swEnabled = en;
+	chSysLock();
+		swEnabledNew = en;
+	chSysUnlock();
 }
 
 uint8_t sweepEn( void )
@@ -267,7 +277,7 @@ uint8_t sweepPush( int ptsCnt, int period, int * dacTo )
 	chSysLock();
 		int space = chOQGetEmptyI( &sweepCmdQueue );
 	chSysUnlock();
-	if ( space >= 24 )
+	if ( space >= 16 )
 	{
 		// ptsCnt
 		v = (uint8_t)(( ptsCnt >> 24 ) & 0xFF);
@@ -300,12 +310,6 @@ uint8_t sweepPush( int ptsCnt, int period, int * dacTo )
 		uint8_t i;
 		for ( i=0; i<4; i++ )
 		{
-			v = (uint8_t)(( dacTo[i] >> 24 ) & 0xFF);
-			chOQPut( &sweepCmdQueue, v );
-
-			v = (uint8_t)(( dacTo[i] >> 16 ) & 0xFF);
-			chOQPut( &sweepCmdQueue, v );
-
 			v = (uint8_t)(( dacTo[i] >> 8 ) & 0xFF);
 			chOQPut( &sweepCmdQueue, v );
 
