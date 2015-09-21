@@ -17,10 +17,8 @@ message( STATUS $ENV{PATH} )
 
 add_subdirectory( "./3dparty" )
 add_subdirectory( "./libio" )
-
-#add_subdirectory( "./lib_lua_machine" )
-#add_subdirectory( "./test" )
-
 add_subdirectory( "./digitizer" )
 add_subdirectory( "./libextctrl" )
 add_subdirectory( "./libluafactory" )
+
+add_subdirectory( "./test" )
