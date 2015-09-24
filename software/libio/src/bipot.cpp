@@ -126,6 +126,7 @@ qreal Bipot::PD::adc2workI( int adc )
     mutex.unlock();
     qreal res = 10000.0 * ( a.b + a.ka*( (static_cast<qreal>( adc ) - 32767.0) / 32768.0 ) + a.kt*t + a.kt2*t*t + a.kt3*t*t*t );
     res = workA + res*workB;
+    res = -res;
 
     return res;
 }
@@ -138,11 +139,14 @@ qreal Bipot::PD::adc2probeI( int adc )
     mutex.unlock();
     qreal res = 10000.0 * ( a.b + a.ka*( (static_cast<qreal>( adc ) - 32767.0) / 32768.0 ) + a.kt*t + a.kt2*t*t + a.kt3*t*t*t );
     res = probeA + res*probeB;
+    res = -res;
+
     return res;
 }
 
 void  Bipot::PD::workV2Dac( qreal workV, int & dac1, int & dac2 )
 {
+    workV = -workV;
     qreal a1  = workDac.a1;
     qreal a2  = workDac.a2;
     qreal b   = workDac.b;
@@ -643,7 +647,7 @@ bool Bipot::sweepPush( int ptsCnt, qreal periodMs, qreal workV, qreal probeV )
     int dacs[4];
     // Convert voltages to DACs.
     pd->workV2Dac( workV,  dacs[0], dacs[1] );
-    pd->workV2Dac( probeV, dacs[2], dacs[3] );
+    pd->probeV2Dac( probeV, dacs[2], dacs[3] );
 
     int period = static_cast<int>( periodMs * 4.0 );
 

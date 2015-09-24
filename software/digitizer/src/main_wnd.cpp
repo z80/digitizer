@@ -610,13 +610,13 @@ void MainWnd::refreshDevicesList()
 void MainWnd::slotGain()
 {
     int indV  = ui.workVoltGain->currentIndex();
-    qreal gainWorkV = -pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainWorkV = pow( 10.0, -static_cast<qreal>( indV ) );
     int indIA = ui.workCurrGain->currentIndex();
     qreal gainI = pow( 10.0, static_cast<qreal>( indIA + 4 ) );
     qreal gainI1 = 0.001 / gainI;
 
     indV  = ui.probeVoltGain->currentIndex();
-    qreal gainProbeV = -pow( 10.0, static_cast<qreal>( indV ) );
+    qreal gainProbeV = pow( 10.0, -static_cast<qreal>( indV ) );
     indIA = ui.probeCurrGain->currentIndex();
     gainI = pow( 10.0, static_cast<qreal>( indIA + 4 ) );
     qreal gainI2 = 0.001 / gainI;
