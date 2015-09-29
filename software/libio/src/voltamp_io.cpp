@@ -52,7 +52,7 @@ const int VoltampIo::PD::CMD_SET_ARGS  = 1;
 const int VoltampIo::PD::CMD_EXEC_FUNC = 2;
 
 const int VoltampIo::PD::TIMEOUT = 6000;
-const int VoltampIo::PD::IN_BUFFER_SZ = (4 * 2048);
+const int VoltampIo::PD::IN_BUFFER_SZ = (640 * 16); //(4 * 2048);
 
 void VoltampIo::PD::encodeData( quint8 * data, int sz )
 {

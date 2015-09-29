@@ -4,7 +4,8 @@
 #include "dac_ctrl.h"
 #include "adc_ctrl.h"
 
-#define SWEEP_QUEUE_SZ (320)
+// CP2102 transmit buffer size is 640 bytes.
+#define SWEEP_QUEUE_SZ (640 * 16)
 
 InputQueue  sweep_queue;
 uint8_t     sweep_queue_buffer[SWEEP_QUEUE_SZ];
@@ -435,11 +436,11 @@ static void extCb( EXTDriver * extp, expchannel_t channel )
 {
   (void)extp;
   (void)channel;
-  //chSysLockFromIsr();
+  chSysLockFromIsr();
   	// Just indicate that point is supposed to be recorded.
     trigRecordPtsCnt++;
     // And it will be recorded in normal timer ISR.
-  //chSysUnlockFromIsr();
+  chSysUnlockFromIsr();
 }
 
 
