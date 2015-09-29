@@ -29,6 +29,8 @@ static uint8_t swEnabledNew;
 
 static uint8_t swDacMode;
 
+static int trigRecordPtsCnt = 0;
+
 static void extCb( EXTDriver * extp, expchannel_t channel );
 
 static const EXTConfig extcfg = {
@@ -83,6 +85,7 @@ void initSweep( void )
 	swEnabledNew  = 0;
 	swDacMode     = 0;
 	swPeriod      = 8000000;
+	trigRecordPtsCnt = 0;
 
 	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
 	chOQInit( &sweepCmdQueue, sweepCmdBuffer,     SWEEP_CMD_SZ,   0 );
@@ -164,6 +167,11 @@ void processSweepI( uint8_t dacIndex )
 	}
 	else
 	{
+		if ( trigRecordPtsCnt > 0 )
+		{
+			recordAdcI();
+			trigRecordPtsCnt--;
+		}
 		if ( swEnabledNew )
 		{
 			// Check if there is next transition.
@@ -427,10 +435,11 @@ static void extCb( EXTDriver * extp, expchannel_t channel )
 {
   (void)extp;
   (void)channel;
-  chSysLockFromIsr();
-    // Record ADC data.
-    recordAdcI();
-  chSysUnlockFromIsr();
+  //chSysLockFromIsr();
+  	// Just indicate that point is supposed to be recorded.
+    trigRecordPtsCnt++;
+    // And it will be recorded in normal timer ISR.
+  //chSysUnlockFromIsr();
 }
 
 

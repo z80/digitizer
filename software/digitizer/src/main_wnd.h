@@ -170,6 +170,8 @@ private:
     QString m_host;
     int     m_port;
     bool    m_doListen;
+
+    int totalPts;
 };
 
 #endif

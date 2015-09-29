@@ -347,6 +347,8 @@ void MainWnd::measure()
 
             bool res;
 
+            measureSweep();
+
             // Read oscilloscope data.
             res = io->oscData( t_workV, t_probeV, t_workI, t_probeI );
             if ( !res )
@@ -389,7 +391,7 @@ void MainWnd::measure()
             // Sweep measure routine in the same thread.
             bool measured = measureSweep();
 
-            if ( ( szMeasured < 24 ) && ( !measured ) )
+            if ( ( szMeasured < 24 ) && ( measured ) )
                 Msleep::msleep( 10 );
         }
         else
@@ -458,7 +460,14 @@ bool MainWnd::measureSweep()
             emit sigSweepReplot();
         }
 
-        if ( !sweep )
+        mutex.lock();
+            totalPts += szMeasured;
+        mutex.unlock();
+
+        mutex.lock();
+            bool sweepRem = sweepRemote;
+        mutex.unlock();
+        if ( ( !sweep ) && ( !sweepRem ) )
         {
             int szCollected = 0;
             int cnt = 0;
@@ -466,6 +475,11 @@ bool MainWnd::measureSweep()
                 bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
                 Msleep::msleep( 10 );
                 cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+
+                mutex.lock();
+                    totalPts += cnt;
+                mutex.unlock();
+
                 mutexSw.lock();
                     for ( int i=0; i<t_swWorkV.size(); i++ )
                         p_swWorkV.enqueue( t_swWorkV.at( i ) );
@@ -768,6 +782,12 @@ void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
                                                                                          .arg( pi * 1000000.0, 8, 'f', 7, QChar( '0' ) );
 
     setTitle( stri );
+
+    // Debugging;
+    mutex.lock();
+        int cnt = totalPts;
+    mutex.unlock();
+    setWindowTitle( QString( "%1" ).arg( cnt ) );
 }
 
 void MainWnd::slotReplot()
@@ -873,6 +893,9 @@ void MainWnd::slotOpen()
 
 void MainWnd::slotExternalTrigger()
 {
+    mutex.lock();
+        totalPts = 0;
+    mutex.unlock();
     bool en = ui.actionExternal_trigger->isChecked();
     bool dacMode = ui.sweepDacMode->isChecked();
     bool res;
@@ -1131,8 +1154,10 @@ void MainWnd::slotInstantValues()
 
 void MainWnd::slotSetTrigEn()
 {
-    sweepRemote    = this->trigEn;
-    doMeasureSweep = this->trigEn;
+    mutex.lock();
+        sweepRemote    = this->trigEn;
+        doMeasureSweep = this->trigEn;
+    mutex.unlock();
     ui.actionExternal_trigger->setChecked( this->trigEn );
     slotExternalTrigger();
 
