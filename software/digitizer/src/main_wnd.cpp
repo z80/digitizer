@@ -341,8 +341,11 @@ void MainWnd::measure()
                 mutex.unlock();
                 if ( term )
                     break;
-                Msleep::msleep( 1000 );
-                continue;
+                if ( !io->isOpen() )
+                {
+                    Msleep::msleep( 1000 );
+                    continue;
+                }
             }
 
             bool res;
@@ -353,7 +356,7 @@ void MainWnd::measure()
             res = io->oscData( t_workV, t_probeV, t_workI, t_probeI );
             if ( !res )
             {
-                Msleep::msleep( 1000 );
+                Msleep::msleep( 10 );
                 reopen();
                 continue;
             }
@@ -374,25 +377,13 @@ void MainWnd::measure()
             mutex.unlock();
             // Replot if necessary.
             if ( szCollected > 12 )
-            {
-                qreal workV, probeV, workI, probeI;
-                // Probably instant data shouldn't be read here.
-                res = io->instantData( workV, probeV, workI, probeI );
-                if ( !res )
-                {
-                    Msleep::msleep( 1000 );
-                    reopen();
-                    continue;
-                }
-                emit sigInstantValues( workV, probeV, workI, probeI );
                 emit sigReplot();
-            }
 
             // Sweep measure routine in the same thread.
             bool measured = measureSweep();
 
             if ( ( szMeasured < 24 ) && ( measured ) )
-                Msleep::msleep( 10 );
+                Msleep::msleep( 1 );
         }
         else
             Msleep::msleep( 100 );
@@ -823,8 +814,16 @@ void MainWnd::slotTemp()
                 io->setWorkMv( setWorkV );
                 io->setProbeMv( setProbeV );
             }
+            temperature = t;
+
+            qreal workV, probeV, workI, probeI;
+            // Probably instant data shouldn't be read here.
+            res = io->instantData( workV, probeV, workI, probeI );
+            if ( res )
+                emit sigInstantValues( workV, probeV, workI, probeI );
         }
-        temperature = t;
+
+
     }
 }
 

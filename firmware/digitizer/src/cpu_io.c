@@ -252,10 +252,6 @@ static void get_adc( uint8_t * args )
 		writeResult( b );
 		b = (uint8_t)((res[i] >> 8) & 0xFF);
 		writeResult( b );
-		b = (uint8_t)((res[i] >> 16) & 0xFF);
-		writeResult( b );
-		b = (uint8_t)((res[i] >> 24) & 0xFF);
-		writeResult( b );
 	}
 	writeEom();
 }
@@ -271,8 +267,8 @@ static void set_osc_period( uint8_t * arg )
 	uint32_t v;
 	v = (int)( arg[0] );
 	v += ( (int)( arg[1] ) << 8 );
-	v += ( (int)( arg[1] ) << 16 );
-	v += ( (int)( arg[1] ) << 24 );
+	v += ( (int)( arg[2] ) << 16 );
+	v += ( (int)( arg[3] ) << 24 );
 	setOscPeriod( v );
 }
 
@@ -282,7 +278,7 @@ static void get_osc_data( uint8_t * arg )
 	InputQueue * q = adcQueue();
 	chSysLock();
 		size_t cnt;
-		cnt = (chQSpaceI( q ) / 12);
+		cnt = (chQSpaceI( q ) / 8);
 	chSysUnlock();
 	size_t recInd;
 	for ( recInd=0; recInd<cnt; recInd++ )
@@ -291,7 +287,7 @@ static void get_osc_data( uint8_t * arg )
 		for ( sigInd=0; sigInd<4; sigInd++ )
 		{
 			size_t byteInd;
-			for ( byteInd = 0; byteInd<3; byteInd++ )
+			for ( byteInd = 0; byteInd<2; byteInd++ )
 			{
 				uint8_t v;
 				msg_t msg;
@@ -361,7 +357,7 @@ static void get_sweep_data( uint8_t * args )
 	InputQueue * q = sweepQueue();
 	chSysLock();
 		size_t cnt;
-		cnt = (chQSpaceI( q ) / 12);
+		cnt = (chQSpaceI( q ) / 8);
 	chSysUnlock();
 	size_t recInd;
 	for ( recInd=0; recInd<cnt; recInd++ )
@@ -370,7 +366,7 @@ static void get_sweep_data( uint8_t * args )
 		for ( sigInd=0; sigInd<4; sigInd++ )
 		{
 			size_t byteInd;
-			for ( byteInd = 0; byteInd<3; byteInd++ )
+			for ( byteInd = 0; byteInd<2; byteInd++ )
 			{
 				uint8_t v;
 				msg_t msg;

@@ -349,7 +349,7 @@ uint8_t sweepPush( int ptsCnt, int period, int * dacTo )
 
 static void recordAdcI( void )
 {
-	if ( chIQGetEmptyI( &sweep_queue ) >= 12 )
+	if ( chIQGetEmptyI( &sweep_queue ) >= 8 )
 	{
 		int adc[4];
 		instantAdcI( adc );
@@ -374,9 +374,6 @@ static void recordAdcI( void )
 		v = (uint8_t)( (value >> 8) & 0xFF );
 		chIQPutI( &sweep_queue, v );
 
-		v = (uint8_t)( (value >> 16) & 0xFF );
-		chIQPutI( &sweep_queue, v );
-
 
 
 		value = adc[1];
@@ -384,9 +381,6 @@ static void recordAdcI( void )
 		chIQPutI( &sweep_queue, v );
 
 		v = (uint8_t)( (value >> 8) & 0xFF );
-		chIQPutI( &sweep_queue, v );
-
-		v = (uint8_t)( (value >> 16) & 0xFF );
 		chIQPutI( &sweep_queue, v );
 
 
@@ -398,9 +392,6 @@ static void recordAdcI( void )
 		v = (uint8_t)( (value >> 8) & 0xFF );
 		chIQPutI( &sweep_queue, v );
 
-		v = (uint8_t)( (value >> 16) & 0xFF );
-		chIQPutI( &sweep_queue, v );
-
 
 
 		value = adc[3];
@@ -408,9 +399,6 @@ static void recordAdcI( void )
 		chIQPutI( &sweep_queue, v );
 
 		v = (uint8_t)( (value >> 8) & 0xFF );
-		chIQPutI( &sweep_queue, v );
-
-		v = (uint8_t)( (value >> 16) & 0xFF );
 		chIQPutI( &sweep_queue, v );
 	}
 }

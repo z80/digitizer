@@ -87,7 +87,6 @@ void onSpiComplete( SPIDriver * spid )
 		value = (value >> 1) & 0xFFFF;
 
 		filterAdc( prevIndex, value );
-    	//instantAdcData[prevIndex] = value;
 
 		// if (adcIndex == 0) this means it was 3 just
 		// in time of measure. So a full cycle was just completed.
@@ -99,7 +98,7 @@ void onSpiComplete( SPIDriver * spid )
 			if ( elapsed >= period )
 			{
 				elapsed -= period;
-				if ( chIQGetEmptyI( &adc_queue ) >= 12 )
+				if ( chIQGetEmptyI( &adc_queue ) >= 8 )
 				{
 					// Before I don't really know which bits to get I get all bits obtained.
 					// In datasheet it is written that minimum 22 cycles are required and 24
@@ -114,9 +113,6 @@ void onSpiComplete( SPIDriver * spid )
 					v = (uint8_t)( (value >> 8) & 0xFF );
 					chIQPutI( &adc_queue, v );
 
-					v = (uint8_t)( (value >> 16) & 0xFF );
-					chIQPutI( &adc_queue, v );
-
 
 
 					value = instantAdcData[1];
@@ -124,9 +120,6 @@ void onSpiComplete( SPIDriver * spid )
 					chIQPutI( &adc_queue, v );
 
 					v = (uint8_t)( (value >> 8) & 0xFF );
-					chIQPutI( &adc_queue, v );
-
-					v = (uint8_t)( (value >> 16) & 0xFF );
 					chIQPutI( &adc_queue, v );
 
 
@@ -138,9 +131,6 @@ void onSpiComplete( SPIDriver * spid )
 					v = (uint8_t)( (value >> 8) & 0xFF );
 					chIQPutI( &adc_queue, v );
 
-					v = (uint8_t)( (value >> 16) & 0xFF );
-					chIQPutI( &adc_queue, v );
-
 
 
 					value = instantAdcData[3];
@@ -148,9 +138,6 @@ void onSpiComplete( SPIDriver * spid )
 					chIQPutI( &adc_queue, v );
 
 					v = (uint8_t)( (value >> 8) & 0xFF );
-					chIQPutI( &adc_queue, v );
-
-					v = (uint8_t)( (value >> 16) & 0xFF );
 					chIQPutI( &adc_queue, v );
 				}
 			}
