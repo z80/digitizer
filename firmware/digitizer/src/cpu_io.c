@@ -252,10 +252,12 @@ static void get_adc( uint8_t * args )
 		writeResult( b );
 		b = (uint8_t)((res[i] >> 8) & 0xFF);
 		writeResult( b );
+		/*
 		b = (uint8_t)((res[i] >> 16) & 0xFF);
 		writeResult( b );
 		b = (uint8_t)((res[i] >> 24) & 0xFF);
 		writeResult( b );
+		*/
 	}
 	writeEom();
 }

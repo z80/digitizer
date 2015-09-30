@@ -1545,7 +1545,7 @@ destructors     0x080050ec        0x0
  *(SORT(.fini_array.*))
                 0x080050ec                PROVIDE (__fini_array_end, .)
 
-.text           0x080050f0     0x61bc
+.text           0x080050f0     0x617c
  *(.text.startup.*)
  .text.startup.main
                 0x080050f0       0x40 build/obj/main.o
@@ -2052,247 +2052,247 @@ destructors     0x080050ec        0x0
                 0x08009420       0x20 build/obj/cpu_io.o
  .text.set_osc_signals
                 0x08009440       0x10 build/obj/cpu_io.o
- .text.get_adc  0x08009450       0xa0 build/obj/cpu_io.o
+ .text.get_adc  0x08009450       0x60 build/obj/cpu_io.o
  .text.set_dac2
-                0x080094f0       0x20 build/obj/cpu_io.o
+                0x080094b0       0x20 build/obj/cpu_io.o
  .text.set_dac1
-                0x08009510       0x20 build/obj/cpu_io.o
- .text.set_led  0x08009530       0x10 build/obj/cpu_io.o
+                0x080094d0       0x20 build/obj/cpu_io.o
+ .text.set_led  0x080094f0       0x10 build/obj/cpu_io.o
  .text.initCpuIo
-                0x08009540       0x50 build/obj/cpu_io.o
-                0x08009540                initCpuIo
+                0x08009500       0x50 build/obj/cpu_io.o
+                0x08009500                initCpuIo
  .text.processCpuIo
-                0x08009590      0x120 build/obj/cpu_io.o
-                0x08009590                processCpuIo
+                0x08009550      0x120 build/obj/cpu_io.o
+                0x08009550                processCpuIo
  .text.ledsThread
-                0x080096b0       0x70 build/obj/led_ctrl.o
- .text.initLed  0x08009720       0x60 build/obj/led_ctrl.o
-                0x08009720                initLed
- .text.setLeds  0x08009780       0x30 build/obj/led_ctrl.o
-                0x08009780                setLeds
- .text.extCb    0x080097b0       0x30 build/obj/sweep_ctrl.o
+                0x08009670       0x70 build/obj/led_ctrl.o
+ .text.initLed  0x080096e0       0x60 build/obj/led_ctrl.o
+                0x080096e0                initLed
+ .text.setLeds  0x08009740       0x30 build/obj/led_ctrl.o
+                0x08009740                setLeds
+ .text.extCb    0x08009770       0x30 build/obj/sweep_ctrl.o
  .text.checkForNewTransitionI
-                0x080097e0      0x160 build/obj/sweep_ctrl.o
+                0x080097a0      0x160 build/obj/sweep_ctrl.o
  .text.recordAdcI
-                0x08009940      0x110 build/obj/sweep_ctrl.o
+                0x08009900      0x110 build/obj/sweep_ctrl.o
  .text.initSweep
-                0x08009a50       0xa0 build/obj/sweep_ctrl.o
-                0x08009a50                initSweep
+                0x08009a10       0xa0 build/obj/sweep_ctrl.o
+                0x08009a10                initSweep
  .text.setSweepRange
-                0x08009af0       0x20 build/obj/sweep_ctrl.o
-                0x08009af0                setSweepRange
+                0x08009ab0       0x20 build/obj/sweep_ctrl.o
+                0x08009ab0                setSweepRange
  .text.setSweepTime
-                0x08009b10       0x20 build/obj/sweep_ctrl.o
-                0x08009b10                setSweepTime
+                0x08009ad0       0x20 build/obj/sweep_ctrl.o
+                0x08009ad0                setSweepTime
  .text.processSweepI
-                0x08009b30      0x1c0 build/obj/sweep_ctrl.o
-                0x08009b30                processSweepI
+                0x08009af0      0x1c0 build/obj/sweep_ctrl.o
+                0x08009af0                processSweepI
  .text.setSweepEn
-                0x08009cf0       0x30 build/obj/sweep_ctrl.o
-                0x08009cf0                setSweepEn
- .text.sweepEn  0x08009d20       0x30 build/obj/sweep_ctrl.o
-                0x08009d20                sweepEn
+                0x08009cb0       0x30 build/obj/sweep_ctrl.o
+                0x08009cb0                setSweepEn
+ .text.sweepEn  0x08009ce0       0x30 build/obj/sweep_ctrl.o
+                0x08009ce0                sweepEn
  .text.setTrigEn
-                0x08009d50       0x20 build/obj/sweep_ctrl.o
-                0x08009d50                setTrigEn
+                0x08009d10       0x20 build/obj/sweep_ctrl.o
+                0x08009d10                setTrigEn
  .text.sweepQueue
-                0x08009d70       0x10 build/obj/sweep_ctrl.o
-                0x08009d70                sweepQueue
+                0x08009d30       0x10 build/obj/sweep_ctrl.o
+                0x08009d30                sweepQueue
  .text.setSweepDacMode
-                0x08009d80       0x30 build/obj/sweep_ctrl.o
-                0x08009d80                setSweepDacMode
+                0x08009d40       0x30 build/obj/sweep_ctrl.o
+                0x08009d40                setSweepDacMode
  .text.sweepDacMode
-                0x08009db0       0x30 build/obj/sweep_ctrl.o
-                0x08009db0                sweepDacMode
+                0x08009d70       0x30 build/obj/sweep_ctrl.o
+                0x08009d70                sweepDacMode
  .text.sweepPush
-                0x08009de0      0x110 build/obj/sweep_ctrl.o
-                0x08009de0                sweepPush
+                0x08009da0      0x110 build/obj/sweep_ctrl.o
+                0x08009da0                sweepPush
  .text.onSpiComplete
-                0x08009ef0      0x240 build/obj/adc_ctrl.o
- .text.initAdc  0x0800a130       0xa0 build/obj/adc_ctrl.o
-                0x0800a130                initAdc
+                0x08009eb0      0x240 build/obj/adc_ctrl.o
+ .text.initAdc  0x0800a0f0       0xa0 build/obj/adc_ctrl.o
+                0x0800a0f0                initAdc
  .text.queryAdcI
-                0x0800a1d0       0x30 build/obj/adc_ctrl.o
-                0x0800a1d0                queryAdcI
+                0x0800a190       0x30 build/obj/adc_ctrl.o
+                0x0800a190                queryAdcI
  .text.adcQueue
-                0x0800a200       0x10 build/obj/adc_ctrl.o
-                0x0800a200                adcQueue
+                0x0800a1c0       0x10 build/obj/adc_ctrl.o
+                0x0800a1c0                adcQueue
  .text.instantAdc
-                0x0800a210       0x30 build/obj/adc_ctrl.o
-                0x0800a210                instantAdc
+                0x0800a1d0       0x30 build/obj/adc_ctrl.o
+                0x0800a1d0                instantAdc
  .text.instantAdcI
-                0x0800a240       0x20 build/obj/adc_ctrl.o
-                0x0800a240                instantAdcI
+                0x0800a200       0x20 build/obj/adc_ctrl.o
+                0x0800a200                instantAdcI
  .text.setOscSignals
-                0x0800a260       0x30 build/obj/adc_ctrl.o
-                0x0800a260                setOscSignals
+                0x0800a220       0x30 build/obj/adc_ctrl.o
+                0x0800a220                setOscSignals
  .text.setOscPeriod
-                0x0800a290       0x30 build/obj/adc_ctrl.o
-                0x0800a290                setOscPeriod
+                0x0800a250       0x30 build/obj/adc_ctrl.o
+                0x0800a250                setOscPeriod
  .text.onDacSpiComplete
-                0x0800a2c0       0x30 build/obj/dac_ctrl.o
- .text.setDacI  0x0800a2f0       0x20 build/obj/dac_ctrl.o
-                0x0800a2f0                setDacI
- .text.setDac   0x0800a310       0x60 build/obj/dac_ctrl.o
-                0x0800a310                setDac
- .text.initDac  0x0800a370       0xc0 build/obj/dac_ctrl.o
-                0x0800a370                initDac
- .text.setDac1  0x0800a430       0x20 build/obj/dac_ctrl.o
-                0x0800a430                setDac1
- .text.setDac2  0x0800a450       0x20 build/obj/dac_ctrl.o
-                0x0800a450                setDac2
+                0x0800a280       0x30 build/obj/dac_ctrl.o
+ .text.setDacI  0x0800a2b0       0x20 build/obj/dac_ctrl.o
+                0x0800a2b0                setDacI
+ .text.setDac   0x0800a2d0       0x60 build/obj/dac_ctrl.o
+                0x0800a2d0                setDac
+ .text.initDac  0x0800a330       0xc0 build/obj/dac_ctrl.o
+                0x0800a330                initDac
+ .text.setDac1  0x0800a3f0       0x20 build/obj/dac_ctrl.o
+                0x0800a3f0                setDac1
+ .text.setDac2  0x0800a410       0x20 build/obj/dac_ctrl.o
+                0x0800a410                setDac2
  .text.processDacI
-                0x0800a470      0x100 build/obj/dac_ctrl.o
-                0x0800a470                processDacI
+                0x0800a430      0x100 build/obj/dac_ctrl.o
+                0x0800a430                processDacI
  .text.currentDacsI
-                0x0800a570       0x20 build/obj/dac_ctrl.o
-                0x0800a570                currentDacsI
- .text.gptCb    0x0800a590       0x20 build/obj/timer_ctrl.o
+                0x0800a530       0x20 build/obj/dac_ctrl.o
+                0x0800a530                currentDacsI
+ .text.gptCb    0x0800a550       0x20 build/obj/timer_ctrl.o
  .text.initTimer
-                0x0800a5b0       0x30 build/obj/timer_ctrl.o
-                0x0800a5b0                initTimer
+                0x0800a570       0x30 build/obj/timer_ctrl.o
+                0x0800a570                initTimer
  .text.initTemp
-                0x0800a5e0       0x80 build/obj/temp_ctrl.o
-                0x0800a5e0                initTemp
+                0x0800a5a0       0x80 build/obj/temp_ctrl.o
+                0x0800a5a0                initTemp
  .text.processTemp
-                0x0800a660       0x80 build/obj/temp_ctrl.o
-                0x0800a660                processTemp
+                0x0800a620       0x80 build/obj/temp_ctrl.o
+                0x0800a620                processTemp
  .text.lastTemp
-                0x0800a6e0       0x20 build/obj/temp_ctrl.o
-                0x0800a6e0                lastTemp
+                0x0800a6a0       0x20 build/obj/temp_ctrl.o
+                0x0800a6a0                lastTemp
  .text.initOutput
-                0x0800a700       0x40 build/obj/output_ctrl.o
-                0x0800a700                initOutput
+                0x0800a6c0       0x40 build/obj/output_ctrl.o
+                0x0800a6c0                initOutput
  .text.setOutput
-                0x0800a740       0x30 build/obj/output_ctrl.o
-                0x0800a740                setOutput
+                0x0800a700       0x30 build/obj/output_ctrl.o
+                0x0800a700                setOutput
  .text.firmwareUpgrade
-                0x0800a770       0x30 build/obj/dfu_ctrl.o
-                0x0800a770                firmwareUpgrade
+                0x0800a730       0x30 build/obj/dfu_ctrl.o
+                0x0800a730                firmwareUpgrade
  *(.rodata)
- .rodata        0x0800a7a0        0x4 build/obj/temp_ctrl.o
+ .rodata        0x0800a760        0x4 build/obj/temp_ctrl.o
  *(.rodata.*)
- *fill*         0x0800a7a4        0xc 00
+ *fill*         0x0800a764        0xc 00
  .rodata.str1.4
-                0x0800a7b0        0xd build/obj/chsys.o
+                0x0800a770        0xd build/obj/chsys.o
                                  0x10 (size before relaxing)
- *fill*         0x0800a7bd        0x3 00
+ *fill*         0x0800a77d        0x3 00
  .rodata.str1.4
-                0x0800a7c0       0x56 build/obj/chdebug.o
+                0x0800a780       0x56 build/obj/chdebug.o
                                  0x58 (size before relaxing)
- *fill*         0x0800a816        0xa 00
+ *fill*         0x0800a7d6        0xa 00
  .rodata.str1.4
-                0x0800a820       0x31 build/obj/chvt.o
+                0x0800a7e0       0x31 build/obj/chvt.o
                                  0x34 (size before relaxing)
- *fill*         0x0800a851        0xf 00
+ *fill*         0x0800a811        0xf 00
  .rodata.str1.4
-                0x0800a860       0x23 build/obj/chschd.o
+                0x0800a820       0x23 build/obj/chschd.o
                                  0x24 (size before relaxing)
- *fill*         0x0800a883        0xd 00
+ *fill*         0x0800a843        0xd 00
  .rodata.str1.4
-                0x0800a890       0x84 build/obj/chthreads.o
- *fill*         0x0800a914        0xc 00
+                0x0800a850       0x84 build/obj/chthreads.o
+ *fill*         0x0800a8d4        0xc 00
  .rodata.str1.4
-                0x0800a920       0xab build/obj/chmtx.o
+                0x0800a8e0       0xab build/obj/chmtx.o
                                  0xac (size before relaxing)
- *fill*         0x0800a9cb        0x5 00
+ *fill*         0x0800a98b        0x5 00
  .rodata.str1.4
-                0x0800a9d0       0x90 build/obj/chevents.o
+                0x0800a990       0x90 build/obj/chevents.o
  .rodata.str1.4
-                0x0800aa60       0x29 build/obj/chqueues.o
+                0x0800aa20       0x29 build/obj/chqueues.o
                                  0x2c (size before relaxing)
- *fill*         0x0800aa89        0x7 00
+ *fill*         0x0800aa49        0x7 00
  .rodata.str1.4
-                0x0800aa90       0x9c build/obj/ext.o
- *fill*         0x0800ab2c        0x4 00
+                0x0800aa50       0x9c build/obj/ext.o
+ *fill*         0x0800aaec        0x4 00
  .rodata.str1.4
-                0x0800ab30       0xd9 build/obj/gpt.o
+                0x0800aaf0       0xd9 build/obj/gpt.o
                                  0xdc (size before relaxing)
- *fill*         0x0800ac09        0x7 00
+ *fill*         0x0800abc9        0x7 00
  .rodata.str1.4
-                0x0800ac10       0xc3 build/obj/i2c.o
+                0x0800abd0       0xc3 build/obj/i2c.o
                                  0xc4 (size before relaxing)
- *fill*         0x0800acd3        0xd 00
+ *fill*         0x0800ac93        0xd 00
  .rodata.str1.4
-                0x0800ace0       0x5f build/obj/serial.o
+                0x0800aca0       0x5f build/obj/serial.o
                                  0x60 (size before relaxing)
- *fill*         0x0800ad3f        0x1 00
- .rodata.vmt    0x0800ad40       0x24 build/obj/serial.o
- *fill*         0x0800ad64        0xc 00
+ *fill*         0x0800acff        0x1 00
+ .rodata.vmt    0x0800ad00       0x24 build/obj/serial.o
+ *fill*         0x0800ad24        0xc 00
  .rodata.str1.4
-                0x0800ad70      0x12e build/obj/spi.o
+                0x0800ad30      0x12e build/obj/spi.o
                                 0x130 (size before relaxing)
- *fill*         0x0800ae9e        0x2 00
+ *fill*         0x0800ae5e        0x2 00
  .rodata.str1.4
-                0x0800aea0       0x31 build/obj/stm32_dma.o
+                0x0800ae60       0x31 build/obj/stm32_dma.o
                                  0x34 (size before relaxing)
- *fill*         0x0800aed1        0xf 00
+ *fill*         0x0800ae91        0xf 00
  .rodata._stm32_dma_streams
-                0x0800aee0       0x54 build/obj/stm32_dma.o
-                0x0800aee0                _stm32_dma_streams
- *fill*         0x0800af34        0xc 00
+                0x0800aea0       0x54 build/obj/stm32_dma.o
+                0x0800aea0                _stm32_dma_streams
+ *fill*         0x0800aef4        0xc 00
  .rodata.str1.4
-                0x0800af40       0x14 build/obj/gpt_lld.o
- *fill*         0x0800af54        0xc 00
+                0x0800af00       0x14 build/obj/gpt_lld.o
+ *fill*         0x0800af14        0xc 00
  .rodata.str1.4
-                0x0800af60      0x130 build/obj/i2c_lld.o
+                0x0800af20      0x130 build/obj/i2c_lld.o
  .rodata.default_config
-                0x0800b090        0xc build/obj/serial_lld.o
- *fill*         0x0800b09c        0x4 00
+                0x0800b050        0xc build/obj/serial_lld.o
+ *fill*         0x0800b05c        0x4 00
  .rodata.str1.4
-                0x0800b0a0       0x50 build/obj/spi_lld.o
+                0x0800b060       0x50 build/obj/spi_lld.o
  .rodata.cfgtab.6060
-                0x0800b0f0       0x14 build/obj/pal_lld.o
- *fill*         0x0800b104        0xc 00
+                0x0800b0b0       0x14 build/obj/pal_lld.o
+ *fill*         0x0800b0c4        0xc 00
  .rodata.pal_default_config
-                0x0800b110       0x3c build/obj/board.o
-                0x0800b110                pal_default_config
- *fill*         0x0800b14c        0x4 00
- .rodata.funcs  0x0800b150       0x54 build/obj/cpu_io.o
- *fill*         0x0800b1a4        0xc 00
+                0x0800b0d0       0x3c build/obj/board.o
+                0x0800b0d0                pal_default_config
+ *fill*         0x0800b10c        0x4 00
+ .rodata.funcs  0x0800b110       0x54 build/obj/cpu_io.o
+ *fill*         0x0800b164        0xc 00
  .rodata.str1.4
-                0x0800b1b0       0x18 build/obj/cpu_io.o
- *fill*         0x0800b1c8        0x8 00
+                0x0800b170       0x18 build/obj/cpu_io.o
+ *fill*         0x0800b188        0x8 00
  .rodata.str1.4
-                0x0800b1d0        0x4 build/obj/led_ctrl.o
- *fill*         0x0800b1d4        0xc 00
+                0x0800b190        0x4 build/obj/led_ctrl.o
+ *fill*         0x0800b194        0xc 00
  .rodata.extcfg
-                0x0800b1e0       0xa0 build/obj/sweep_ctrl.o
+                0x0800b1a0       0xa0 build/obj/sweep_ctrl.o
  .rodata.hs_spicfg
-                0x0800b280        0xc build/obj/adc_ctrl.o
- *fill*         0x0800b28c        0x4 00
+                0x0800b240        0xc build/obj/adc_ctrl.o
+ *fill*         0x0800b24c        0x4 00
  .rodata.gptCfg
-                0x0800b290        0x8 build/obj/timer_ctrl.o
- *fill*         0x0800b298        0x8 00
+                0x0800b250        0x8 build/obj/timer_ctrl.o
+ *fill*         0x0800b258        0x8 00
  .rodata.i2cfg1
-                0x0800b2a0        0xc build/obj/temp_ctrl.o
+                0x0800b260        0xc build/obj/temp_ctrl.o
  *(.glue_7t)
  .glue_7t       0x00000000        0x0 linker stubs
  *(.glue_7)
  .glue_7        0x00000000        0x0 linker stubs
  *(.gcc*)
 
-.vfp11_veneer   0x0800b2ac        0x0
+.vfp11_veneer   0x0800b26c        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0800b2ac        0x0
+.v4_bx          0x0800b26c        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x0800b2ac        0x0
+.iplt           0x0800b26c        0x0
  .iplt          0x00000000        0x0 build/obj/crt0.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM.exidx      0x0800b2ac        0x8
-                0x0800b2ac                PROVIDE (__exidx_start, .)
+.ARM.exidx      0x0800b26c        0x8
+                0x0800b26c                PROVIDE (__exidx_start, .)
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x0800b2ac        0x8 c:/programs/codesourcery/2011.03-56/bin/../lib/gcc/arm-none-eabi/4.6.3/thumb2\libgcc.a(_divdi3.o)
- .ARM.exidx     0x0800b2b4        0x0 c:/programs/codesourcery/2011.03-56/bin/../lib/gcc/arm-none-eabi/4.6.3/thumb2\libgcc.a(_udivdi3.o)
+ .ARM.exidx     0x0800b26c        0x8 c:/programs/codesourcery/2011.03-56/bin/../lib/gcc/arm-none-eabi/4.6.3/thumb2\libgcc.a(_divdi3.o)
+ .ARM.exidx     0x0800b274        0x0 c:/programs/codesourcery/2011.03-56/bin/../lib/gcc/arm-none-eabi/4.6.3/thumb2\libgcc.a(_udivdi3.o)
                                   0x8 (size before relaxing)
-                0x0800b2b4                PROVIDE (__exidx_end, .)
+                0x0800b274                PROVIDE (__exidx_end, .)
 
-.rel.dyn        0x0800b2b4        0x0
+.rel.dyn        0x0800b274        0x0
  .rel.iplt      0x00000000        0x0 build/obj/crt0.o
 
 .eh_frame_hdr
@@ -2301,12 +2301,12 @@ destructors     0x080050ec        0x0
 .eh_frame
  *(.eh_frame)
 
-.textalign      0x0800b2b4        0x4
-                0x0800b2b8                . = ALIGN (0x8)
- *fill*         0x0800b2b4        0x4 00
-                0x0800b2b8                . = ALIGN (0x4)
-                0x0800b2b8                _etext = .
-                0x0800b2b8                _textdata = _etext
+.textalign      0x0800b274        0x4
+                0x0800b278                . = ALIGN (0x8)
+ *fill*         0x0800b274        0x4 00
+                0x0800b278                . = ALIGN (0x4)
+                0x0800b278                _etext = .
+                0x0800b278                _textdata = _etext
 
 .stacks         0x20000000      0x800
                 0x20000000                . = ALIGN (0x8)
@@ -2323,7 +2323,7 @@ destructors     0x080050ec        0x0
                 0x20000800                __process_stack_end__ = .
                 0x20000800                __main_thread_stack_end__ = .
 
-.data           0x20000800       0x44 load address 0x0800b2b8
+.data           0x20000800       0x44 load address 0x0800b278
                 0x20000800                . = ALIGN (0x4)
                 0x20000800                PROVIDE (_data, .)
  *(.data)
@@ -2349,10 +2349,10 @@ destructors     0x080050ec        0x0
                 0x20000844                . = ALIGN (0x4)
                 0x20000844                PROVIDE (_edata, .)
 
-.igot.plt       0x20000844        0x0 load address 0x0800b2fc
+.igot.plt       0x20000844        0x0 load address 0x0800b2bc
  .igot.plt      0x00000000        0x0 build/obj/crt0.o
 
-.bss            0x20000848     0x3d50 load address 0x0800b300
+.bss            0x20000848     0x3d50 load address 0x0800b2c0
                 0x20000848                . = ALIGN (0x4)
                 0x20000848                PROVIDE (_bss_start, .)
  *(.bss)
@@ -2575,7 +2575,7 @@ OUTPUT(build/digitizer.elf elf32-littlearm)
  .debug_abbrev  0x00004294       0xc4 build/obj/output_ctrl.o
  .debug_abbrev  0x00004358       0xe6 build/obj/dfu_ctrl.o
 
-.debug_loc      0x00000000     0x7492
+.debug_loc      0x00000000     0x7432
  .debug_loc     0x00000000       0x88 build/obj/crt0.o
  .debug_loc     0x00000088      0x112 build/obj/chcore_v7m.o
  .debug_loc     0x0000019a      0x115 build/obj/nvic.o
@@ -2603,14 +2603,14 @@ OUTPUT(build/digitizer.elf elf32-littlearm)
  .debug_loc     0x00004cc1      0x3b0 build/obj/spi_lld.o
  .debug_loc     0x00005071      0x24c build/obj/pal_lld.o
  .debug_loc     0x000052bd       0x20 build/obj/main.o
- .debug_loc     0x000052dd      0xee7 build/obj/cpu_io.o
- .debug_loc     0x000061c4       0xdb build/obj/led_ctrl.o
- .debug_loc     0x0000629f      0x763 build/obj/sweep_ctrl.o
- .debug_loc     0x00006a02      0x5ae build/obj/adc_ctrl.o
- .debug_loc     0x00006fb0      0x380 build/obj/dac_ctrl.o
- .debug_loc     0x00007330       0x79 build/obj/timer_ctrl.o
- .debug_loc     0x000073a9       0xa9 build/obj/temp_ctrl.o
- .debug_loc     0x00007452       0x40 build/obj/output_ctrl.o
+ .debug_loc     0x000052dd      0xe87 build/obj/cpu_io.o
+ .debug_loc     0x00006164       0xdb build/obj/led_ctrl.o
+ .debug_loc     0x0000623f      0x763 build/obj/sweep_ctrl.o
+ .debug_loc     0x000069a2      0x5ae build/obj/adc_ctrl.o
+ .debug_loc     0x00006f50      0x380 build/obj/dac_ctrl.o
+ .debug_loc     0x000072d0       0x79 build/obj/timer_ctrl.o
+ .debug_loc     0x00007349       0xa9 build/obj/temp_ctrl.o
+ .debug_loc     0x000073f2       0x40 build/obj/output_ctrl.o
 
 .debug_aranges  0x00000000      0xcc0
  .debug_aranges
@@ -2733,7 +2733,7 @@ OUTPUT(build/digitizer.elf elf32-littlearm)
  .debug_ranges  0x000015b0       0x18 build/obj/output_ctrl.o
  .debug_ranges  0x000015c8       0x10 build/obj/dfu_ctrl.o
 
-.debug_line     0x00000000     0x6b11
+.debug_line     0x00000000     0x6b03
  .debug_line    0x00000000      0x15b build/obj/crt0.o
  .debug_line    0x0000015b       0x69 build/obj/vectors.o
  .debug_line    0x000001c4       0x5e build/obj/chcore.o
@@ -2764,15 +2764,15 @@ OUTPUT(build/digitizer.elf elf32-littlearm)
  .debug_line    0x00004a70      0x21f build/obj/pal_lld.o
  .debug_line    0x00004c8f      0x146 build/obj/board.o
  .debug_line    0x00004dd5      0x105 build/obj/main.o
- .debug_line    0x00004eda      0x5f0 build/obj/cpu_io.o
- .debug_line    0x000054ca      0x293 build/obj/led_ctrl.o
- .debug_line    0x0000575d      0x455 build/obj/sweep_ctrl.o
- .debug_line    0x00005bb2      0x453 build/obj/adc_ctrl.o
- .debug_line    0x00006005      0x3c9 build/obj/dac_ctrl.o
- .debug_line    0x000063ce      0x17c build/obj/timer_ctrl.o
- .debug_line    0x0000654a      0x311 build/obj/temp_ctrl.o
- .debug_line    0x0000685b      0x19a build/obj/output_ctrl.o
- .debug_line    0x000069f5      0x11c build/obj/dfu_ctrl.o
+ .debug_line    0x00004eda      0x5e2 build/obj/cpu_io.o
+ .debug_line    0x000054bc      0x293 build/obj/led_ctrl.o
+ .debug_line    0x0000574f      0x455 build/obj/sweep_ctrl.o
+ .debug_line    0x00005ba4      0x453 build/obj/adc_ctrl.o
+ .debug_line    0x00005ff7      0x3c9 build/obj/dac_ctrl.o
+ .debug_line    0x000063c0      0x17c build/obj/timer_ctrl.o
+ .debug_line    0x0000653c      0x311 build/obj/temp_ctrl.o
+ .debug_line    0x0000684d      0x19a build/obj/output_ctrl.o
+ .debug_line    0x000069e7      0x11c build/obj/dfu_ctrl.o
 
 .debug_str      0x00000000     0x2a29
  .debug_str     0x00000000      0x1cc build/obj/crt0.o

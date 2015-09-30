@@ -252,17 +252,19 @@ bool VoltampIo::instantAdc( int * data )
     arr.resize( PD::IN_BUFFER_SZ );
     bool eom;
     int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
-    if ( ( !eom ) || ( cnt < 16 ) )
+    if ( ( !eom ) || ( cnt < 8 ) )
         return false;
 
     for ( int i=0; i<4; i++ )
     {
         quint8 * d = reinterpret_cast<quint8 *>( arr.data() );
-        d += i*4;
+        d += i*2;
         int val = static_cast<int>( d[0] );
         val    += (static_cast<int>( d[1] ) << 8);
+        /*
         val    += (static_cast<int>( d[2] ) << 16);
         val    += (static_cast<int>( d[3] ) << 24);
+        */
         data[i] = val;
     }
     
