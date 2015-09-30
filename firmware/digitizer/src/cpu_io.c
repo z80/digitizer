@@ -284,8 +284,11 @@ static void get_osc_data( uint8_t * arg )
 	InputQueue * q = adcQueue();
 	chSysLock();
 		size_t cnt;
-		cnt = (chQSpaceI( q ) / 8);
+		cnt = chQSpaceI( q );
 	chSysUnlock();
+	// Limit packet size to fit into out buffer.
+	cnt = ( cnt <= CP2102_OUT_BUF_SZ ) ? cnt : CP2102_OUT_BUF_SZ;
+	cnt = cnt / 8; // One record is 4 2 byte numbers.
 	size_t recInd;
 	for ( recInd=0; recInd<cnt; recInd++ )
 	{
@@ -363,8 +366,11 @@ static void get_sweep_data( uint8_t * args )
 	InputQueue * q = sweepQueue();
 	chSysLock();
 		size_t cnt;
-		cnt = (chQSpaceI( q ) / 8);
+		cnt = chQSpaceI( q );
 	chSysUnlock();
+	// Limit packet size to fit into out buffer.
+	cnt = ( cnt <= CP2102_OUT_BUF_SZ ) ? cnt : CP2102_OUT_BUF_SZ;
+	cnt = cnt / 8; // One record is 4 2 byte numbers.
 	size_t recInd;
 	for ( recInd=0; recInd<cnt; recInd++ )
 	{
@@ -372,7 +378,7 @@ static void get_sweep_data( uint8_t * args )
 		for ( sigInd=0; sigInd<4; sigInd++ )
 		{
 			size_t byteInd;
-			for ( byteInd = 0; byteInd<3; byteInd++ )
+			for ( byteInd = 0; byteInd<2; byteInd++ )
 			{
 				uint8_t v;
 				msg_t msg;

@@ -493,15 +493,15 @@ bool VoltampIo::sweepData( QVector<int> & data )
     if ( !eom )
         return false;
 
-    int sz = cnt / 3;
+    int sz = cnt / 2;
     data.resize( sz );
     quint8 * d = reinterpret_cast<quint8 *>( arr.data() );
     for ( int i=0; i<sz; i++ )
     {
         int v;
-        v  = static_cast<int>( d[3*i] );
-        v += static_cast<int>( d[3*i+1] << 8 );
-        v += static_cast<int>( d[3*i+2] << 16 );
+        v  = static_cast<int>( d[2*i] );
+        v += static_cast<int>( d[2*i+1] << 8 );
+        //v += static_cast<int>( d[3*i+2] << 16 );
         //if ( v & 0x8000 )
         //    v = v - 65535;
         data[i] = v;

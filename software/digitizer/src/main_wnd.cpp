@@ -22,8 +22,10 @@ MainWnd::MainWnd( HostTray * parent )
     ui.setupUi( this );
     //ui.osc->show();
 
+    totalPts       = 0;
     temperature = -273.15;
     doMeasureSweep = false;
+    sweepRemote    = false;
 
     terminate = false;
     io        = new Bipot();
@@ -382,8 +384,8 @@ void MainWnd::measure()
             // Sweep measure routine in the same thread.
             bool measured = measureSweep();
 
-            if ( ( szMeasured < 24 ) && ( measured ) )
-                Msleep::msleep( 1 );
+            if ( ( szMeasured < 24 ) && ( !measured ) )
+                Msleep::msleep( 50 );
         }
         else
             Msleep::msleep( 100 );
@@ -412,48 +414,54 @@ bool MainWnd::measureSweep()
         }
 
         bool res;
+        int szMeasured;
+        int szCollected;
+        do {
+            // Measure data.
+            res = io->sweepData( t_swWorkV, t_swProbeV, t_swWorkI, t_swProbeI, sweepDacMode );
+            if ( !res )
+            {
+                Msleep::msleep( 1000 );
+                reopen();
+                return false;
+            }
+
+            // Check total data cnt in all arrays.
+            szMeasured = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
+            mutex.lock();
+                totalPts += szMeasured;
+            mutex.unlock();
+            // Now move data to paint data.
+            mutexSw.lock();
+                for ( int i=0; i<t_swWorkV.size(); i++ )
+                    p_swWorkV.enqueue( t_swWorkV.at( i ) );
+                for ( int i=0; i<t_swWorkI.size(); i++ )
+                    p_swWorkI.enqueue( t_swWorkI.at( i ) );
+                for ( int i=0; i<t_swProbeV.size(); i++ )
+                    p_swProbeV.enqueue( t_swProbeV.at( i ) );
+                for ( int i=0; i<t_swProbeI.size(); i++ )
+                    p_swProbeI.enqueue( t_swProbeI.at( i ) );
+                szCollected = p_swWorkV.size() + p_swWorkI.size() + p_swProbeV.size() + p_swProbeI.size();
+            mutexSw.unlock();
+        } while ( szMeasured > 32 );
+
         bool sweep;
-        res = io->sweepEn( sweep );
-        if ( !res )
-        {
-            Msleep::msleep( 1000 );
-            reopen();
-            return false;
-        }
-
-
-        // Measure data.
-        res = io->sweepData( t_swWorkV, t_swProbeV, t_swWorkI, t_swProbeI, sweepDacMode );
-        if ( !res )
-        {
-            Msleep::msleep( 1000 );
-            reopen();
-            return false;
-        }
-
-        // Check total data cnt in all arrays.
-        int szMeasured = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
-        // Now move data to paint data.
-        mutexSw.lock();
-            for ( int i=0; i<t_swWorkV.size(); i++ )
-                p_swWorkV.enqueue( t_swWorkV.at( i ) );
-            for ( int i=0; i<t_swWorkI.size(); i++ )
-                p_swWorkI.enqueue( t_swWorkI.at( i ) );
-            for ( int i=0; i<t_swProbeV.size(); i++ )
-                p_swProbeV.enqueue( t_swProbeV.at( i ) );
-            for ( int i=0; i<t_swProbeI.size(); i++ )
-                p_swProbeI.enqueue( t_swProbeI.at( i ) );
-            int szCollected = p_swWorkV.size() + p_swWorkI.size() + p_swProbeV.size() + p_swProbeI.size();
-        mutexSw.unlock();
         // Replot if necessary.
         if ( szCollected > 12 )
         {
             emit sigSweepReplot();
+            sweep = true;
         }
-
-        mutex.lock();
-            totalPts += szMeasured;
-        mutex.unlock();
+        else
+        {
+            res = io->sweepEn( sweep );
+            if ( !res )
+            {
+                Msleep::msleep( 1000 );
+                reopen();
+                return false;
+            }
+        }
 
         mutex.lock();
             bool sweepRem = sweepRemote;
@@ -766,19 +774,21 @@ void MainWnd::slotSweepProbe()
 
 void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
 {
-    QString stri= QString( "T: %1[C], workV = %2[mV], workI = %3[uA], probeV = %4[mV], probeI = %5[uA]" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
-                                                                                         .arg( wv, 8, 'f', 1, QChar( '0' ) ) 
-                                                                                         .arg( wi * 1000000.0, 8, 'f', 7, QChar( '0' ) )
-                                                                                         .arg( pv, 8, 'f', 1, QChar( '0' ) )
-                                                                                         .arg( pi * 1000000.0, 8, 'f', 7, QChar( '0' ) );
-
-    setTitle( stri );
-
     // Debugging;
     mutex.lock();
         int cnt = totalPts;
     mutex.unlock();
-    setWindowTitle( QString( "%1" ).arg( cnt ) );
+
+    //setWindowTitle( QString( "%1" ).arg( cnt ) );
+    QString stri= QString( "T: %1[C], workV = %2[mV], workI = %3[uA], probeV = %4[mV], probeI = %5[uA], triggers: %6" ).arg( temperature, 5, 'f', 2, QChar( '0' ) ) 
+                                                                                         .arg( wv, 8, 'f', 1, QChar( '0' ) ) 
+                                                                                         .arg( wi * 1000000.0, 8, 'f', 7, QChar( '0' ) )
+                                                                                         .arg( pv, 8, 'f', 1, QChar( '0' ) )
+                                                                                         .arg( pi * 1000000.0, 8, 'f', 7, QChar( '0' ) )
+                                                                                         .arg( cnt, 6, 10, QChar( ' ' ) );
+
+    setTitle( stri );
+
 }
 
 void MainWnd::slotReplot()

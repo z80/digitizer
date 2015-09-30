@@ -19,6 +19,7 @@
 #define LED_1_PORT   GPIOC
 #define LED_1_PIN    13
 
+#define CP2102_OUT_BUF_SZ 640
 
 #endif
 
