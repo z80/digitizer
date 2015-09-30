@@ -435,7 +435,6 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
         {
             int adc = *i;
             qreal v;
-            /*
             switch ( ind )
             {
             case 0:
@@ -451,8 +450,7 @@ bool Bipot::oscData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<qr
                 v = pd->adc2workI( adc );
                 break;
             }
-            */
-            v = static_cast< qreal >( adc );
+            //v = static_cast< qreal >( adc );
             data[ind]->append( v );
         }
         ind = (ind + 1) % 4;
@@ -484,17 +482,15 @@ bool Bipot::instantData( qreal & workV, qreal & probeV, qreal & workI, qreal & p
     if ( !res )
         return false;
 
-    /*
     workV  = pd->adc2workV( data[0] );
     probeV = pd->adc2probeV( data[1] );
     workI  = pd->adc2workI( data[3] );
     probeI = pd->adc2probeI( data[2] );
-    */
 
-    workV  = static_cast<qreal>( data[0] );
-    probeV = static_cast<qreal>( data[1] );
-    workI  = static_cast<qreal>( data[3] );
-    probeI = static_cast<qreal>( data[2] );
+    //workV  = static_cast<qreal>( data[0] );
+    //probeV = static_cast<qreal>( data[1] );
+    //workI  = static_cast<qreal>( data[3] );
+    //probeI = static_cast<qreal>( data[2] );
 
     return true;
 }
@@ -603,7 +599,6 @@ bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<
         {
             int adc = *i;
             qreal v;
-            /*
             switch ( ind )
             {
             case 0:
@@ -626,8 +621,7 @@ bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<
                 v = pd->adc2workI( adc );
                 break;
             }
-            */
-            v = static_cast< qreal >( adc );
+            //v = static_cast< qreal >( adc );
             data[ind]->append( v );
         }
         ind = (ind + 1) % 4;
