@@ -293,7 +293,7 @@ static void get_osc_data( uint8_t * arg )
 		for ( sigInd=0; sigInd<4; sigInd++ )
 		{
 			size_t byteInd;
-			for ( byteInd = 0; byteInd<3; byteInd++ )
+			for ( byteInd = 0; byteInd<2; byteInd++ )
 			{
 				uint8_t v;
 				msg_t msg;
