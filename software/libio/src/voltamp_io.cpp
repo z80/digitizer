@@ -252,7 +252,7 @@ bool VoltampIo::instantAdc( int * data )
     arr.resize( PD::IN_BUFFER_SZ );
     bool eom;
     int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
-    if ( ( !eom ) || ( cnt < 8 ) )
+    if ( ( !eom ) || ( cnt < 16 ) )
         return false;
 
     for ( int i=0; i<4; i++ )
@@ -261,6 +261,8 @@ bool VoltampIo::instantAdc( int * data )
         d += i*4;
         int val = static_cast<int>( d[0] );
         val    += (static_cast<int>( d[1] ) << 8);
+        val    += (static_cast<int>( d[2] ) << 16);
+        val    += (static_cast<int>( d[3] ) << 24);
         data[i] = val;
     }
     
@@ -325,7 +327,7 @@ bool VoltampIo::oscData( QVector<int> & data )
     if ( !eom )
         return false;
 
-    int sz = cnt / 2;
+    int sz = cnt / 3;
     data.resize( sz );
     quint8 * d = reinterpret_cast<quint8 *>( arr.data() );
     for ( int i=0; i<sz; i++ )
@@ -333,6 +335,7 @@ bool VoltampIo::oscData( QVector<int> & data )
         int v;
         v  = static_cast<int>( d[3*i] );
         v += static_cast<int>( d[3*i+1] << 8 );
+        v += static_cast<int>( d[3*i+2] << 16 );
         //if ( v & 0x8000 )
         //    v = v - 65535;
         data[i] = v;
@@ -488,7 +491,7 @@ bool VoltampIo::sweepData( QVector<int> & data )
     if ( !eom )
         return false;
 
-    int sz = cnt / 2;
+    int sz = cnt / 3;
     data.resize( sz );
     quint8 * d = reinterpret_cast<quint8 *>( arr.data() );
     for ( int i=0; i<sz; i++ )
@@ -496,6 +499,7 @@ bool VoltampIo::sweepData( QVector<int> & data )
         int v;
         v  = static_cast<int>( d[3*i] );
         v += static_cast<int>( d[3*i+1] << 8 );
+        v += static_cast<int>( d[3*i+2] << 16 );
         //if ( v & 0x8000 )
         //    v = v - 65535;
         data[i] = v;

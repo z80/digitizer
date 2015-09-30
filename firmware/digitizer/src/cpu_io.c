@@ -252,6 +252,10 @@ static void get_adc( uint8_t * args )
 		writeResult( b );
 		b = (uint8_t)((res[i] >> 8) & 0xFF);
 		writeResult( b );
+		b = (uint8_t)((res[i] >> 16) & 0xFF);
+		writeResult( b );
+		b = (uint8_t)((res[i] >> 24) & 0xFF);
+		writeResult( b );
 	}
 	writeEom();
 }
@@ -287,7 +291,7 @@ static void get_osc_data( uint8_t * arg )
 		for ( sigInd=0; sigInd<4; sigInd++ )
 		{
 			size_t byteInd;
-			for ( byteInd = 0; byteInd<2; byteInd++ )
+			for ( byteInd = 0; byteInd<3; byteInd++ )
 			{
 				uint8_t v;
 				msg_t msg;
@@ -366,7 +370,7 @@ static void get_sweep_data( uint8_t * args )
 		for ( sigInd=0; sigInd<4; sigInd++ )
 		{
 			size_t byteInd;
-			for ( byteInd = 0; byteInd<2; byteInd++ )
+			for ( byteInd = 0; byteInd<3; byteInd++ )
 			{
 				uint8_t v;
 				msg_t msg;
