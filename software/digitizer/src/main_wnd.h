@@ -56,6 +56,8 @@ public slots:
     void slotProbeVolt();
     void slotSweepProbe();
 
+    void slotPolarization();
+
     void slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi );
     void slotReplot();
 
@@ -90,6 +92,7 @@ private:
     bool runSweep();
 
     void sweepDelay( int ms );
+    void polarizationDelay( int ms = 500 );
 
     QQueue<int> ptsCntQueue;
     QQueue<qreal> periodQueue, workVQueue, probeVQueue;
@@ -135,6 +138,9 @@ private:
           setProbeV;
 
     QLabel * statusLabel;
+
+    qreal polarizationPotential, 
+          polarizationDuration;
 
     static const QString SETTINGS_INI;
 

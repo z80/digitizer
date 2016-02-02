@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include "sweep_wnd.h"
 #include "setup_dlg.h"
+#include "polarization_dlg.h"
 #include "host_tray.h"
 
 #include "qwt_text_label.h"
@@ -103,6 +104,9 @@ MainWnd::MainWnd( HostTray * parent )
 
     connect( ui.workVolt, SIGNAL(editingFinished()),    this, SLOT(slotWorkVolt()) );
 
+    // Polarization dialog.
+    connect( ui.actionPolarization, SIGNAL(triggered()), this, SLOT(slotPolarization()) );
+
     connect( this, SIGNAL(sigInstantValues(qreal,qreal,qreal,qreal)), 
              this, SLOT(slotInstantValues(qreal,qreal,qreal,qreal)), 
              Qt::QueuedConnection );
@@ -189,7 +193,15 @@ void MainWnd::loadSettings()
     ui.sweepRate->setValue( s.value( "sweepRate", 0.1 ).toDouble() );
     ui.sweepDacMode->setChecked( s.value( "dacMode", false ).toBool() );
 
+    ui.cyclesCnt->setValue( s.value( "cyclesCnt", 1 ).toInt() );
+
+    polarizationPotential = s.value( "polarizationPotential", 0.0 ).toDouble();
+    polarizationDuration  = s.value( "polarizationDuration",  1.0 ).toDouble();
+
     this->restoreState( s.value( "state", QByteArray() ).toByteArray() );
+
+    setWorkV  = ui.workVolt->value();
+    setProbeV = ui.probeVolt->value();
 }
 
 void MainWnd::saveSettings()
@@ -224,6 +236,11 @@ void MainWnd::saveSettings()
     s.setValue( "sweepPtsCnt", ui.sweepPtsCnt->value() );
     s.setValue( "sweepRate", ui.sweepRate->value() );
     s.setValue( "dacMode", ui.sweepDacMode->isChecked() );
+
+    s.setValue( "cyclesCnt", ui.cyclesCnt->value() );
+
+    s.setValue( "polarizationPotential", polarizationPotential );
+    s.setValue( "polarizationDuration",  polarizationDuration );
 
     s.setValue( "state", this->saveState() );
 }
@@ -615,18 +632,29 @@ bool MainWnd::runSweep()
 
 void MainWnd::sweepDelay( int ms )
 {
+    const int MIN_QTY = 16;
     const int DELAY = ms;
     int sz = 0;
     do {
         bool res = io->sweepQueueSize( sz );
-        if ( sz <= 2 )
+        if ( sz <= MIN_QTY )
             break;
         QTime time;
         time.start();
         while ( time.elapsed() < DELAY )
             qApp->processEvents();
-    } while ( sz > 2 );
-    QTime t;
+    } while ( sz > MIN_QTY );
+}
+
+void MainWnd::polarizationDelay( int ms )
+{
+    const int MIN_QTY = 300;
+    const int DELAY = ms;
+    int sz = 0;
+    QTime time;
+    time.start();
+    while ( time.elapsed() < DELAY )
+        qApp->processEvents();
 }
 
 void MainWnd::refreshDevicesList()
@@ -813,6 +841,75 @@ void MainWnd::slotSweepProbe()
         ui.workVolt->setStyleSheet( ss );
         ui.probeVolt->setStyleSheet( ss );
     }
+}
+
+void MainWnd::slotPolarization()
+{
+    PolarizationDlg pDlg( this );
+    pDlg.setPotential( polarizationPotential );
+    pDlg.setDuration( polarizationDuration );
+    if ( pDlg.exec() != QDialog::Accepted )
+        return;
+
+    tempTimer->stop();
+
+    polarizationPotential = pDlg.potential();
+    polarizationDuration  = pDlg.duration();
+
+    qreal workAt  = ui.workVolt->value();
+    qreal probeAt = ui.probeVolt->value();
+
+    // Block GUI.
+
+    bool res = io->sweepPush( 0, 0, polarizationPotential, probeAt );
+    if ( !res )
+    {
+        QString stri = QString( "Failed to set potential transition!" );
+        QMessageBox::critical( this, "Error", stri );
+        return;
+    }
+
+    res = io->sweepPush( 0, polarizationDuration, polarizationPotential, probeAt );
+    if ( !res )
+    {
+        QString stri = QString( "Failed to set potential transition!" );
+        QMessageBox::critical( this, "Error", stri );
+        return;
+    }
+    res = io->sweepPush( 0, 0, workAt, probeAt );
+    if ( !res )
+    {
+        QString stri = QString( "Failed to set potential transition!" );
+        QMessageBox::critical( this, "Error", stri );
+        return;
+    }
+    res = io->setSweepEn( true );
+    ui.dockWidget_2->setEnabled( false );
+    do
+    {
+        QMutexLocker lock( &mutex );
+            doMeasureSweep = true;
+    } while ( false );
+
+    // To prevent overwriting potential by timer.
+    setWorkV = polarizationPotential;
+    bool sweepEn;
+    do {
+        polarizationDelay();
+        res = io->sweepEn( sweepEn );
+        if ( !res )
+            break;
+        qApp->processEvents();
+    } while ( sweepEn );
+
+
+    // Restore overwriting potential by timer.
+    setWorkV  = ui.workVolt->value();
+    setProbeV = ui.probeVolt->value();
+
+    ui.dockWidget_2->setEnabled( true );
+
+    tempTimer->start();
 }
 
 void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )

@@ -85,7 +85,7 @@ void initSweep( void )
 	swEnabled     = 0;
 	swEnabledNew  = 0;
 	swDacMode     = 0;
-	swPeriod      = 8000000;
+	swPeriod      = 0;
 	trigRecordPtsCnt = 0;
 
 	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
@@ -121,7 +121,7 @@ void processSweepI( uint8_t dacIndex )
 		{
 			swElapsed += 1;
 			// Record data if it's time to do that.
-			if ( swElapsed >= swNextPtTime )
+			if ( ( swElapsed >= swNextPtTime ) && ( swPtsCnt ) )
 			{
 				// Measure signals.
 				recordAdcI();
@@ -151,8 +151,7 @@ void processSweepI( uint8_t dacIndex )
 		if ( swElapsed < swPeriod )
 		{
 			// Calc current DAC values.
-			int time = (swElapsed < swPeriod) ? swElapsed : (2*swPeriod - swElapsed);
-			int64_t dac64 = (int64_t)swDacFrom[dacIndex] + (int64_t)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(int64_t)time / (int64_t)swPeriod;
+			int64_t dac64 = (int64_t)swDacFrom[dacIndex] + (int64_t)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(int64_t)swElapsed / (int64_t)swPeriod;
 			int dac = (int)dac64;
 			setDacI( dacIndex, dac );
 		}
@@ -186,8 +185,8 @@ static uint8_t checkForNewTransitionI( void )
 	int space = chOQGetFullI( &sweepCmdQueue );
 	if ( space >= 16 )
 	{
-		// Current DAC values.
-		currentDacsI( swDacFrom );
+	    // Save previous period value.
+	    int prevPeriod = swPeriod;
 
 		uint8_t v;
 		v = chOQGetI( &sweepCmdQueue );
@@ -224,6 +223,39 @@ static uint8_t checkForNewTransitionI( void )
 			v = chOQGetI( &sweepCmdQueue );
 			swDacTo[i] += (int)(v);
 		}
+
+        // Current DAC values.
+		if ( swPeriod > 0 )
+		{
+            if ( prevPeriod > 0 )
+                currentDacsI( swDacFrom );
+            else
+            {
+                swDacFrom[0] = swDacTo[0];
+                swDacFrom[1] = swDacTo[1];
+                swDacFrom[2] = swDacTo[2];
+                swDacFrom[3] = swDacTo[3];
+            }
+		}
+		else
+		{
+		    // If period is 0 just apply DACs.
+            swDacFrom[0] = swDacTo[0];
+            swDacFrom[1] = swDacTo[1];
+            swDacFrom[2] = swDacTo[2];
+            swDacFrom[3] = swDacTo[3];
+		    setDacI( 0, swDacTo[0] );
+		    setDacI( 1, swDacTo[1] );
+		    setDacI( 2, swDacTo[2] );
+		    setDacI( 3, swDacTo[3] );
+	        // Reset counter values.
+	        swElapsed    = 0;
+	        swPtIndex    = 0;
+	        swNextPtTime = 0;
+		    // Recursively call the same to check for new transition.
+		    return checkForNewTransitionI();
+		}
+
 
 		// Initial counter values.
 		swElapsed    = 0;
