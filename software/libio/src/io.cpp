@@ -40,10 +40,10 @@ QStringList Io::enumDevices() const
     QList<QextPortInfo> pl = QextSerialEnumerator::getPorts();
     foreach( QextPortInfo i, pl )
     {
-        qDebug() << i.portName;   ///< Port name.
-        qDebug() << i.physName;   ///< Physical name.
-        qDebug() << i.friendName; ///< Friendly name.
-        qDebug() << i.enumName;   ///< Enumerator name.
+        //qDebug() << i.portName;   ///< Port name.
+        //qDebug() << i.physName;   ///< Physical name.
+        //qDebug() << i.friendName; ///< Friendly name.
+        //qDebug() << i.enumName;   ///< Enumerator name.
 
         l << i.friendName;
         pd->portsList << i.portName;
@@ -78,7 +78,7 @@ bool Io::open( int index )
     bool res = port->open( QIODevice::ReadWrite );
     if ( !res )
     {
-        qDebug() << port->errorString();
+        //qDebug() << port->errorString();
         port->deleteLater();
         pd->ftdi = 0;
     }

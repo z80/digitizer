@@ -602,7 +602,7 @@ bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<
             switch ( ind )
             {
             case 0:
-                qDebug() << adc;
+                //qDebug() << adc;
                 if ( dacMode )
                     v = pd->dac2workV( 32767, adc );
                 else
@@ -659,6 +659,15 @@ bool Bipot::sweepPush( int ptsCnt, qreal periodMs, qreal workV, qreal probeV )
     int period = static_cast<int>( periodMs * 4.0 );
 
     bool res = io.sweepPush( ptsCnt, period, dacs );
+
+    return res;
+}
+
+bool Bipot::sweepQueueSize( int & size )
+{
+    VoltampIo & io = *(pd->io);
+
+    bool res = io.sweepQueueSize( size );
 
     return res;
 }
@@ -1079,7 +1088,7 @@ bool Bipot::calibrationLoad( const QString & fileName )
         if ( !file.atEnd() )
         {
             stri = file.readLine();
-            qDebug() << stri;
+            //qDebug() << stri;
             QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
@@ -1113,7 +1122,7 @@ bool Bipot::calibrationLoad( const QString & fileName )
         if ( !file.atEnd() )
         {
             stri = file.readLine();
-            qDebug() << stri;
+            //qDebug() << stri;
             QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
@@ -1147,7 +1156,7 @@ bool Bipot::calibrationLoad( const QString & fileName )
         if ( !file.atEnd() )
         {
             stri = file.readLine();
-            qDebug() << stri;
+            //qDebug() << stri;
             QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
@@ -1178,7 +1187,7 @@ bool Bipot::calibrationLoad( const QString & fileName )
         if ( !file.atEnd() )
         {
             stri = file.readLine();
-            qDebug() << stri;
+            //qDebug() << stri;
             QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
@@ -1212,7 +1221,7 @@ bool Bipot::calibrationLoad( const QString & fileName )
         if ( !file.atEnd() )
         {
             stri = file.readLine();
-            qDebug() << stri;
+            //qDebug() << stri;
             QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )
@@ -1244,7 +1253,7 @@ bool Bipot::calibrationLoad( const QString & fileName )
         if ( !file.atEnd() )
         {
             stri = file.readLine();
-            qDebug() << stri;
+            //qDebug() << stri;
             QRegExp ex( "([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)\\s+([\\w.\\-]+)" );
             int index = ex.indexIn( stri );
             if ( index >= 0 )

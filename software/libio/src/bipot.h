@@ -45,6 +45,7 @@ public:
     bool sweepDacMode( bool & en );
 
     bool sweepPush( int ptsCnt, qreal periodMs, qreal workV, qreal probeV );
+    bool sweepQueueSize( int & size );
 
     bool setOutput( int o );
 

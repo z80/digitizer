@@ -561,41 +561,72 @@ bool MainWnd::runSweep()
         return false;
     }
 
+    bool firstTransition = true;
+    qDebug() << "Queue size: " << ptsCntQueue.size();
     while ( ptsCntQueue.size() > 0 )
     {
+        qDebug() << "A) Queue size: " << ptsCntQueue.size();
         int ptsCnt = ptsCntQueue.dequeue();
         qreal timeMs = periodQueue.dequeue();
         qreal workTo = workVQueue.dequeue();
         qreal probeTo = probeVQueue.dequeue();
+        qDebug() << "B) Queue size: " << ptsCntQueue.size();
         res = io->sweepPush( ptsCnt, timeMs, workTo, probeTo );
+        qDebug() << "C) Queue size: " << ptsCntQueue.size();
         if ( !res )
         {
             QString stri = QString( "Failed to set potential transition!" );
             QMessageBox::critical( this, "Error", stri );
             return false;
         }
+        qDebug() << "Pushed transition";
+
+        if ( firstTransition )
+        {
+            firstTransition = false;
+            res = io->setSweepEn( true );
+            if ( !res )
+            {
+                QString stri = QString( "Failed to start potential transition!" );
+                QMessageBox::critical( this, "Error", stri );
+                return false;
+            }
+
+            ui.dockWidget_2->setEnabled( false );
+            // Open sweep window display.
+            sweepWnd = new SweepWnd( 0 );
+            sweepWnd->show();
+            // Run sweep data readout.
+            QMutexLocker lock( &mutex );
+                doMeasureSweep = true;
+        }
+
+        // Wait if queue is too long.
+        qDebug() << "Wait for transition";
+        sweepDelay( static_cast<int>( timeMs ) );
+        qDebug() << "Done waiting";
     }
 
-    res = io->setSweepEn( true );
-    if ( !res )
-    {
-        QString stri = QString( "Failed to start potential transition!" );
-        QMessageBox::critical( this, "Error", stri );
-        return false;
-    }
-
+    qDebug() << "Queue size: " << ptsCntQueue.size();
     clearSweepConfig();
 
-    ui.dockWidget_2->setEnabled( false );
-    // Open sweep window display.
-    sweepWnd = new SweepWnd( 0 );
-    sweepWnd->show();
-    // Run sweep data readout.
-    QMutexLocker lock( &mutex );
-        doMeasureSweep = true;
-
-
     return true;
+}
+
+void MainWnd::sweepDelay( int ms )
+{
+    const int DELAY = ms;
+    int sz = 0;
+    do {
+        bool res = io->sweepQueueSize( sz );
+        if ( sz <= 2 )
+            break;
+        QTime time;
+        time.start();
+        while ( time.elapsed() < DELAY )
+            qApp->processEvents();
+    } while ( sz > 2 );
+    QTime t;
 }
 
 void MainWnd::refreshDevicesList()
@@ -668,17 +699,23 @@ void MainWnd::slotSweepWork()
 
         qreal workAt  = ui.workVolt->value();
         qreal probeAt = ui.probeVolt->value();
-        if ( ui.workVertex1En->isChecked() )
+        int   qty     = ui.cyclesCnt->value();
+        if ( ( !ui.workVertex1En->isChecked() ) || ( !ui.workVertex2En->isChecked() ) )
+            qty = 1;
+        for ( int i=0; i<qty; i++ )
         {
-            qreal wv = ui.workVertex1->value();
-            qreal pv = ( pull ) ? (probeAt+wv-workAt) : probeAt;
-            pushSweepConfig( wv, pv );
-        }
-        if ( ui.workVertex2En->isChecked() )
-        {
-            qreal wv = ui.workVertex2->value();
-            qreal pv = ( pull ) ? (probeAt+wv-workAt) : probeAt;
-            pushSweepConfig( wv, pv );
+            if ( ui.workVertex1En->isChecked() )
+            {
+                qreal wv = ui.workVertex1->value();
+                qreal pv = ( pull ) ? (probeAt+wv-workAt) : probeAt;
+                pushSweepConfig( wv, pv );
+            }
+            if ( ui.workVertex2En->isChecked() )
+            {
+                qreal wv = ui.workVertex2->value();
+                qreal pv = ( pull ) ? (probeAt+wv-workAt) : probeAt;
+                pushSweepConfig( wv, pv );
+            }
         }
         qreal wv = ui.workSweepTo->value();
         qreal pv = ( pull ) ? (probeAt+wv-workAt) : probeAt;
@@ -735,17 +772,23 @@ void MainWnd::slotSweepProbe()
 
         qreal workAt  = ui.workVolt->value();
         qreal probeAt = ui.probeVolt->value();
-        if ( ui.probeVertex1En->isChecked() )
+        int   qty     = ui.cyclesCnt->value();
+        if ( ( !ui.workVertex1En->isChecked() ) || ( !ui.workVertex2En->isChecked() ) )
+            qty = 1;
+        for ( int i=0; i<qty; i++ )
         {
-            qreal pv = ui.probeVertex1->value();
-            qreal wv = ( pull ) ? (workAt+pv-probeAt) : workAt;
-            pushSweepConfig( wv, pv );
-        }
-        if ( ui.probeVertex2En->isChecked() )
-        {
-            qreal pv = ui.probeVertex2->value();
-            qreal wv = ( pull ) ? (workAt+pv-probeAt) : workAt;
-            pushSweepConfig( wv, pv );
+            if ( ui.probeVertex1En->isChecked() )
+            {
+                qreal pv = ui.probeVertex1->value();
+                qreal wv = ( pull ) ? (workAt+pv-probeAt) : workAt;
+                pushSweepConfig( wv, pv );
+            }
+            if ( ui.probeVertex2En->isChecked() )
+            {
+                qreal pv = ui.probeVertex2->value();
+                qreal wv = ( pull ) ? (workAt+pv-probeAt) : workAt;
+                pushSweepConfig( wv, pv );
+            }
         }
         qreal pv = ui.probeSweepTo->value();
         qreal wv = ( pull ) ? (workAt+pv-probeAt) : workAt;
@@ -877,6 +920,7 @@ void MainWnd::slotSweepFinished()
 
 void MainWnd::slotStopSweep()
 {
+    clearSweepConfig();
     {
         QMutexLocker lock( &mutex );
             doMeasureSweep = false;

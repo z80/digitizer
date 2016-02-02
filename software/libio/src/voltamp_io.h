@@ -38,6 +38,7 @@ public:
     bool sweepData( QVector<int> & data );
 
     bool sweepPush( int ptsCnt, int period, int * dacsTo );
+    bool sweepQueueSize( int & size );
 
     bool setOutput( int o );
 

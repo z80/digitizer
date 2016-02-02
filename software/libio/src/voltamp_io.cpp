@@ -545,6 +545,32 @@ bool VoltampIo::sweepPush( int ptsCnt, int period, int * dacsTo )
     return true;
 }
 
+bool VoltampIo::sweepQueueSize( int & size )
+{
+    QMutexLocker lock( &pd->mutex );
+
+    quint8 funcInd = 21;
+    bool res = execFunc( funcInd );
+    if ( !res )
+        return false;
+
+    bool eom;
+    QByteArray & arr = pd->buffer;
+    arr.resize( PD::IN_BUFFER_SZ );
+    int cnt = read( reinterpret_cast<quint8 *>( arr.data() ), arr.size(), eom );
+    if ( ( !eom ) || (cnt < 4) )
+        return false;
+
+    quint8 * d = reinterpret_cast<quint8 *>( arr.data() );
+    cnt = static_cast<int>(d[0]) + 
+          ( static_cast<int>(d[1]) << 8 ) + 
+          ( static_cast<int>(d[2]) << 16 ) + 
+          ( static_cast<int>(d[3]) << 24 );
+
+    size = cnt;
+    return true;
+}
+
 bool VoltampIo::setOutput( int o )
 {
     QMutexLocker lock( &pd->mutex );

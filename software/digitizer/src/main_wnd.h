@@ -89,6 +89,8 @@ private:
     void pushSweepConfig( qreal workV, qreal probeV );
     bool runSweep();
 
+    void sweepDelay( int ms );
+
     QQueue<int> ptsCntQueue;
     QQueue<qreal> periodQueue, workVQueue, probeVQueue;
 
