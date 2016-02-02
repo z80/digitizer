@@ -38,7 +38,7 @@ static const SerialConfig serial_cfg =
 {
 	115200,
 	0,
-	USART_CR2_STOP1_BITS | USART_CR2_LINEN,
+	USART_CR2_STOP1_BITS, // | USART_CR2_LINEN,
 	USART_CR3_RTSE | USART_CR3_CTSE
 
 };
@@ -156,6 +156,7 @@ static void set_sweep_dac( uint8_t * args );
 static void get_sweep_dac( uint8_t * args );
 
 static void sweep_push( uint8_t * args );
+static void sweep_queue_size( uint8_t * args );
 
 static TFunc funcs[] =
 {
@@ -186,7 +187,8 @@ static TFunc funcs[] =
 	set_sweep_dac,
 	get_sweep_dac,
 
-	sweep_push
+	sweep_push,
+	sweep_queue_size
 };
 
 static void exec_func( void )
@@ -439,6 +441,24 @@ static void sweep_push( uint8_t * args )
 	dacs[2] = ( (int)args[12] << 8 ) + ( (int)args[13] );
 	dacs[3] = ( (int)args[14] << 8 ) + ( (int)args[15] );
 	sweepPush( ptsCnt, period, dacs );
+}
+
+static void sweep_queue_size( uint8_t * args )
+{
+    (void)args;
+    int sz = sweepQueueSize();
+
+    uint8_t v;
+    v = (uint8_t)(sz & 0xFF);
+    writeResult( v );
+    v = (uint8_t)((sz >> 8) & 0xFF);
+    writeResult( v );
+    v = (uint8_t)((sz >> 16) & 0xFF);
+    writeResult( v );
+    v = (uint8_t)((sz >> 24) & 0xFF);
+    writeResult( v );
+
+    writeEom();
 }
 
 

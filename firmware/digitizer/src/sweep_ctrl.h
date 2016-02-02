@@ -18,6 +18,8 @@ uint8_t sweepDacMode( void );
 
 uint8_t sweepPush( int ptsCnt, int period, int * dacTo );
 
+int     sweepQueueSize( void );
+
 #endif
 
 

@@ -331,6 +331,15 @@ uint8_t sweepPush( int ptsCnt, int period, int * dacTo )
 	return 0;
 }
 
+int sweepQueueSize( void )
+{
+    chSysLock();
+        int ocupied = chOQGetFullI( &sweepCmdQueue );
+    chSysUnlock();
+    ocupied /= 16;
+    return ocupied;
+}
+
 
 
 
