@@ -85,7 +85,7 @@ void initSweep( void )
 	swEnabled     = 0;
 	swEnabledNew  = 0;
 	swDacMode     = 0;
-	swPeriod      = 0;
+	swPeriod      = 4; // To make it just nonzero to make correct DAC assignments.
 	trigRecordPtsCnt = 0;
 
 	chIQInit( &sweep_queue,   sweep_queue_buffer, SWEEP_QUEUE_SZ, 0 );
@@ -214,6 +214,20 @@ static uint8_t checkForNewTransitionI( void )
 		v = chOQGetI( &sweepCmdQueue );
 		swPeriod += (int)(v);
 
+        // Current DAC values for normal current period.
+        if ( swPeriod > 0 )
+        {
+            if ( prevPeriod > 0 )
+                currentDacsI( swDacFrom );
+            else
+            {
+                swDacFrom[0] = swDacTo[0];
+                swDacFrom[1] = swDacTo[1];
+                swDacFrom[2] = swDacTo[2];
+                swDacFrom[3] = swDacTo[3];
+            }
+        }
+
 		uint8_t i;
 		for ( i=0; i<4; i++ )
 		{
@@ -224,20 +238,8 @@ static uint8_t checkForNewTransitionI( void )
 			swDacTo[i] += (int)(v);
 		}
 
-        // Current DAC values.
-		if ( swPeriod > 0 )
-		{
-            if ( prevPeriod > 0 )
-                currentDacsI( swDacFrom );
-            else
-            {
-                swDacFrom[0] = swDacTo[0];
-                swDacFrom[1] = swDacTo[1];
-                swDacFrom[2] = swDacTo[2];
-                swDacFrom[3] = swDacTo[3];
-            }
-		}
-		else
+        // Current DAC values for instant transition.
+		if ( swPeriod <= 0 )
 		{
 		    // If period is 0 just apply DACs.
             swDacFrom[0] = swDacTo[0];
@@ -255,7 +257,6 @@ static uint8_t checkForNewTransitionI( void )
 		    // Recursively call the same to check for new transition.
 		    return checkForNewTransitionI();
 		}
-
 
 		// Initial counter values.
 		swElapsed    = 0;
