@@ -1,4 +1,6 @@
 
+set( SOFTWARE_VERSION "\"1.0.0\"" )
+
 project( digitizer )
 cmake_minimum_required(VERSION 2.8)
 
@@ -22,3 +24,7 @@ add_subdirectory( "./libextctrl" )
 add_subdirectory( "./libluafactory" )
 
 add_subdirectory( "./test" )
+
+CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/version.h.in ${CMAKE_BINARY_DIR}/version.h )
+
+

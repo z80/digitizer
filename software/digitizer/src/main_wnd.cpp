@@ -5,6 +5,7 @@
 #include "setup_dlg.h"
 #include "polarization_dlg.h"
 #include "host_tray.h"
+#include "version.h"
 
 #include "qwt_text_label.h"
 
@@ -279,7 +280,8 @@ void MainWnd::slotAbout()
         fmwVer = io->firmwareVersion();
     else
         fmwVer = "undefined";
-    QString stri = QString( "Bipotentiostat control module\nfirmware version: %1" ).arg( fmwVer );
+
+    QString stri = QString( "Bipotentiostat control module: fw ver: \"<b>%1</b>\", sw ver: \"<b>%2</b>\"" ).arg( fmwVer ).arg( SOFTWARE_VERSION );
     QMessageBox::about( this, "About", stri );
 }
 
@@ -488,7 +490,7 @@ bool MainWnd::measureSweep()
             int szCollected = 0;
             int cnt = 0;
             do {
-                bool res = io->sweepData( t_swWorkV, t_swWorkI, t_swProbeV, t_swProbeI );
+                bool res = io->sweepData( t_swWorkV, t_swProbeV, t_swWorkI, t_swProbeI );
                 Msleep::msleep( 10 );
                 cnt = t_swWorkV.size() + t_swWorkI.size() + t_swProbeV.size() + t_swProbeI.size();
 

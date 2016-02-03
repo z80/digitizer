@@ -48,11 +48,37 @@ void SweepWnd::addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI
 
 void SweepWnd::addData( QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI )
 {
-    work->addData(  workV,  workI );
-    probe->addData( probeV, probeI );
+    //for ( int i=0; i<workI.size(); i++ )
+    //{
+    //    qreal v = workI[i];
+    //    if ( v > 1.0 )
+    //    {
+    //        qDebug() << workV[i] << probeV[i] << workI[i] << probeI[i];
+    //        return;
+    //    }
+    //}
+    //for ( int i=0; i<probeI.size(); i++ )
+    //{
+    //    qreal v = probeI[i];
+    //    if ( v > 1.0 )
+    //    {
+    //        qDebug() << workV[i] << probeV[i] << workI[i] << probeI[i];
+    //        return;
+    //    }
+    //}
+    //qDebug() << workV.size() << workI.size() << probeV.size() << probeI.size();
+    //if ( ( workV.size() > 0 ) && 
+    //     ( workI.size() > 0 ) && 
+    //     ( workV.size() == workI.size() ) )
+        work->addData(  workV,  workI );
+    //if ( ( probeV.size() > 0 ) && 
+    //     ( probeI.size() > 0 ) && 
+    //     ( probeV.size() == probeI.size() ) )
+        probe->addData( probeV, probeI );
     work->slotReplot();
     probe->slotReplot();
     shouldBeSaved = true;
+
 }
 
 SweepWnd * SweepWnd::loadFile( QWidget * parent )
@@ -157,7 +183,7 @@ void SweepWnd::closeEvent( QCloseEvent * e )
 {
     if ( shouldBeSaved )
     {
-        QMessageBox::StandardButton res = QMessageBox::warning( this, "Error", QString( "Current data is not saved! Close anyway?" ), QMessageBox::Ok | QMessageBox::Cancel );
+        QMessageBox::StandardButton res = QMessageBox::warning( this, "Warning", QString( "Current data is not saved! Close anyway?" ), QMessageBox::Ok | QMessageBox::Cancel );
         if ( res != QMessageBox::Ok )
         {
             e->setAccepted( false );

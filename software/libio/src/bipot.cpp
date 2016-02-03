@@ -592,12 +592,18 @@ bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<
         return false;
     // Unit convertion is to be applied here.
     int ind = 0;
+
+    //int dbg[4];
+    //qreal dbgf[4];
+
+    //qDebug() << dataRaw.size();
     
     for ( QVector<int>::const_iterator i=dataRaw.begin(); i!= dataRaw.end(); i++ )
     {
         if ( true ) //( en[ind] )
         {
             int adc = *i;
+
             qreal v;
             switch ( ind )
             {
@@ -623,7 +629,12 @@ bool Bipot::sweepData( QVector<qreal> & workV, QVector<qreal> & probeV, QVector<
             }
             //v = static_cast< qreal >( adc );
             data[ind]->append( v );
+            //dbg[ind] = adc;
+            //dbgf[ind] = v;
         }
+        //if ( ind == 3 )
+        //    qDebug() << dbg[0] << dbg[1] << dbg[2] << dbg[3] << dbgf[0] << dbgf[1] << dbgf[2] << dbgf[3];
+
         ind = (ind + 1) % 4;
     }
     return true;

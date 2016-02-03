@@ -17,6 +17,7 @@ include_directories( "./src"
                      ${ROOT}/libio/src
                      ${ROOT}/3dparty/qwt-6.1.2/src
                      ${CMAKE_CURRENT_BINARY_DIR}
+                     ${CMAKE_BINARY_DIR} # This one is for "version.h"
                      ${ICE_PATH}/include )
 if ( WIN32 )
     include_directories( ${BOOST_PATH} )
