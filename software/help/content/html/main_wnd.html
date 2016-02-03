@@ -15,54 +15,136 @@
 
       <div class="row">
         <div class="col-sm-7">
-          Software is represented on a desktop as an icon in system tray area, see the image to the right. In order to open the software one may click the icon. After that software main window should appear. Software icon's tooltip shows current software status. "Listening port xxx" means that the software is in remote control mode and can be controld with main Aist-NT sfotware.
+          Software is represented on a desktop as an icon in system tray area, see the image to the right. In order to open the software one may click the icon. After that software main window should appear. Software icon's tooltip shows current software status. "Listening port xxx" means that the software is in remote control mode and can be controlled with main Aist-NT sfotware.
         </div>
         <div class="col-sm-5">
           <img src="./icon-listening.png"></img>
         </div>
       </div>
 
-      <div class="row" style="margin-top: 2cm;">
-        <div class="col-sm-5">
-          <img src="./main-wnd.png"></img>
-        </div>
-        <div class="col-sm-7">
-          <div>
-            <h3>
-              Main window
-            </h3>
-            <span>
-              LCU03 software main window contains a few controls dedicated for altering three pieces of hardware.
-              <ul>
-                <li>Laser shutter</li>
-                <li>Power control</li>
-                <li>Polarization control</li>
-              </ul>
-            </span>
-          </div>
-        </div>
+      <img src="./main-wnd.png"></img>
+      <div>
+        <h3>
+          Main window
+        </h3>
+        <span>
+          Software main window contains a few areas.
+          <ul>
+            <li>Falling menu.</li>
+            <li>Toolbar.</li>
+            <li>Sweep control panel.</li>
+            <li>Current of time oscilloscope like plots.</li>
+            <li>Status bar with instant current and voltage values.</li>
+          </ul>
+        </span>
       </div>
       
       <div class="row">
-        <h3>Laser shutter</h3>
+        <h3>Falling menu</h3>
         <p>
-          Laser shutter either blocks laser beam or allows it to go through the system. It has two positions: <b>closed</b> and <b>opened</b>.
+          There are a few sections in falling menu: "File", "Device", "Settings" and "Help".
+          <br>
+          
+          <ul>
+            <li>
+              "File" menu allows a user to close software.
+            </li>
+            <li>
+              Bipotentiostat control hardware attached to a computer appears as Virtual COM port.
+              "Device" menu is dedicated to device selection. In case of a few devices attached or in case of a few serial ports onboard one may choose Virtual COM port which corresponds to the hardware attached.
+            </li>
+            <li>
+              "Settings" menu contains two setup dialogs. One for device calibration and the other for remote control setup.
+            </li>
+            <li>
+              "Help" menu contains this help window as well as two more dialogs: "About" and "Firmware upgrade"
+              <br>
+              
+              "About" dialog allows to obtain software and firmware versions.
+              <br>
+              
+              "Firmware upgrade" item is needed to upgrade onboard firmware inside the control box.
+            </li>
+          <br>
+        </p>
+      </div>
+
+      <div class="row">
+        <h3>Toolbar</h3>
+        <p>
+          Toolbar contains buttons for the following purposes.
+        </p>  
+        
+        <p>
+          <img src="./oscilloscope-arrows.png"></img> These three arrows allows user to choose current of time oscilloscope period. Three buttons correspond to "slow", "medium" and "fast" sweeps.
+        </p>
+        
+        <p>
+          <img src="./chronoamperometry-icon.png"></img> This button engages chronoapmerometry function. In gives the user to choose meandge pulse's destination potential and duration.
+        </p>
+        
+        <p>
+          <img src="./ext-trigger-icon.png"></img> External triggering button. When in pressed state external triggering more is on. In this mode control box records data on rising edge of triggering signal.
+        </p>
+        
+        <p>
+          <img src="./input-choice-icon.png"></img>  This buttons group allows user to choose AFM controller input. It can be set to either of current inputs of the control box or to not connected state.
+        </p>
+        
+        <p>
+          <img src="./stop-icon.png"></img> Stop button interrupts executed sweep or chronoamperometry procedure.
         </p>
       </div>
       
-      <div class="row">
-        <h3>Power control</h3>
-        <p>
-          Power control alteres laser beam intensity. Currently used filter allows 1 to 1E-4 intensity attenuation. In order to set laser intensity one should enter desired attenuation value and press <b>Enter</b>.
-        </p>
-      </div>
       
       <div class="row">
-        <h3>Polarization control</h3>
+        <h3>Sweep control panel</h3>
         <p>
-          This controls set allows one to choose between two laser polarizations. Whenever user clicks appropriate radio button laser polarization is changed.
+          Sweep control panel is located on the left by default. Please, pay attention that control box <text style="font-size: 200%; color: red; text-decoration: underline;"><b><i>CAN NOT</i></b></text> apply no potential. It always applies some potential. Panel has three control groups: "Electrode 1", "Electrode 2" and "Sweep setup".
         </p>
+        
+        <p>
+          "Electrode 1" and "Electrode 2" groups have identical controls shich allow to setup potential sweep. These controls are the following.
+          
+          <ul>
+            <li>
+              <b>Voltage gain</b> This control is supposed to be set to the same position as appropriate knob on bipotentiostat.
+            </li>
+
+            <li>
+              <b>Current gain</b> Current gain is the same but to adjust current cain to match potentiostat's knob.
+            </li>
+
+            <li>
+              <b>Instant/Start pot</b> Control defines the potential applied at the moment. Whenever a value is changed in this control box it is applied as soon as user presses "Enter" key or when control box looses focus.
+            </li>
+            
+            <li>
+              <b>Vertex 1, vertex 2</b> pair define up to two intermediate points potential transits through during sweep. When sweep is looped potential is swept within these two values.
+            </li>
+            
+            <li>
+              <b>End potential</b> input defines the potential sweep stops at. When sweep reaches end potential "start" and "stop" values are flept to provide smooth backward transition.
+            </li>
+            
+            <li>
+              <b>Pull el 2 when sweep, pull el 1 when sweep</b> check box defines if the other electrode should be involved into sweep. For example, if "electrode 1" is supposed to sweep and if "pull el 2 when sweep" control is checked then "electrode 2" will be swept in such a way that potential difference will remain constant.
+              <br>
+              <br>
+              <text style="font-size: 200%; color: red; text-decoration: underline;"><b><i>Warning!</i></b></text> According to your echeme this condition is satisfied automatically by hardware feedback. It seems that if this option is selected applied by control box potential difference will remain the same. But as for potentials in bipotentiostat it is not the case.
+            </li>
+            
+          </ul>
+        </p>
+        
+        
+        
+        <p>
+          "Sweep setup" control group defines sweep cycles quantity, speed and recorded points quantity per one volt.
+        </p>        
       </div>
+      
+      
     </div>
   </body>
 </html>
