@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="./bootstrap.min.css" rel="stylesheet" type="text/css"></link>
+    <script type="text/javscript" src="./jquery-2.1.4.min.js"></script>
+    <script type="text/javscript" src="./boostrap.min.js"></script>
+  </head>
+  <body>
+
+    <div class="container">
+    
+      <div class="jumbotron">
+        <h1>Hardware setup dialog</h1>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-5">
+          <img src="./setup-dlg.png"></img>
+        </div>
+        <div class="col-sm-7">
+          This setup dialog has several functions.
+          <ul>
+            <li>Adjust laser power control driver</li>
+            <li>Adjust polarization control driver</li>
+            <li>Choose current shutter position</li>
+            <li>Find current drivers position</li>
+            <li>Upgrade device firmware if new firmware's been released</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row">
+        <h3>Laser power driver adjustment</h3>
+        <p>
+          It is necessary to select <b>Power</b> in driver selection combo box in the very top of the dialog. After that one may adjust driver position in two ways. 1) To set position in appropriate box explicitly or 2) use incremental <b>left</b> and <b>right</b> buttons with step increment input area.
+        </p>
+      </div>
+      
+      <div class="row">
+        <h3>Polarization driver adjustment</h3>
+        <p>
+          It is necessary to select <b>Polarization</b> in driver selection combo box in the very top of the dialog. After that in the same way one may adjust driver position by either setting it explicitly or by using use incremental <b>left</b> and <b>right</b> buttons.
+        </p>
+      </div>
+      
+      <div class="row">
+        <h3>Shutter position</h3>
+        <p>
+          In order to choose current shutter position one may select it via "<b>Shutter opened</b>" and "<b>Shutter closed</b>" radio buttons.
+        </p>
+      </div>
+      
+      <div class="row">
+        <h3>Finding current drivers position</h3>
+        <p>
+          After any service work it is a good practive to tel the system find it's dirver mechanical positions. In order to do that one may use "<b>Find pos.</b>" button.
+        </p>
+        <p>
+          <strong>
+            WARNING! This operation will perform full driver revolution. So in order to prevent sensitive sample from being damaged it is recommended to perform this operation with shutter closed or laser off.
+          </strong>
+        </p>
+      </div>
+      
+      <div class="row">
+        <h3>Firmware upgrade</h3>
+        <p>
+          In order to use this function one is to have a new firmware file for the device. Having the file one may upgrade internal device firmware by clicking this button and choosing the file in open file dialog.
+        </p>
+        <p>
+          <strong>
+            WARNING! Do not unpower the device during firmware upgrade operation. It may cause it's bricking. Unbricking the device requires using another software utility which is not a part of software installation package.
+          </strong>
+        </p>
+      </div>
+      
+    </div>
+  </body>
+</html>

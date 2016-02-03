@@ -1,0 +1,20 @@
+
+# Создание файла справки.
+list( APPEND args "${QT_LIBRARY_DIR}/qcollectiongenerator" "${CMAKE_CURRENT_SOURCE_DIR}/help.qhcp" "-o" "${CMAKE_CURRENT_SOURCE_DIR}/help.qhc" )
+if ( WIN32 )
+    foreach( n ${args} )
+        string( REPLACE "/" "\\\\" res ${n} )
+        string( REPLACE "lib" "bin" res ${res} )
+        message( STATUS "src: ${n}" )
+        message( STATUS "dest: ${res}" )
+        list( APPEND res_args ${res} )
+    endforeach( n )
+endif ( WIN32 )
+# message( STATUS ${res_args} )
+execute_process( COMMAND ${res_args} WORKING_DIRECTORY "." RESULT_VARIABLE res OUTPUT_VARIABLE out ERROR_VARIABLE err )
+message( STATUS "res: ${res}" )
+message( STATUS "out: ${out}" )
+message( STATUS "err: ${err}" )
+
+install( FILES "./help.qch" DESTINATION "./help/" )
+install( FILES "./help.qhc" DESTINATION "./help/" )

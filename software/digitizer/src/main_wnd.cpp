@@ -5,6 +5,7 @@
 #include "setup_dlg.h"
 #include "polarization_dlg.h"
 #include "host_tray.h"
+#include "help_main_wnd.h"
 #include "version.h"
 
 #include "qwt_text_label.h"
@@ -17,6 +18,7 @@ const QString MainWnd::SETTINGS_INI = "./settings.ini";
 
 MainWnd::MainWnd( HostTray * parent )
     : QMainWindow( 0 ), 
+      m_helpBrowser( 0 ), 
       sem( 1 )
 {
     m_hostTray = parent;
@@ -86,6 +88,7 @@ MainWnd::MainWnd( HostTray * parent )
 
     connect( ui.action_Quit,       SIGNAL(triggered()), m_hostTray, SLOT(slotQuit()) );
     connect( ui.actionOpen_file,   SIGNAL(triggered()), this, SLOT(slotOpen()) );
+    connect( ui.actionHelp,        SIGNAL(triggered()), this, SLOT(slotHelp()) );
     connect( ui.action_About,      SIGNAL(triggered()), this, SLOT(slotAbout()) );
     connect( ui.actionCalibration, SIGNAL(triggered()), this, SLOT(slotCalibration()) );
     connect( ui.actionRemote_control, SIGNAL(triggered()), this, SLOT(slotRemoteSetup()) );
@@ -261,6 +264,13 @@ void MainWnd::slotQuit()
         terminate = true;
     mutex.unlock();
     future.waitForFinished();
+}
+
+void MainWnd::slotHelp()
+{
+    if ( !m_helpBrowser )
+        m_helpBrowser = new HelpMainWnd( "./help.qhc" );
+    m_helpBrowser->show();
 }
 
 void MainWnd::slotReopen()

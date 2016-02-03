@@ -22,6 +22,7 @@ add_subdirectory( "./libio" )
 add_subdirectory( "./digitizer" )
 add_subdirectory( "./libextctrl" )
 add_subdirectory( "./libluafactory" )
+add_subdirectory( "./help" )
 
 add_subdirectory( "./test" )
 

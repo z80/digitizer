@@ -17,6 +17,7 @@
 
 class QwtTextLabel;
 class HostTray;
+class HelpMainWnd;
 
 class MainWnd: public QMainWindow
 {
@@ -38,6 +39,7 @@ signals:
     void sigSweepFinished();
 public slots:
     void slotQuit();
+    void slotHelp();
     void slotAbout();
     void slotCalibration();
     void slotRemoteSetup();
@@ -98,6 +100,9 @@ private:
     QQueue<qreal> periodQueue, workVQueue, probeVQueue;
 
     int devName;
+
+    HelpMainWnd * m_helpBrowser;
+
 
     Ui_MainWnd ui;
     QFuture<void> future;

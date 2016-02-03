@@ -14,9 +14,10 @@
 
 
 include_directories( "./src"
-                     ${ROOT}/libio/src
-                     ${ROOT}/3dparty/qwt-6.1.2/src
-                     ${CMAKE_CURRENT_BINARY_DIR}
+                     ${ROOT}/libio/src 
+                     ${ROOT}/help/libhelp/src 
+                     ${ROOT}/3dparty/qwt-6.1.2/src 
+                     ${CMAKE_CURRENT_BINARY_DIR} 
                      ${CMAKE_BINARY_DIR} # This one is for "version.h"
                      ${ICE_PATH}/include )
 if ( WIN32 )
@@ -76,7 +77,7 @@ set( libs debug ${iced}
 
 add_executable( digitizer ${BLD_TYPE} ${src} )
 qt5_use_modules( digitizer Widgets Core Network )
-set( libs ${libs} libio qwt-6.1.2 ${QT_LIBRARIES} )
+set( libs ${libs} libio libhelp qwt-6.1.2 ${QT_LIBRARIES} )
 if ( WIN32 )
     set( libs ${libs} Qt5::WinMain )
 endif ( WIN32 )
