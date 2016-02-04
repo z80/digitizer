@@ -83,7 +83,7 @@ void HelpMainWnd::print()
 void HelpMainWnd::about()
 {
     QMessageBox box;
-    box.setText( "Lcu03 help window." );
+    box.setText( "BiPotentiostat help window." );
     box.exec();
 }
 
