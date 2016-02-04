@@ -26,6 +26,12 @@
 #define CMD_SET_ARGS  1
 #define CMD_EXEC_FUNC 2
 
+#define RTS_PORT GPIOA
+#define RTS_PAD  12
+
+#define CTS_PORT GPIOA
+#define CTS_PAD  11
+
 static uint8_t buffer[ BUFFER_SZ ];
 static uint8_t args[ ARGS_SZ ];
 
@@ -33,6 +39,9 @@ static uint8_t args[ ARGS_SZ ];
 static void process_command( uint8_t * buf, int sz );
 static void writeResult( uint8_t v );
 static void writeEom( void );
+
+//static void setRts( uint8_t en );
+//static uint8_t cts( void );
 
 static const SerialConfig serial_cfg =
 {
@@ -51,6 +60,7 @@ void initCpuIo( void )
 	// Setup CTS.
 	palSetPadMode( GPIOA, 11, PAL_MODE_INPUT );
 	// Setup RTS.
+	//palSetPadMode( GPIOA, 12, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
 	palSetPadMode( GPIOA, 12, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
 
 	// Initialize serial driver.
@@ -492,6 +502,21 @@ static void writeEom( void )
 {
 	sdPut( &SERIAL, '\0' );
 }
+
+/*
+static void setRts( uint8_t en )
+{
+    if ( en )
+        palSetPad( RTS_PORT, RTS_PAD );
+    else
+        palClearPad( RTS_PORT, RTS_PAD );
+}
+
+static uint8_t cts( void )
+{
+    return palReadPad( CTS_PORT, CTS_PAD );
+}
+*/
 
 
 
