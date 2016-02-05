@@ -48,6 +48,10 @@ public slots:
 
     void slotGain();
 
+    // Adjust speed to prevent data loss.
+    void slotSweepPts();
+    void slotSweepRate();
+
     // Work electrode setup.
     void slotWorkVoltChange();
     void slotWorkVolt();

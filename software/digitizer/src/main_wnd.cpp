@@ -93,6 +93,9 @@ MainWnd::MainWnd( HostTray * parent )
     connect( ui.actionCalibration, SIGNAL(triggered()), this, SLOT(slotCalibration()) );
     connect( ui.actionRemote_control, SIGNAL(triggered()), this, SLOT(slotRemoteSetup()) );
 
+    connect( ui.sweepPtsCnt, SIGNAL(editingFinished()), this, SLOT(slotSweepPts()) );
+    connect( ui.sweepRate,   SIGNAL(editingFinished()), this, SLOT(slotSweepRate()) );
+
     connect( ui.workVoltGain,   SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
     connect( ui.workCurrGain,   SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
     connect( ui.probeVoltGain,  SIGNAL(currentIndexChanged(int)), this, SLOT(slotGain()) );
@@ -707,6 +710,27 @@ void MainWnd::slotGain()
 
     io->setmV2mA( 0.0, gainI1, 0.0, gainI2 ); 
     io->setVoltScale( gainWorkV, gainProbeV );
+}
+
+// Points per second limit.
+static const qreal PTS_LIMIT = 500.0;
+
+void MainWnd::slotSweepPts()
+{
+    int pts = ui.sweepPtsCnt->value();
+    qreal speed = ui.sweepRate->value();
+    qreal pts_per_sec = static_cast<int>( static_cast<qreal>( pts ) * speed / 1000.0 );
+    if ( pts_per_sec > PTS_LIMIT )
+        ui.sweepRate->setValue( PTS_LIMIT / static_cast<qreal>( pts ) * 1000.0 );
+}
+
+void MainWnd::slotSweepRate()
+{
+    int pts = ui.sweepPtsCnt->value();
+    qreal speed = ui.sweepRate->value();
+    qreal pts_per_sec = static_cast<int>( static_cast<qreal>( pts ) * speed / 1000.0 );
+    if ( pts_per_sec > PTS_LIMIT )
+        ui.sweepPtsCnt->setValue( static_cast<int>( PTS_LIMIT / speed  * 1000.0 ) );
 }
 
 void MainWnd::slotWorkVoltChange()

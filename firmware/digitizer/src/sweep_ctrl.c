@@ -151,7 +151,8 @@ void processSweepI( uint8_t dacIndex )
 		if ( swElapsed < swPeriod )
 		{
 			// Calc current DAC values.
-			int64_t dac64 = (int64_t)swDacFrom[dacIndex] + (int64_t)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(int64_t)swElapsed / (int64_t)swPeriod;
+			//int64_t dac64 = (int64_t)swDacFrom[dacIndex] + (int64_t)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(int64_t)swElapsed / (int64_t)swPeriod;
+		    int dac64 = (int)swDacFrom[dacIndex] + (int)(swDacTo[dacIndex] - swDacFrom[dacIndex])*(int)swElapsed / (int)swPeriod;
 			int dac = (int)dac64;
 			setDacI( dacIndex, dac );
 		}
