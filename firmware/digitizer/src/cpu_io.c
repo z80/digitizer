@@ -64,8 +64,8 @@ void initCpuIo( void )
 	palSetPadMode( GPIOA, 12, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
 
 	// Initialize serial driver.
-	//sdStart( &SERIAL, &serial_cfg );
-	sdStart( &SERIAL, 0 );
+	sdStart( &SERIAL, &serial_cfg );
+	//sdStart( &SERIAL, 0 );
 }
 
 void processCpuIo( void )
@@ -80,7 +80,6 @@ void processCpuIo( void )
 	sdPut( &SERIAL, msg );
 	return;
 	*/
-
 
 	msg = sdGetTimeout( &SERIAL, TIME_INFINITE );
 	uint8_t noData = ( ( msg == Q_TIMEOUT ) || ( msg == Q_RESET ) ) ? 1 : 0;
