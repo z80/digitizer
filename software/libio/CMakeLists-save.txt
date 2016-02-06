@@ -9,7 +9,7 @@
 
 
 include_directories( "./src"
-                     ${ROOT}/3dparty/usbx
+                     ${ROOT}/3dparty/qextserialport/src
                      ${CMAKE_CURRENT_BINARY_DIR} )
 if ( WIN32 )
     include_directories( ${BOOST_PATH} )
@@ -17,14 +17,6 @@ endif ( WIN32 )
 
 aux_source_directory( "./src" src )
 
-
-find_library( usbx SiUSBXp PATHS "${ROOT}/3dparty/usbx/x86" )
-
 add_library( libio STATIC ${src} )
 qt5_use_modules( libio Widgets Core )
-target_link_libraries( libio ${usbx} ${QT_LIBRARIES} )
-
-
-
-
-
+target_link_libraries( libio serial ${QT_LIBRARIES} )
