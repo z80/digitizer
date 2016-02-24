@@ -328,6 +328,13 @@ void Bipot::close()
     io.close();
 }
 
+bool Bipot::setLed( quint8 leds )
+{
+    VoltampIo & io = *(pd->io);
+    bool res = io.setLed( leds );
+    return res;
+}
+
 QString Bipot::hardwareVersion()
 {
     VoltampIo & io = *(pd->io);

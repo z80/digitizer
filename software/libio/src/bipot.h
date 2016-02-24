@@ -16,6 +16,8 @@ public:
     bool isOpen();
     void close();
 
+    bool setLed( quint8 leds );
+
     QString hardwareVersion();
     QString firmwareVersion();
 

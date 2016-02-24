@@ -544,6 +544,9 @@ void MainWnd::reopen()
     QMutexLocker lock( &mutexReopen );
         io->close();
         io->open( devName );
+        // If opened turn LEDs off.
+        if ( io->isOpen() )
+            io->setLed( 0 );
 }
 
 void MainWnd::clearSweepConfig()
