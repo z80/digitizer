@@ -64,8 +64,8 @@ void initCpuIo( void )
 	palSetPadMode( GPIOA, 12, PAL_MODE_STM32_ALTERNATE_PUSHPULL );
 
 	// Initialize serial driver.
-	sdStart( &SERIAL, &serial_cfg );
-	//sdStart( &SERIAL, 0 );
+	//sdStart( &SERIAL, &serial_cfg );
+	sdStart( &SERIAL, 0 );
 }
 
 void processCpuIo( void )

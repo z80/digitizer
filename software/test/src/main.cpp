@@ -2,6 +2,7 @@
 #include <QtGui>
 #include <QApplication>
 #include "voltamp_io.h"
+#include <iostream>
 
 #include "qextserialport.h"
 
@@ -12,11 +13,19 @@ int main( int argc, char * argv[] )
 
     VoltampIo io;
     bool res;
+    std::cout << "enum\n";
     QStringList l = io.enumDevices();
-    qDebug() << l;
+    //qDebug() << l;
+    std::cout << "open\n";
     res = io.open( 4 );
     if ( !res )
         return -1;
+
+    std::cout << "opened!\n";
+
+    res = io.firmwareUpgrade( "./digitizer.bin" );
+
+    std::cout << "res: " << (res ? "ok" : "failed");
 
     /*
     quint8 v;
@@ -35,17 +44,17 @@ int main( int argc, char * argv[] )
     }
     */
 
-    QString stri;
+    //QString stri;
 
-    QVector<int> data;
-    res = io.setTriggerEn( true );
-    res = io.setDac1( 32767, 32767 );
-    res = io.setDac1( 32767, 41000 );
-    res = io.setDac1( 32767, 32767 );
-    res = io.setDac1( 32767, 41000 );
-    res = io.setDac1( 32767, 32767 );
-    res = io.setDac1( 32767, 41000 );
-    res = io.sweepData( data );
+    //QVector<int> data;
+    //res = io.setTriggerEn( true );
+    //res = io.setDac1( 32767, 32767 );
+    //res = io.setDac1( 32767, 41000 );
+    //res = io.setDac1( 32767, 32767 );
+    //res = io.setDac1( 32767, 41000 );
+    //res = io.setDac1( 32767, 32767 );
+    //res = io.setDac1( 32767, 41000 );
+    //res = io.sweepData( data );
 
     io.close();
     
