@@ -11,19 +11,33 @@ int main( int argc, char * argv[] )
 {
     QApplication app( argc, argv );
 
+    QTime t;
+    t.start();
     VoltampIo io;
     bool res;
     std::cout << "enum\n";
+    qDebug() << t;
+    t.start();
     QStringList l = io.enumDevices();
+    qDebug() << t;
+    t.start();
     //qDebug() << l;
     std::cout << "open\n";
+    qDebug() << t;
+    t.start();
     res = io.open( 4 );
+    qDebug() << t;
+    t.start();
     if ( !res )
         return -1;
 
     std::cout << "opened!\n";
 
+    qDebug() << t;
+    t.start();
     res = io.firmwareUpgrade( "./digitizer.bin" );
+    qDebug() << t;
+    t.start();
 
     std::cout << "res: " << (res ? "ok" : "failed");
 
