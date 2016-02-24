@@ -14,7 +14,7 @@ static void startFirmwareI( void * arg );
 
 static uint8_t sector[ CONF_PAGE_SIZE ];
 static int     byteIndex = 0;
-static int     timeLeft = 3000;
+static int     timeLeft = 5000;
 static bool_t  dontStartFirmware = 0;
 
 

@@ -13,7 +13,7 @@ int main(void)
 
     initCpuIo();
     initLed();
-    initDfu( 3000 );
+    initDfu( 5000 );
 
     setLeds( 3 );
 
