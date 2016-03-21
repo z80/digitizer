@@ -51,7 +51,7 @@
           
           <ul>
             <li>
-              "File" menu allows a user to close software.
+              "File" menu allows user to close software.
             </li>
             <li>
               Bipotentiostat control hardware attached to a computer appears as Virtual COM port.
@@ -61,10 +61,10 @@
               "Settings" menu contains two setup dialogs. One for device calibration and the other for remote control setup.
             </li>
             <li>
-              "Help" menu contains this help window as well as two more dialogs: "About" and "Firmware upgrade"
+              "Help" menu contains this help window as well as two more dialogs: "About" and "Firmware upgrade".
               <br>
               
-              "About" dialog allows to obtain software and firmware versions.
+              "About" dialog allows to obtain software and firmware versions. This might be useful in case of remote support.
               <br>
               
               "Firmware upgrade" item is needed to upgrade onboard firmware inside the control box.
@@ -82,19 +82,19 @@
         </p>  
         
         <p>
-          <img src="./oscilloscope-arrows.png"></img> These three arrows allows user to choose current of time oscilloscope period. Three buttons correspond to "slow", "medium" and "fast" sweeps.
+          <img src="./oscilloscope-arrows.png"></img> These three arrows allow user to choose current of time oscilloscope period. Three buttons correspond to "slow", "medium" and "fast" sweeps.
         </p>
         
         <p>
-          <img src="./chronoamperometry-icon.png"></img> This button engages chronoapmerometry function. In gives the user to choose meandge pulse's destination potential and duration.
+          <img src="./chronoamperometry-icon.png"></img> This button engages <b>chronoapmerometry</b> function. It gives the user ability to choose rectangular pulse's destination potential and duration.
         </p>
         
         <p>
-          <img src="./ext-trigger-icon.png"></img> External triggering button. When in pressed state external triggering more is on. In this mode control box records data on rising edge of triggering signal.
+          <img src="./ext-trigger-icon.png"></img> External triggering button. When in pressed state external triggering mode is on. In this mode control box records data on rising edge of triggering signal. If coupled with main AFM software current and potential mappings may be performed in this mode. AFM controller sends pulses to the control box in each map point. Control box records data and sends it to computer asynchronously.
         </p>
         
         <p>
-          <img src="./input-choice-icon.png"></img>  This buttons group allows user to choose AFM controller input. It can be set to either of current inputs of the control box or to not connected state.
+          <img src="./input-choice-icon.png"></img>  This buttons group allows user to choose AFM controller input. It can be set to either one of current inputs of the control box or to not connected state.
         </p>
         
         <p>
@@ -138,7 +138,7 @@
               <b>Pull el 2 when sweep, pull el 1 when sweep</b> check box defines if the other electrode should be involved into sweep. For example, if "electrode 1" is supposed to sweep and if "pull el 2 when sweep" control is checked then "electrode 2" will be swept in such a way that potential difference will remain constant.
               <br>
               <br>
-              <text style="font-size: 200%; color: red; text-decoration: underline;"><b><i>Warning!</i></b></text> According to your echeme this condition is satisfied automatically by hardware feedback. It seems that if this option is selected applied by control box potential difference will remain the same. But as for potentials in bipotentiostat it is not the case.
+              <text style="font-size: 200%; color: red; text-decoration: underline;"><b><i>Warning!</i></b></text> According to your echeme this condition is satisfied automatically by hardware feedback as current to boltage converter on your potentiostat is biased by REF voltage. It seems that if this option is selected applied by control box potential difference will remain the same. But as for potentials in bipotentiostat it is not the case.
             </li>
             
           </ul>
@@ -148,6 +148,8 @@
         
         <p>
           "Sweep setup" control group defines sweep cycles quantity, speed and recorded points quantity per one volt.
+          <br>
+          <br>          
         </p>        
       </div>
       
