@@ -53,7 +53,7 @@ MainWnd::MainWnd( HostTray * parent )
     QFont f = textWork.font();
     f.setPointSizeF( 15 );
     textWork.setFont( f );
-    textWork.setText( "Work I(t) [A(s)]" );
+    textWork.setText( "Electrode 1, I(t) [A(s)]" );
 
     labelWork->setText( textWork );
     labelWork->setIndent( 0 );
@@ -69,7 +69,7 @@ MainWnd::MainWnd( HostTray * parent )
     f = textProbe.font();
     f.setPointSizeF( 15 );
     textProbe.setFont( f );
-    textProbe.setText( "Probe I(t) [A(s)]" );
+    textProbe.setText( "Electrode 2, I(t) [A(s)]" );
 
     labelProbe->setText( textProbe );
     labelProbe->setIndent( 0 );
@@ -142,6 +142,24 @@ MainWnd::MainWnd( HostTray * parent )
     connect( ui.probeVertex1En, SIGNAL(clicked(bool)), this, SLOT(slotVertexEnChanged()) );
     connect( ui.probeVertex2En, SIGNAL(clicked(bool)), this, SLOT(slotVertexEnChanged()) );
 
+
+    flipPotA = new QAction( "Invert potential 1", this );
+    flipCurA = new QAction( "Invert current 1", this ); 
+    flipPotB = new QAction( "Invert potential 2", this ); 
+    flipCurB = new QAction( "Invert current 2", this );  
+    flipPotA->setCheckable( true );
+    flipPotA->setChecked( invSampleV );
+    flipCurA->setCheckable( true );
+    flipCurA->setChecked( invSampleI );
+    flipPotB->setCheckable( true );
+    flipPotB->setChecked( invProbeV );
+    flipCurB->setCheckable( true );
+    flipCurB->setChecked( invProbeI );
+    connect( flipPotA, SIGNAL(triggered()), this, SLOT(slotGain()) );
+    connect( flipCurA, SIGNAL(triggered()), this, SLOT(slotGain()) );
+    connect( flipPotB, SIGNAL(triggered()), this, SLOT(slotGain()) );
+    connect( flipCurB, SIGNAL(triggered()), this, SLOT(slotGain()) );
+
     slotGain();
     slotVertexEnChanged();
 
@@ -207,6 +225,11 @@ void MainWnd::loadSettings()
 
     this->restoreState( s.value( "state", QByteArray() ).toByteArray() );
 
+    invSampleV = s.value( "invSampleV", false ).toBool();
+    invSampleI = s.value( "invSampleI", false ).toBool(); 
+    invProbeV  = s.value( "invProbeV",  false ).toBool();
+    invProbeI  = s.value( "invProbeI",  false ).toBool();
+
     setWorkV  = ui.workVolt->value();
     setProbeV = ui.probeVolt->value();
 }
@@ -250,6 +273,12 @@ void MainWnd::saveSettings()
     s.setValue( "polarizationDuration",  polarizationDuration );
 
     s.setValue( "state", this->saveState() );
+
+    s.setValue( "invSampleV", invSampleV );
+    s.setValue( "invSampleI", invSampleI ); 
+    s.setValue( "invProbeV",  invProbeV );
+    s.setValue( "invProbeI",  invProbeI );
+
 }
 
 int MainWnd::deviceName() const
@@ -341,6 +370,17 @@ void MainWnd::closeEvent( QCloseEvent * e )
 {
     hide();
     e->ignore();
+}
+
+void MainWnd::contextMenuEvent( QContextMenuEvent * e )
+{
+    QMenu menu( this );
+    menu.addAction( flipPotA );
+    menu.addAction( flipCurA );
+    menu.addAction( flipPotB );
+    menu.addAction( flipCurB );
+
+    menu.exec( e->globalPos() );
 }
 
 void MainWnd::setTitle( const QString & stri )
@@ -699,19 +739,34 @@ void MainWnd::refreshDevicesList()
 
 void MainWnd::slotGain()
 {
+    invSampleV = flipPotA->isChecked();
+    invSampleI = flipCurA->isChecked();
+    invProbeV  = flipPotB->isChecked();
+    invProbeI  = flipCurB->isChecked();
+
     int indV  = ui.workVoltGain->currentIndex();
     qreal gainWorkV = pow( 10.0, -static_cast<qreal>( indV ) );
+    if ( invSampleV )
+        gainWorkV = -gainWorkV;
+
     int indIA = ui.workCurrGain->currentIndex();
-    qreal gainI = pow( 10.0, static_cast<qreal>( indIA + 4 ) );
+    qreal gainI = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
     qreal gainI1 = 0.001 / gainI;
+    if ( invSampleI )
+        gainI1 = -gainI1;
 
     indV  = ui.probeVoltGain->currentIndex();
     qreal gainProbeV = pow( 10.0, -static_cast<qreal>( indV ) );
-    indIA = ui.probeCurrGain->currentIndex();
-    gainI = pow( 10.0, static_cast<qreal>( indIA + 4 ) );
-    qreal gainI2 = 0.001 / gainI;
+    if ( invProbeV )
+        gainProbeV = -gainProbeV;
 
-    io->setmV2mA( 0.0, gainI1, 0.0, gainI2 ); 
+    indIA = ui.probeCurrGain->currentIndex();
+    gainI = pow( 10.0, static_cast<qreal>( indIA + 3 ) );
+    qreal gainI2 = 0.001 / gainI;
+    if ( invProbeI )
+        gainI2 = -gainI2;
+
+    io->setmV2mA( 0.0, gainI1, 0.0, gainI2 );
     io->setVoltScale( gainWorkV, gainProbeV );
 }
 

@@ -1,5 +1,5 @@
 
-set( SOFTWARE_VERSION "\"1.0.0\"" )
+set( SOFTWARE_VERSION "\"1.0.1\"" )
 
 project( digitizer )
 cmake_minimum_required(VERSION 2.8)

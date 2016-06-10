@@ -15,12 +15,12 @@ SweepWnd::SweepWnd( QWidget * parent )
     setWindowTitle( "*Untitled" );
 
     work  = new OscilloscopeWnd( 0 );
-    work->setWindowTitle( "Work electrode I(V) [A(mV)]" );
+    work->setWindowTitle( "Electrode 1, I(V) [A(mV)]" );
     work->setWindowIcon( QIcon( ":images/icon.png" ) );
     work->installEventFilter( this );
 
     probe = new OscilloscopeWnd( 0 );
-    probe->setWindowTitle( "Probe electrode I(V) [A(mV)]" );
+    probe->setWindowTitle( "Electrode 2, I(V) [A(mV)]" );
     probe->setWindowIcon( QIcon( ":images/icon.png" ) );
     probe->installEventFilter( this );
 

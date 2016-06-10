@@ -85,6 +85,7 @@ public slots:
     void slotVertexEnChanged();
 protected:
     void closeEvent( QCloseEvent * e );
+    void contextMenuEvent( QContextMenuEvent * e );
 private:
     void setTitle( const QString & stri );
     void refreshDevicesList();
@@ -189,6 +190,17 @@ private:
     bool    m_doListen;
 
     int totalPts;
+
+    // Inverting incoming singlas.
+    bool invSampleV, 
+         invSampleI, 
+         invProbeV, 
+         invProbeI;
+
+    QAction * flipPotA, 
+            * flipCurA, 
+            * flipPotB, 
+            * flipCurB;
 };
 
 #endif
