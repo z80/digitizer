@@ -115,7 +115,7 @@ private:
                   mutexSw, 
                   mutexReopen; // Mutex for oscilloscope and for sweep.
     bool          terminate;
-    bool          doMeasureSweep;
+    bool          doMeasureSweep, doMeasureOsc; // Measuring osc for chronoamperometry.
     bool          sweepDacMode;
     Bipot         * io;
     OscilloscopeWnd * oscWork;
@@ -150,7 +150,8 @@ private:
     QLabel * statusLabel;
 
     qreal polarizationPotential, 
-          polarizationDuration;
+          polarizationDuration, 
+          measureDuration;
 
     static const QString SETTINGS_INI;
 

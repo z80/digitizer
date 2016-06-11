@@ -29,6 +29,7 @@ MainWnd::MainWnd( HostTray * parent )
     totalPts       = 0;
     temperature = -273.15;
     doMeasureSweep = false;
+    doMeasureOsc   = false;
     sweepRemote    = false;
 
     terminate = false;
@@ -222,6 +223,7 @@ void MainWnd::loadSettings()
 
     polarizationPotential = s.value( "polarizationPotential", 0.0 ).toDouble();
     polarizationDuration  = s.value( "polarizationDuration",  1.0 ).toDouble();
+    measureDuration       = s.value( "measureDuration", 5.0 ).toDouble();
 
     this->restoreState( s.value( "state", QByteArray() ).toByteArray() );
 
@@ -271,6 +273,7 @@ void MainWnd::saveSettings()
 
     s.setValue( "polarizationPotential", polarizationPotential );
     s.setValue( "polarizationDuration",  polarizationDuration );
+    s.setValue( "measureDuration",       measureDuration );
 
     s.setValue( "state", this->saveState() );
 
@@ -942,6 +945,7 @@ void MainWnd::slotPolarization()
     PolarizationDlg pDlg( this );
     pDlg.setPotential( polarizationPotential );
     pDlg.setDuration( polarizationDuration );
+    pDlg.setMeasureDuraton( measureDuration );
     if ( pDlg.exec() != QDialog::Accepted )
         return;
 
@@ -949,6 +953,7 @@ void MainWnd::slotPolarization()
 
     polarizationPotential = pDlg.potential();
     polarizationDuration  = pDlg.duration();
+    measureDuration       = pDlg.measureDuration();
 
     qreal workAt  = ui.workVolt->value();
     qreal probeAt = ui.probeVolt->value();
@@ -977,14 +982,17 @@ void MainWnd::slotPolarization()
         QMessageBox::critical( this, "Error", stri );
         return;
     }
+
+    sweepWnd = new SweepWnd( this );
+    sweepWnd->show();
+    mutex.lock();
+        doMeasureOsc = true;
+    mutex.unlock();
     res = io->setSweepEn( true );
     ui.dockWidget_2->setEnabled( false );
-    do
-    {
-        QMutexLocker lock( &mutex );
-            doMeasureSweep = true;
-    } while ( false );
 
+    QTime time;
+    time.start();
     // To prevent overwriting potential by timer.
     setWorkV = polarizationPotential;
     bool sweepEn;
@@ -995,6 +1003,20 @@ void MainWnd::slotPolarization()
             break;
         qApp->processEvents();
     } while ( sweepEn );
+
+    do {
+        qApp->processEvents();
+        mutex.lock();
+            bool measureEn = doMeasureOsc;
+        mutex.unlock();
+        if ( !measureEn )
+            break;
+    } while ( ( time.elapsed() / 1000 ) < measureDuration );
+
+    // Sto measures.
+    mutex.lock();
+        doMeasureOsc = false;
+    mutex.unlock();
 
 
     // Restore overwriting potential by timer.
@@ -1028,7 +1050,16 @@ void MainWnd::slotInstantValues( qreal wv, qreal pv, qreal wi, qreal pi )
 void MainWnd::slotReplot()
 {
     // Add data to oscilloscope windows.
+    QQueue<qreal> workV, workI, probeV, probeI;
     mutex.lock();
+        bool measureOsc = doMeasureOsc;
+        if ( sweepWnd && measureOsc )
+        {
+            workV = p_workV;
+            workI = p_workI;
+            probeV = p_probeV;
+            probeI = p_probeI;
+        }
         oscWork->addData( p_workI );
         oscProbe->addData( p_probeI );
         p_workV.clear();
@@ -1037,6 +1068,10 @@ void MainWnd::slotReplot()
     // Replot oscilloscope windows.
     oscWork->slotReplot();
     oscProbe->slotReplot();
+
+    // Replot sweepWnd if there is something to replot.
+    if ( sweepWnd && measureOsc )
+        sweepWnd->addData( workV, workI, probeV, probeI );
 }
 
 void MainWnd::slotTemp()
@@ -1115,6 +1150,7 @@ void MainWnd::slotStopSweep()
     {
         QMutexLocker lock( &mutex );
             doMeasureSweep = false;
+            doMeasureOsc   = false;
             // If terminated, sweep should be stopped.
             io->setSweepEn( false );
             // Read while something is read.

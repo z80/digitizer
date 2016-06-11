@@ -34,6 +34,17 @@ qreal PolarizationDlg::duration() const
     return res;
 }
 
+void PolarizationDlg::setMeasureDuraton( qreal t )
+{
+    ui.recordDuration->setValue( t );
+}
+
+qreal PolarizationDlg::measureDuration() const
+{
+    qreal res = ui.recordDuration->value();
+    return res;
+}
+
 
 
 
