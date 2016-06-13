@@ -3,15 +3,15 @@
 
 [Setup]
 AppName=Digitizer
-AppVerName=Digitizer-1.2.0
+AppVerName=Digitizer-1.3.0
 AppPublisher=Aist-NT
 AppPublisherURL=http://www.aist-nt.com/
 AppSupportURL=http://www.aist-nt.com/
 AppUpdatesURL=http://www.aist-nt.com/
-DefaultDirName=c:\Aist\Digitizer-1.2.0
+DefaultDirName=c:\Aist\Digitizer-1.3.0
 DefaultGroupName=Digitizer
 AllowNoIcons=yes
-OutputBaseFilename=Digitizer-1.2.0
+OutputBaseFilename=Digitizer-1.3.0
 SetupIconFile=.\icon.ico
 Compression=lzma
 SolidCompression=yes
