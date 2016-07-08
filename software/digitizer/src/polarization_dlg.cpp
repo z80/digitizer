@@ -45,6 +45,26 @@ qreal PolarizationDlg::measureDuration() const
     return res;
 }
 
+void PolarizationDlg::setApplyTo( int index )
+{
+    if ( index > 0 )
+    {
+        ui.e1->setChecked( false );
+        ui.e2->setChecked( true );
+    }
+    else
+    {
+        ui.e2->setChecked( false );
+        ui.e1->setChecked( true );
+    }
+}
+
+int PolarizationDlg::applyTo() const
+{
+    return ui.e1->isChecked() ? 0 : 1;
+}
+
+
 
 
 

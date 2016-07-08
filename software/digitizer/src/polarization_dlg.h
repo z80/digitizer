@@ -22,6 +22,9 @@ public:
     void setMeasureDuraton( qreal t );
     qreal measureDuration() const;
 
+    void setApplyTo( int index );
+    int applyTo() const;
+
 private:
     Ui_PolarizationDlg ui;
 };

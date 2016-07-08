@@ -208,6 +208,8 @@ private:
             * flipCurB,
             * flipOutA, 
             * flipOutB;
+
+    int polarizationIndex;
 };
 
 #endif

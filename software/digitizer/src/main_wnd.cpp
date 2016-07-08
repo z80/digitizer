@@ -166,6 +166,8 @@ MainWnd::MainWnd( HostTray * parent )
     connect( flipCurA, SIGNAL(triggered()), this, SLOT(slotGain()) );
     connect( flipPotB, SIGNAL(triggered()), this, SLOT(slotGain()) );
     connect( flipCurB, SIGNAL(triggered()), this, SLOT(slotGain()) );
+    connect( flipOutA, SIGNAL(triggered()), this, SLOT(slotGain()) );
+    connect( flipOutB, SIGNAL(triggered()), this, SLOT(slotGain()) );
 
     slotGain();
     slotVertexEnChanged();
@@ -240,6 +242,8 @@ void MainWnd::loadSettings()
     invOutA    = s.value( "invOutA",    false ).toBool();
     invOutB    = s.value( "invOutB",    false ).toBool();
 
+    polarizationIndex = s.value( "polarizationIndex", 0 ).toInt();
+
     setWorkV  = ui.workVolt->value();
     setProbeV = ui.probeVolt->value();
 }
@@ -292,6 +296,7 @@ void MainWnd::saveSettings()
     s.setValue( "invOutA",    invOutA );
     s.setValue( "invOutB",    invOutB );
 
+    s.setValue( "polarizationIndex", polarizationIndex );
 }
 
 int MainWnd::deviceName() const
@@ -759,6 +764,8 @@ void MainWnd::slotGain()
     invSampleI = flipCurA->isChecked();
     invProbeV  = flipPotB->isChecked();
     invProbeI  = flipCurB->isChecked();
+    invOutA    = flipOutA->isChecked();
+    invOutB    = flipOutB->isChecked();
 
     int indV  = ui.workVoltGain->currentIndex();
     qreal gainWorkV = pow( 10.0, -static_cast<qreal>( indV ) );
@@ -959,6 +966,7 @@ void MainWnd::slotPolarization()
     pDlg.setPotential( polarizationPotential );
     pDlg.setDuration( polarizationDuration );
     pDlg.setMeasureDuraton( measureDuration );
+    pDlg.setApplyTo( polarizationIndex );
     if ( pDlg.exec() != QDialog::Accepted )
         return;
 
@@ -967,13 +975,16 @@ void MainWnd::slotPolarization()
     polarizationPotential = pDlg.potential();
     polarizationDuration  = pDlg.duration();
     measureDuration       = pDlg.measureDuration();
+    polarizationIndex     = pDlg.applyTo();
 
     qreal workAt  = ui.workVolt->value();
     qreal probeAt = ui.probeVolt->value();
 
     // Block GUI.
+    qreal workTo  = ( polarizationIndex == 0 ) ? polarizationPotential : workAt;
+    qreal probeTo = ( polarizationIndex >  0 ) ? polarizationPotential : probeAt;
 
-    bool res = io->sweepPush( 0, 0, outA( polarizationPotential ), outB( probeAt ) );
+    bool res = io->sweepPush( 0, 0, outA( workTo ), outB( probeTo ) );
     if ( !res )
     {
         QString stri = QString( "Failed to set potential transition!" );
@@ -981,7 +992,7 @@ void MainWnd::slotPolarization()
         return;
     }
 
-    res = io->sweepPush( 0, polarizationDuration, outA( polarizationPotential ), outB( probeAt ) );
+    res = io->sweepPush( 0, polarizationDuration, outA( workTo ), outB( probeTo ) );
     if ( !res )
     {
         QString stri = QString( "Failed to set potential transition!" );
