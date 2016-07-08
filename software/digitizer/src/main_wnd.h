@@ -209,7 +209,8 @@ private:
             * flipOutA, 
             * flipOutB;
 
-    int polarizationIndex;
+    int  polarizationIndex;
+    bool polarizationPull;
 };
 
 #endif

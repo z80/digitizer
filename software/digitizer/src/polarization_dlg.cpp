@@ -61,8 +61,22 @@ void PolarizationDlg::setApplyTo( int index )
 
 int PolarizationDlg::applyTo() const
 {
-    return ui.e1->isChecked() ? 0 : 1;
+    if ( ui.e1->isChecked() )
+        return 0;
+    return 1;
 }
+
+void PolarizationDlg::setPull( bool pull )
+{
+    ui.pull->setChecked( pull );
+}
+
+bool PolarizationDlg::pull() const
+{
+    return ui.pull->isChecked();
+}
+
+
 
 
 

@@ -54,7 +54,7 @@ MainWnd::MainWnd( HostTray * parent )
     QFont f = textWork.font();
     f.setPointSizeF( 15 );
     textWork.setFont( f );
-    textWork.setText( "Electrode 1, I(t) [A(s)]" );
+    textWork.setText( "Electrode 1, I(t) [Amp of sec]" );
 
     labelWork->setText( textWork );
     labelWork->setIndent( 0 );
@@ -70,7 +70,7 @@ MainWnd::MainWnd( HostTray * parent )
     f = textProbe.font();
     f.setPointSizeF( 15 );
     textProbe.setFont( f );
-    textProbe.setText( "Electrode 2, I(t) [A(s)]" );
+    textProbe.setText( "Electrode 2, I(t) [Amp of sec]" );
 
     labelProbe->setText( textProbe );
     labelProbe->setIndent( 0 );
@@ -243,6 +243,7 @@ void MainWnd::loadSettings()
     invOutB    = s.value( "invOutB",    false ).toBool();
 
     polarizationIndex = s.value( "polarizationIndex", 0 ).toInt();
+    polarizationPull  = s.value( "polarizationPull",  false ).toBool();
 
     setWorkV  = ui.workVolt->value();
     setProbeV = ui.probeVolt->value();
@@ -297,6 +298,7 @@ void MainWnd::saveSettings()
     s.setValue( "invOutB",    invOutB );
 
     s.setValue( "polarizationIndex", polarizationIndex );
+    s.setValue( "polarizationPull",  polarizationPull );
 }
 
 int MainWnd::deviceName() const
@@ -667,7 +669,7 @@ bool MainWnd::runSweep()
         qreal workTo = workVQueue.dequeue();
         qreal probeTo = probeVQueue.dequeue();
         qDebug() << "B) Queue size: " << ptsCntQueue.size();
-        res = io->sweepPush( ptsCnt, timeMs, workTo, probeTo );
+        res = io->sweepPush( ptsCnt, timeMs, outA( workTo ), outB( probeTo ) );
         qDebug() << "C) Queue size: " << ptsCntQueue.size();
         if ( !res )
         {
@@ -967,6 +969,7 @@ void MainWnd::slotPolarization()
     pDlg.setDuration( polarizationDuration );
     pDlg.setMeasureDuraton( measureDuration );
     pDlg.setApplyTo( polarizationIndex );
+    pDlg.setPull( polarizationPull );
     if ( pDlg.exec() != QDialog::Accepted )
         return;
 
@@ -976,13 +979,24 @@ void MainWnd::slotPolarization()
     polarizationDuration  = pDlg.duration();
     measureDuration       = pDlg.measureDuration();
     polarizationIndex     = pDlg.applyTo();
+    polarizationPull      = pDlg.pull();
 
     qreal workAt  = ui.workVolt->value();
     qreal probeAt = ui.probeVolt->value();
 
     // Block GUI.
-    qreal workTo  = ( polarizationIndex == 0 ) ? polarizationPotential : workAt;
-    qreal probeTo = ( polarizationIndex >  0 ) ? polarizationPotential : probeAt;
+    qreal workTo; 
+    qreal probeTo;
+    if ( polarizationIndex == 0 )
+    {
+        workTo  = polarizationPotential;
+        probeTo = (polarizationPull) ? (probeAt + polarizationPotential - workAt) : probeAt;
+    }
+    else
+    {
+        probeTo = polarizationPotential;
+        workTo  = (polarizationPull) ? (workAt + polarizationPotential - probeAt) : workAt;
+    }
 
     bool res = io->sweepPush( 0, 0, outA( workTo ), outB( probeTo ) );
     if ( !res )
@@ -1115,8 +1129,8 @@ void MainWnd::slotTemp()
             // If it isn't sweeping at the moment adjust steady voltages.
             if ( ( !measure ) && ( !calibrationWnd->isVisible() ) )
             {
-                io->setWorkMv( setWorkV );
-                io->setProbeMv( setProbeV );
+                io->setWorkMv( outA( setWorkV ) );
+                io->setProbeMv( outB( setProbeV ) );
             }
             temperature = t;
 

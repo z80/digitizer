@@ -25,6 +25,9 @@ public:
     void setApplyTo( int index );
     int applyTo() const;
 
+    void setPull( bool pull );
+    bool pull() const;
+
 private:
     Ui_PolarizationDlg ui;
 };
