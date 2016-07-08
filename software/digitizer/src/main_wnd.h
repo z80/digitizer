@@ -175,6 +175,8 @@ private:
 
     void listen();
     void setTrayToolTip( const QString & stri );
+    qreal outA( qreal value ) const;
+    qreal outB( qreal value ) const;
 
     HostTray * m_hostTray;
 
@@ -196,12 +198,16 @@ private:
     bool invSampleV, 
          invSampleI, 
          invProbeV, 
-         invProbeI;
+         invProbeI, 
+         invOutA, 
+         invOutB;
 
     QAction * flipPotA, 
             * flipCurA, 
             * flipPotB, 
-            * flipCurB;
+            * flipCurB,
+            * flipOutA, 
+            * flipOutB;
 };
 
 #endif

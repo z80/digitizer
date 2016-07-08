@@ -25,6 +25,8 @@ public:
 
     void data( QVector<qreal> & x, QVector<qreal> & y );
 
+    qreal scale() const;
+
     QwtPlot * plot();
 public slots:
     //void slotCurveType();

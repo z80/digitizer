@@ -14,8 +14,10 @@ public:
     SweepWnd( QWidget * parent = 0 );
     ~SweepWnd();
 
-    void addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI );
-    void addData( QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI );
+    void setTitles( const QString & striA, const QString & striB );
+
+    void addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI, qreal timeScale = -1.0 );
+    void addData( QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI, qreal timeScale = -1.0 );
 
     static SweepWnd * loadFile( QWidget * parent = 0 );
     void load( const QString & fileName );
@@ -37,6 +39,7 @@ private:
     OscilloscopeWnd * work;
     OscilloscopeWnd * probe;
     bool shouldBeSaved;
+    int ptIndex;
 };
 
 

@@ -148,6 +148,8 @@ MainWnd::MainWnd( HostTray * parent )
     flipCurA = new QAction( "Invert current 1", this ); 
     flipPotB = new QAction( "Invert potential 2", this ); 
     flipCurB = new QAction( "Invert current 2", this );  
+    flipOutA = new QAction( "Invert out 1", this );
+    flipOutB = new QAction( "Invert out 2", this );
     flipPotA->setCheckable( true );
     flipPotA->setChecked( invSampleV );
     flipCurA->setCheckable( true );
@@ -156,6 +158,10 @@ MainWnd::MainWnd( HostTray * parent )
     flipPotB->setChecked( invProbeV );
     flipCurB->setCheckable( true );
     flipCurB->setChecked( invProbeI );
+    flipOutA->setCheckable( true );
+    flipOutA->setChecked( invOutA );
+    flipOutB->setCheckable( true );
+    flipOutB->setChecked( invOutB );
     connect( flipPotA, SIGNAL(triggered()), this, SLOT(slotGain()) );
     connect( flipCurA, SIGNAL(triggered()), this, SLOT(slotGain()) );
     connect( flipPotB, SIGNAL(triggered()), this, SLOT(slotGain()) );
@@ -231,6 +237,8 @@ void MainWnd::loadSettings()
     invSampleI = s.value( "invSampleI", false ).toBool(); 
     invProbeV  = s.value( "invProbeV",  false ).toBool();
     invProbeI  = s.value( "invProbeI",  false ).toBool();
+    invOutA    = s.value( "invOutA",    false ).toBool();
+    invOutB    = s.value( "invOutB",    false ).toBool();
 
     setWorkV  = ui.workVolt->value();
     setProbeV = ui.probeVolt->value();
@@ -281,6 +289,8 @@ void MainWnd::saveSettings()
     s.setValue( "invSampleI", invSampleI ); 
     s.setValue( "invProbeV",  invProbeV );
     s.setValue( "invProbeI",  invProbeI );
+    s.setValue( "invOutA",    invOutA );
+    s.setValue( "invOutB",    invOutB );
 
 }
 
@@ -382,6 +392,9 @@ void MainWnd::contextMenuEvent( QContextMenuEvent * e )
     menu.addAction( flipCurA );
     menu.addAction( flipPotB );
     menu.addAction( flipCurB );
+
+    menu.addAction( flipOutA );
+    menu.addAction( flipOutB );
 
     menu.exec( e->globalPos() );
 }
@@ -805,7 +818,7 @@ void MainWnd::slotWorkVolt()
     if ( io->isOpen() )
     {
         qreal val = ui.workVolt->value();
-        io->setWorkMv( val );
+        io->setWorkMv( outA( val ) );
 
         setWorkV = val;
 
@@ -878,7 +891,7 @@ void MainWnd::slotProbeVolt()
     if ( io->isOpen() )
     {
         qreal val = ui.probeVolt->value();
-        io->setProbeMv( val );
+        io->setProbeMv( outA( val ) );
 
         setProbeV = val;
 
@@ -960,7 +973,7 @@ void MainWnd::slotPolarization()
 
     // Block GUI.
 
-    bool res = io->sweepPush( 0, 0, polarizationPotential, probeAt );
+    bool res = io->sweepPush( 0, 0, outA( polarizationPotential ), outB( probeAt ) );
     if ( !res )
     {
         QString stri = QString( "Failed to set potential transition!" );
@@ -968,14 +981,14 @@ void MainWnd::slotPolarization()
         return;
     }
 
-    res = io->sweepPush( 0, polarizationDuration, polarizationPotential, probeAt );
+    res = io->sweepPush( 0, polarizationDuration, outA( polarizationPotential ), outB( probeAt ) );
     if ( !res )
     {
         QString stri = QString( "Failed to set potential transition!" );
         QMessageBox::critical( this, "Error", stri );
         return;
     }
-    res = io->sweepPush( 0, 0, workAt, probeAt );
+    res = io->sweepPush( 0, 0, outA( workAt ), outB( probeAt ) );
     if ( !res )
     {
         QString stri = QString( "Failed to set potential transition!" );
@@ -984,6 +997,7 @@ void MainWnd::slotPolarization()
     }
 
     sweepWnd = new SweepWnd( this );
+    sweepWnd->setTitles( "Electrode 1 I(t)", "Electrode 2 I(t)" );
     sweepWnd->show();
     mutex.lock();
         doMeasureOsc = true;
@@ -1071,7 +1085,7 @@ void MainWnd::slotReplot()
 
     // Replot sweepWnd if there is something to replot.
     if ( sweepWnd && measureOsc )
-        sweepWnd->addData( workV, workI, probeV, probeI );
+        sweepWnd->addData( workV, workI, probeV, probeI, oscWork->scale() );
 }
 
 void MainWnd::slotTemp()
@@ -1417,6 +1431,16 @@ void MainWnd::listen()
 void MainWnd::setTrayToolTip( const QString & stri )
 {
     m_hostTray->setToolTip( stri );
+}
+
+qreal MainWnd::outA( qreal value ) const
+{
+    return invOutA ? (-value) : value;
+}
+
+qreal MainWnd::outB( qreal value ) const
+{
+    return invOutB ? (-value) : value;
 }
 
 void MainWnd::slotInstantValues()

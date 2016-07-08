@@ -34,20 +34,41 @@ SweepWnd::SweepWnd( QWidget * parent )
     connect( ui.actionSave_as, SIGNAL(triggered()), this, SLOT(slotSave()) );
 
     shouldBeSaved = false;
+    ptIndex = 0;
 }
 
 SweepWnd::~SweepWnd()
 {
 }
 
-void SweepWnd::addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI )
+void SweepWnd::setTitles( const QString & striA, const QString & striB )
 {
-    QMutexLocker lock( &m );
-        addData( workV, workI, probeV, probeI );
+    work->setWindowTitle( striA );
+    probe->setWindowTitle( striB );
 }
 
-void SweepWnd::addData( QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI )
+void SweepWnd::addData( QMutex & m, QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI, qreal timeScale )
 {
+    QMutexLocker lock( &m );
+        addData( workV, workI, probeV, probeI, timeScale );
+}
+
+void SweepWnd::addData( QQueue<qreal> & workV, QQueue<qreal> & workI, QQueue<qreal> & probeV, QQueue<qreal> & probeI, qreal timeScale )
+{
+    if ( timeScale )
+    {
+        // This is I(t) plot.
+        // Replace Voltage with time.
+        int sz = workV.size();
+        workV.clear();
+        probeV.clear();
+        for ( auto i=0; i<sz; i++ )
+        {
+            qreal t = timeScale * static_cast<qreal>( ptIndex++ );
+            workV.append( t );
+            probeV.append( t );
+        }
+    }
     //for ( int i=0; i<workI.size(); i++ )
     //{
     //    qreal v = workI[i];

@@ -126,6 +126,11 @@ void OscilloscopeWnd::data( QVector<qreal> & x, QVector<qreal> & y )
     y = c.y;
 }
 
+qreal OscilloscopeWnd::scale() const
+{
+    return period / static_cast<qreal>( PTS_CNT );
+}
+
 QwtPlot * OscilloscopeWnd::plot()
 {
     return ui.plot;
