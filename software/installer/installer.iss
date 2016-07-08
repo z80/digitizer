@@ -3,15 +3,15 @@
 
 [Setup]
 AppName=Digitizer
-AppVerName=Digitizer-1.3.0
+AppVerName=Digitizer-1.4.0
 AppPublisher=Aist-NT
 AppPublisherURL=http://www.aist-nt.com/
 AppSupportURL=http://www.aist-nt.com/
 AppUpdatesURL=http://www.aist-nt.com/
-DefaultDirName=c:\Aist\Digitizer-1.3.0
+DefaultDirName=c:\Aist\Digitizer-1.4.0
 DefaultGroupName=Digitizer
 AllowNoIcons=yes
-OutputBaseFilename=Digitizer-1.3.0
+OutputBaseFilename=Digitizer-1.4.0
 SetupIconFile=.\icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -29,10 +29,10 @@ Source: "..\app\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs create
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Digitizer-1.2.0"; Filename: "{app}\digitizer.exe"; WorkingDir: "{app}"
+Name: "{group}\Digitizer-1.4.0"; Filename: "{app}\digitizer.exe"; WorkingDir: "{app}"
 Name: "{group}\{cm:ProgramOnTheWeb,aist}"; Filename: "http://www.aist-nt.com/"
 Name: "{group}\{cm:UninstallProgram,aist}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\Digitizer-1.2.0"; Filename: "{app}\digitizer.exe"; WorkingDir: "{app}"; Tasks: desktopicon
+Name: "{commondesktop}\Digitizer-1.4.0"; Filename: "{app}\digitizer.exe"; WorkingDir: "{app}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\vcredist_x86.exe"; Description: "x86 runtime envirinment install. It's necessary to install it at least once."; Check: not Is64BitInstallMode
